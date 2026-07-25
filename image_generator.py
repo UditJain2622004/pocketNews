@@ -51,13 +51,12 @@ def generate_story_image(
                 model=IMAGE_MODEL,
                 image=image_files,
                 prompt=prompt,
-                input_fidelity="high",
                 size="1024x1536",
                 quality="medium",
             )
         return _decode_image(result)
     except Exception as error:
-        raise ImageGenerationError("OpenAI image generation request failed.") from error
+        raise ImageGenerationError(f"OpenAI image edit request failed: {error}") from error
 
 
 def _generate_image(prompt: str) -> bytes:
