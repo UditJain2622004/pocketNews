@@ -4,7 +4,7 @@ import LoginPage from './pages/LoginPage'
 import SignUpPage from './pages/SignUpPage'
 import DashboardPage from './pages/DashboardPage'
 
-const API_BASE = 'http://localhost:8001'
+const API_BASE = 'http://localhost:8000'
 
 function App() {
   const [showLanding, setShowLanding] = useState(true)
