@@ -34,8 +34,9 @@ def generate_story_line(
         f"Character delivery direction: {voice_profile}. "
         "Use the full scene context below to preserve the character's emotional state, pace, "
         "relationships, and the scene's dramatic progression. "
-        "Speak only the exact requested line. Do not add words, sound effects, or introductions.\n\n"
-        f"FULL STORY CONTEXT:\n{story_context}"
+        "The scene context is silent reference material: never speak, quote, or repeat it. "
+        "Speak only the exact requested line in the user message. Do not add words, sound effects, or introductions.\n\n"
+        f"SILENT SCENE CONTEXT:\n{story_context}"
     )
     try:
         response = OpenAI().chat.completions.create(
