@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr, Field
-from typing import List, Optional, Dict
+from typing import List, Dict
 
 class UserSignup(BaseModel):
     username: str = Field(..., min_length=3, max_length=50)
@@ -34,3 +34,4 @@ class UserProfileResponse(BaseModel):
 
 class SuggestionResponse(BaseModel):
     suggestions: Dict[str, List[str]]
+
