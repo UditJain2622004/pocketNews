@@ -38,6 +38,7 @@ const dashboardEpisode = (episode) => {
     tag: `${episode.cadence} recap`,
     season: `${episode.cadence} episode`,
     plays: `${scripts.length} stories`,
+    date: episode.periodEnd || episode.periodStart || '',
     rating: '4.9',
     color: 'from-[#E11D48] to-[#F97316]',
     videoFrames: coverPath ? [mediaUrl(episode.runId, coverPath), mediaUrl(episode.runId, coverPath)] : [],
