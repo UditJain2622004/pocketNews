@@ -34,15 +34,18 @@ def run_script_workflow(
     generate_audio: bool = True,
     cast_mode: str = "auto",
     visual_style: str = "animated",
+    source_root: Path | None = None,
+    input_dir: Path | None = None,
+    cadence: str = "daily",
 ) -> dict[str, object]:
     if cast_mode not in CAST_MODES:
         raise WorkflowInputError(f"Unsupported cast mode. Use one of: {', '.join(CAST_MODES)}.")
     if visual_style not in VISUAL_STYLES:
         raise WorkflowInputError(f"Unsupported visual style. Use one of: {', '.join(VISUAL_STYLES)}.")
     selected_date = _resolve_date(run_date)
-    input_dir = ARTICLES_DIR / selected_date.isoformat()
-    if not input_dir.is_dir():
-        raise WorkflowInputError(f"Article folder does not exist: articles/{selected_date.isoformat()}")
+    resolved_input_dir = input_dir or (source_root or ARTICLES_DIR) / selected_date.isoformat()
+    if not resolved_input_dir.is_dir():
+        raise WorkflowInputError(f"Article folder does not exist: {resolved_input_dir}")
 
     run_id = f"{selected_date.isoformat()}_{secrets.token_hex(4)}"
     output_dir = SCRIPTS_DIR / run_id
@@ -55,7 +58,7 @@ def run_script_workflow(
     started_at = datetime.now(timezone.utc).isoformat()
     article_jobs: list[tuple[int, NewsArticle, Path]] = []
 
-    for source_file in sorted(input_dir.glob("*.json")):
+    for source_file in sorted(path for path in resolved_input_dir.glob("*.json") if path.name != "manifest.json"):
         try:
             articles = _read_articles(source_file)
         except Exception as error:
@@ -84,6 +87,7 @@ def run_script_workflow(
     manifest = {
         "runId": run_id,
         "runDate": selected_date.isoformat(),
+        "cadence": cadence,
         "language": language,
         "startedAt": started_at,
         "articlesFound": articles_found,
@@ -114,6 +118,7 @@ def run_script_workflow(
 
     return {
         "runId": run_id,
+        "cadence": cadence,
         "outputPath": _relative(output_dir),
         "articlesFound": articles_found,
         "scriptsGenerated": len(generated_scripts),

@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 
 from auth.database import db
 from auth.schemas import UserSignup, UserLogin, TokenResponse, UserProfileResponse, SuggestionResponse, ProfileUpdateRequest
+from shared_taxonomy import PROFILE_TAXONOMY
 
 load_dotenv()
 logger = logging.getLogger("auth.router")
@@ -21,14 +22,7 @@ JWT_ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
 # Predefined Suggested Interests
-SUGGESTED_INTERESTS = {
-    "Technology": ["Artificial Intelligence", "Web Development", "Mobile Applications", "Cybersecurity", "Blockchain"],
-    "Sports": ["Cricket", "Football", "Basketball", "Tennis", "Athletics"],
-    "Business": ["Finance", "Stocks", "Real Estate", "Startups", "Cryptocurrency"],
-    "Entertainment": ["Movies", "Music", "Gaming", "Celebrity News", "Television"],
-    "Science": ["Space Exploration", "Physics", "Biology", "Environment", "Medicine"],
-    "Lifestyle": ["Health & Fitness", "Travel", "Food & Cooking", "Fashion", "DIY"]
-}
+SUGGESTED_INTERESTS = PROFILE_TAXONOMY
 
 # Cryptography Helpers
 def hash_password(password: str) -> tuple:

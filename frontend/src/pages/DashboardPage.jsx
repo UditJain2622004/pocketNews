@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Dashboard from '../components/Dashboard'
+import PublishedEpisodes from '../components/PublishedEpisodes'
 
 export default function DashboardPage({ setShowLanding, user, onLogout, token, onProfileUpdate }) {
   // Cinematic news stories list
@@ -165,7 +166,7 @@ export default function DashboardPage({ setShowLanding, user, onLogout, token, o
   const [activeStoryId, setActiveStoryId] = useState('silicon-wars')
 
   return (
-    <Dashboard
+    <><PublishedEpisodes token={token} /><Dashboard
       setShowLanding={setShowLanding}
       user={user}
       onLogout={onLogout}
@@ -173,6 +174,6 @@ export default function DashboardPage({ setShowLanding, user, onLogout, token, o
       onProfileUpdate={onProfileUpdate}
       storiesList={storiesList}
       setActiveStoryId={setActiveStoryId}
-    />
+    /></>
   )
 }

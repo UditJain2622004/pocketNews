@@ -2,12 +2,14 @@
 import sys
 from pathlib import Path
 from typing import List, Literal, Optional
+from uuid import uuid4
 
 from dotenv import load_dotenv
-from fastapi import BackgroundTasks, FastAPI, HTTPException, Query
+from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
+from bson import ObjectId
 
 from audio_workflow import AudioWorkflowInputError, media_file, prepare_story_audio
 from episode_service import compose_episode, select_articles, story_format_for_index, supported_story_formats
@@ -16,7 +18,12 @@ from news_adapter import load_mock_articles
 from story_generator import CAST_MODES, VISUAL_STYLES, StoryGenerationError, generate_story
 from workflow_service import WorkflowInputError, run_script_workflow
 from auth.database import setup_db_indexes
-from auth.router import router as auth_router
+from auth.database import db
+from auth.router import get_current_user_id, router as auth_router
+from automated_workflows import run_daily_workflow
+from localization_service import locale_for_language, prepare_localized_episode
+from publication_store import episode_playback, list_episodes, set_localized_run, setup_publication_indexes, workflow_status
+from scheduler_service import start_scheduler, stop_scheduler
 from news_collection import fetch_google_news_rss
 from news_collection.sync_news import run_news_sync
 from news_collection.taxonomy import NEWS_TAXONOMY
@@ -42,11 +49,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.include_router(auth_router)
+ADMIN_TASKS: dict[str, dict[str, object]] = {}
 
 
 @app.on_event("startup")
 def on_startup() -> None:
     setup_db_indexes()
+    setup_publication_indexes()
+    start_scheduler()
+
+
+@app.on_event("shutdown")
+def on_shutdown() -> None:
+    stop_scheduler()
 
 
 class TranslationRequest(BaseModel):
@@ -67,6 +82,17 @@ class AudioWorkflowRequest(BaseModel):
 class MediaWorkflowRequest(BaseModel):
     folderName: str
     generate: Literal["images", "audio", "both"]
+
+
+class AdminDailyWorkflowRequest(BaseModel):
+    runDate: Optional[str] = None
+    categories: Optional[List[str]] = None
+    mode: Literal["fetch_only", "generate_only", "full"] = "full"
+    generateImages: bool = True
+    generateAudio: bool = True
+    castMode: str = "auto"
+    visualStyle: str = "animated"
+    language: str = "en-IN"
 
 
 @app.post("/translate")
@@ -138,8 +164,8 @@ def get_local_archive(category: str, date: Optional[str] = None) -> dict[str, ob
     from datetime import datetime
     import json
 
-    archive_date = date or datetime.now().strftime("%d_%m_%Y")
-    archive_path = BASE_DIR / "News" / archive_date / f"{category.strip().lower()}.json"
+    archive_date = date or datetime.now().date().isoformat()
+    archive_path = BASE_DIR / "news" / "daily" / archive_date / f"{category.strip().lower()}.json"
     if not archive_path.is_file():
         raise HTTPException(
             status_code=404,
@@ -153,6 +179,76 @@ def get_local_archive(category: str, date: Optional[str] = None) -> dict[str, ob
         return payload
     except (OSError, ValueError, json.JSONDecodeError) as error:
         raise HTTPException(status_code=500, detail=f"Error reading archive file: {error}") from error
+
+
+@app.post("/api/admin/workflows/daily")
+def start_admin_daily_workflow(request: AdminDailyWorkflowRequest, background_tasks: BackgroundTasks) -> dict[str, object]:
+    task_id = uuid4().hex
+    ADMIN_TASKS[task_id] = {"taskId": task_id, "status": "queued"}
+
+    def run_task() -> None:
+        ADMIN_TASKS[task_id] = {"taskId": task_id, "status": "running"}
+        try:
+            result = run_daily_workflow(
+                request.runDate, request.categories, request.mode, request.generateImages,
+                request.generateAudio, request.castMode, request.visualStyle, request.language,
+            )
+            ADMIN_TASKS[task_id] = {"taskId": task_id, "status": "completed", "result": result}
+        except Exception as error:
+            ADMIN_TASKS[task_id] = {"taskId": task_id, "status": "failed", "error": str(error)}
+
+    background_tasks.add_task(run_task)
+    return ADMIN_TASKS[task_id]
+
+
+@app.get("/api/admin/workflows/{workflow_id}")
+def get_admin_workflow_status(workflow_id: str) -> dict[str, object]:
+    if workflow_id in ADMIN_TASKS:
+        return ADMIN_TASKS[workflow_id]
+    record = workflow_status(workflow_id)
+    if record is None:
+        raise HTTPException(status_code=404, detail="Workflow was not found.")
+    return record
+
+
+@app.get("/api/dashboard/episodes")
+def get_dashboard_episodes(user_id: str = Depends(get_current_user_id)) -> dict[str, object]:
+    if db is None:
+        raise HTTPException(status_code=503, detail="Database connection is unavailable.")
+    user = db.users.find_one({"_id": ObjectId(user_id)})
+    if not user:
+        raise HTTPException(status_code=404, detail="User was not found.")
+    return {"episodes": list_episodes(user.get("topics", []))}
+
+
+@app.get("/api/episodes/{episode_id}/playback")
+def get_published_episode_playback(episode_id: str, background_tasks: BackgroundTasks, user_id: str = Depends(get_current_user_id)) -> dict[str, object]:
+    if db is None:
+        raise HTTPException(status_code=503, detail="Database connection is unavailable.")
+    user = db.users.find_one({"_id": ObjectId(user_id)})
+    if not user:
+        raise HTTPException(status_code=404, detail="User was not found.")
+    episode = episode_playback(episode_id, user.get("topics", []))
+    if episode is None:
+        raise HTTPException(status_code=404, detail="Published episode was not found.")
+    profile_language = str(user.get("language") or "English")
+    locale = locale_for_language(profile_language)
+    localized = episode.get("localizedRuns", {}).get(locale) if isinstance(episode.get("localizedRuns"), dict) else None
+    if locale != "en-IN" and isinstance(localized, dict) and localized.get("status") == "ready":
+        episode["runId"] = localized["runId"]
+        episode["playbackStatus"] = "ready"
+        episode["localizedStatus"] = "ready"
+    elif locale != "en-IN":
+        if not isinstance(localized, dict) or localized.get("status") != "preparing":
+            set_localized_run(episode_id, locale, "", "preparing")
+            background_tasks.add_task(prepare_localized_episode, episode, profile_language)
+        episode["playbackStatus"] = "preparing"
+        episode["localizedStatus"] = "canonical_fallback"
+    else:
+        episode["playbackStatus"] = "ready"
+        episode["localizedStatus"] = "canonical"
+    episode["requestedLanguage"] = profile_language
+    return episode
 
 
 @app.get("/api/stories/{article_id}")

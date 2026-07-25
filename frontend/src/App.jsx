@@ -4,8 +4,9 @@ import LoginPage from './pages/LoginPage'
 import SignUpPage from './pages/SignUpPage'
 import DashboardPage from './pages/DashboardPage'
 import EpisodePage from './pages/EpisodePage'
+import AdminWorkflowPage from './pages/AdminWorkflowPage'
 
-const API_BASE = 'http://localhost:8000'
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
 
 function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname)
@@ -71,8 +72,10 @@ function App() {
   // Routing rendering logic
   const episodeMatch = currentPath.match(/^\/episode\/([^/]+)\/?$/)
   if (episodeMatch) {
-    return <EpisodePage episodeId={decodeURIComponent(episodeMatch[1])} />
+    return <EpisodePage episodeId={decodeURIComponent(episodeMatch[1])} token={token} />
   }
+
+  if (currentPath === '/admin/workflows') return <AdminWorkflowPage />
 
   if (currentPath === '/login') {
     return (
