@@ -116,6 +116,7 @@ def generate_story(
 
     story = generated.dict()
     story["storyId"] = article.id
+    story["category"] = story["classification"]["category"]
     story["sourceCategory"] = _primary_category(article.categories)
     story["topics"] = article.categories
     story["format"] = story_format

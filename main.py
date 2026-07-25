@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Query
 from pydantic import BaseModel
 
+from audio_workflow import AudioWorkflowInputError, media_file, prepare_story_audio
 from episode_service import compose_episode, select_articles, story_format_for_index, supported_story_formats
 from news_adapter import load_mock_articles
 from story_generator import StoryGenerationError, generate_story
@@ -22,7 +23,7 @@ NEWS_FEED_PATH = BASE_DIR / "news_format.json"
 app = FastAPI(
     title="PocketNews API",
     description="Multilingual, AI-generated news episode API.",
-    version="0.4.0",
+    version="0.5.0",
 )
 
 
@@ -36,6 +37,11 @@ class ScriptWorkflowRequest(BaseModel):
     language: str = "en-IN"
 
 
+class AudioWorkflowRequest(BaseModel):
+    runId: str
+    articleIds: Optional[List[str]] = None
+
+
 @app.post("/translate")
 def translate(req: TranslationRequest):
     return translate_text(req.text, req.languages)
@@ -47,6 +53,7 @@ def read_root() -> dict[str, str]:
         "message": "PocketNews API is running.",
         "docs_url": "/docs",
         "workflow_url": "/api/workflows/generate-scripts",
+        "audio_workflow_url": "/api/workflows/generate-audio",
     }
 
 
@@ -94,6 +101,24 @@ def generate_scripts(request: ScriptWorkflowRequest) -> dict[str, object]:
         return run_script_workflow(request.date, request.language)
     except WorkflowInputError as error:
         raise HTTPException(status_code=422, detail=str(error)) from error
+
+
+@app.post("/api/workflows/generate-audio")
+def generate_audio(request: AudioWorkflowRequest) -> dict[str, object]:
+    try:
+        return prepare_story_audio(request.runId, request.articleIds)
+    except AudioWorkflowInputError as error:
+        raise HTTPException(status_code=422, detail=str(error)) from error
+
+
+@app.get("/api/media/{run_id}/{media_path:path}")
+def get_media(run_id: str, media_path: str):
+    try:
+        from fastapi.responses import FileResponse
+
+        return FileResponse(media_file(run_id, media_path))
+    except AudioWorkflowInputError as error:
+        raise HTTPException(status_code=404, detail=str(error)) from error
 
 
 def _load_articles():
