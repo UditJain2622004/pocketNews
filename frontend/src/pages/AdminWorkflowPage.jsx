@@ -4,7 +4,7 @@ import { API_BASE } from '../api'
 const CATEGORIES = ['technology', 'sports', 'business', 'entertainment', 'science', 'lifestyle']
 
 export default function AdminWorkflowPage() {
-  const [form, setForm] = useState({ mode: 'full', generateImages: true, generateAudio: true, threeImagesPerStory: false, storyFormat: 'auto', castMode: 'auto', visualStyle: 'animated', language: 'en-IN', maxArticlesPerCategory: 1, maxTotalStories: 6 })
+  const [form, setForm] = useState({ mode: 'full', generateImages: true, generateAudio: true, threeImagesPerStory: false, storyFormat: 'mix', castMode: 'auto', visualStyle: 'animated', language: 'en-IN', maxArticlesPerCategory: 1, maxTotalStories: 6 })
   const [categories, setCategories] = useState(CATEGORIES)
   const [task, setTask] = useState(null)
   const [episodes, setEpisodes] = useState([])
@@ -49,7 +49,7 @@ export default function AdminWorkflowPage() {
         </label>
         <label className="block text-sm font-bold">Story format
           <select value={form.storyFormat} onChange={(event) => setForm({ ...form, storyFormat: event.target.value })} className="mt-2 w-full rounded-xl border border-white/10 bg-black/20 p-3 text-white">
-            <option value="auto">Auto rotate formats</option><option value="solo-hot-take">Solo hot take</option><option value="two-person-banter">Two-person banter</option><option value="dramatized-pov">Dramatized POV</option>
+            <option value="mix">AI chooses per story</option><option value="auto">Auto rotate formats</option><option value="solo-hot-take">Solo hot take</option><option value="two-person-banter">Two-person banter</option><option value="dramatized-pov">Dramatized POV</option>
           </select>
         </label>
         <div><p className="text-sm font-bold">Categories</p><div className="mt-3 flex flex-wrap gap-2">{CATEGORIES.map((category) => <label key={category} className="rounded-full border border-white/10 px-3 py-2 text-xs font-bold"><input type="checkbox" checked={categories.includes(category)} onChange={() => toggleCategory(category)} className="mr-2" />{category}</label>)}</div></div>

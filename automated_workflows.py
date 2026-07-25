@@ -34,7 +34,7 @@ def run_daily_workflow(
     max_articles_per_category: int | None = DEFAULT_MAX_ARTICLES_PER_CATEGORY,
     max_total_stories: int | None = DEFAULT_MAX_TOTAL_STORIES,
     three_images_per_story: bool = False,
-    story_format: str = "auto",
+    story_format: str = "mix",
 ) -> dict[str, object]:
     selected_date = date.fromisoformat(run_date) if run_date else date.today()
     selected_categories = categories or list(COLLECTOR_TAXONOMY)

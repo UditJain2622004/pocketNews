@@ -9,7 +9,7 @@ MODE = StoryMode(
     prompt_fragment="""
 This is DRAMATIZED POV mode. Use one lead fictional performer and at most one supporting performer; the lead must
 speak at least 70 percent of the lines. Set creativeDirection.performanceMode to first-person-pov and
-creativeDirection.castMode to pov_lead. The requested cast mode does not apply in this format; do not use Mira and
+creativeDirection.selectedFormat to dramatized-pov and castMode to pov_lead. The requested cast mode does not apply in this format; do not use Mira and
 Kabir unless the article-specific scene genuinely needs them, which it normally should not.
 Tell the scene from inside the lead's immediate experience, in first person. The lead is not explaining a headline:
 they are trying to get through a concrete moment and the news changes their choices. A supporting voice, if used, can

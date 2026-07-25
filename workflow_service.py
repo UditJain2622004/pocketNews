@@ -42,7 +42,7 @@ def run_script_workflow(
     max_articles_per_category: int | None = None,
     max_total_stories: int | None = None,
     three_images_per_story: bool = False,
-    story_format: str = "auto",
+    story_format: str = "mix",
 ) -> dict[str, object]:
     if cast_mode not in CAST_MODES:
         raise WorkflowInputError(f"Unsupported cast mode. Use one of: {', '.join(CAST_MODES)}.")
