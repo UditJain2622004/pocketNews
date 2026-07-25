@@ -1,151 +1,278 @@
-from pydantic import BaseModel
-from fastapi import FastAPI, Query, BackgroundTasks
-from dotenv import load_dotenv
-from typing import List, Optional
-from news_collection import fetch_google_news_rss
-from news_collection.taxonomy import NEWS_TAXONOMY
-from news_collection.sync_news import run_news_sync
-import os
+﻿import os
 import sys
-# Load environment variables
-load_dotenv()
+from pathlib import Path
+from typing import List, Literal, Optional
 
-# Ensure the parent directory is in path so we can import translator
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from multilingual.translator import translate_text
+from dotenv import load_dotenv
+from fastapi import BackgroundTasks, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from pydantic import BaseModel
+
+from audio_workflow import AudioWorkflowInputError, media_file, prepare_story_audio
+from episode_service import compose_episode, select_articles, story_format_for_index, supported_story_formats
+from image_workflow import ImageWorkflowInputError, prepare_story_images
+from news_adapter import load_mock_articles
+from story_generator import CAST_MODES, VISUAL_STYLES, StoryGenerationError, generate_story
+from workflow_service import WorkflowInputError, run_script_workflow
 from auth.database import setup_db_indexes
 from auth.router import router as auth_router
+from news_collection import fetch_google_news_rss
+from news_collection.sync_news import run_news_sync
+from news_collection.taxonomy import NEWS_TAXONOMY
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from multilingual.translator import translate_text
+
+BASE_DIR = Path(__file__).resolve().parent
+load_dotenv(BASE_DIR / ".env")
+NEWS_FEED_PATH = BASE_DIR / "news_format.json"
+EPISODE_PLAYER_PATH = BASE_DIR / "episode_player.html"
 
 app = FastAPI(
     title="PocketNews API",
-    description="A basic FastAPI application with Multilingual Translation and Auth API support",
-    version="0.3.0"
+    description="Multilingual, AI-generated news episode API.",
+    version="0.5.0",
 )
-
-# Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins for local development
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 app.include_router(auth_router)
 
+
 @app.on_event("startup")
-def on_startup():
+def on_startup() -> None:
     setup_db_indexes()
+
 
 class TranslationRequest(BaseModel):
     text: str
     languages: List[str]
 
+
+class ScriptWorkflowRequest(BaseModel):
+    date: Optional[str] = None
+    language: str = "en-IN"
+
+
+class AudioWorkflowRequest(BaseModel):
+    runId: str
+    articleIds: Optional[List[str]] = None
+
+
+class MediaWorkflowRequest(BaseModel):
+    folderName: str
+    generate: Literal["images", "audio", "both"]
+
+
 @app.post("/translate")
 def translate(req: TranslationRequest):
     return translate_text(req.text, req.languages)
 
+
+@app.get("/")
+def read_root() -> dict[str, str]:
+    return {
+        "message": "PocketNews API is running.",
+        "docs_url": "/docs",
+        "workflow_url": "/api/workflows/generate-scripts",
+        "audio_workflow_url": "/api/workflows/generate-audio",
+        "media_workflow_url": "/api/workflows/generate-media",
+    }
+
+
 @app.get("/api/health")
-def health_check():
+def health_check() -> dict[str, str]:
     return {"status": "healthy", "service": "PocketNews API"}
 
-# ==========================================
-# NEWS COLLECTION & ARCHIVING APIS
-# ==========================================
 
-@app.get("/api/news/categories")
-def get_categories():
-    """
-    Get the hierarchical news classification mapping (Macro Spheres -> Sub-Topics -> Micro-Niches).
-    Allows frontend clients to discover available topics to build menus.
-    """
-    return NEWS_TAXONOMY
+@app.get("/episode-player")
+def episode_player():
+    return FileResponse(EPISODE_PLAYER_PATH)
+
 
 @app.get("/api/news")
-async def get_news(
+def get_news() -> dict[str, object]:
+    return {"articles": [article.to_dict() for article in _load_articles()]}
+
+
+@app.get("/api/news/categories")
+def get_news_categories() -> dict[str, object]:
+    return NEWS_TAXONOMY
+
+
+@app.get("/api/news/live")
+async def get_live_news(
     q: Optional[str] = None,
     category: Optional[List[str]] = Query(None),
     sub_topic: Optional[List[str]] = Query(None),
-    micro_niche: Optional[List[str]] = Query(None)
-):
-    """
-    Retrieve live 24-hour news feeds dynamically from Google News RSS.
-    Supports parallel querying and merging of multiple categories, sub-topics, or niches.
-    """
+    micro_niche: Optional[List[str]] = Query(None),
+) -> dict[str, object]:
     try:
-        data = await fetch_google_news_rss(
+        return await fetch_google_news_rss(
             q=q,
             category=category,
             sub_topic=sub_topic,
-            micro_niche=micro_niche
+            micro_niche=micro_niche,
         )
-        return data
-    except Exception as e:
-        from fastapi import HTTPException
-        raise HTTPException(status_code=500, detail=str(e))
+    except Exception as error:
+        raise HTTPException(status_code=500, detail=str(error)) from error
+
 
 @app.post("/api/news/sync")
-def trigger_news_sync(background_tasks: BackgroundTasks):
-    """
-    MANUAL SYNC TRIGGER:
-    Manually triggers background news scraping for all registered categories.
-    Stores files locally under the 'News/DD_MM_YYYY/' directory hierarchy in the background.
-    """
+def trigger_news_sync(background_tasks: BackgroundTasks) -> dict[str, object]:
     background_tasks.add_task(run_news_sync)
     return {
         "status": "sync_started",
         "message": "Bulk news scraping process initiated in the background.",
-        "categories": list(NEWS_TAXONOMY.keys())
+        "categories": list(NEWS_TAXONOMY.keys()),
     }
+
 
 @app.get("/api/news/local")
-def get_local_archive(
-    category: str,
-    date: Optional[str] = None
-):
-    """
-    RETRIEVE LOCAL NEWS ARCHIVE:
-    Retrieve locally archived news JSON for a specific category and date.
-    
-    Parameters:
-    - category: The news category (e.g. politics, sports, technology, business, pop_culture, world).
-    - date: Date string formatted as DD_MM_YYYY (e.g. 25_07_2026). Defaults to today's local date.
-    """
-    import os
-    import json
+def get_local_archive(category: str, date: Optional[str] = None) -> dict[str, object]:
     from datetime import datetime
-    from fastapi import HTTPException
-    
-    # Default to today's local date if not specified
-    if not date:
-        date = datetime.now().strftime("%d_%m_%Y")
-        
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(base_dir, "News", date, f"{category.strip().lower()}.json")
-    
-    # Raise a 404 if the local file has not been created by sync script / manual trigger
-    if not os.path.exists(file_path):
+    import json
+
+    archive_date = date or datetime.now().strftime("%d_%m_%Y")
+    archive_path = BASE_DIR / "News" / archive_date / f"{category.strip().lower()}.json"
+    if not archive_path.is_file():
         raise HTTPException(
             status_code=404,
-            detail=f"Local news archive not found for category '{category}' on date '{date}'"
+            detail=f"Local news archive not found for category '{category}' on date '{archive_date}'",
         )
-        
     try:
-        with open(file_path, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        return data
-    except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail=f"Error reading archive file: {str(e)}"
+        with archive_path.open("r", encoding="utf-8") as input_file:
+            payload = json.load(input_file)
+        if not isinstance(payload, dict):
+            raise ValueError("Expected a JSON object.")
+        return payload
+    except (OSError, ValueError, json.JSONDecodeError) as error:
+        raise HTTPException(status_code=500, detail=f"Error reading archive file: {error}") from error
+
+
+@app.get("/api/stories/{article_id}")
+def get_story(
+    article_id: str,
+    language: str = Query("en-IN", description="Requested narration language locale"),
+    story_format: str = Query("auto", description="auto, solo-hot-take, two-person-banter, or dramatized-pov"),
+    cast_mode: str = Query("auto", description="auto, story_duo, or recurring_duo"),
+    visual_style: str = Query("animated", description="animated or live_action"),
+) -> dict[str, object]:
+    _validate_creative_query(cast_mode, visual_style)
+    article = next((item for item in _load_articles() if item.id == article_id), None)
+    if article is None:
+        raise HTTPException(status_code=404, detail="News article not found.")
+    return _generate_or_raise(article, _resolve_story_format(story_format, 0), language, cast_mode, visual_style)
+
+
+@app.get("/api/episodes")
+def get_episode(
+    interests: str = Query("top", description="Comma-separated interests, for example politics,business"),
+    cadence: str = Query("daily", pattern="^(daily|weekly|monthly)$"),
+    language: str = Query("en-IN", description="Requested narration language locale"),
+    story_count: int = Query(3, ge=2, le=5),
+    cast_mode: str = Query("auto", description="auto, story_duo, or recurring_duo"),
+    visual_style: str = Query("animated", description="animated or live_action"),
+) -> dict[str, object]:
+    _validate_creative_query(cast_mode, visual_style)
+    selected_interests = [item.strip().lower() for item in interests.split(",") if item.strip()]
+    articles = select_articles(_load_articles(), selected_interests or ["top"], story_count)
+    stories = [
+        _generate_or_raise(article, story_format_for_index(index), language, cast_mode, visual_style)
+        for index, article in enumerate(articles)
+    ]
+    return compose_episode(stories, selected_interests or ["top"], cadence, language)
+
+
+@app.post("/api/workflows/generate-scripts")
+def generate_scripts(
+    request: ScriptWorkflowRequest,
+    generate_images: bool = Query(True, description="Generate and save story images"),
+    generate_audio: bool = Query(True, description="Generate and save narration audio"),
+    cast_mode: str = Query("auto", description="auto, story_duo, or recurring_duo"),
+    visual_style: str = Query("animated", description="animated or live_action"),
+) -> dict[str, object]:
+    try:
+        _validate_creative_query(cast_mode, visual_style)
+        return run_script_workflow(
+            request.date,
+            request.language,
+            generate_images=generate_images,
+            generate_audio=generate_audio,
+            cast_mode=cast_mode,
+            visual_style=visual_style,
         )
+    except WorkflowInputError as error:
+        raise HTTPException(status_code=422, detail=str(error)) from error
 
-@app.get("/")
-def read_root():
-    return {
-        "message": "Welcome to the PocketNews Multilingual Translation API",
-        "docs_url": "/docs",
-        "health_check_url": "/api/health"
-    }
 
+@app.post("/api/workflows/generate-audio")
+def generate_audio(request: AudioWorkflowRequest) -> dict[str, object]:
+    try:
+        return prepare_story_audio(request.runId, request.articleIds)
+    except AudioWorkflowInputError as error:
+        raise HTTPException(status_code=422, detail=str(error)) from error
+
+
+@app.post("/api/workflows/generate-media")
+def generate_media(request: MediaWorkflowRequest) -> dict[str, object]:
+    result: dict[str, object] = {"folderName": request.folderName, "generate": request.generate}
+    try:
+        if request.generate in ("images", "both"):
+            result["images"] = prepare_story_images(request.folderName)
+        if request.generate in ("audio", "both"):
+            result["audio"] = prepare_story_audio(request.folderName)
+        return result
+    except (ImageWorkflowInputError, AudioWorkflowInputError) as error:
+        raise HTTPException(status_code=422, detail=str(error)) from error
+
+
+@app.get("/api/media/{run_id}/{media_path:path}")
+def get_media(run_id: str, media_path: str):
+    try:
+        return FileResponse(media_file(run_id, media_path))
+    except AudioWorkflowInputError as error:
+        raise HTTPException(status_code=404, detail=str(error)) from error
+
+
+def _load_articles():
+    try:
+        return load_mock_articles(NEWS_FEED_PATH)
+    except (OSError, ValueError) as error:
+        raise HTTPException(status_code=500, detail="Unable to load the news feed.") from error
+
+
+def _resolve_story_format(requested_format: str, index: int) -> str:
+    if requested_format == "auto":
+        return story_format_for_index(index)
+    if requested_format not in supported_story_formats():
+        raise HTTPException(
+            status_code=422,
+            detail={"message": "Unsupported story format.", "supportedFormats": supported_story_formats()},
+        )
+    return requested_format
+
+
+def _generate_or_raise(
+    article,
+    story_format: str,
+    language: str,
+    cast_mode: str = "auto",
+    visual_style: str = "animated",
+) -> dict[str, object]:
+    try:
+        return generate_story(article, story_format, language, cast_mode, visual_style)
+    except StoryGenerationError as error:
+        raise HTTPException(status_code=502, detail=str(error)) from error
+
+
+def _validate_creative_query(cast_mode: str, visual_style: str) -> None:
+    if cast_mode not in CAST_MODES:
+        raise HTTPException(status_code=422, detail={"message": "Unsupported cast mode.", "supportedCastModes": CAST_MODES})
+    if visual_style not in VISUAL_STYLES:
+        raise HTTPException(status_code=422, detail={"message": "Unsupported visual style.", "supportedVisualStyles": VISUAL_STYLES})
