@@ -60,6 +60,8 @@ class VisualDirection(BaseModel):
 
 class StoryBeat(BaseModel):
     id: Literal["title-cue", "hook", "what-happened", "why-it-matters", "takeaway"]
+    dramaticAction: str
+    turningPoint: str
     visual: VisualDirection
     lines: list[StoryLine]
 
@@ -95,11 +97,20 @@ class VisualBible(BaseModel):
     referenceImagePrompt: str
 
 
+class DramaticSpine(BaseModel):
+    characterGoal: str
+    obstacle: str
+    newsCatalyst: str
+    emotionalTurn: str
+    resolution: str
+
+
 class GeneratedStory(BaseModel):
     title: str
     skipLabel: str
     classification: StoryClassification
     creativeDirection: CreativeDirection
+    dramaticSpine: DramaticSpine
     visualBible: VisualBible
     cast: list[VoiceCharacter]
     beats: list[StoryBeat]
@@ -140,7 +151,7 @@ def generate_story(
     if generated is None:
         raise StoryGenerationError("OpenAI returned no structured story output.")
 
-    story = generated.dict()
+    story = _repair_generated_text(generated.dict())
     story["storyId"] = article.id
     story["category"] = story["classification"]["category"]
     story["sourceCategory"] = _primary_category(article.categories)
@@ -188,7 +199,10 @@ Rules:
 - Use only facts in the supplied article. Do not add claims, quotes, dates, motives, or outcomes.
 - This must feel like a miniature movie, not a news bulletin, explainer, reporter script, or article summary.
 - Reveal the news through a fictional dramatic situation: a discovery, disagreement, chase for an answer, emotional turn, mystery, or escalating consequence.
-- Before writing, decide the characters' immediate goal, the physical situation, the obstacle, the evidence or reveal, and the emotional change at the end. Each beat must advance that scene; it cannot simply restate a different fact.
+- Fill dramaticSpine before writing dialogue. It must describe one concrete goal, obstacle, factual catalyst, emotional turn, and resolution for the same scene.
+- Every beat needs a concrete dramaticAction and turningPoint. dramaticAction must be an observable event happening now, not a theme, explanation, reaction alone, or summary. turningPoint must state how that action changes the characters' options.
+- The dialogue must perform the dramaticAction rather than describe a hypothetical scene around it. Characters must try something, find something, interrupt something, risk something, lose something, or decide something in each beat.
+- A listener must be able to answer: what are the characters trying to do, what is blocking them, and what changes because of the news? If removing the news facts leaves no scene, rewrite it.
 - Choose a genre that makes the story compelling: comedy, drama, mystery, thriller, emotional drama, light horror, or another suitable genre. Treat sensitive events with appropriate care.
 - Make the entertainment come from fictional framing, action, and reactions, never invented facts.
 - Do not imitate any real person's voice or write generated dialogue as a quote from a real person.
@@ -196,6 +210,7 @@ Rules:
 - If requested cast mode is auto, choose either a custom two-character scene or multi-character self-talk. If story_duo, create exactly two new fictional characters. If recurring_duo, use exactly Mira and Kabir: Mira is an impulsive, sharp-eyed Indian creative strategist with a cropped black bob, amber jacket, and silver ear cuff; Kabir is a calm, deadpan Indian systems thinker with close-cropped hair, round glasses, and a forest-green overshirt. Preserve these names, personalities, and visual identities.
 - creativeDirection.visualStyle must exactly equal the requested visual style. creativeDirection.castMode must be story_duo or recurring_duo, never auto.
 - No detached narrator is allowed. Every fact must surface through character dialogue, self-talk, discovery, or visible consequence.
+- After the title cue, do not use news-reader language such as "the headline is", "the article says", "the report says", "the takeaway is", "what this means is", or "bottom line". State facts only as part of a discovery, argument, choice, or consequence inside the scene.
 - The title-cue beat must be first. Its first line must start with "Quick story:" and clearly name the news item so it can be skipped.
 - Return exactly five beats in this order: title-cue, hook, what-happened, why-it-matters, takeaway.
 - Make the complete scene about 45 to 90 seconds. Keep spoken lines short and natural for text-to-speech.
@@ -231,7 +246,7 @@ takeaway:
 Mira: We make the train, and the headline is clear: overnight service begins Friday.
 Kabir: The city changed the route. We just got lucky enough to be standing at the first door.
 
-Why this works: the characters pursue a goal, a real-world fact changes what they can do, every beat escalates the same situation, and the final line lands both the news and the emotional resolution. Write stories with this level of action and causal movement.
+For this example, the dramatic spine is: goal = reach the audition; obstacle = no transport before it closes; catalyst = overnight trains begin Friday; emotional turn = the notice becomes their escape route; resolution = they board the first train. The five dramatic actions are: discover the closed station, race the clock, activate the display, choose the train, board it. Write stories with this level of visible action and causal movement.
 """.strip()
 
 
@@ -262,3 +277,16 @@ def _validate_creative_options(cast_mode: str, visual_style: str) -> None:
         raise StoryGenerationError(f"Unsupported cast mode. Use one of: {', '.join(CAST_MODES)}.")
     if visual_style not in VISUAL_STYLES:
         raise StoryGenerationError(f"Unsupported visual style. Use one of: {', '.join(VISUAL_STYLES)}.")
+
+
+def _repair_generated_text(value: object) -> object:
+    if isinstance(value, dict):
+        return {key: _repair_generated_text(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_repair_generated_text(item) for item in value]
+    if not isinstance(value, str) or not any(marker in value for marker in ("Ã", "â")):
+        return value
+    try:
+        return value.encode("latin-1").decode("utf-8")
+    except UnicodeError:
+        return value
