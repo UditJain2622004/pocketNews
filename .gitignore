@@ -4,4 +4,6 @@ myenv/
 __pycache__/
 scripts/
 articles/
+news/
+summaries/
 episode_player.html

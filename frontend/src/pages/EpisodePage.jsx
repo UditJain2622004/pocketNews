@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-
-const API_BASE = 'http://localhost:8001'
+import { API_BASE } from '../api'
 
 const formatTime = (seconds) => {
   const value = Math.max(0, Math.floor(seconds || 0))
@@ -16,7 +15,7 @@ const mediaUrl = (runId, path) => {
 const getScriptName = (path) => path.split('/').pop()
 const getScriptStem = (path) => getScriptName(path).replace(/\.json$/, '')
 
-export default function EpisodePage({ episodeId }) {
+export default function EpisodePage({ episodeId, token }) {
   const audioRef = useRef(null)
   const [stories, setStories] = useState([])
   const [storyIndex, setStoryIndex] = useState(0)
@@ -26,6 +25,9 @@ export default function EpisodePage({ episodeId }) {
   const [playbackTime, setPlaybackTime] = useState(0)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const sessionIdRef = useRef(globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random()}`)
+  const sentEventsRef = useRef(new Set())
+  const completedStoriesRef = useRef(new Set())
 
   useEffect(() => {
     let active = true
@@ -33,23 +35,35 @@ export default function EpisodePage({ episodeId }) {
       setLoading(true)
       setError('')
       try {
-        const manifestResponse = await fetch(mediaUrl(episodeId, 'manifest.json'))
-        if (!manifestResponse.ok) throw new Error('This episode could not be found.')
-        const manifest = await manifestResponse.json()
+        let runId = episodeId
+        let manifest
+        if (token) {
+          const playbackResponse = await fetch(`${API_BASE}/api/episodes/${encodeURIComponent(episodeId)}/playback`, { headers: { Authorization: `Bearer ${token}` } })
+          if (playbackResponse.ok) {
+            const playback = await playbackResponse.json()
+            runId = playback.runId
+            manifest = { scripts: playback.scripts || [] }
+          }
+        }
+        if (!manifest) {
+          const manifestResponse = await fetch(mediaUrl(runId, 'manifest.json'))
+          if (!manifestResponse.ok) throw new Error('This episode could not be found.')
+          manifest = await manifestResponse.json()
+        }
         const loadedStories = await Promise.all((manifest.scripts || []).map(async (entry) => {
           const scriptPath = getScriptName(entry.scriptPath)
-          const scriptResponse = await fetch(mediaUrl(episodeId, scriptPath))
+          const scriptResponse = await fetch(mediaUrl(runId, scriptPath))
           if (!scriptResponse.ok) throw new Error('A story file could not be loaded.')
           const script = await scriptResponse.json()
           const stem = getScriptStem(entry.scriptPath)
           let audioManifest = { clips: [], failures: [] }
           try {
-            const audioResponse = await fetch(mediaUrl(episodeId, `audio/${stem}/manifest.json`))
+            const audioResponse = await fetch(mediaUrl(runId, `audio/${stem}/manifest.json`))
             if (audioResponse.ok) audioManifest = await audioResponse.json()
           } catch (_) {
             // The player can still use generated clip files from an incomplete manifest.
           }
-          return buildStory(script, audioManifest, stem, episodeId)
+          return buildStory(script, audioManifest, stem, runId, entry.storyId)
         }))
         const playableStories = loadedStories.filter((story) => story.tracks.length > 0)
         if (!playableStories.length) throw new Error('This episode has no playable audio yet.')
@@ -67,7 +81,7 @@ export default function EpisodePage({ episodeId }) {
     }
     loadEpisode()
     return () => { active = false }
-  }, [episodeId])
+  }, [episodeId, token])
 
   const currentStory = stories[storyIndex]
   const currentTrack = currentStory?.tracks[trackIndex]
@@ -106,6 +120,29 @@ export default function EpisodePage({ episodeId }) {
     setPlaying(false)
   }
 
+  const sendStoryEvent = (story, event, progressRatio) => {
+    if (!token || !story?.storyId) return
+    const storyKey = `${episodeId}:${story.storyId}`
+    if (event === 'skipped' && completedStoriesRef.current.has(storyKey)) return
+    const eventId = `${sessionIdRef.current}:${episodeId}:${story.storyId}:${event}`
+    if (sentEventsRef.current.has(eventId)) return
+    sentEventsRef.current.add(eventId)
+    if (event === 'completed') completedStoriesRef.current.add(storyKey)
+    fetch(`${API_BASE}/api/episodes/${encodeURIComponent(episodeId)}/events`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ eventId, storyId: story.storyId, event, progressRatio }),
+    }).catch(() => {})
+  }
+
+  const currentStoryProgress = () => {
+    if (!currentStory?.duration) return 0
+    const completedTrackTime = currentStory.tracks
+      .slice(0, trackIndex)
+      .reduce((sum, track) => sum + track.duration, 0)
+    return Math.min(1, (completedTrackTime + playbackTime) / currentStory.duration)
+  }
+
   const selectStory = (nextStoryIndex, autoPlay = playing) => {
     pause()
     setStoryIndex(nextStoryIndex)
@@ -126,6 +163,9 @@ export default function EpisodePage({ episodeId }) {
       setElapsed((value) => value + currentStory.tracks[trackIndex].duration)
       setTrackIndex(trackIndex + 1)
     } else if (direction > 0 && storyIndex < stories.length - 1) {
+      if (!completedStoriesRef.current.has(`${episodeId}:${currentStory.storyId}`)) {
+        sendStoryEvent(currentStory, 'skipped', currentStoryProgress())
+      }
       selectStory(storyIndex + 1, shouldPlay)
       return
     } else if (direction > 0) {
@@ -139,6 +179,7 @@ export default function EpisodePage({ episodeId }) {
   }
 
   const skipStory = () => {
+    sendStoryEvent(currentStory, 'skipped', currentStoryProgress())
     if (storyIndex < stories.length - 1) selectStory(storyIndex + 1, playing)
     else {
       pause()
@@ -149,7 +190,12 @@ export default function EpisodePage({ episodeId }) {
     }
   }
 
-  const handleEnded = () => moveTrack(1)
+  const handleEnded = () => {
+    if (currentStory && trackIndex === currentStory.tracks.length - 1) {
+      sendStoryEvent(currentStory, 'completed', 1)
+    }
+    moveTrack(1)
+  }
   const handleTimeUpdate = (event) => setPlaybackTime(event.currentTarget.currentTime || 0)
   const handleMetadata = () => {
     if (currentTrack && !currentTrack.duration && Number.isFinite(audioRef.current.duration)) {
@@ -165,18 +211,18 @@ export default function EpisodePage({ episodeId }) {
   const episodeTitle = currentStory?.title || (loading ? 'Loading episode' : 'Untitled episode')
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#08090b] text-white lg:h-screen lg:overflow-hidden">
+    <main className="episode-page min-h-screen overflow-x-hidden bg-gradient-to-tr from-[#EBEBF2] via-[#F5F5F7] to-[#E9EFF7] text-zinc-800 selection:bg-[#E11D48]/15 selection:text-[#E11D48] lg:h-screen lg:overflow-hidden">
       <div className="fixed inset-0 -z-10 bg-[linear-gradient(to_right,rgba(124,58,237,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(37,99,235,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
-      <div className="fixed left-1/2 top-[-14rem] -z-10 h-[34rem] w-[50rem] -translate-x-1/2 rounded-full bg-gradient-to-b from-fuchsia-700/20 via-indigo-900/10 to-transparent blur-3xl" />
+      <div className="fixed left-1/2 top-[-14rem] -z-10 h-[34rem] w-[50rem] -translate-x-1/2 rounded-full bg-gradient-to-b from-[#7C3AED]/10 via-[#EC4899]/5 to-transparent blur-3xl" />
 
       <header className="mx-auto flex max-w-[1480px] items-center justify-between px-5 py-3 sm:px-8 lg:px-12">
         <a href="/" className="flex items-center gap-3 no-underline">
           <img src="/logo.png" className="h-9 w-9 rounded-lg object-contain" alt="StoryCast AI" />
-          <span className="text-[15px] font-extrabold tracking-tight text-white">StoryCast <span className="text-fuchsia-400">AI</span></span>
+          <span className="text-[15px] font-extrabold tracking-tight text-zinc-900">StoryCast <span className="text-[#E11D48]">AI</span></span>
         </a>
-        <div className="flex items-center gap-4 text-sm text-white/45">
+        <div className="flex items-center gap-4 text-sm text-zinc-500">
           <span className="hidden sm:block">Episode {episodeId}</span>
-          <a href="/" className="rounded-full border border-white/15 px-4 py-2 font-bold text-white/75 transition hover:border-fuchsia-400/70 hover:text-white">Back to library</a>
+          <a href="/" className="rounded-full border border-zinc-300/80 bg-white/50 px-4 py-2 font-bold text-zinc-700 shadow-sm transition hover:border-[#E11D48]/50 hover:text-[#E11D48]">Back to library</a>
         </div>
       </header>
 
@@ -184,16 +230,16 @@ export default function EpisodePage({ episodeId }) {
         <div className="flex min-w-0 flex-col pt-4 lg:min-h-0 lg:pt-3">
           <div className="mb-4 flex shrink-0 flex-wrap items-end justify-between gap-3">
             <div>
-              <p className="mb-2 text-xs font-extrabold uppercase tracking-[0.22em] text-fuchsia-400">Now playing</p>
-              <h1 className="text-3xl font-black tracking-[-0.04em] text-white sm:text-4xl">{episodeTitle}</h1>
+              <p className="mb-2 text-xs font-extrabold uppercase tracking-[0.22em] text-[#E11D48]">Now playing</p>
+              <h1 className="text-3xl font-black tracking-[-0.04em] text-zinc-900 sm:text-4xl">{episodeTitle}</h1>
             </div>
-            <p className="text-sm font-semibold text-white/35">A cinematic audio story</p>
+            <p className="text-sm font-semibold text-zinc-500">A cinematic audio story</p>
           </div>
 
-          <section className="relative aspect-[1.16/1] min-h-[22rem] overflow-hidden rounded-[1.6rem] border border-white/10 bg-[#15151a] shadow-[0_30px_100px_-35px_rgba(168,85,247,0.6)] sm:aspect-[1.5/1] lg:aspect-auto lg:min-h-0 lg:flex-1">
+          <section className="relative aspect-[1.16/1] min-h-[22rem] overflow-hidden rounded-[1.6rem] border border-white/70 bg-zinc-950 shadow-lg sm:aspect-[1.5/1] lg:aspect-auto lg:min-h-0 lg:flex-1">
             {displayImage && <img src={displayImage} alt="Story scene" className="absolute inset-0 h-full w-full object-contain opacity-90" />}
             <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,8,0.92)_0%,rgba(5,6,8,0.45)_48%,rgba(5,6,8,0.18)_100%)]" />
-            <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-fuchsia-600 via-pink-500 to-orange-400" />
+            <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-[#E11D48] via-[#EC4899] to-[#7C3AED]" />
 
             {loading && <div className="absolute inset-0 grid place-items-center text-sm font-bold text-white/75">Loading your episode…</div>}
             {error && <div className="absolute inset-0 grid place-items-center p-8 text-center text-sm font-bold text-white/80">{error}</div>}
@@ -208,10 +254,10 @@ export default function EpisodePage({ episodeId }) {
             )}
           </section>
 
-          <section className="mt-3 shrink-0 border-b border-white/10 pb-3">
-            <div className="mb-2 flex items-end justify-between"><div><p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-white/35">Listening progress</p><p className="mt-1 text-xl font-black tabular-nums tracking-tight text-white">{formatTime(currentTime)} <span className="text-sm font-medium text-white/30">/ {formatTime(totalDuration)}</span></p></div><span className="text-[10px] font-bold text-white/35">{stories.length} {stories.length === 1 ? 'story' : 'stories'}</span></div>
-            <div className="mb-3 h-1 overflow-hidden rounded-full bg-white/10">
-              <div className="h-full rounded-full bg-gradient-to-r from-fuchsia-600 via-pink-500 to-orange-400 transition-[width] duration-200" style={{ width: `${progress}%` }} />
+          <section className="mt-3 shrink-0 border-b border-zinc-200/80 pb-3">
+            <div className="mb-2 flex items-end justify-between"><div><p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-zinc-400">Listening progress</p><p className="mt-1 text-xl font-black tabular-nums tracking-tight text-zinc-900">{formatTime(currentTime)} <span className="text-sm font-medium text-zinc-400">/ {formatTime(totalDuration)}</span></p></div><span className="text-[10px] font-bold text-zinc-400">{stories.length} {stories.length === 1 ? 'story' : 'stories'}</span></div>
+            <div className="mb-3 h-1 overflow-hidden rounded-full bg-zinc-200">
+              <div className="h-full rounded-full bg-gradient-to-r from-[#E11D48] via-[#EC4899] to-[#7C3AED] transition-[width] duration-200" style={{ width: `${progress}%` }} />
             </div>
             <div className="flex items-center justify-center gap-2 sm:justify-start">
                 <button type="button" aria-label="Previous story" onClick={() => moveTrack(-1)} className="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-base text-white/70 transition hover:border-white/40 hover:text-white">‹</button>
@@ -222,23 +268,23 @@ export default function EpisodePage({ episodeId }) {
           </section>
         </div>
 
-        <aside className="min-w-0 pt-2 lg:min-h-0 lg:overflow-hidden lg:pt-3">
-          <div className="flex items-end gap-8 border-b border-white/15">
-            <button type="button" className="relative pb-5 text-base font-extrabold text-white after:absolute after:bottom-[-1px] after:left-0 after:h-0.5 after:w-full after:bg-gradient-to-r after:from-fuchsia-500 after:to-pink-500">Stories <sup className="ml-1 text-[10px] text-white/45">{stories.length}</sup></button><span className="pb-5 text-base font-bold text-white/35">About</span>
+        <aside className="min-w-0 rounded-3xl border border-white/50 bg-white/55 p-4 shadow-md backdrop-blur-md lg:min-h-0 lg:overflow-hidden lg:pt-4">
+          <div className="flex items-end gap-8 border-b border-zinc-200/80">
+            <button type="button" className="relative pb-4 text-base font-extrabold text-zinc-900 after:absolute after:bottom-[-1px] after:left-0 after:h-0.5 after:w-full after:bg-[#E11D48]">Stories <sup className="ml-1 text-[10px] text-zinc-400">{stories.length}</sup></button><span className="pb-4 text-base font-bold text-zinc-400">About</span>
           </div>
           <div className="flex items-center justify-between py-7">
             <div>
-              <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-fuchsia-400">Your queue</p>
-              <h2 className="mt-2 text-2xl font-black tracking-tight text-white">All stories</h2>
+              <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#E11D48]">Your queue</p>
+              <h2 className="mt-2 text-2xl font-black tracking-tight text-zinc-900">All stories</h2>
             </div>
-            <span className="text-xs font-bold text-white/35">{stories.length} stories</span>
+            <span className="text-xs font-bold text-zinc-400">{stories.length} stories</span>
           </div>
           <div className="max-h-[34rem] space-y-1 overflow-y-auto pr-1 scrollbar-none">
             {stories.map((story, index) => (
-              <button key={`${story.title}-${index}`} type="button" onClick={() => selectStory(index)} className={`group relative flex w-full items-center gap-4 rounded-xl px-3 py-4 text-left transition ${index === storyIndex ? 'bg-white/[0.09]' : 'hover:bg-white/[0.045]'}`}>
-                <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-full border text-xs font-black ${index === storyIndex ? 'border-fuchsia-400 bg-fuchsia-500/15 text-fuchsia-300' : 'border-white/10 text-white/35'}`}>{String(index + 1).padStart(2, '0')}</span>
+              <button key={`${story.title}-${index}`} type="button" onClick={() => selectStory(index)} className={`group relative flex w-full items-center gap-4 rounded-xl px-3 py-4 text-left transition ${index === storyIndex ? 'bg-[#E11D48]/10' : 'hover:bg-zinc-100/70'}`}>
+                <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-full border text-xs font-black ${index === storyIndex ? 'border-[#E11D48] bg-[#E11D48]/10 text-[#E11D48]' : 'border-zinc-200 bg-white/70 text-zinc-400'}`}>{String(index + 1).padStart(2, '0')}</span>
                 <span className="min-w-0">
-                  <span className={`block truncate text-[15px] font-extrabold ${index === storyIndex ? 'text-white' : 'text-white/65 group-hover:text-white'}`}>{story.title}</span>
+                  <span className={`block truncate text-[15px] font-extrabold ${index === storyIndex ? 'text-zinc-900' : 'text-zinc-700 group-hover:text-zinc-900'}`}>{story.title}</span>
                   <span className={`mt-0.5 block text-xs font-semibold ${index === storyIndex ? 'text-white/70' : 'text-slate-400'}`}>{story.category} · {formatTime(story.duration)}</span>
                 </span>
               </button>
@@ -251,7 +297,7 @@ export default function EpisodePage({ episodeId }) {
   )
 }
 
-function buildStory(script, audioManifest, stem, episodeId) {
+function buildStory(script, audioManifest, stem, episodeId, entryStoryId) {
   const story = script.story || {}
   const clips = new Map((audioManifest.clips || []).map((clip) => [`${clip.beatId}-${clip.lineIndex}`, clip]))
   const canRecover = (audioManifest.failures || []).length > 0
@@ -270,6 +316,7 @@ function buildStory(script, audioManifest, stem, episodeId) {
     })
   }))
   return {
+    storyId: story.storyId || entryStoryId || '',
     title: story.title || 'Untitled story',
     category: story.classification?.category || story.category || 'News',
     tracks,

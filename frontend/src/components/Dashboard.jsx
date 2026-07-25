@@ -10,7 +10,7 @@ export default function Dashboard({
   token,
   onProfileUpdate,
   storiesList,
-  setActiveStoryId
+  onPlayStory
 }) {
   const [activeTab, setActiveTab] = useState('home')
 
@@ -162,7 +162,7 @@ export default function Dashboard({
       </nav>
 
       {/* MAIN CONTENT CONTAINER */}
-      <div className="flex-1 flex flex-col min-h-screen md:pl-20 pb-20 md:pb-0">
+      <div className="flex-1 flex flex-col md:pl-20 pb-20 md:pb-0">
         
         {/* Top bar header (Desktop only - Styled like Pocket FM search and hello header in light mode) */}
         <header className="hidden md:flex h-24 bg-transparent px-8 items-center justify-between shrink-0 select-none">
@@ -199,7 +199,7 @@ export default function Dashboard({
         </header>
 
         {/* Content Panel Area */}
-        <main className="flex-1 p-4 sm:p-8 overflow-y-auto w-full">
+        <main className="flex-1 p-4 sm:p-8 w-full">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
@@ -213,7 +213,7 @@ export default function Dashboard({
               {/* TAB 1: Home Tab */}
               {activeTab === 'home' && (
                 <HomeTab 
-                  onPlayStory={setActiveStoryId}
+                  onPlayStory={onPlayStory}
                   user={user}
                   onTabChange={setActiveTab}
                   storiesList={storiesList}

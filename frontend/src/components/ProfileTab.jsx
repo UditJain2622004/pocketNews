@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { API_BASE } from '../api'
 
 export default function ProfileTab({ user, token, onProfileUpdate, onLogout }) {
-  const API_BASE = 'http://localhost:8001'
   const [selectedTopics, setSelectedTopics] = useState([])
   const [selectedSubtopics, setSelectedSubtopics] = useState([])
   const [language, setLanguage] = useState('English')

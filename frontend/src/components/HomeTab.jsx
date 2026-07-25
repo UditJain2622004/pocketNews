@@ -64,7 +64,7 @@ export default function HomeTab({ onPlayStory, user, onTabChange, storiesList = 
           </h2>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {dramas.map((drama, idx) => (
             <motion.div 
               key={drama.id} 
@@ -79,7 +79,7 @@ export default function HomeTab({ onPlayStory, user, onTabChange, storiesList = 
                 damping: 18,
                 opacity: { duration: 0.2, delay: idx * 0.04 }
               }}
-              className="relative aspect-[3/4] rounded-2xl bg-zinc-900 overflow-hidden cursor-pointer shadow-lg border border-zinc-200/80 hover:border-zinc-400 group z-10 hover:z-20"
+              className="relative aspect-[3/2] rounded-2xl bg-zinc-900 overflow-hidden cursor-pointer shadow-lg border border-zinc-200/80 hover:border-zinc-400 group z-10 hover:z-20"
             >
               {/* Shimmer sweep reflection on hover */}
               <div className="shimmer-shine" />
@@ -100,7 +100,7 @@ export default function HomeTab({ onPlayStory, user, onTabChange, storiesList = 
                 {/* Top red play statistics badge */}
                 <div className="self-end">
                   <span className="px-2.5 py-1 rounded-md bg-[#EF4444] text-white text-xs font-black tracking-wider flex items-center gap-1">
-                    {drama.plays} <span className="text-[9px]">⏵</span>
+                    {drama.date || '25-07-2026'} <span className="text-[9px]">⏵</span>
                   </span>
                 </div>
 
@@ -109,6 +109,7 @@ export default function HomeTab({ onPlayStory, user, onTabChange, storiesList = 
                   <span className="px-2.5 py-0.5 rounded bg-black/35 text-[10px] font-black text-white uppercase tracking-wider backdrop-blur-sm inline-block">
                     {drama.category}
                   </span>
+                  {/* {drama.date && <p className="text-[10px] font-bold text-zinc-200/90 tracking-wide">{drama.date}</p>} */}
                   <h3 className="text-base font-black text-white tracking-wide uppercase leading-tight drop-shadow-md">
                     {drama.title.split(':')[0]}
                   </h3>
@@ -291,21 +292,11 @@ export default function HomeTab({ onPlayStory, user, onTabChange, storiesList = 
 
       {/* Main Show Cards Rows */}
       <div className="space-y-12">
-        {/* Row 1: Top Picks */}
-        {renderNewsRow(user ? 'Top Picks for You' : 'Top Picks for Guest', filteredDramas)}
-
-        {/* Row 2: Daily News */}
-        {renderNewsRow('Daily News', (filteredDramas || []).slice(0, 3))}
-
-        {/* Row 3: Weekly News */}
-        {renderNewsRow('Weekly News', (filteredDramas || []).slice(1, 4))}
-
-        {/* Row 4: Monthly News */}
-        {renderNewsRow('Monthly News', (filteredDramas || []).slice(2, 5))}
+        {renderNewsRow(user ? 'Daily episodes' : 'Available episodes', filteredDramas)}
       </div>
 
       {/* Quick Stats section */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
+      {/* <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
         <motion.div 
           whileHover={{ y: -3, scale: 1.02 }}
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
@@ -339,7 +330,7 @@ export default function HomeTab({ onPlayStory, user, onTabChange, storiesList = 
             <span className="block text-sm font-bold text-zinc-700 mt-0.5">Lossless Dolby Atmos Simulation</span>
           </div>
         </motion.div>
-      </div>
+      </div> */}
 
     </div>
   )

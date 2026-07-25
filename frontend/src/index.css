@@ -30,12 +30,21 @@
   --color-orange: #F97316;
 }
 
+html {
+  overflow-y: scroll;
+}
+
+html, body, #root {
+  min-height: 100%;
+}
+
 body {
   background-color: var(--bg-color);
   color: var(--text-main);
   font-family: var(--font-sans);
   margin: 0;
   overflow-x: hidden;
+  overflow-y: visible;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
@@ -105,6 +114,29 @@ h1, h2, h3, h4, .font-display {
 .scrollbar-none {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Episode player uses the dashboard's light glass theme. */
+.episode-page [class~="border-white/15"] {
+  border-color: rgba(161, 161, 170, 0.55);
+  background-color: rgba(255, 255, 255, 0.6);
+  color: #71717a;
+}
+
+.episode-page [class~="border-white/10"] {
+  border-color: rgba(161, 161, 170, 0.45);
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.episode-page [class~="text-white/70"],
+.episode-page [class~="text-white/45"] {
+  color: #71717a;
+}
+
+.episode-page button[class~="from-fuchsia-600"] {
+  background-image: none;
+  background-color: #e11d48;
+  color: #fff;
 }
 
 /* Card hover sweep shimmer shine reflection */

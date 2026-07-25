@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import LoginForm from '../components/auth/LoginForm'
-
-const API_BASE = 'http://localhost:8000'
+import { API_BASE } from '../api'
 
 export default function LoginPage({ onLoginSuccess, onCancel, onSwitchToSignUp }) {
   const [username, setUsername] = useState('')

@@ -40,6 +40,11 @@ def setup_db_indexes():
         db.users.create_index("username", unique=True)
         # Create unique index on email
         db.users.create_index("email", unique=True)
+        # Listening feedback is idempotent per user and client event.
+        db.listening_events.create_index([("userId", 1), ("eventId", 1)], unique=True)
+        db.listening_events.create_index([("userId", 1), ("createdAt", -1)])
+        db.listening_events.create_index([("userId", 1), ("storyId", 1)])
+        db.listening_events.create_index([("userId", 1), ("category", 1)])
         logger.info("Successfully configured unique indexes on 'users' collection.")
     except Exception as e:
         logger.error(f"Failed to create database indexes: {str(e)}")

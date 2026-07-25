@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import SignUpForm from '../components/auth/SignUpForm'
 import InterestSelector from '../components/auth/InterestSelector'
-
-const API_BASE = 'http://localhost:8000'
+import { API_BASE } from '../api'
 
 const DEFAULT_SUGGESTIONS = {
   "Technology": ["Artificial Intelligence", "Web Development", "Mobile Applications", "Cybersecurity", "Blockchain"],

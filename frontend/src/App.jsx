@@ -4,8 +4,8 @@ import LoginPage from './pages/LoginPage'
 import SignUpPage from './pages/SignUpPage'
 import DashboardPage from './pages/DashboardPage'
 import EpisodePage from './pages/EpisodePage'
-
-const API_BASE = 'http://localhost:8000'
+import AdminWorkflowPage from './pages/AdminWorkflowPage'
+import { API_BASE } from './api'
 
 function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname)
@@ -58,7 +58,7 @@ function App() {
   const handleLoginSuccess = (newToken) => {
     localStorage.setItem('token', newToken)
     setToken(newToken)
-    navigateTo('/dashboard')
+    navigateTo('/home')
   }
 
   const handleLogout = () => {
@@ -71,8 +71,10 @@ function App() {
   // Routing rendering logic
   const episodeMatch = currentPath.match(/^\/episode\/([^/]+)\/?$/)
   if (episodeMatch) {
-    return <EpisodePage episodeId={decodeURIComponent(episodeMatch[1])} />
+    return <EpisodePage episodeId={decodeURIComponent(episodeMatch[1])} token={token} />
   }
+
+  if (currentPath === '/admin') return <AdminWorkflowPage />
 
   if (currentPath === '/login') {
     return (
@@ -94,9 +96,9 @@ function App() {
     )
   }
 
-  if (currentPath === '/dashboard') {
+  if (currentPath === '/home') {
     if (!token) {
-      // Redirect to login if trying to access dashboard unauthenticated
+      // Redirect to login if trying to access the home feed unauthenticated
       return (
         <LoginPage 
           onLoginSuccess={handleLoginSuccess} 
@@ -112,6 +114,7 @@ function App() {
         onLogout={handleLogout}
         token={token}
         onProfileUpdate={setUser}
+        navigateTo={navigateTo}
       />
     )
   }
@@ -119,7 +122,7 @@ function App() {
   // Fallback / default path is Home (landing page)
   return (
     <Home 
-      onEnterApp={() => navigateTo('/dashboard')}
+      onEnterApp={() => navigateTo('/home')}
       user={user}
       onLoginClick={() => navigateTo('/login')}
       onLogout={handleLogout}

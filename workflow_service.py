@@ -11,6 +11,8 @@ import secrets
 from typing import Any
 
 from audio_workflow import prepare_story_audio
+from editorial_selection import select_story_candidates
+from episode_title_generator import generate_episode_title
 from episode_service import story_format_for_index
 from news_adapter import NewsArticle, normalize_news_feed
 from story_generator import CAST_MODES, VISUAL_STYLES, generate_story
@@ -20,7 +22,7 @@ from visual_story_service import generate_story_visuals
 BASE_DIR = Path(__file__).resolve().parent
 ARTICLES_DIR = BASE_DIR / "articles"
 SCRIPTS_DIR = BASE_DIR / "scripts"
-MAX_PARALLEL_REQUESTS = max(1, int(os.getenv("OPENAI_MAX_PARALLEL_REQUESTS", "4")))
+MAX_PARALLEL_REQUESTS = max(1, int(os.getenv("OPENAI_MAX_PARALLEL_REQUESTS", "6")))
 
 
 class WorkflowInputError(ValueError):
@@ -34,15 +36,20 @@ def run_script_workflow(
     generate_audio: bool = True,
     cast_mode: str = "auto",
     visual_style: str = "animated",
+    source_root: Path | None = None,
+    input_dir: Path | None = None,
+    cadence: str = "daily",
+    max_articles_per_category: int | None = None,
+    max_total_stories: int | None = None,
 ) -> dict[str, object]:
     if cast_mode not in CAST_MODES:
         raise WorkflowInputError(f"Unsupported cast mode. Use one of: {', '.join(CAST_MODES)}.")
     if visual_style not in VISUAL_STYLES:
         raise WorkflowInputError(f"Unsupported visual style. Use one of: {', '.join(VISUAL_STYLES)}.")
     selected_date = _resolve_date(run_date)
-    input_dir = ARTICLES_DIR / selected_date.isoformat()
-    if not input_dir.is_dir():
-        raise WorkflowInputError(f"Article folder does not exist: articles/{selected_date.isoformat()}")
+    resolved_input_dir = input_dir or (source_root or ARTICLES_DIR) / selected_date.isoformat()
+    if not resolved_input_dir.is_dir():
+        raise WorkflowInputError(f"Article folder does not exist: {resolved_input_dir}")
 
     run_id = f"{selected_date.isoformat()}_{secrets.token_hex(4)}"
     output_dir = SCRIPTS_DIR / run_id
@@ -55,7 +62,7 @@ def run_script_workflow(
     started_at = datetime.now(timezone.utc).isoformat()
     article_jobs: list[tuple[int, NewsArticle, Path]] = []
 
-    for source_file in sorted(input_dir.glob("*.json")):
+    for source_file in sorted(path for path in resolved_input_dir.glob("*.json") if path.name != "manifest.json"):
         try:
             articles = _read_articles(source_file)
         except Exception as error:
@@ -66,7 +73,11 @@ def run_script_workflow(
             articles_found += 1
             article_jobs.append((len(article_jobs), article, source_file))
 
-    generated_stories = _generate_stories(article_jobs, language, cast_mode, visual_style, failures)
+    selected_jobs, selection = select_story_candidates(
+        article_jobs, max_articles_per_category, max_total_stories
+    )
+    generated_stories = _generate_stories(selected_jobs, language, cast_mode, visual_style, failures)
+    episode_title = generate_episode_title([story for _, _, _, story in generated_stories], cadence)
     image_paths = _generate_images(output_dir, generated_stories, failures) if generate_images else {}
     images_generated = sum(len(paths) for paths in image_paths.values())
 
@@ -84,9 +95,13 @@ def run_script_workflow(
     manifest = {
         "runId": run_id,
         "runDate": selected_date.isoformat(),
+        "cadence": cadence,
+        "episodeTitle": episode_title,
         "language": language,
         "startedAt": started_at,
         "articlesFound": articles_found,
+        "articlesSelected": len(selected_jobs),
+        "selection": selection,
         "scriptsGenerated": len(generated_scripts),
         "imagesGenerated": images_generated,
         "generateImages": generate_images,
@@ -114,8 +129,12 @@ def run_script_workflow(
 
     return {
         "runId": run_id,
+        "cadence": cadence,
+        "episodeTitle": episode_title,
         "outputPath": _relative(output_dir),
         "articlesFound": articles_found,
+        "articlesSelected": len(selected_jobs),
+        "selection": selection,
         "scriptsGenerated": len(generated_scripts),
         "imagesGenerated": images_generated,
         "generateImages": generate_images,
