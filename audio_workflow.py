@@ -98,6 +98,7 @@ def _prepare_script_audio(
     article_id: str,
     language: str,
 ) -> dict[str, Any]:
+    run_id = run_dir.name
     script = _read_json(script_path)
     story = script.get("story")
     if not isinstance(story, dict):
