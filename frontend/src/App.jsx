@@ -5,8 +5,7 @@ import SignUpPage from './pages/SignUpPage'
 import DashboardPage from './pages/DashboardPage'
 import EpisodePage from './pages/EpisodePage'
 import AdminWorkflowPage from './pages/AdminWorkflowPage'
-
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
+import { API_BASE } from './api'
 
 function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname)
