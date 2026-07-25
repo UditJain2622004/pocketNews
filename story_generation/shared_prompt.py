@@ -49,10 +49,10 @@ Rules:
 - Do not use characters as human PowerPoint pointers. Avoid scenes where they merely arrange, pin, read, tap, compare, or point at cards, screens, scoreboards, maps, folders, scales, displays, or labels so they can repeat article facts. Use those objects only when the article itself is about them or when they create a real obstacle.
 - Ban explanatory exchange patterns such as "so this means", "that is the point", "the whole picture", "not a tiny warning", or one character stating a fact and the other paraphrasing it. Replace them with a move, a rebuttal, a joke with consequences, or a choice.
 - By the middle beat, something must go wrong or reverse unexpectedly. By the final beat, somebody must have paid a small cost, changed their plan, or committed to a choice because of the factual development.
-- The title-cue beat must be first. Its first line must start with "Quick story:" and clearly name the news item so it can be skipped.
+- The title-cue beat must be first. Its first line must clearly name the news item so it can be skipped, but it must sound like the beginning of this scene. Never use the literal phrase "Quick story:" and never rely on a repeated canned intro. Put the news subject in a natural, situation-specific opening line instead.
 - Return exactly five beats in this order: title-cue, hook, what-happened, why-it-matters, takeaway.
 - Make the complete scene about 45 to 90 seconds. Keep spoken lines short and natural for text-to-speech.
-- Make every voiceProfile performance-ready: specify voice texture, pace, emotional arc, and comic or dramatic timing rather than generic narration. Let dialogue contain occasional earned reaction fragments, pauses, interruptions, or self-aware turns, but never pad it with repetitive filler.
+- Make every voiceProfile performance-ready: specify voice texture, pace, emotional baseline, emotional shift by the ending, and comic or dramatic timing rather than generic narration. Write for an expressive, intimate podcast performance, not a clean read-aloud. Let characters reveal surprise, contained laughter, disbelief, warmth, nerves, relief, frustration, or excitement through the shape of their dialogue. Use a few earned pauses, interruptions, clipped reactions, or self-aware turns when the scene supports them, but never pad it with repetitive filler.
 - Build a visual bible that fixes character appearance, wardrobe, setting, props, color/lighting, and story arc for the entire scene. The reference image prompt must establish every recurring character together in the core location.
 - Every beat must be a consecutive shot in one continuous scene. Include a scene prompt and continuity notes explaining what must remain from the previous shot and what advances.
 - Each beat image prompt needs subject, action, setting, camera, lighting, mood, the recurring visual details, caption-safe upper-third space, and "no text, logos, or watermark".
@@ -74,20 +74,20 @@ News fact to communicate: A city starts overnight trains on Friday.
 Genre: light thriller. Premise: Mira and Kabir are trapped outside a shuttered station after midnight, trying to get across town before a once-in-a-lifetime audition closes.
 
 title-cue:
-Mira: Quick story: the city is starting overnight trains this Friday.
-Kabir: Then that locked station is about to become our plot twist.
+Mira: Overnight trains start Friday. Please tell me that means this locked station has one last trick.
+Kabir: It is either that or we explain to your audition why destiny sent a bus replacement.
 
 hook:
 Mira: The audition room closes in forty minutes, and every cab says twenty-five.
-Kabir: The new service was supposed to be a boring transit notice. Tonight it is our escape route.
+Kabir: I am trying not to panic, but this timetable may be our escape route.
 
 what-happened:
 Mira: Look, the display is waking up. Overnight trains begin Friday, running through the night.
-Kabir: Which means the city has added a late-night option exactly where this map used to end.
+Kabir: Oh. That is not a delay board. That is the city giving late-night commuters one more way home.
 
 why-it-matters:
 Mira: For everyone working late, travelling late, or just stranded after midnight, that changes the whole journey home.
-Kabir: A timetable can be a small thing until it is the only door still open.
+Kabir: A timetable is a small thing until it is the only door still open.
 
 takeaway:
 Mira: We make the train, and the headline is clear: overnight service begins Friday.

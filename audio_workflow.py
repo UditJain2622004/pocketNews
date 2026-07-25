@@ -17,7 +17,7 @@ from audio_generator import AUDIO_MODEL, AUDIO_VOICES, generate_story_line
 BASE_DIR = Path(__file__).resolve().parent
 SCRIPTS_DIR = BASE_DIR / "scripts"
 MAX_PARALLEL_REQUESTS = max(1, int(os.getenv("OPENAI_MAX_PARALLEL_REQUESTS", "6")))
-AUDIO_PROMPT_VERSION = "story-context-v3"
+AUDIO_PROMPT_VERSION = "story-context-v4-podcast"
 MAX_CLIP_DURATION_SECONDS = 60
 
 
