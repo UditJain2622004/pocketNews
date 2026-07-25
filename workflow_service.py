@@ -21,7 +21,7 @@ from visual_story_service import generate_story_visuals
 BASE_DIR = Path(__file__).resolve().parent
 ARTICLES_DIR = BASE_DIR / "articles"
 SCRIPTS_DIR = BASE_DIR / "scripts"
-MAX_PARALLEL_REQUESTS = max(1, int(os.getenv("OPENAI_MAX_PARALLEL_REQUESTS", "4")))
+MAX_PARALLEL_REQUESTS = max(1, int(os.getenv("OPENAI_MAX_PARALLEL_REQUESTS", "6")))
 
 
 class WorkflowInputError(ValueError):

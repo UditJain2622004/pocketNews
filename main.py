@@ -22,7 +22,7 @@ from auth.database import db
 from auth.router import get_current_user_id, router as auth_router
 from automated_workflows import run_daily_workflow
 from localization_service import locale_for_language, prepare_localized_episode
-from publication_store import backfill_complete_episodes, episode_playback, list_episodes, set_localized_run, setup_publication_indexes, workflow_status
+from publication_store import backfill_complete_episodes, delete_published_episode, episode_playback, list_episodes, list_published_episodes, set_localized_run, setup_publication_indexes, workflow_status
 from listening_service import ListeningEventError, learned_scores as get_learned_scores, record_listening_event as store_listening_event
 from scheduler_service import start_scheduler, stop_scheduler
 from news_collection import fetch_google_news_rss
@@ -228,6 +228,24 @@ def backfill_historical_episodes() -> dict[str, object]:
         return backfill_complete_episodes()
     except RuntimeError as error:
         raise HTTPException(status_code=503, detail=str(error)) from error
+
+
+@app.get("/api/admin/episodes")
+def get_admin_episodes() -> dict[str, object]:
+    try:
+        return {"episodes": list_published_episodes()}
+    except RuntimeError as error:
+        raise HTTPException(status_code=503, detail=str(error)) from error
+
+
+@app.delete("/api/admin/episodes/{episode_id}")
+def delete_admin_episode(episode_id: str) -> dict[str, str]:
+    try:
+        return delete_published_episode(episode_id)
+    except KeyError as error:
+        raise HTTPException(status_code=404, detail=str(error)) from error
+    except (RuntimeError, ValueError) as error:
+        raise HTTPException(status_code=400, detail=str(error)) from error
 
 
 @app.get("/api/dashboard/episodes")

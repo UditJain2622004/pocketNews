@@ -4,6 +4,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 import json
 from pathlib import Path
+import shutil
 from typing import Any
 from uuid import uuid4
 
@@ -114,6 +115,37 @@ def backfill_complete_episodes() -> dict[str, Any]:
         except Exception as error:
             skipped.append({"runId": run_dir.name, "reason": str(error)})
     return {"published": published, "skipped": skipped}
+
+
+def list_published_episodes() -> list[dict[str, Any]]:
+    if db is None:
+        raise RuntimeError("MongoDB is required for episode publishing.")
+    return list(
+        db.episodes.find(
+            {"status": "published"},
+            {"_id": 0, "episodeId": 1, "runId": 1, "title": 1, "cadence": 1, "periodEnd": 1},
+        ).sort("publishedAt", -1)
+    )
+
+
+def delete_published_episode(episode_id: str) -> dict[str, str]:
+    if db is None:
+        raise RuntimeError("MongoDB is required for episode publishing.")
+    episode = db.episodes.find_one({"episodeId": episode_id}, {"_id": 0, "runId": 1, "localizedRuns": 1})
+    if not episode:
+        raise KeyError("Episode was not found.")
+
+    run_id = str(episode.get("runId") or "")
+    localized = episode.get("localizedRuns") if isinstance(episode.get("localizedRuns"), dict) else {}
+    run_ids = [run_id, *(str(item.get("runId") or "") for item in localized.values() if isinstance(item, dict))]
+    for candidate in set(filter(None, run_ids)):
+        run_dir = (SCRIPTS_DIR / candidate).resolve()
+        if run_dir.parent != SCRIPTS_DIR.resolve():
+            raise ValueError("Episode run folder is invalid.")
+        if run_dir.exists():
+            shutil.rmtree(run_dir)
+    db.episodes.delete_one({"episodeId": episode_id})
+    return {"episodeId": episode_id, "runId": run_id, "status": "deleted"}
 
 
 def list_episodes(
