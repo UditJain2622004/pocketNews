@@ -74,7 +74,7 @@ def publish_episode(cadence: str, run_id: str, period_start: str, period_end: st
         ),
         "",
     )
-    category_label = " & ".join(sorted(category for category in categories if category)[:2]) or "News"
+    fallback_title = next((str(entry.get("title") or "") for entry in entries if entry.get("title")), "News Edition")
     document = {
         "episodeId": episode_id,
         "cadence": cadence,
@@ -83,7 +83,7 @@ def publish_episode(cadence: str, run_id: str, period_start: str, period_end: st
         "periodEnd": period_end,
         "language": manifest.get("language", "en-IN"),
         "categories": sorted(category for category in categories if category),
-        "title": f"{cadence.title()} Brief: {category_label}",
+        "title": str(manifest.get("episodeTitle") or fallback_title),
         "coverPath": cover_path,
         "scripts": entries,
         "status": "published",
@@ -158,6 +158,8 @@ def list_episodes(
     episodes = list(db.episodes.find({"status": "published"}, {"_id": 0}).sort("publishedAt", -1))
     for episode in episodes:
         entries = [_enrich_entry(entry) for entry in episode.get("scripts", [])]
+        if str(episode.get("title") or "").casefold().startswith(f"{episode.get('cadence', '')} brief:"):
+            episode["title"] = next((str(entry.get("title") or "") for entry in entries if entry.get("title")), "News Edition")
         _, personalization = select_personalized_stories(
             entries, user_topics, user_subtopics or [], learned_scores
         )

@@ -12,6 +12,7 @@ from typing import Any
 
 from audio_workflow import prepare_story_audio
 from editorial_selection import select_story_candidates
+from episode_title_generator import generate_episode_title
 from episode_service import story_format_for_index
 from news_adapter import NewsArticle, normalize_news_feed
 from story_generator import CAST_MODES, VISUAL_STYLES, generate_story
@@ -76,6 +77,7 @@ def run_script_workflow(
         article_jobs, max_articles_per_category, max_total_stories
     )
     generated_stories = _generate_stories(selected_jobs, language, cast_mode, visual_style, failures)
+    episode_title = generate_episode_title([story for _, _, _, story in generated_stories], cadence)
     image_paths = _generate_images(output_dir, generated_stories, failures) if generate_images else {}
     images_generated = sum(len(paths) for paths in image_paths.values())
 
@@ -94,6 +96,7 @@ def run_script_workflow(
         "runId": run_id,
         "runDate": selected_date.isoformat(),
         "cadence": cadence,
+        "episodeTitle": episode_title,
         "language": language,
         "startedAt": started_at,
         "articlesFound": articles_found,
@@ -127,6 +130,7 @@ def run_script_workflow(
     return {
         "runId": run_id,
         "cadence": cadence,
+        "episodeTitle": episode_title,
         "outputPath": _relative(output_dir),
         "articlesFound": articles_found,
         "articlesSelected": len(selected_jobs),
