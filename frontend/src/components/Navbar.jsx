@@ -19,40 +19,42 @@ export default function Navbar({ onEnterApp, user, onLoginClick, onLogout }) {
     <div className="fixed top-0 left-0 right-0 z-50 transition-all">
       <nav className={`w-full px-8 md:px-12 flex items-center justify-between transition-all duration-300 ${
         isScrolled 
-          ? 'pure-glass h-16 shadow-md border-b border-black/5' 
+          ? 'backdrop-blur-md bg-white/75 border-b border-slate-200/60 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.03)] h-16' 
           : 'bg-transparent h-24'
       }`}>
         <div className="flex items-center gap-4">
-          <img 
-            src="/logo.png" 
-            className={`object-contain rounded-xl transition-all duration-300 ${
-              isScrolled ? 'w-12 h-12' : 'w-20 h-20'
-            }`} 
-            alt="StoryCast AI Logo" 
-          />
+          <div className="relative group select-none">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#7C3AED] to-[#EC4899] rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-300"></div>
+            <img 
+              src="/logo.png" 
+              className={`relative object-contain rounded-xl bg-white shadow-sm transition-all duration-300 ${
+                isScrolled ? 'w-10 h-10' : 'w-16 h-16'
+              }`} 
+              alt="StoryCast AI Logo" 
+            />
+          </div>
           <div>
-            <span className="text-xl font-bold tracking-tight text-slate-800">StoryCast AI</span>
-            <span className="block text-[9px] text-[#7C3AED] font-bold tracking-widest uppercase">Cinematic News Engine</span>
+            <span className="text-lg sm:text-xl font-black tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">StoryCast AI</span>
+            <span className="block text-[8px] sm:text-[9px] text-[#7C3AED] font-extrabold tracking-widest uppercase">Cinematic News Engine</span>
           </div>
         </div>
 
-        <div className="hidden md:flex items-center gap-4 text-sm font-bold text-slate-700">
-          <a href="#features" className="hover:bg-slate-200/50 hover:text-[#7C3AED] px-3.5 py-2 rounded-xl transition-all">Features</a>
-          <a href="#storytellers" className="hover:bg-slate-200/50 hover:text-[#7C3AED] px-3.5 py-2 rounded-xl transition-all">Storytellers</a>
-          <a href="#graph" className="hover:bg-slate-200/50 hover:text-[#7C3AED] px-3.5 py-2 rounded-xl transition-all">Connected Universe</a>
-          <a href="#stats" className="hover:bg-slate-200/50 hover:text-[#7C3AED] px-3.5 py-2 rounded-xl transition-all">Live Stats</a>
+        <div className="hidden md:flex items-center gap-2 text-xs font-extrabold tracking-wide uppercase text-slate-600">
+          <a href="#features" className="hover:bg-slate-100 hover:text-[#7C3AED] px-4 py-2 rounded-xl transition-all">Features</a>
+          <a href="#storytellers" className="hover:bg-slate-100 hover:text-[#7C3AED] px-4 py-2 rounded-xl transition-all">Storytellers</a>
+          <a href="#graph" className="hover:bg-slate-100 hover:text-[#7C3AED] px-4 py-2 rounded-xl transition-all">Universe</a>
+          <a href="#stats" className="hover:bg-slate-100 hover:text-[#7C3AED] px-4 py-2 rounded-xl transition-all">Stats</a>
         </div>
 
         <div className="flex items-center gap-3">
           {user ? (
-            <div className="flex items-center gap-3">
-              <div className="hidden sm:flex flex-col items-end text-xs">
-                <span className="font-bold text-slate-800">@{user.username}</span>
-                <span className="text-[10px] text-slate-500 font-semibold">{user.topics?.length || 0} interests selected</span>
+            <div className="flex items-center gap-3 bg-white/80 border border-slate-200/80 pl-3 pr-2 py-1 rounded-2xl shadow-[0_2px_8px_-1px_rgba(0,0,0,0.04)] backdrop-blur-sm">
+              <div className="hidden sm:flex flex-col items-end text-right">
+                <span className="text-xs font-bold text-slate-800">@{user.username}</span>
               </div>
               <button 
                 onClick={onLogout}
-                className="px-4 py-2 text-xs font-bold border border-black/10 hover:border-black/20 text-slate-700 bg-white/50 hover:bg-white rounded-xl transition-all"
+                className="px-3 py-1.5 text-xs font-bold text-rose-650 hover:text-white bg-rose-50 hover:bg-rose-550 rounded-xl transition-all duration-200 cursor-pointer shadow-sm hover:shadow-rose-100"
               >
                 Sign Out
               </button>
@@ -60,7 +62,7 @@ export default function Navbar({ onEnterApp, user, onLoginClick, onLogout }) {
           ) : (
             <button 
               onClick={onLoginClick}
-              className="px-4 py-2 text-xs font-bold text-slate-700 hover:bg-slate-200/40 rounded-xl transition-all"
+              className="px-4 py-2 text-xs font-extrabold text-slate-600 hover:bg-slate-100 rounded-xl transition-all cursor-pointer"
             >
               Sign In
             </button>
@@ -68,7 +70,7 @@ export default function Navbar({ onEnterApp, user, onLoginClick, onLogout }) {
 
           <button 
             onClick={onEnterApp}
-            className="px-5 py-2.5 rounded-xl text-sm font-bold bg-gradient-to-r from-[#7C3AED] to-[#EC4899] hover:opacity-90 text-white transition-all shadow shadow-[#7C3AED]/20 hover:scale-105 active:scale-95"
+            className="px-5 py-2.5 rounded-xl text-xs font-extrabold bg-gradient-to-r from-[#7C3AED] to-[#EC4899] hover:opacity-90 text-white transition-all shadow-md shadow-[#7C3AED]/20 hover:scale-105 active:scale-95 cursor-pointer uppercase tracking-wider"
           >
             Enter StoryCast
           </button>
