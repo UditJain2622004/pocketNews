@@ -41,6 +41,7 @@ def run_script_workflow(
     cadence: str = "daily",
     max_articles_per_category: int | None = None,
     max_total_stories: int | None = None,
+    three_images_per_story: bool = False,
 ) -> dict[str, object]:
     if cast_mode not in CAST_MODES:
         raise WorkflowInputError(f"Unsupported cast mode. Use one of: {', '.join(CAST_MODES)}.")
@@ -78,7 +79,7 @@ def run_script_workflow(
     )
     generated_stories = _generate_stories(selected_jobs, language, cast_mode, visual_style, failures)
     episode_title = generate_episode_title([story for _, _, _, story in generated_stories], cadence)
-    image_paths = _generate_images(output_dir, generated_stories, failures) if generate_images else {}
+    image_paths = _generate_images(output_dir, generated_stories, failures, three_images_per_story) if generate_images else {}
     images_generated = sum(len(paths) for paths in image_paths.values())
 
     for index, article, source_file, story in generated_stories:
@@ -105,6 +106,7 @@ def run_script_workflow(
         "scriptsGenerated": len(generated_scripts),
         "imagesGenerated": images_generated,
         "generateImages": generate_images,
+        "threeImagesPerStory": three_images_per_story,
         "generateAudio": generate_audio,
         "castMode": cast_mode,
         "visualStyle": visual_style,
@@ -138,6 +140,7 @@ def run_script_workflow(
         "scriptsGenerated": len(generated_scripts),
         "imagesGenerated": images_generated,
         "generateImages": generate_images,
+        "threeImagesPerStory": three_images_per_story,
         "generateAudio": generate_audio,
         "castMode": cast_mode,
         "visualStyle": visual_style,
@@ -224,11 +227,12 @@ def _generate_images(
     output_dir: Path,
     generated_stories: list[tuple[int, NewsArticle, Path, dict[str, object]]],
     failures: list[dict[str, str]],
+    three_images_per_story: bool,
 ) -> dict[int, list[str]]:
     image_paths: dict[int, list[str]] = {index: [] for index, _, _, _ in generated_stories}
     with ThreadPoolExecutor(max_workers=MAX_PARALLEL_REQUESTS) as executor:
         futures = {
-            executor.submit(generate_story_visuals, output_dir, source_file, article.id, story): (index, article, source_file)
+            executor.submit(generate_story_visuals, output_dir, source_file, article.id, story, three_images_per_story): (index, article, source_file)
             for index, article, source_file, story in generated_stories
         }
         for future in as_completed(futures):
