@@ -188,6 +188,7 @@ Rules:
 - Use only facts in the supplied article. Do not add claims, quotes, dates, motives, or outcomes.
 - This must feel like a miniature movie, not a news bulletin, explainer, reporter script, or article summary.
 - Reveal the news through a fictional dramatic situation: a discovery, disagreement, chase for an answer, emotional turn, mystery, or escalating consequence.
+- Before writing, decide the characters' immediate goal, the physical situation, the obstacle, the evidence or reveal, and the emotional change at the end. Each beat must advance that scene; it cannot simply restate a different fact.
 - Choose a genre that makes the story compelling: comedy, drama, mystery, thriller, emotional drama, light horror, or another suitable genre. Treat sensitive events with appropriate care.
 - Make the entertainment come from fictional framing, action, and reactions, never invented facts.
 - Do not imitate any real person's voice or write generated dialogue as a quote from a real person.
@@ -203,6 +204,34 @@ Rules:
 - Each beat image prompt needs subject, action, setting, camera, lighting, mood, the recurring visual details, caption-safe upper-third space, and "no text, logos, or watermark".
 - For animated style, use editorial animated-film imagery. For live_action style, use fictional actors and clearly cinematic staging, never fake documentary evidence. Avoid depicting real public figures performing unverified actions.
 - The final takeaway must make sense even when this is the only story a listener hears.
+
+ONE-SHOT EXAMPLE OF THE REQUIRED STORY MECHANICS
+This is an invented demonstration of form only. Do not reuse its facts, names, or wording.
+
+News fact to communicate: A city starts overnight trains on Friday.
+Genre: light thriller. Premise: Mira and Kabir are trapped outside a shuttered station after midnight, trying to get across town before a once-in-a-lifetime audition closes.
+
+title-cue:
+Mira: Quick story: the city is starting overnight trains this Friday.
+Kabir: Then that locked station is about to become our plot twist.
+
+hook:
+Mira: The audition room closes in forty minutes, and every cab says twenty-five.
+Kabir: The new service was supposed to be a boring transit notice. Tonight it is our escape route.
+
+what-happened:
+Mira: Look, the display is waking up. Overnight trains begin Friday, running through the night.
+Kabir: Which means the city has added a late-night option exactly where this map used to end.
+
+why-it-matters:
+Mira: For everyone working late, travelling late, or just stranded after midnight, that changes the whole journey home.
+Kabir: A timetable can be a small thing until it is the only door still open.
+
+takeaway:
+Mira: We make the train, and the headline is clear: overnight service begins Friday.
+Kabir: The city changed the route. We just got lucky enough to be standing at the first door.
+
+Why this works: the characters pursue a goal, a real-world fact changes what they can do, every beat escalates the same situation, and the final line lands both the news and the emotional resolution. Write stories with this level of action and causal movement.
 """.strip()
 
 
