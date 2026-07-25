@@ -96,9 +96,18 @@ def get_episode(
 
 
 @app.post("/api/workflows/generate-scripts")
-def generate_scripts(request: ScriptWorkflowRequest) -> dict[str, object]:
+def generate_scripts(
+    request: ScriptWorkflowRequest,
+    generate_images: bool = Query(True, description="Generate and save story images"),
+    generate_audio: bool = Query(True, description="Generate and save narration audio"),
+) -> dict[str, object]:
     try:
-        return run_script_workflow(request.date, request.language)
+        return run_script_workflow(
+            request.date,
+            request.language,
+            generate_images=generate_images,
+            generate_audio=generate_audio,
+        )
     except WorkflowInputError as error:
         raise HTTPException(status_code=422, detail=str(error)) from error
 

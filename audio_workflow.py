@@ -1,8 +1,10 @@
 """Cache-first filesystem workflow for PocketNews narration audio."""
 from __future__ import annotations
 
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 from typing import Any
@@ -13,6 +15,7 @@ from audio_generator import AUDIO_MODEL, AUDIO_VOICES, generate_story_line
 
 BASE_DIR = Path(__file__).resolve().parent
 SCRIPTS_DIR = BASE_DIR / "scripts"
+MAX_PARALLEL_REQUESTS = max(1, int(os.getenv("OPENAI_MAX_PARALLEL_REQUESTS", "4")))
 
 
 class AudioWorkflowInputError(ValueError):
@@ -42,22 +45,33 @@ def prepare_story_audio(run_id: str, article_ids: list[str] | None = None) -> di
     clips_generated = 0
     clips_reused = 0
 
-    for script_entry in selected_scripts:
-        script_path = _script_path(run_dir, str(script_entry.get("scriptPath") or ""))
-        article_id = str(script_entry.get("articleId") or script_path.stem)
-        try:
-            result = _prepare_script_audio(run_dir, script_path, article_id, language)
-            clips_generated += result["clipsGenerated"]
-            clips_reused += result["clipsReused"]
-            failures.extend(result["failures"])
-            manifests.append(result["manifest"])
-        except Exception as error:
-            failures.append(
-                {
-                    "articleId": article_id,
-                    "error": str(error),
-                }
-            )
+    with ThreadPoolExecutor(max_workers=MAX_PARALLEL_REQUESTS) as executor:
+        futures = {}
+        for script_entry in selected_scripts:
+            article_id = str(script_entry.get("articleId") or "")
+            try:
+                script_path = _script_path(run_dir, str(script_entry.get("scriptPath") or ""))
+                futures[executor.submit(_prepare_script_audio, run_dir, script_path, article_id or script_path.stem, language)] = article_id or script_path.stem
+            except Exception as error:
+                failures.append({"articleId": article_id, "error": str(error)})
+
+        for future in as_completed(futures):
+            article_id = futures[future]
+            try:
+                result = future.result()
+                clips_generated += result["clipsGenerated"]
+                clips_reused += result["clipsReused"]
+                failures.extend(result["failures"])
+                manifests.append(result["manifest"])
+            except Exception as error:
+                failures.append(
+                    {
+                        "articleId": article_id,
+                        "error": str(error),
+                    }
+                )
+
+    manifests.sort(key=lambda item: str(item["articleId"]))
 
     return {
         "runId": run_id,

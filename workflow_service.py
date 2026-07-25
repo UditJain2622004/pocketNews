@@ -1,13 +1,16 @@
 ﻿"""Filesystem workflow for generating and persisting news story modules."""
 from __future__ import annotations
 
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date, datetime, timezone
 import json
+import os
 from pathlib import Path
 import re
 import secrets
 from typing import Any
 
+from audio_workflow import prepare_story_audio
 from episode_service import story_format_for_index
 from image_generator import generate_story_image
 from news_adapter import NewsArticle, normalize_news_feed
@@ -17,13 +20,19 @@ from story_generator import generate_story
 BASE_DIR = Path(__file__).resolve().parent
 ARTICLES_DIR = BASE_DIR / "articles"
 SCRIPTS_DIR = BASE_DIR / "scripts"
+MAX_PARALLEL_REQUESTS = max(1, int(os.getenv("OPENAI_MAX_PARALLEL_REQUESTS", "4")))
 
 
 class WorkflowInputError(ValueError):
     pass
 
 
-def run_script_workflow(run_date: str | None, language: str) -> dict[str, object]:
+def run_script_workflow(
+    run_date: str | None,
+    language: str,
+    generate_images: bool = True,
+    generate_audio: bool = True,
+) -> dict[str, object]:
     selected_date = _resolve_date(run_date)
     input_dir = ARTICLES_DIR / selected_date.isoformat()
     if not input_dir.is_dir():
@@ -37,8 +46,8 @@ def run_script_workflow(run_date: str | None, language: str) -> dict[str, object
     generated_scripts: list[dict[str, object]] = []
     articles_found = 0
     images_generated = 0
-    generation_index = 0
     started_at = datetime.now(timezone.utc).isoformat()
+    article_jobs: list[tuple[int, NewsArticle, Path]] = []
 
     for source_file in sorted(input_dir.glob("*.json")):
         try:
@@ -49,32 +58,22 @@ def run_script_workflow(run_date: str | None, language: str) -> dict[str, object
 
         for article in articles:
             articles_found += 1
-            try:
-                story = generate_story(article, story_format_for_index(generation_index), language)
-                image_paths, image_failures = _generate_story_images(
-                    output_dir, article, source_file, story
-                )
-                images_generated += len(image_paths)
-                failures.extend(image_failures)
-                script_path = _write_story(output_dir, article, source_file, story)
-                generated_scripts.append(
-                    {
-                        "articleId": article.id,
-                        "sourceFile": _relative(source_file),
-                        "scriptPath": _relative(script_path),
-                        "imagePaths": image_paths,
-                    }
-                )
-            except Exception as error:
-                failures.append(
-                    {
-                        "articleId": article.id,
-                        "sourceFile": _relative(source_file),
-                        "error": str(error),
-                    }
-                )
-            finally:
-                generation_index += 1
+            article_jobs.append((len(article_jobs), article, source_file))
+
+    generated_stories = _generate_stories(article_jobs, language, failures)
+    image_paths = _generate_images(output_dir, generated_stories, failures) if generate_images else {}
+    images_generated = sum(len(paths) for paths in image_paths.values())
+
+    for index, article, source_file, story in generated_stories:
+        script_path = _write_story(output_dir, article, source_file, story)
+        generated_scripts.append(
+            {
+                "articleId": article.id,
+                "sourceFile": _relative(source_file),
+                "scriptPath": _relative(script_path),
+                "imagePaths": image_paths.get(index, []),
+            }
+        )
 
     manifest = {
         "runId": run_id,
@@ -84,10 +83,25 @@ def run_script_workflow(run_date: str | None, language: str) -> dict[str, object
         "articlesFound": articles_found,
         "scriptsGenerated": len(generated_scripts),
         "imagesGenerated": images_generated,
+        "generateImages": generate_images,
+        "generateAudio": generate_audio,
         "scripts": generated_scripts,
         "failures": failures,
     }
     manifest_path = output_dir / "manifest.json"
+    _write_json(manifest_path, manifest)
+
+    audio_result: dict[str, object] | None = None
+    if generate_audio and generated_scripts:
+        try:
+            audio_result = prepare_story_audio(run_id)
+            failures.extend(audio_result["failures"])
+        except Exception as error:
+            failures.append({"articleId": "", "sourceFile": "", "error": str(error)})
+
+    if audio_result is not None:
+        manifest["audio"] = audio_result
+    manifest["failures"] = failures
     _write_json(manifest_path, manifest)
 
     return {
@@ -96,6 +110,9 @@ def run_script_workflow(run_date: str | None, language: str) -> dict[str, object
         "articlesFound": articles_found,
         "scriptsGenerated": len(generated_scripts),
         "imagesGenerated": images_generated,
+        "generateImages": generate_images,
+        "generateAudio": generate_audio,
+        "audio": audio_result,
         "failures": failures,
     }
 
@@ -144,48 +161,99 @@ def _write_story(
     return output_path
 
 
-def _generate_story_images(
+def _generate_stories(
+    article_jobs: list[tuple[int, NewsArticle, Path]],
+    language: str,
+    failures: list[dict[str, str]],
+) -> list[tuple[int, NewsArticle, Path, dict[str, object]]]:
+    generated_stories: list[tuple[int, NewsArticle, Path, dict[str, object]]] = []
+    with ThreadPoolExecutor(max_workers=MAX_PARALLEL_REQUESTS) as executor:
+        futures = {
+            executor.submit(generate_story, article, story_format_for_index(index), language): (index, article, source_file)
+            for index, article, source_file in article_jobs
+        }
+        for future in as_completed(futures):
+            index, article, source_file = futures[future]
+            try:
+                generated_stories.append((index, article, source_file, future.result()))
+            except Exception as error:
+                failures.append(
+                    {
+                        "articleId": article.id,
+                        "sourceFile": _relative(source_file),
+                        "error": str(error),
+                    }
+                )
+    return sorted(generated_stories, key=lambda item: item[0])
+
+
+def _generate_images(
     output_dir: Path,
-    article: NewsArticle,
-    source_file: Path,
-    story: dict[str, object],
-) -> tuple[list[str], list[dict[str, str]]]:
-    image_paths: list[str] = []
-    failures: list[dict[str, str]] = []
-    image_dir = output_dir / "images" / _safe_filename(source_file.stem) / _safe_filename(article.id)
-
-    beats = story.get("beats")
-    if not isinstance(beats, list):
-        raise WorkflowInputError("Generated story does not contain visual beats.")
-
-    for beat in beats:
-        if not isinstance(beat, dict):
-            continue
-        beat_id = str(beat.get("id") or "visual")
-        visual = beat.get("visual")
-        if not isinstance(visual, dict):
-            continue
-
-        try:
-            image_bytes = generate_story_image(str(visual.get("imagePrompt") or ""))
-            image_path = image_dir / f"{_safe_filename(beat_id)}.png"
-            image_path.parent.mkdir(parents=True, exist_ok=True)
-            image_path.write_bytes(image_bytes)
-            relative_path = _relative(image_path)
-            visual["imagePath"] = relative_path
-            image_paths.append(relative_path)
-        except Exception as error:
-            visual["imagePath"] = None
+    generated_stories: list[tuple[int, NewsArticle, Path, dict[str, object]]],
+    failures: list[dict[str, str]],
+) -> dict[int, list[str]]:
+    image_paths: dict[int, list[str]] = {index: [] for index, _, _, _ in generated_stories}
+    image_jobs: list[tuple[int, NewsArticle, Path, dict[str, object], dict[str, object]]] = []
+    for index, article, source_file, story in generated_stories:
+        beats = story.get("beats")
+        if not isinstance(beats, list):
             failures.append(
                 {
                     "articleId": article.id,
                     "sourceFile": _relative(source_file),
-                    "beatId": beat_id,
-                    "error": str(error),
+                    "error": "Generated story does not contain visual beats.",
                 }
             )
+            continue
+        for beat in beats:
+            if isinstance(beat, dict) and isinstance(beat.get("visual"), dict):
+                image_jobs.append((index, article, source_file, story, beat))
 
-    return image_paths, failures
+    with ThreadPoolExecutor(max_workers=MAX_PARALLEL_REQUESTS) as executor:
+        futures = {
+            executor.submit(_generate_beat_image, output_dir, article, source_file, beat): (index, article, source_file, beat)
+            for index, article, source_file, _, beat in image_jobs
+        }
+        for future in as_completed(futures):
+            index, article, source_file, beat = futures[future]
+            beat_id = str(beat.get("id") or "visual")
+            try:
+                image_paths[index].append(future.result())
+            except Exception as error:
+                visual = beat["visual"]
+                visual["imagePath"] = None
+                failures.append(
+                    {
+                        "articleId": article.id,
+                        "sourceFile": _relative(source_file),
+                        "beatId": beat_id,
+                        "error": str(error),
+                    }
+                )
+
+    for paths in image_paths.values():
+        paths.sort()
+    return image_paths
+
+
+def _generate_beat_image(
+    output_dir: Path,
+    article: NewsArticle,
+    source_file: Path,
+    beat: dict[str, object],
+) -> str:
+    visual = beat["visual"]
+    if not isinstance(visual, dict):
+        raise WorkflowInputError("Story beat does not contain visual direction.")
+    beat_id = str(beat.get("id") or "visual")
+    image_dir = output_dir / "images" / _safe_filename(source_file.stem) / _safe_filename(article.id)
+    image_bytes = generate_story_image(str(visual.get("imagePrompt") or ""))
+    image_path = image_dir / f"{_safe_filename(beat_id)}.png"
+    image_path.parent.mkdir(parents=True, exist_ok=True)
+    image_path.write_bytes(image_bytes)
+    relative_path = _relative(image_path)
+    visual["imagePath"] = relative_path
+    return relative_path
 
 
 def _write_json(path: Path, payload: dict[str, object]) -> None:
