@@ -7,6 +7,7 @@ class UserSignup(BaseModel):
     password: str = Field(..., min_length=6)
     topics: List[str] = []
     subtopics: List[str] = []
+    language: str = "english"
 
 class UserLogin(BaseModel):
     username_or_email: str
@@ -21,6 +22,7 @@ class UserProfile(BaseModel):
     email: EmailStr
     topics: List[str]
     subtopics: List[str]
+    language: str = "english"
 
 class UserProfileResponse(BaseModel):
     id: str
@@ -28,6 +30,8 @@ class UserProfileResponse(BaseModel):
     email: str
     topics: List[str]
     subtopics: List[str]
+    language: str
 
 class SuggestionResponse(BaseModel):
     suggestions: Dict[str, List[str]]
+

@@ -56,9 +56,9 @@ def get_categories():
 @app.get("/api/news")
 async def get_news(
     q: Optional[str] = None,
-    category: Optional[Union[str, List[str]]] = Query(None),
-    sub_topic: Optional[Union[str, List[str]]] = Query(None),
-    micro_niche: Optional[Union[str, List[str]]] = Query(None)
+    category: Optional[List[str]] = Query(None),
+    sub_topic: Optional[List[str]] = Query(None),
+    micro_niche: Optional[List[str]] = Query(None)
 ):
     """
     Retrieve live 24-hour news feeds dynamically from Google News RSS.
