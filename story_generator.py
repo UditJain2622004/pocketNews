@@ -214,6 +214,7 @@ Rules:
 - The title-cue beat must be first. Its first line must start with "Quick story:" and clearly name the news item so it can be skipped.
 - Return exactly five beats in this order: title-cue, hook, what-happened, why-it-matters, takeaway.
 - Make the complete scene about 45 to 90 seconds. Keep spoken lines short and natural for text-to-speech.
+- Make every voiceProfile performance-ready: specify voice texture, pace, emotional arc, and comic or dramatic timing rather than generic narration. Let dialogue contain occasional earned reaction fragments, pauses, interruptions, or self-aware turns, but never pad it with repetitive filler.
 - Build a visual bible that fixes character appearance, wardrobe, setting, props, color/lighting, and story arc for the entire scene. The reference image prompt must establish every recurring character together in the core location.
 - Every beat must be a consecutive shot in one continuous scene. Include a scene prompt and continuity notes explaining what must remain from the previous shot and what advances.
 - Each beat image prompt needs subject, action, setting, camera, lighting, mood, the recurring visual details, caption-safe upper-third space, and "no text, logos, or watermark".

@@ -159,6 +159,9 @@ export default function EpisodePage({ episodeId }) {
 
   const beatLabel = currentTrack?.beatId?.replace(/-/g, ' ') || 'Now playing'
   const firstVisual = currentStory?.tracks.find((track) => track.image)?.image
+  const displayImage = currentTrack?.image
+    || currentStory?.tracks.slice(0, trackIndex + 1).reverse().find((track) => track.image)?.image
+    || firstVisual
   const episodeTitle = currentStory?.title || (loading ? 'Loading episode' : 'Untitled episode')
 
   return (
@@ -188,7 +191,7 @@ export default function EpisodePage({ episodeId }) {
           </div>
 
           <section className="relative aspect-[1.16/1] min-h-[22rem] overflow-hidden rounded-[1.6rem] border border-white/10 bg-[#15151a] shadow-[0_30px_100px_-35px_rgba(168,85,247,0.6)] sm:aspect-[1.5/1] lg:aspect-auto lg:min-h-0 lg:flex-1">
-            {(currentTrack?.image || firstVisual) && <img src={currentTrack?.image || firstVisual} alt="Story scene" className="absolute inset-0 h-full w-full object-cover opacity-85" />}
+            {displayImage && <img src={displayImage} alt="Story scene" className="absolute inset-0 h-full w-full object-cover opacity-85" />}
             <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,8,0.92)_0%,rgba(5,6,8,0.45)_48%,rgba(5,6,8,0.18)_100%)]" />
             <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-fuchsia-600 via-pink-500 to-orange-400" />
 

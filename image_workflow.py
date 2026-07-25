@@ -55,6 +55,14 @@ def prepare_story_images(folder_name: str) -> dict[str, object]:
                 entry["imagePaths"] = result["paths"]
                 images_generated += result["generated"]
                 images_reused += result["reused"]
+                failures.extend(
+                    {
+                        "articleId": article_id,
+                        "beatId": str(failure.get("beatId") or "image"),
+                        "error": str(failure.get("error") or "Image generation failed."),
+                    }
+                    for failure in result.get("failures", [])
+                )
                 _write_json(script_path, script)
             except Exception as error:
                 failures.append(
