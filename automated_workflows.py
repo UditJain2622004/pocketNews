@@ -18,6 +18,8 @@ from workflow_service import run_script_workflow
 BASE_DIR = Path(__file__).resolve().parent
 SUMMARY_DIR = BASE_DIR / "summaries"
 WorkflowMode = Literal["fetch_only", "generate_only", "full"]
+DEFAULT_MAX_ARTICLES_PER_CATEGORY = 3
+DEFAULT_MAX_TOTAL_STORIES = 12
 
 
 def run_daily_workflow(
@@ -29,6 +31,8 @@ def run_daily_workflow(
     cast_mode: str = "auto",
     visual_style: str = "animated",
     language: str = "en-IN",
+    max_articles_per_category: int | None = DEFAULT_MAX_ARTICLES_PER_CATEGORY,
+    max_total_stories: int | None = DEFAULT_MAX_TOTAL_STORIES,
 ) -> dict[str, object]:
     selected_date = date.fromisoformat(run_date) if run_date else date.today()
     selected_categories = categories or list(COLLECTOR_TAXONOMY)
@@ -41,6 +45,8 @@ def run_daily_workflow(
             generation = run_script_workflow(
                 selected_date.isoformat(), language, generate_images, generate_audio, cast_mode, visual_style,
                 source_root=NEWS_DIR, cadence="daily",
+                max_articles_per_category=max_articles_per_category,
+                max_total_stories=max_total_stories,
             )
             result["generation"] = generation
             result["episode"] = publish_episode("daily", str(generation["runId"]), (selected_date - timedelta(days=1)).isoformat(), selected_date.isoformat())

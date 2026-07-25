@@ -11,6 +11,7 @@ import secrets
 from typing import Any
 
 from audio_workflow import prepare_story_audio
+from editorial_selection import select_story_candidates
 from episode_service import story_format_for_index
 from news_adapter import NewsArticle, normalize_news_feed
 from story_generator import CAST_MODES, VISUAL_STYLES, generate_story
@@ -37,6 +38,8 @@ def run_script_workflow(
     source_root: Path | None = None,
     input_dir: Path | None = None,
     cadence: str = "daily",
+    max_articles_per_category: int | None = None,
+    max_total_stories: int | None = None,
 ) -> dict[str, object]:
     if cast_mode not in CAST_MODES:
         raise WorkflowInputError(f"Unsupported cast mode. Use one of: {', '.join(CAST_MODES)}.")
@@ -69,7 +72,10 @@ def run_script_workflow(
             articles_found += 1
             article_jobs.append((len(article_jobs), article, source_file))
 
-    generated_stories = _generate_stories(article_jobs, language, cast_mode, visual_style, failures)
+    selected_jobs, selection = select_story_candidates(
+        article_jobs, max_articles_per_category, max_total_stories
+    )
+    generated_stories = _generate_stories(selected_jobs, language, cast_mode, visual_style, failures)
     image_paths = _generate_images(output_dir, generated_stories, failures) if generate_images else {}
     images_generated = sum(len(paths) for paths in image_paths.values())
 
@@ -91,6 +97,8 @@ def run_script_workflow(
         "language": language,
         "startedAt": started_at,
         "articlesFound": articles_found,
+        "articlesSelected": len(selected_jobs),
+        "selection": selection,
         "scriptsGenerated": len(generated_scripts),
         "imagesGenerated": images_generated,
         "generateImages": generate_images,
@@ -121,6 +129,8 @@ def run_script_workflow(
         "cadence": cadence,
         "outputPath": _relative(output_dir),
         "articlesFound": articles_found,
+        "articlesSelected": len(selected_jobs),
+        "selection": selection,
         "scriptsGenerated": len(generated_scripts),
         "imagesGenerated": images_generated,
         "generateImages": generate_images,

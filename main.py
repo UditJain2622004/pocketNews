@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from bson import ObjectId
 
 from audio_workflow import AudioWorkflowInputError, media_file, prepare_story_audio
@@ -93,6 +93,8 @@ class AdminDailyWorkflowRequest(BaseModel):
     castMode: str = "auto"
     visualStyle: str = "animated"
     language: str = "en-IN"
+    maxArticlesPerCategory: Optional[int] = Field(default=3, ge=1)
+    maxTotalStories: Optional[int] = Field(default=12, ge=1)
 
 
 @app.post("/translate")
@@ -192,6 +194,7 @@ def start_admin_daily_workflow(request: AdminDailyWorkflowRequest, background_ta
             result = run_daily_workflow(
                 request.runDate, request.categories, request.mode, request.generateImages,
                 request.generateAudio, request.castMode, request.visualStyle, request.language,
+                request.maxArticlesPerCategory, request.maxTotalStories,
             )
             ADMIN_TASKS[task_id] = {"taskId": task_id, "status": "completed", "result": result}
         except Exception as error:
