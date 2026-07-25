@@ -10,7 +10,7 @@ export default function Dashboard({
   token,
   onProfileUpdate,
   storiesList,
-  setActiveStoryId
+  onPlayStory
 }) {
   const [activeTab, setActiveTab] = useState('home')
 
@@ -213,7 +213,7 @@ export default function Dashboard({
               {/* TAB 1: Home Tab */}
               {activeTab === 'home' && (
                 <HomeTab 
-                  onPlayStory={setActiveStoryId}
+                  onPlayStory={onPlayStory}
                   user={user}
                   onTabChange={setActiveTab}
                   storiesList={storiesList}

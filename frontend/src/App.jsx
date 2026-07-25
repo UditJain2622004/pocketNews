@@ -114,6 +114,7 @@ function App() {
         onLogout={handleLogout}
         token={token}
         onProfileUpdate={setUser}
+        navigateTo={navigateTo}
       />
     )
   }

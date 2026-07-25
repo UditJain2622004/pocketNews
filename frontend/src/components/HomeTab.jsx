@@ -291,17 +291,7 @@ export default function HomeTab({ onPlayStory, user, onTabChange, storiesList = 
 
       {/* Main Show Cards Rows */}
       <div className="space-y-12">
-        {/* Row 1: Top Picks */}
-        {renderNewsRow(user ? 'Top Picks for You' : 'Top Picks for Guest', filteredDramas)}
-
-        {/* Row 2: Daily News */}
-        {renderNewsRow('Daily News', (filteredDramas || []).slice(0, 3))}
-
-        {/* Row 3: Weekly News */}
-        {renderNewsRow('Weekly News', (filteredDramas || []).slice(1, 4))}
-
-        {/* Row 4: Monthly News */}
-        {renderNewsRow('Monthly News', (filteredDramas || []).slice(2, 5))}
+        {renderNewsRow(user ? 'Your episodes' : 'Available episodes', filteredDramas)}
       </div>
 
       {/* Quick Stats section */}

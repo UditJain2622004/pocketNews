@@ -64,6 +64,16 @@ def publish_episode(cadence: str, run_id: str, period_start: str, period_end: st
         categories.add(category)
         entries.append(_enrich_entry({**entry, "category": category, "title": story.get("title", "Untitled story")}, story))
     episode_id = f"{cadence}-{run_id}"
+    cover_path = next(
+        (
+            path
+            for entry in entries
+            for path in entry.get("imagePaths", [])
+            if isinstance(path, str)
+        ),
+        "",
+    )
+    category_label = " & ".join(sorted(category for category in categories if category)[:2]) or "News"
     document = {
         "episodeId": episode_id,
         "cadence": cadence,
@@ -72,6 +82,8 @@ def publish_episode(cadence: str, run_id: str, period_start: str, period_end: st
         "periodEnd": period_end,
         "language": manifest.get("language", "en-IN"),
         "categories": sorted(category for category in categories if category),
+        "title": f"{cadence.title()} Brief: {category_label}",
+        "coverPath": cover_path,
         "scripts": entries,
         "status": "published",
         "publishedAt": _now(),
