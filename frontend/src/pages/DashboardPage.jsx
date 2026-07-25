@@ -32,7 +32,7 @@ const dashboardEpisode = (episode) => {
     title: episode.title || `${episode.cadence} brief: ${categories.slice(0, 2).join(' & ') || 'News'}`,
     topic: categories.join(' + ') || 'News recap',
     summary: scripts.length
-      ? `${scripts.length} cinematic news stories, selected for your interests.`
+      ? `Cinematic news stories, selected for your interests.`
       : 'A cinematic news episode selected for your interests.',
     category: categories[0] || 'News',
     tag: `${episode.cadence} recap`,

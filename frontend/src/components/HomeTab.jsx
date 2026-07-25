@@ -100,7 +100,7 @@ export default function HomeTab({ onPlayStory, user, onTabChange, storiesList = 
                 {/* Top red play statistics badge */}
                 <div className="self-end">
                   <span className="px-2.5 py-1 rounded-md bg-[#EF4444] text-white text-xs font-black tracking-wider flex items-center gap-1">
-                    {drama.plays} <span className="text-[9px]">⏵</span>
+                    {drama.date || '25-07-2026'} <span className="text-[9px]">⏵</span>
                   </span>
                 </div>
 
@@ -109,7 +109,7 @@ export default function HomeTab({ onPlayStory, user, onTabChange, storiesList = 
                   <span className="px-2.5 py-0.5 rounded bg-black/35 text-[10px] font-black text-white uppercase tracking-wider backdrop-blur-sm inline-block">
                     {drama.category}
                   </span>
-                  {drama.date && <p className="text-[10px] font-bold text-zinc-200/90 tracking-wide">{drama.date}</p>}
+                  {/* {drama.date && <p className="text-[10px] font-bold text-zinc-200/90 tracking-wide">{drama.date}</p>} */}
                   <h3 className="text-base font-black text-white tracking-wide uppercase leading-tight drop-shadow-md">
                     {drama.title.split(':')[0]}
                   </h3>
@@ -292,7 +292,7 @@ export default function HomeTab({ onPlayStory, user, onTabChange, storiesList = 
 
       {/* Main Show Cards Rows */}
       <div className="space-y-12">
-        {renderNewsRow(user ? 'Your episodes' : 'Available episodes', filteredDramas)}
+        {renderNewsRow(user ? 'Daily episodes' : 'Available episodes', filteredDramas)}
       </div>
 
       {/* Quick Stats section */}
