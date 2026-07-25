@@ -1,5 +1,12 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 from fastapi.responses import HTMLResponse
+from dotenv import load_dotenv
+from typing import List, Union, Optional
+from news_collection import fetch_google_news_rss
+from news_collection.taxonomy import NEWS_TAXONOMY
+
+# Load environment variables
+load_dotenv()
 
 app = FastAPI(
     title="PocketNews API",
@@ -181,3 +188,30 @@ def read_root():
 @app.get("/api/health")
 def health_check():
     return {"status": "healthy", "service": "PocketNews API"}
+
+@app.get("/api/news/categories")
+def get_categories():
+    """
+    Get the hierarchical news classification mapping (Macro Spheres -> Sub-Topics -> Micro-Niches).
+    """
+    return NEWS_TAXONOMY
+
+@app.get("/api/news")
+async def get_news(
+    q: Optional[str] = None,
+    category: Optional[Union[str, List[str]]] = Query(None),
+    sub_topic: Optional[Union[str, List[str]]] = Query(None),
+    micro_niche: Optional[Union[str, List[str]]] = Query(None)
+):
+    try:
+        data = await fetch_google_news_rss(
+            q=q,
+            category=category,
+            sub_topic=sub_topic,
+            micro_niche=micro_niche
+        )
+        return data
+    except Exception as e:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=500, detail=str(e))
+
