@@ -25,6 +25,9 @@ export default function EpisodePage({ episodeId, token }) {
   const [playbackTime, setPlaybackTime] = useState(0)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const sessionIdRef = useRef(globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random()}`)
+  const sentEventsRef = useRef(new Set())
+  const completedStoriesRef = useRef(new Set())
 
   useEffect(() => {
     let active = true
@@ -60,7 +63,7 @@ export default function EpisodePage({ episodeId, token }) {
           } catch (_) {
             // The player can still use generated clip files from an incomplete manifest.
           }
-          return buildStory(script, audioManifest, stem, runId)
+          return buildStory(script, audioManifest, stem, runId, entry.storyId)
         }))
         const playableStories = loadedStories.filter((story) => story.tracks.length > 0)
         if (!playableStories.length) throw new Error('This episode has no playable audio yet.')
@@ -78,7 +81,7 @@ export default function EpisodePage({ episodeId, token }) {
     }
     loadEpisode()
     return () => { active = false }
-  }, [episodeId])
+  }, [episodeId, token])
 
   const currentStory = stories[storyIndex]
   const currentTrack = currentStory?.tracks[trackIndex]
@@ -117,6 +120,29 @@ export default function EpisodePage({ episodeId, token }) {
     setPlaying(false)
   }
 
+  const sendStoryEvent = (story, event, progressRatio) => {
+    if (!token || !story?.storyId) return
+    const storyKey = `${episodeId}:${story.storyId}`
+    if (event === 'skipped' && completedStoriesRef.current.has(storyKey)) return
+    const eventId = `${sessionIdRef.current}:${episodeId}:${story.storyId}:${event}`
+    if (sentEventsRef.current.has(eventId)) return
+    sentEventsRef.current.add(eventId)
+    if (event === 'completed') completedStoriesRef.current.add(storyKey)
+    fetch(`${API_BASE}/api/episodes/${encodeURIComponent(episodeId)}/events`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ eventId, storyId: story.storyId, event, progressRatio }),
+    }).catch(() => {})
+  }
+
+  const currentStoryProgress = () => {
+    if (!currentStory?.duration) return 0
+    const completedTrackTime = currentStory.tracks
+      .slice(0, trackIndex)
+      .reduce((sum, track) => sum + track.duration, 0)
+    return Math.min(1, (completedTrackTime + playbackTime) / currentStory.duration)
+  }
+
   const selectStory = (nextStoryIndex, autoPlay = playing) => {
     pause()
     setStoryIndex(nextStoryIndex)
@@ -137,6 +163,9 @@ export default function EpisodePage({ episodeId, token }) {
       setElapsed((value) => value + currentStory.tracks[trackIndex].duration)
       setTrackIndex(trackIndex + 1)
     } else if (direction > 0 && storyIndex < stories.length - 1) {
+      if (!completedStoriesRef.current.has(`${episodeId}:${currentStory.storyId}`)) {
+        sendStoryEvent(currentStory, 'skipped', currentStoryProgress())
+      }
       selectStory(storyIndex + 1, shouldPlay)
       return
     } else if (direction > 0) {
@@ -150,6 +179,7 @@ export default function EpisodePage({ episodeId, token }) {
   }
 
   const skipStory = () => {
+    sendStoryEvent(currentStory, 'skipped', currentStoryProgress())
     if (storyIndex < stories.length - 1) selectStory(storyIndex + 1, playing)
     else {
       pause()
@@ -160,7 +190,12 @@ export default function EpisodePage({ episodeId, token }) {
     }
   }
 
-  const handleEnded = () => moveTrack(1)
+  const handleEnded = () => {
+    if (currentStory && trackIndex === currentStory.tracks.length - 1) {
+      sendStoryEvent(currentStory, 'completed', 1)
+    }
+    moveTrack(1)
+  }
   const handleTimeUpdate = (event) => setPlaybackTime(event.currentTarget.currentTime || 0)
   const handleMetadata = () => {
     if (currentTrack && !currentTrack.duration && Number.isFinite(audioRef.current.duration)) {
@@ -262,7 +297,7 @@ export default function EpisodePage({ episodeId, token }) {
   )
 }
 
-function buildStory(script, audioManifest, stem, episodeId) {
+function buildStory(script, audioManifest, stem, episodeId, entryStoryId) {
   const story = script.story || {}
   const clips = new Map((audioManifest.clips || []).map((clip) => [`${clip.beatId}-${clip.lineIndex}`, clip]))
   const canRecover = (audioManifest.failures || []).length > 0
@@ -281,6 +316,7 @@ function buildStory(script, audioManifest, stem, episodeId) {
     })
   }))
   return {
+    storyId: story.storyId || entryStoryId || '',
     title: story.title || 'Untitled story',
     category: story.classification?.category || story.category || 'News',
     tracks,

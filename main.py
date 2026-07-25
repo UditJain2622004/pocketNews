@@ -23,6 +23,7 @@ from auth.router import get_current_user_id, router as auth_router
 from automated_workflows import run_daily_workflow
 from localization_service import locale_for_language, prepare_localized_episode
 from publication_store import episode_playback, list_episodes, set_localized_run, setup_publication_indexes, workflow_status
+from listening_service import ListeningEventError, learned_scores as get_learned_scores, record_listening_event as store_listening_event
 from scheduler_service import start_scheduler, stop_scheduler
 from news_collection import fetch_google_news_rss
 from news_collection.sync_news import run_news_sync
@@ -82,6 +83,13 @@ class AudioWorkflowRequest(BaseModel):
 class MediaWorkflowRequest(BaseModel):
     folderName: str
     generate: Literal["images", "audio", "both"]
+
+
+class ListeningEventRequest(BaseModel):
+    eventId: str = Field(..., min_length=1, max_length=200)
+    storyId: str = Field(..., min_length=1, max_length=200)
+    event: Literal["completed", "skipped"]
+    progressRatio: float = Field(default=0.0, ge=0.0, le=1.0)
 
 
 class AdminDailyWorkflowRequest(BaseModel):
@@ -221,7 +229,12 @@ def get_dashboard_episodes(user_id: str = Depends(get_current_user_id)) -> dict[
     user = db.users.find_one({"_id": ObjectId(user_id)})
     if not user:
         raise HTTPException(status_code=404, detail="User was not found.")
-    return {"episodes": list_episodes(user.get("topics", []))}
+    scores = get_learned_scores(db, user_id)
+    return {
+        "episodes": list_episodes(
+            user.get("topics", []), user.get("subtopics", []), scores
+        )
+    }
 
 
 @app.get("/api/episodes/{episode_id}/playback")
@@ -231,7 +244,10 @@ def get_published_episode_playback(episode_id: str, background_tasks: Background
     user = db.users.find_one({"_id": ObjectId(user_id)})
     if not user:
         raise HTTPException(status_code=404, detail="User was not found.")
-    episode = episode_playback(episode_id, user.get("topics", []))
+    scores = get_learned_scores(db, user_id)
+    episode = episode_playback(
+        episode_id, user.get("topics", []), user.get("subtopics", []), scores
+    )
     if episode is None:
         raise HTTPException(status_code=404, detail="Published episode was not found.")
     profile_language = str(user.get("language") or "English")
@@ -252,6 +268,34 @@ def get_published_episode_playback(episode_id: str, background_tasks: Background
         episode["localizedStatus"] = "canonical"
     episode["requestedLanguage"] = profile_language
     return episode
+
+
+@app.post("/api/episodes/{episode_id}/events")
+def post_episode_event(
+    episode_id: str,
+    request: ListeningEventRequest,
+    user_id: str = Depends(get_current_user_id),
+) -> dict[str, object]:
+    if db is None:
+        raise HTTPException(status_code=503, detail="Database connection is unavailable.")
+    try:
+        user_object_id = ObjectId(user_id)
+    except Exception as error:
+        raise HTTPException(status_code=401, detail="Invalid authenticated user.") from error
+    if not db.users.find_one({"_id": user_object_id}, {"_id": 1}):
+        raise HTTPException(status_code=404, detail="User was not found.")
+    try:
+        return store_listening_event(
+            db,
+            user_id,
+            episode_id,
+            request.eventId,
+            request.storyId,
+            request.event,
+            request.progressRatio,
+        )
+    except ListeningEventError as error:
+        raise HTTPException(status_code=422, detail=str(error)) from error
 
 
 @app.get("/api/stories/{article_id}")

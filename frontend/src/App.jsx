@@ -58,7 +58,7 @@ function App() {
   const handleLoginSuccess = (newToken) => {
     localStorage.setItem('token', newToken)
     setToken(newToken)
-    navigateTo('/dashboard')
+    navigateTo('/home')
   }
 
   const handleLogout = () => {
@@ -74,7 +74,7 @@ function App() {
     return <EpisodePage episodeId={decodeURIComponent(episodeMatch[1])} token={token} />
   }
 
-  if (currentPath === '/admin/workflows') return <AdminWorkflowPage />
+  if (currentPath === '/admin') return <AdminWorkflowPage />
 
   if (currentPath === '/login') {
     return (
@@ -96,9 +96,9 @@ function App() {
     )
   }
 
-  if (currentPath === '/dashboard') {
+  if (currentPath === '/home') {
     if (!token) {
-      // Redirect to login if trying to access dashboard unauthenticated
+      // Redirect to login if trying to access the home feed unauthenticated
       return (
         <LoginPage 
           onLoginSuccess={handleLoginSuccess} 
@@ -121,7 +121,7 @@ function App() {
   // Fallback / default path is Home (landing page)
   return (
     <Home 
-      onEnterApp={() => navigateTo('/dashboard')}
+      onEnterApp={() => navigateTo('/home')}
       user={user}
       onLoginClick={() => navigateTo('/login')}
       onLogout={handleLogout}

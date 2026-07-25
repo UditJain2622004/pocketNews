@@ -8,6 +8,7 @@ from typing import Any
 from uuid import uuid4
 
 from auth.database import db
+from personalization_service import select_personalized_stories
 
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -60,7 +61,7 @@ def publish_episode(cadence: str, run_id: str, period_start: str, period_end: st
         story = script.get("story", {})
         category = str(story.get("category") or story.get("classification", {}).get("category") or "")
         categories.add(category)
-        entries.append({**entry, "category": category, "title": story.get("title", "Untitled story")})
+        entries.append(_enrich_entry({**entry, "category": category, "title": story.get("title", "Untitled story")}, story))
     episode_id = f"{cadence}-{run_id}"
     document = {
         "episodeId": episode_id,
@@ -78,27 +79,73 @@ def publish_episode(cadence: str, run_id: str, period_start: str, period_end: st
     return document
 
 
-def list_episodes(user_topics: list[str]) -> list[dict[str, Any]]:
+def list_episodes(
+    user_topics: list[str],
+    user_subtopics: list[str] | None = None,
+    learned_scores: dict[str, int] | None = None,
+) -> list[dict[str, Any]]:
     if db is None:
         return []
-    selected = {topic.casefold() for topic in user_topics}
     episodes = list(db.episodes.find({"status": "published"}, {"_id": 0}).sort("publishedAt", -1))
     for episode in episodes:
-        episode["matchScore"] = sum(category.casefold() in selected for category in episode.get("categories", []))
+        entries = [_enrich_entry(entry) for entry in episode.get("scripts", [])]
+        _, personalization = select_personalized_stories(
+            entries, user_topics, user_subtopics or [], learned_scores
+        )
+        episode["matchScore"] = personalization["matchScore"]
+        episode["matchingStoryCount"] = personalization["matchingStoryCount"]
+        episode["hasExplorationStory"] = personalization["hasExplorationStory"]
     return sorted(episodes, key=lambda item: (item["matchScore"], item.get("publishedAt", "")), reverse=True)
 
 
-def episode_playback(episode_id: str, user_topics: list[str]) -> dict[str, Any] | None:
+def episode_playback(
+    episode_id: str,
+    user_topics: list[str],
+    user_subtopics: list[str] | None = None,
+    learned_scores: dict[str, int] | None = None,
+) -> dict[str, Any] | None:
     if db is None:
         return None
     episode = db.episodes.find_one({"episodeId": episode_id, "status": "published"}, {"_id": 0})
     if not episode:
         return None
-    selected = {topic.casefold() for topic in user_topics}
-    matching = [entry for entry in episode.get("scripts", []) if entry.get("category", "").casefold() in selected]
-    episode["scripts"] = (matching or episode.get("scripts", []))[:PERSONALIZED_STORY_LIMIT]
+    entries = [_enrich_entry(entry) for entry in episode.get("scripts", [])]
+    selected, personalization = select_personalized_stories(
+        entries, user_topics, user_subtopics or [], learned_scores
+    )
+    # Keep the exploration item visible even when the legacy playback limit
+    # would otherwise truncate the final item in the selected list.
+    if personalization["hasExplorationStory"] and len(selected) > PERSONALIZED_STORY_LIMIT:
+        episode["scripts"] = (
+            selected[:PERSONALIZED_STORY_LIMIT - 1] + [selected[-1]]
+        )
+    else:
+        episode["scripts"] = selected[:PERSONALIZED_STORY_LIMIT]
+    episode.update(personalization)
     episode["storyLimit"] = PERSONALIZED_STORY_LIMIT
     return episode
+
+
+def episode_story_entry(
+    episode_id: str,
+    story_id: str,
+    database: Any | None = None,
+) -> dict[str, Any] | None:
+    """Return one enriched story entry for authenticated feedback validation."""
+    database = database if database is not None else db
+    if database is None:
+        return None
+    episode = database.episodes.find_one(
+        {"episodeId": episode_id, "status": "published"},
+        {"_id": 0, "scripts": 1},
+    )
+    if not episode:
+        return None
+    for entry in episode.get("scripts", []):
+        enriched = _enrich_entry(entry)
+        if str(enriched.get("storyId") or "") == story_id:
+            return enriched
+    return None
 
 
 def set_localized_run(episode_id: str, locale: str, run_id: str, status: str) -> None:
@@ -121,6 +168,30 @@ def _read_json(path: Path) -> dict[str, Any]:
     if not isinstance(payload, dict):
         raise ValueError(f"Expected JSON object: {path}")
     return payload
+
+
+def _enrich_entry(entry: dict[str, Any], story: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Add story tags to new and legacy published episode entries."""
+    enriched = dict(entry)
+    story_payload = story or {}
+    if not story_payload and entry.get("scriptPath"):
+        try:
+            script = _read_json(BASE_DIR / str(entry["scriptPath"]))
+            story_payload = script.get("story", {})
+        except (OSError, ValueError, KeyError):
+            story_payload = {}
+    classification = story_payload.get("classification") or {}
+    if not enriched.get("storyId"):
+        enriched["storyId"] = story_payload.get("storyId") or entry.get("storyId")
+    if not enriched.get("title"):
+        enriched["title"] = story_payload.get("title", "Untitled story")
+    if not enriched.get("category"):
+        enriched["category"] = story_payload.get("category") or classification.get("category", "")
+    if not enriched.get("topics"):
+        enriched["topics"] = story_payload.get("topics", [])
+    if not enriched.get("subcategories"):
+        enriched["subcategories"] = classification.get("subcategories", [])
+    return enriched
 
 
 def _now() -> str:

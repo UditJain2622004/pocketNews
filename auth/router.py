@@ -24,6 +24,31 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 60
 # Predefined Suggested Interests
 SUGGESTED_INTERESTS = PROFILE_TAXONOMY
 
+
+def _normalize_profile_values(values: list[str], known_values: list[str]) -> list[str]:
+    known = {value.casefold(): value for value in known_values}
+    normalized: list[str] = []
+    seen: set[str] = set()
+    for value in values or []:
+        cleaned = str(value).strip()
+        if not cleaned:
+            continue
+        canonical = known.get(cleaned.casefold(), cleaned)
+        key = canonical.casefold()
+        if key not in seen:
+            normalized.append(canonical)
+            seen.add(key)
+    return normalized
+
+
+def _normalize_profile(topics: list[str], subtopics: list[str]) -> tuple[list[str], list[str]]:
+    known_topics = list(SUGGESTED_INTERESTS)
+    known_subtopics = [item for values in SUGGESTED_INTERESTS.values() for item in values]
+    return (
+        _normalize_profile_values(topics, known_topics),
+        _normalize_profile_values(subtopics, known_subtopics),
+    )
+
 # Cryptography Helpers
 def hash_password(password: str) -> tuple:
     salt = os.urandom(16).hex()
@@ -111,13 +136,14 @@ def signup(user_data: UserSignup):
     # Hash the password
     pwd_hash, salt = hash_password(user_data.password)
 
+    normalized_topics, normalized_subtopics = _normalize_profile(user_data.topics, user_data.subtopics)
     user_doc = {
         "username": user_data.username,
         "email": user_data.email,
         "password_hash": pwd_hash,
         "salt": salt,
-        "topics": user_data.topics,
-        "subtopics": user_data.subtopics,
+        "topics": normalized_topics,
+        "subtopics": normalized_subtopics,
         "language": user_data.language,
         "created_at": datetime.utcnow()
     }
@@ -206,9 +232,10 @@ def update_profile(
     except Exception:
         raise HTTPException(status_code=400, detail="Invalid User ID structure")
 
+    normalized_topics, normalized_subtopics = _normalize_profile(profile_data.topics, profile_data.subtopics)
     update_fields = {
-        "topics": profile_data.topics,
-        "subtopics": profile_data.subtopics,
+        "topics": normalized_topics,
+        "subtopics": normalized_subtopics,
         "language": profile_data.language
     }
 
