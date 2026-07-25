@@ -15,7 +15,7 @@ export default function Dashboard({
   const [activeTab, setActiveTab] = useState('home')
 
   return (
-    <div className="h-[100dvh] bg-gradient-to-tr from-[#EBEBF2] via-[#F5F5F7] to-[#E9EFF7] text-zinc-800 font-sans antialiased overflow-hidden relative selection:bg-[#E11D48]/15 selection:text-[#E11D48] flex flex-col md:flex-row">
+    <div className="min-h-screen bg-gradient-to-tr from-[#EBEBF2] via-[#F5F5F7] to-[#E9EFF7] text-zinc-800 font-sans antialiased overflow-x-hidden relative selection:bg-[#E11D48]/15 selection:text-[#E11D48] flex flex-col md:flex-row">
       
       {/* Background decoration blur spheres (glassmorphism backdrops) */}
       <motion.div 
@@ -162,7 +162,7 @@ export default function Dashboard({
       </nav>
 
       {/* MAIN CONTENT CONTAINER */}
-      <div className="flex-1 flex min-h-0 flex-col md:pl-20 pb-20 md:pb-0">
+      <div className="flex-1 flex flex-col md:pl-20 pb-20 md:pb-0">
         
         {/* Top bar header (Desktop only - Styled like Pocket FM search and hello header in light mode) */}
         <header className="hidden md:flex h-24 bg-transparent px-8 items-center justify-between shrink-0 select-none">
@@ -199,7 +199,7 @@ export default function Dashboard({
         </header>
 
         {/* Content Panel Area */}
-        <main className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-8 w-full">
+        <main className="flex-1 p-4 sm:p-8 w-full">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
