@@ -80,6 +80,8 @@ class DramaticSpine(BaseModel):
     characterGoal: str
     obstacle: str
     newsCatalyst: str
+    reversal: str
+    costOfFailure: str
     emotionalTurn: str
     resolution: str
 

@@ -19,6 +19,7 @@ from story_generation.schema import GeneratedStory
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / ".env")
 MODEL = os.getenv("OPENAI_MODEL", "gpt-5.6")
+PROMPT_VERSION = "cinematic-scene-v2"
 _STORY_CACHE: dict[str, dict[str, object]] = {}
 _CACHE_LOCK = Lock()
 
@@ -89,7 +90,7 @@ def _cache_key(
     visual_style: str,
 ) -> str:
     source_hash = hashlib.sha256(article.best_available_text.encode("utf-8")).hexdigest()
-    return f"{article.id}:{source_hash}:{story_format}:{language}:{cast_mode}:{visual_style}:{MODEL}"
+    return f"{article.id}:{source_hash}:{story_format}:{language}:{cast_mode}:{visual_style}:{MODEL}:{PROMPT_VERSION}"
 
 
 def _system_prompt(story_format: str, language: str, cast_mode: str, visual_style: str) -> str:
