@@ -5,6 +5,17 @@
 @theme {
   --font-sans: 'Nunito', sans-serif;
   --font-display: 'Nunito', sans-serif;
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-pulse-slow: pulse-slow 4s ease-in-out infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(0.8deg); }
+  }
+  @keyframes pulse-slow {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.05); }
+  }
 }
 
 :root {
@@ -71,17 +82,6 @@ h1, h2, h3, h4, .font-display {
   border-color: rgba(124, 58, 237, 0.25);
   transform: translateY(-4px);
   box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.08);
-}
-
-/* Ambient animations */
-@keyframes float {
-  0% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-10px) rotate(0.5deg); }
-  100% { transform: translateY(0px) rotate(0deg); }
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
 }
 
 /* Soundwave animations */

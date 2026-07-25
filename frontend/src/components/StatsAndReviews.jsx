@@ -4,7 +4,7 @@ export default function StatsAndReviews() {
   return (
     <div className="space-y-24">
       {/* 10. LIVE STATISTICS */}
-      <section id="stats" className="max-w-8xl mx-auto px-4 py-24 border-t border-slate-200 space-y-12">
+      <section id="stats" className="max-w-6xl mx-auto px-4 py-24 border-t border-slate-200 space-y-12">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
           
           <div className="bg-white border border-slate-250 p-6 rounded-2xl shadow-sm">
@@ -31,7 +31,7 @@ export default function StatsAndReviews() {
       </section>
 
       {/* 11. TESTIMONIALS */}
-      <section className="max-w-8xl mx-auto px-4 py-24 border-t border-slate-200 space-y-12">
+      <section className="max-w-6xl mx-auto px-4 py-24 border-t border-slate-200 space-y-12">
         <div className="text-center space-y-3">
           <h2 className="text-3xl font-extrabold text-[#1D1D1F]">What The Listeners Say</h2>
           <p className="text-slate-600 text-sm max-w-sm mx-auto">Real responses from users switching their feed habits.</p>

@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Timeline({ episodes }) {
   return (
-    <section className="max-w-8xl mx-auto px-4 py-24 border-t border-slate-200 space-y-12 text-center">
+    <section className="max-w-6xl mx-auto px-4 py-24 border-t border-slate-200 space-y-12 text-center">
       <div className="space-y-3">
         <h2 className="text-3xl font-extrabold text-[#1D1D1F]">Episodic TIMELINE</h2>
         <p className="text-slate-600 text-sm max-w-sm mx-auto">Follow long-running world affairs like a Netflix series.</p>

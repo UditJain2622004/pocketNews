@@ -25,7 +25,9 @@ export default function Dashboard({
   setIsPlaying,
   audioProgress,
   videoFrameIndex,
-  demoWaveHeight
+  demoWaveHeight,
+  user,
+  onLogout
 }) {
   return (
     <div className="min-h-screen bg-[#F5F5F7] text-[#1D1D1F] font-sans antialiased overflow-x-hidden relative selection:bg-[#7C3AED]/20 selection:text-slate-900">
@@ -44,17 +46,7 @@ export default function Dashboard({
             >
               ← <span className="hidden sm:inline">Home</span>
             </button>
-            <svg className="w-8 h-8 rounded-xl" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="db-logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#7C3AED" />
-                  <stop offset="100%" stopColor="#EC4899" />
-                </linearGradient>
-              </defs>
-              <rect width="100" height="100" rx="26" fill="url(#db-logo-grad)" />
-              <path d="M38 32 L68 50 L38 68 Z" fill="#ffffff" />
-              <path d="M72 38 A 20 20 0 0 1 72 62" stroke="#ffffff" strokeWidth="4.5" strokeLinecap="round" opacity="0.8" />
-            </svg>
+            <img src="/logo.png" className="w-12 h-12 object-contain rounded-xl" alt="StoryCast AI Logo" />
             <div>
               <span className="text-base sm:text-xl font-bold tracking-tight text-slate-800">StoryCast AI</span>
               <span className="block text-[8px] sm:text-[9px] text-[#7C3AED] font-bold tracking-widest uppercase">Cinematic News Engine</span>
@@ -62,30 +54,57 @@ export default function Dashboard({
           </div>
 
           {/* User profile / Personalization controls */}
-          <div className="flex items-center gap-2 sm:gap-3 bg-white border border-slate-200 px-2 sm:px-3 py-1.5 rounded-2xl">
-            <div className="text-right hidden md:block">
-              <span className="block text-xs font-semibold text-slate-700">Persona Editor</span>
-              <span className="block text-[10px] text-slate-500">{profession} • {level}</span>
+          <div className="flex items-center gap-2 sm:gap-3">
+            {user && (
+              <div className="hidden lg:flex flex-wrap gap-1 max-w-[200px] justify-end">
+                {user.topics?.map(topic => (
+                  <span key={topic} className="px-2 py-0.5 bg-[#7C3AED]/10 text-[#7C3AED] rounded-md text-[9px] font-bold uppercase tracking-wider">
+                    {topic}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            <div className="flex items-center gap-2 bg-white border border-slate-200 px-2 sm:px-3 py-1.5 rounded-2xl shadow-sm">
+              <div className="text-right hidden md:block">
+                <span className="block text-xs font-semibold text-slate-700">Persona Editor</span>
+                <span className="block text-[10px] text-slate-500">{profession} • {level}</span>
+              </div>
+              <select 
+                value={profession} 
+                onChange={(e) => setProfession(e.target.value)}
+                className="bg-white border border-slate-200 text-[11px] sm:text-xs text-slate-750 rounded-lg px-1.5 sm:px-2 py-1 focus:outline-none focus:border-[#7C3AED]"
+              >
+                <option>Software Engineer</option>
+                <option>Student</option>
+                <option>Investor</option>
+                <option>Creative Writer</option>
+              </select>
+              <select 
+                value={level} 
+                onChange={(e) => setLevel(e.target.value)}
+                className="bg-white border border-slate-200 text-[11px] sm:text-xs text-slate-750 rounded-lg px-1.5 sm:px-2 py-1 focus:outline-none focus:border-[#7C3AED]"
+              >
+                <option>Analogy-driven</option>
+                <option>Standard Narrative</option>
+                <option>Deep Dive</option>
+              </select>
             </div>
-            <select 
-              value={profession} 
-              onChange={(e) => setProfession(e.target.value)}
-              className="bg-white border border-slate-200 text-[11px] sm:text-xs text-slate-750 rounded-lg px-1.5 sm:px-2 py-1 focus:outline-none focus:border-[#7C3AED]"
-            >
-              <option>Software Engineer</option>
-              <option>Student</option>
-              <option>Investor</option>
-              <option>Creative Writer</option>
-            </select>
-            <select 
-              value={level} 
-              onChange={(e) => setLevel(e.target.value)}
-              className="bg-white border border-slate-200 text-[11px] sm:text-xs text-slate-750 rounded-lg px-1.5 sm:px-2 py-1 focus:outline-none focus:border-[#7C3AED]"
-            >
-              <option>Analogy-driven</option>
-              <option>Standard Narrative</option>
-              <option>Deep Dive</option>
-            </select>
+
+            {user ? (
+              <div className="flex items-center gap-2 bg-white border border-slate-200 px-2 sm:px-3 py-1.5 rounded-2xl shadow-sm">
+                <div className="text-right hidden sm:block">
+                  <span className="block text-xs font-bold text-slate-800">@{user.username}</span>
+                  <span className="block text-[9px] text-slate-500 font-bold uppercase tracking-wider">{user.language}</span>
+                </div>
+                <button 
+                  onClick={onLogout}
+                  className="px-3 py-1 text-[11px] font-bold text-red-650 bg-red-50 hover:bg-red-100 rounded-lg transition-all"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : null}
           </div>
         </div>
       </header>

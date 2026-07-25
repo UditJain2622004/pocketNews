@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Storytellers({ storytellers, activeTeller, setActiveTeller }) {
   return (
-    <section id="storytellers" className="max-w-8xl mx-auto px-4 py-24 border-t border-slate-200 space-y-12">
+    <section id="storytellers" className="max-w-6xl mx-auto px-4 py-24 border-t border-slate-200 space-y-12">
       <div className="text-center space-y-3">
         <h2 className="text-3xl sm:text-5xl font-extrabold text-[#1D1D1F]">Meet Your AI Storytellers</h2>
         <p className="text-slate-600 max-w-md mx-auto text-sm">Choose characters that match your interest. Every narrator keeps memory across your listening sessions.</p>

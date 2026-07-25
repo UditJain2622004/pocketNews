@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function FeaturesGrid() {
   return (
-    <section id="features" className="max-w-8xl mx-auto px-4 py-24 border-t border-slate-200 space-y-12">
+    <section id="features" className="max-w-6xl mx-auto px-4 py-24 border-t border-slate-200 space-y-12">
       <div className="text-center space-y-3">
         <h2 className="text-3xl sm:text-5xl font-extrabold text-[#1D1D1F]">Engineered For Immersion</h2>
         <p className="text-slate-600 max-w-md mx-auto text-sm">Every feature is designed to drag you out of the passenger seat and put you in control of the news.</p>

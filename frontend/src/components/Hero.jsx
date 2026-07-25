@@ -3,14 +3,15 @@ import React from 'react'
 export default function Hero({ onEnterApp, heroMorphStep }) {
   return (
     <div>
-      <header className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-12 pt-28 pb-24 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative">
+      <header className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 pt-28 pb-24 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center relative">
         
         {/* Left Text Column */}
-        <div className="lg:col-span-7 space-y-8 text-left z-10">
-          <div className="flex flex-wrap gap-2">
-            <span className="px-3 py-1 rounded-full text-[10px] font-bold bg-[#7C3AED]/5 text-[#7C3AED] border border-[#7C3AED]/15 uppercase">⚡ AI Generated</span>
-            <span className="px-3 py-1 rounded-full text-[10px] font-bold bg-[#2563EB]/5 text-[#2563EB] border border-[#2563EB]/15 uppercase">🎙️ Voice Narration</span>
-            <span className="px-3 py-1 rounded-full text-[10px] font-bold bg-[#EC4899]/5 text-[#EC4899] border border-[#EC4899]/15 uppercase">🧠 Personalized</span>
+        <div className="space-y-8 text-left z-10">
+          <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/85 border border-slate-200/50 shadow-sm text-xs font-bold text-slate-700 backdrop-blur-md w-fit">
+            <span className="flex h-2 w-2 rounded-full bg-violet-600 animate-pulse" />
+            <span>AI-Native News Engine</span>
+            <span className="text-slate-300">|</span>
+            <span className="text-slate-500 font-medium">Interactive Podcasts</span>
           </div>
 
           <h1 className="text-4xl sm:text-7xl font-extrabold tracking-tight leading-[1.08] text-[#1D1D1F]">
@@ -25,13 +26,13 @@ export default function Hero({ onEnterApp, heroMorphStep }) {
           <div className="flex flex-wrap gap-4 pt-2">
             <button 
               onClick={onEnterApp}
-              className="px-8 py-4 rounded-2xl text-base font-bold bg-[#7C3AED] hover:bg-[#7C3AED]/90 text-white transition-all shadow-lg shadow-[#7C3AED]/20 flex items-center gap-2 hover:-translate-y-0.5"
+              className="px-8 py-4 rounded-2xl text-base font-extrabold bg-[#1D1D1F] text-white hover:bg-black transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5 active:scale-98 flex items-center gap-2"
             >
               ✨ Try Today's Story
             </button>
             <a 
               href="#demo"
-              className="px-8 py-4 rounded-2xl text-base font-bold bg-white border border-slate-200 hover:bg-slate-50 text-slate-800 transition-all flex items-center gap-2"
+              className="px-8 py-4 rounded-2xl text-base font-bold bg-slate-100/80 hover:bg-slate-200/80 text-slate-800 transition-all flex items-center gap-2"
             >
               ▶ Watch Demo
             </a>
@@ -39,7 +40,7 @@ export default function Hero({ onEnterApp, heroMorphStep }) {
         </div>
 
         {/* Right Floating Phone Mockup */}
-        <div className="lg:col-span-5 flex justify-center relative z-10">
+        <div className="flex justify-center relative z-10">
           <div className="w-72 h-[560px] rounded-[42px] border-[6px] border-[#D2D2D7] bg-[#09090B] shadow-2xl relative overflow-hidden animate-float">
             {/* Phone Camera Notch */}
             <div className="absolute top-3 left-1/2 -translate-x-1/2 w-24 h-4 bg-[#D2D2D7] rounded-full z-20" />

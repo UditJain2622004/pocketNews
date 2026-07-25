@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function KnowledgeGraph({ graphNodes, graphConnections, hoveredNode, setHoveredNode }) {
   return (
-    <section id="graph" className="max-w-8xl mx-auto px-4 py-24 border-t border-slate-200 space-y-12 text-center relative">
+    <section id="graph" className="max-w-5xl mx-auto px-4 py-24 border-t border-slate-200 space-y-12 text-center relative">
       <div className="space-y-3">
         <h2 className="text-3xl sm:text-5xl font-extrabold text-[#1D1D1F]">Connected Story Universe</h2>
         <p className="text-slate-600 max-w-md mx-auto text-sm">Understand the big picture rather than isolated titles. Hover over nodes to see relationships.</p>

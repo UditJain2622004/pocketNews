@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function StoryDemo({ demoStep, demoWaveHeight }) {
   return (
-    <section id="demo" className="max-w-8xl mx-auto px-4 py-24 border-t border-slate-200 space-y-8 text-center relative">
+    <section id="demo" className="max-w-5xl mx-auto px-4 py-24 border-t border-slate-200 space-y-8 text-center relative">
       <div className="space-y-3">
         <h2 className="text-3xl sm:text-5xl font-extrabold text-[#1D1D1F]">Watch The Magic Happen</h2>
         <p className="text-slate-600 max-w-lg mx-auto text-sm sm:text-base">Experience how StoryCast AI translates technical stats into immersive digital beats in real-time.</p>

@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function GenreSwitcher({ storyGenres, activeGenre, setActiveGenre, onEnterApp }) {
   return (
-    <section className="max-w-8xl mx-auto px-4 py-24 border-t border-slate-200 space-y-12 text-center">
+    <section className="max-w-6xl mx-auto px-4 py-24 border-t border-slate-200 space-y-12 text-center">
       <div className="space-y-3">
         <h2 className="text-3xl sm:text-5xl font-extrabold text-[#1D1D1F]">One News. Infinite Experiences.</h2>
         <p className="text-slate-600 max-w-md mx-auto text-sm">Experience the exact same news story adapted to different structural genres with one swipe.</p>
