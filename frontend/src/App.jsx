@@ -3,15 +3,21 @@ import Home from './pages/Home'
 import LoginPage from './pages/LoginPage'
 import SignUpPage from './pages/SignUpPage'
 import DashboardPage from './pages/DashboardPage'
+import EpisodePage from './pages/EpisodePage'
 
 const API_BASE = 'http://localhost:8001'
 
 function App() {
+  const episodeMatch = window.location.pathname.match(/^\/episode\/([^/]+)\/?$/)
   const [showLanding, setShowLanding] = useState(true)
   const [showLogin, setShowLogin] = useState(false)
   const [showSignUp, setShowSignUp] = useState(false)
   const [token, setToken] = useState(localStorage.getItem('token') || null)
   const [user, setUser] = useState(null)
+
+  if (episodeMatch) {
+    return <EpisodePage episodeId={decodeURIComponent(episodeMatch[1])} />
+  }
 
   // Fetch user profile on token change/mount
   useEffect(() => {
