@@ -22,7 +22,7 @@ from auth.database import db
 from auth.router import get_current_user_id, router as auth_router
 from automated_workflows import run_daily_workflow
 from localization_service import locale_for_language, prepare_localized_episode
-from publication_store import episode_playback, list_episodes, set_localized_run, setup_publication_indexes, workflow_status
+from publication_store import backfill_complete_episodes, episode_playback, list_episodes, set_localized_run, setup_publication_indexes, workflow_status
 from listening_service import ListeningEventError, learned_scores as get_learned_scores, record_listening_event as store_listening_event
 from scheduler_service import start_scheduler, stop_scheduler
 from news_collection import fetch_google_news_rss
@@ -220,6 +220,14 @@ def get_admin_workflow_status(workflow_id: str) -> dict[str, object]:
     if record is None:
         raise HTTPException(status_code=404, detail="Workflow was not found.")
     return record
+
+
+@app.post("/api/admin/episodes/backfill")
+def backfill_historical_episodes() -> dict[str, object]:
+    try:
+        return backfill_complete_episodes()
+    except RuntimeError as error:
+        raise HTTPException(status_code=503, detail=str(error)) from error
 
 
 @app.get("/api/dashboard/episodes")

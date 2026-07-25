@@ -13,6 +13,7 @@ from personalization_service import select_personalized_stories
 
 BASE_DIR = Path(__file__).resolve().parent
 PERSONALIZED_STORY_LIMIT = 4
+SCRIPTS_DIR = BASE_DIR / "scripts"
 
 
 def start_workflow(cadence: str, period_start: str, period_end: str) -> str:
@@ -77,6 +78,30 @@ def publish_episode(cadence: str, run_id: str, period_start: str, period_end: st
     }
     db.episodes.update_one({"episodeId": episode_id}, {"$set": document}, upsert=True)
     return document
+
+
+def backfill_complete_episodes() -> dict[str, Any]:
+    """Publish legacy script runs only when every story has usable audio and visuals."""
+    if db is None:
+        raise RuntimeError("MongoDB is required for episode publishing.")
+
+    published: list[dict[str, str]] = []
+    skipped: list[dict[str, str]] = []
+    for run_dir in sorted(path for path in SCRIPTS_DIR.iterdir() if path.is_dir()):
+        try:
+            manifest = _read_json(run_dir / "manifest.json")
+            reason = _missing_media_reason(run_dir, manifest)
+            if reason:
+                skipped.append({"runId": run_dir.name, "reason": reason})
+                continue
+
+            run_date = str(manifest.get("runDate") or run_dir.name.split("_", 1)[0])
+            cadence = str(manifest.get("cadence") or "daily")
+            episode = publish_episode(cadence, run_dir.name, run_date, run_date)
+            published.append({"runId": run_dir.name, "episodeId": str(episode["episodeId"])})
+        except Exception as error:
+            skipped.append({"runId": run_dir.name, "reason": str(error)})
+    return {"published": published, "skipped": skipped}
 
 
 def list_episodes(
@@ -160,6 +185,38 @@ def setup_publication_indexes() -> None:
     db.workflow_runs.create_index("workflowId", unique=True)
     db.episodes.create_index("episodeId", unique=True)
     db.episodes.create_index([("publishedAt", -1), ("cadence", 1)])
+
+
+def _missing_media_reason(run_dir: Path, manifest: dict[str, Any]) -> str | None:
+    scripts = manifest.get("scripts")
+    if not isinstance(scripts, list) or not scripts:
+        return "No generated scripts."
+    for entry in scripts:
+        if not isinstance(entry, dict):
+            return "Invalid script manifest entry."
+        article_id = str(entry.get("articleId") or "")
+        image_paths = entry.get("imagePaths")
+        if not isinstance(image_paths, list) or not any(_run_file_exists(run_dir, path) for path in image_paths):
+            return f"Story {article_id} has no generated visual assets."
+
+        audio_manifest = run_dir / "audio" / article_id / "manifest.json"
+        if not audio_manifest.is_file():
+            return f"Story {article_id} has no audio manifest."
+        audio = _read_json(audio_manifest)
+        clips = audio.get("clips")
+        if audio.get("failures") or not isinstance(clips, list) or not clips:
+            return f"Story {article_id} has incomplete audio."
+        if any(not isinstance(clip, dict) or not _run_file_exists(run_dir, clip.get("path")) for clip in clips):
+            return f"Story {article_id} has missing audio clips."
+    return None
+
+
+def _run_file_exists(run_dir: Path, relative_path: object) -> bool:
+    if not isinstance(relative_path, str) or not relative_path:
+        return False
+    path = Path(relative_path)
+    resolved = path.resolve() if path.is_absolute() else (BASE_DIR / path).resolve()
+    return resolved.is_file() and resolved.is_relative_to(run_dir.resolve())
 
 
 def _read_json(path: Path) -> dict[str, Any]:
