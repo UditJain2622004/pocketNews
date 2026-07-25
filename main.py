@@ -4,8 +4,6 @@ from pathlib import Path
 from typing import List
 
 from fastapi import FastAPI, HTTPException, Query
-from fastapi.responses import FileResponse
-from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from episode_service import build_episode
@@ -15,15 +13,13 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from multilingual.translator import translate_text
 
 BASE_DIR = Path(__file__).resolve().parent
-STATIC_DIR = BASE_DIR / "static"
 NEWS_FEED_PATH = BASE_DIR / "news_format.json"
 
 app = FastAPI(
     title="PocketNews API",
-    description="Multilingual, visual AI news episode prototype.",
+    description="Multilingual, AI-generated news episode API.",
     version="0.2.0",
 )
-app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 
 class TranslationRequest(BaseModel):
@@ -36,9 +32,13 @@ def translate(req: TranslationRequest):
     return translate_text(req.text, req.languages)
 
 
-@app.get("/", include_in_schema=False)
-def read_root() -> FileResponse:
-    return FileResponse(STATIC_DIR / "index.html")
+@app.get("/")
+def read_root() -> dict[str, str]:
+    return {
+        "message": "PocketNews API is running.",
+        "docs_url": "/docs",
+        "episode_url": "/api/episodes",
+    }
 
 
 @app.get("/api/health")
