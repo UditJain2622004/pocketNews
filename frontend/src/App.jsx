@@ -7,11 +7,24 @@ import DashboardPage from './pages/DashboardPage'
 const API_BASE = 'http://localhost:8001'
 
 function App() {
-  const [showLanding, setShowLanding] = useState(true)
-  const [showLogin, setShowLogin] = useState(false)
-  const [showSignUp, setShowSignUp] = useState(false)
+  const [currentPath, setCurrentPath] = useState(window.location.pathname)
   const [token, setToken] = useState(localStorage.getItem('token') || null)
   const [user, setUser] = useState(null)
+
+  // Listen to popstate event (browser back/forward button clicks)
+  useEffect(() => {
+    const handlePopState = () => {
+      setCurrentPath(window.location.pathname)
+    }
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [])
+
+  // Navigation helper
+  const navigateTo = (path) => {
+    window.history.pushState({}, '', path)
+    setCurrentPath(path)
+  }
 
   // Fetch user profile on token change/mount
   useEffect(() => {
@@ -36,6 +49,7 @@ function App() {
         localStorage.removeItem('token')
         setToken(null)
         setUser(null)
+        navigateTo('/')
       })
     }
   }, [token])
@@ -43,63 +57,65 @@ function App() {
   const handleLoginSuccess = (newToken) => {
     localStorage.setItem('token', newToken)
     setToken(newToken)
-    setShowLogin(false)
-    setShowSignUp(false)
-    setShowLanding(false) // Automatically direct to app dashboard
+    navigateTo('/dashboard')
   }
 
   const handleLogout = () => {
     localStorage.removeItem('token')
     setToken(null)
     setUser(null)
-    setShowLanding(true)
+    navigateTo('/')
   }
 
-  // Routing
-  if (showLogin) {
+  // Routing rendering logic
+  if (currentPath === '/login') {
     return (
       <LoginPage 
         onLoginSuccess={handleLoginSuccess} 
-        onCancel={() => setShowLogin(false)} 
-        onSwitchToSignUp={() => {
-          setShowLogin(false);
-          setShowSignUp(true);
-        }}
+        onCancel={() => navigateTo('/')} 
+        onSwitchToSignUp={() => navigateTo('/signup')}
       />
     )
   }
 
-  if (showSignUp) {
+  if (currentPath === '/signup') {
     return (
       <SignUpPage 
         onSignupSuccess={handleLoginSuccess} 
-        onCancel={() => setShowSignUp(false)} 
-        onSwitchToSignIn={() => {
-          setShowSignUp(false);
-          setShowLogin(true);
-        }}
+        onCancel={() => navigateTo('/')} 
+        onSwitchToSignIn={() => navigateTo('/login')}
       />
     )
   }
 
-  if (showLanding) {
+  if (currentPath === '/dashboard') {
+    if (!token) {
+      // Redirect to login if trying to access dashboard unauthenticated
+      return (
+        <LoginPage 
+          onLoginSuccess={handleLoginSuccess} 
+          onCancel={() => navigateTo('/')} 
+          onSwitchToSignUp={() => navigateTo('/signup')}
+        />
+      )
+    }
     return (
-      <Home 
-        onEnterApp={() => setShowLanding(false)}
+      <DashboardPage 
+        setShowLanding={() => navigateTo('/')}
         user={user}
-        onLoginClick={() => {
-          setShowLogin(true);
-          setShowSignUp(false);
-        }}
         onLogout={handleLogout}
+        token={token}
+        onProfileUpdate={setUser}
       />
     )
   }
 
+  // Fallback / default path is Home (landing page)
   return (
-    <DashboardPage 
-      setShowLanding={setShowLanding}
+    <Home 
+      onEnterApp={() => navigateTo('/dashboard')}
       user={user}
+      onLoginClick={() => navigateTo('/login')}
       onLogout={handleLogout}
     />
   )
