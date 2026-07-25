@@ -34,6 +34,7 @@ def run_daily_workflow(
     max_articles_per_category: int | None = DEFAULT_MAX_ARTICLES_PER_CATEGORY,
     max_total_stories: int | None = DEFAULT_MAX_TOTAL_STORIES,
     three_images_per_story: bool = False,
+    story_format: str = "auto",
 ) -> dict[str, object]:
     selected_date = date.fromisoformat(run_date) if run_date else date.today()
     selected_categories = categories or list(COLLECTOR_TAXONOMY)
@@ -49,6 +50,7 @@ def run_daily_workflow(
                 max_articles_per_category=max_articles_per_category,
                 max_total_stories=max_total_stories,
                 three_images_per_story=three_images_per_story,
+                story_format=story_format,
             )
             result["generation"] = generation
             result["episode"] = publish_episode("daily", str(generation["runId"]), (selected_date - timedelta(days=1)).isoformat(), selected_date.isoformat())

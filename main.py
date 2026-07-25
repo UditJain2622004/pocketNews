@@ -110,6 +110,7 @@ class AdminDailyWorkflowRequest(BaseModel):
     maxArticlesPerCategory: Optional[int] = Field(default=3, ge=1)
     maxTotalStories: Optional[int] = Field(default=12, ge=1)
     threeImagesPerStory: bool = False
+    storyFormat: str = "auto"
 
 
 @app.post("/translate")
@@ -211,6 +212,7 @@ def start_admin_daily_workflow(request: AdminDailyWorkflowRequest, background_ta
                 request.generateAudio, request.castMode, request.visualStyle, request.language,
                 request.maxArticlesPerCategory, request.maxTotalStories,
                 request.threeImagesPerStory,
+                request.storyFormat,
             )
             ADMIN_TASKS[task_id] = {"taskId": task_id, "status": "completed", "result": result}
         except Exception as error:

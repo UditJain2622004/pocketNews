@@ -63,8 +63,8 @@ class StoryClassification(BaseModel):
 class CreativeDirection(BaseModel):
     genre: str
     dramaticPremise: str
-    performanceMode: Literal["character-dialogue", "multi-character-self-talk"]
-    castMode: Literal["story_duo", "recurring_duo"]
+    performanceMode: Literal["character-dialogue", "solo-character-hot-take", "first-person-pov"]
+    castMode: Literal["story_duo", "recurring_duo", "solo_host", "pov_lead"]
     visualStyle: Literal["animated", "live_action"]
 
 
@@ -93,6 +93,6 @@ class GeneratedStory(BaseModel):
     creativeDirection: CreativeDirection
     dramaticSpine: DramaticSpine
     visualBible: VisualBible
-    cast: list[VoiceCharacter]
+    cast: list[VoiceCharacter] = Field(min_items=1, max_items=3)
     beats: list[StoryBeat]
     exit: str
