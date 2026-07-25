@@ -153,7 +153,7 @@
         if (!clip?.url && !fallbackUrl) return;
         tracks.push({
           url: clip?.url || fallbackUrl,
-          duration: Number(clip.durationSeconds) || 0,
+          duration: Number(clip?.durationSeconds) || 0,
           text: line.text,
           speaker: line.speaker,
           image: beat.visual && beat.visual.imagePath ? mediaUrl(beat.visual.imagePath) : "",
