@@ -4,7 +4,8 @@ from pathlib import Path
 from typing import List, Literal, Optional
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import BackgroundTasks, FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
@@ -14,6 +15,11 @@ from image_workflow import ImageWorkflowInputError, prepare_story_images
 from news_adapter import load_mock_articles
 from story_generator import CAST_MODES, VISUAL_STYLES, StoryGenerationError, generate_story
 from workflow_service import WorkflowInputError, run_script_workflow
+from auth.database import setup_db_indexes
+from auth.router import router as auth_router
+from news_collection import fetch_google_news_rss
+from news_collection.sync_news import run_news_sync
+from news_collection.taxonomy import NEWS_TAXONOMY
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from multilingual.translator import translate_text
@@ -28,6 +34,19 @@ app = FastAPI(
     description="Multilingual, AI-generated news episode API.",
     version="0.5.0",
 )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+app.include_router(auth_router)
+
+
+@app.on_event("startup")
+def on_startup() -> None:
+    setup_db_indexes()
 
 
 class TranslationRequest(BaseModel):
@@ -79,6 +98,61 @@ def episode_player():
 @app.get("/api/news")
 def get_news() -> dict[str, object]:
     return {"articles": [article.to_dict() for article in _load_articles()]}
+
+
+@app.get("/api/news/categories")
+def get_news_categories() -> dict[str, object]:
+    return NEWS_TAXONOMY
+
+
+@app.get("/api/news/live")
+async def get_live_news(
+    q: Optional[str] = None,
+    category: Optional[List[str]] = Query(None),
+    sub_topic: Optional[List[str]] = Query(None),
+    micro_niche: Optional[List[str]] = Query(None),
+) -> dict[str, object]:
+    try:
+        return await fetch_google_news_rss(
+            q=q,
+            category=category,
+            sub_topic=sub_topic,
+            micro_niche=micro_niche,
+        )
+    except Exception as error:
+        raise HTTPException(status_code=500, detail=str(error)) from error
+
+
+@app.post("/api/news/sync")
+def trigger_news_sync(background_tasks: BackgroundTasks) -> dict[str, object]:
+    background_tasks.add_task(run_news_sync)
+    return {
+        "status": "sync_started",
+        "message": "Bulk news scraping process initiated in the background.",
+        "categories": list(NEWS_TAXONOMY.keys()),
+    }
+
+
+@app.get("/api/news/local")
+def get_local_archive(category: str, date: Optional[str] = None) -> dict[str, object]:
+    from datetime import datetime
+    import json
+
+    archive_date = date or datetime.now().strftime("%d_%m_%Y")
+    archive_path = BASE_DIR / "News" / archive_date / f"{category.strip().lower()}.json"
+    if not archive_path.is_file():
+        raise HTTPException(
+            status_code=404,
+            detail=f"Local news archive not found for category '{category}' on date '{archive_date}'",
+        )
+    try:
+        with archive_path.open("r", encoding="utf-8") as input_file:
+            payload = json.load(input_file)
+        if not isinstance(payload, dict):
+            raise ValueError("Expected a JSON object.")
+        return payload
+    except (OSError, ValueError, json.JSONDecodeError) as error:
+        raise HTTPException(status_code=500, detail=f"Error reading archive file: {error}") from error
 
 
 @app.get("/api/stories/{article_id}")
