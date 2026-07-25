@@ -1,4 +1,4 @@
-﻿"""Reusable story-module creation and personalized episode composition."""
+"""Reusable story-module creation and personalized episode composition."""
 from __future__ import annotations
 import re
 from typing import Iterable
@@ -78,7 +78,7 @@ def _takeaway_lines(story_format: str, title: str) -> list[dict[str, str]]:
     speaker = "maya" if story_format == "two-person-banter" else "scene-guide" if story_format == "dramatized-pov" else "nova"
     return [{"speaker": speaker, "text": f"The clean takeaway: {title}. Consider the plot officially in motion."}]
 
-def _select_articles(articles: Iterable[NewsArticle], interests: list[str], story_count: int) -> list[NewsArticle]:
+def supported_story_formats() -> tuple[str, ...]:`n    return tuple(CASTS)`n`n`ndef _story_format_for_index(index: int) -> str:`n    return ("solo-hot-take", "two-person-banter", "dramatized-pov")[index % 3]`n`n`ndef _select_articles(articles: Iterable[NewsArticle], interests: list[str], story_count: int) -> list[NewsArticle]:
     requested = set(interests)
     candidates = [article for article in articles if requested.intersection(article.categories)] or list(articles)
     selected, used_categories = [], set()
@@ -103,3 +103,4 @@ def _story_summary(text: str, fallback: str) -> str:
 def _episode_title(interests: list[str]) -> str:
     focus = " + ".join(item.title() for item in interests[:2] if item != "top") or "Today"
     return f"{focus} in motion"
+
