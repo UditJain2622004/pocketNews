@@ -35,3 +35,9 @@ class UserProfileResponse(BaseModel):
 class SuggestionResponse(BaseModel):
     suggestions: Dict[str, List[str]]
 
+class ProfileUpdateRequest(BaseModel):
+    topics: List[str] = []
+    subtopics: List[str] = []
+    language: str = "English"
+
+
