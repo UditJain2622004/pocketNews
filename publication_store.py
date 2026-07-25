@@ -120,12 +120,20 @@ def backfill_complete_episodes() -> dict[str, Any]:
 def list_published_episodes() -> list[dict[str, Any]]:
     if db is None:
         raise RuntimeError("MongoDB is required for episode publishing.")
-    return list(
+    episodes = list(
         db.episodes.find(
             {"status": "published"},
-            {"_id": 0, "episodeId": 1, "runId": 1, "title": 1, "cadence": 1, "periodEnd": 1},
+            {"_id": 0, "episodeId": 1, "runId": 1, "title": 1, "cadence": 1, "periodEnd": 1, "scripts.title": 1},
         ).sort("publishedAt", -1)
     )
+    for episode in episodes:
+        if str(episode.get("title") or "").casefold().startswith(f"{episode.get('cadence', '')} brief:"):
+            episode["title"] = next(
+                (str(entry.get("title") or "") for entry in episode.get("scripts", []) if isinstance(entry, dict) and entry.get("title")),
+                "News Edition",
+            )
+        episode.pop("scripts", None)
+    return episodes
 
 
 def delete_published_episode(episode_id: str) -> dict[str, str]:
