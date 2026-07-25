@@ -12,9 +12,9 @@ from typing import Any
 
 from audio_workflow import prepare_story_audio
 from episode_service import story_format_for_index
-from image_generator import generate_story_image
 from news_adapter import NewsArticle, normalize_news_feed
-from story_generator import generate_story
+from story_generator import CAST_MODES, VISUAL_STYLES, generate_story
+from visual_story_service import generate_story_visuals
 
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -32,7 +32,13 @@ def run_script_workflow(
     language: str,
     generate_images: bool = True,
     generate_audio: bool = True,
+    cast_mode: str = "auto",
+    visual_style: str = "animated",
 ) -> dict[str, object]:
+    if cast_mode not in CAST_MODES:
+        raise WorkflowInputError(f"Unsupported cast mode. Use one of: {', '.join(CAST_MODES)}.")
+    if visual_style not in VISUAL_STYLES:
+        raise WorkflowInputError(f"Unsupported visual style. Use one of: {', '.join(VISUAL_STYLES)}.")
     selected_date = _resolve_date(run_date)
     input_dir = ARTICLES_DIR / selected_date.isoformat()
     if not input_dir.is_dir():
@@ -60,7 +66,7 @@ def run_script_workflow(
             articles_found += 1
             article_jobs.append((len(article_jobs), article, source_file))
 
-    generated_stories = _generate_stories(article_jobs, language, failures)
+    generated_stories = _generate_stories(article_jobs, language, cast_mode, visual_style, failures)
     image_paths = _generate_images(output_dir, generated_stories, failures) if generate_images else {}
     images_generated = sum(len(paths) for paths in image_paths.values())
 
@@ -85,6 +91,8 @@ def run_script_workflow(
         "imagesGenerated": images_generated,
         "generateImages": generate_images,
         "generateAudio": generate_audio,
+        "castMode": cast_mode,
+        "visualStyle": visual_style,
         "scripts": generated_scripts,
         "failures": failures,
     }
@@ -112,6 +120,8 @@ def run_script_workflow(
         "imagesGenerated": images_generated,
         "generateImages": generate_images,
         "generateAudio": generate_audio,
+        "castMode": cast_mode,
+        "visualStyle": visual_style,
         "audio": audio_result,
         "failures": failures,
     }
@@ -164,12 +174,16 @@ def _write_story(
 def _generate_stories(
     article_jobs: list[tuple[int, NewsArticle, Path]],
     language: str,
+    cast_mode: str,
+    visual_style: str,
     failures: list[dict[str, str]],
 ) -> list[tuple[int, NewsArticle, Path, dict[str, object]]]:
     generated_stories: list[tuple[int, NewsArticle, Path, dict[str, object]]] = []
     with ThreadPoolExecutor(max_workers=MAX_PARALLEL_REQUESTS) as executor:
         futures = {
-            executor.submit(generate_story, article, story_format_for_index(index), language): (index, article, source_file)
+            executor.submit(
+                generate_story, article, story_format_for_index(index), language, cast_mode, visual_style
+            ): (index, article, source_file)
             for index, article, source_file in article_jobs
         }
         for future in as_completed(futures):
@@ -193,40 +207,20 @@ def _generate_images(
     failures: list[dict[str, str]],
 ) -> dict[int, list[str]]:
     image_paths: dict[int, list[str]] = {index: [] for index, _, _, _ in generated_stories}
-    image_jobs: list[tuple[int, NewsArticle, Path, dict[str, object], dict[str, object]]] = []
-    for index, article, source_file, story in generated_stories:
-        beats = story.get("beats")
-        if not isinstance(beats, list):
-            failures.append(
-                {
-                    "articleId": article.id,
-                    "sourceFile": _relative(source_file),
-                    "error": "Generated story does not contain visual beats.",
-                }
-            )
-            continue
-        for beat in beats:
-            if isinstance(beat, dict) and isinstance(beat.get("visual"), dict):
-                image_jobs.append((index, article, source_file, story, beat))
-
     with ThreadPoolExecutor(max_workers=MAX_PARALLEL_REQUESTS) as executor:
         futures = {
-            executor.submit(_generate_beat_image, output_dir, article, source_file, beat): (index, article, source_file, beat)
-            for index, article, source_file, _, beat in image_jobs
+            executor.submit(generate_story_visuals, output_dir, source_file, article.id, story): (index, article, source_file)
+            for index, article, source_file, story in generated_stories
         }
         for future in as_completed(futures):
-            index, article, source_file, beat = futures[future]
-            beat_id = str(beat.get("id") or "visual")
+            index, article, source_file = futures[future]
             try:
-                image_paths[index].append(future.result())
+                image_paths[index].extend(future.result()["paths"])
             except Exception as error:
-                visual = beat["visual"]
-                visual["imagePath"] = None
                 failures.append(
                     {
                         "articleId": article.id,
                         "sourceFile": _relative(source_file),
-                        "beatId": beat_id,
                         "error": str(error),
                     }
                 )
@@ -234,26 +228,6 @@ def _generate_images(
     for paths in image_paths.values():
         paths.sort()
     return image_paths
-
-
-def _generate_beat_image(
-    output_dir: Path,
-    article: NewsArticle,
-    source_file: Path,
-    beat: dict[str, object],
-) -> str:
-    visual = beat["visual"]
-    if not isinstance(visual, dict):
-        raise WorkflowInputError("Story beat does not contain visual direction.")
-    beat_id = str(beat.get("id") or "visual")
-    image_dir = output_dir / "images" / _safe_filename(source_file.stem) / _safe_filename(article.id)
-    image_bytes = generate_story_image(str(visual.get("imagePrompt") or ""))
-    image_path = image_dir / f"{_safe_filename(beat_id)}.png"
-    image_path.parent.mkdir(parents=True, exist_ok=True)
-    image_path.write_bytes(image_bytes)
-    relative_path = _relative(image_path)
-    visual["imagePath"] = relative_path
-    return relative_path
 
 
 def _write_json(path: Path, payload: dict[str, object]) -> None:

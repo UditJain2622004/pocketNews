@@ -12,7 +12,7 @@ from audio_workflow import AudioWorkflowInputError, media_file, prepare_story_au
 from episode_service import compose_episode, select_articles, story_format_for_index, supported_story_formats
 from image_workflow import ImageWorkflowInputError, prepare_story_images
 from news_adapter import load_mock_articles
-from story_generator import StoryGenerationError, generate_story
+from story_generator import CAST_MODES, VISUAL_STYLES, StoryGenerationError, generate_story
 from workflow_service import WorkflowInputError, run_script_workflow
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -86,11 +86,14 @@ def get_story(
     article_id: str,
     language: str = Query("en-IN", description="Requested narration language locale"),
     story_format: str = Query("auto", description="auto, solo-hot-take, two-person-banter, or dramatized-pov"),
+    cast_mode: str = Query("auto", description="auto, story_duo, or recurring_duo"),
+    visual_style: str = Query("animated", description="animated or live_action"),
 ) -> dict[str, object]:
+    _validate_creative_query(cast_mode, visual_style)
     article = next((item for item in _load_articles() if item.id == article_id), None)
     if article is None:
         raise HTTPException(status_code=404, detail="News article not found.")
-    return _generate_or_raise(article, _resolve_story_format(story_format, 0), language)
+    return _generate_or_raise(article, _resolve_story_format(story_format, 0), language, cast_mode, visual_style)
 
 
 @app.get("/api/episodes")
@@ -99,11 +102,14 @@ def get_episode(
     cadence: str = Query("daily", pattern="^(daily|weekly|monthly)$"),
     language: str = Query("en-IN", description="Requested narration language locale"),
     story_count: int = Query(3, ge=2, le=5),
+    cast_mode: str = Query("auto", description="auto, story_duo, or recurring_duo"),
+    visual_style: str = Query("animated", description="animated or live_action"),
 ) -> dict[str, object]:
+    _validate_creative_query(cast_mode, visual_style)
     selected_interests = [item.strip().lower() for item in interests.split(",") if item.strip()]
     articles = select_articles(_load_articles(), selected_interests or ["top"], story_count)
     stories = [
-        _generate_or_raise(article, story_format_for_index(index), language)
+        _generate_or_raise(article, story_format_for_index(index), language, cast_mode, visual_style)
         for index, article in enumerate(articles)
     ]
     return compose_episode(stories, selected_interests or ["top"], cadence, language)
@@ -114,13 +120,18 @@ def generate_scripts(
     request: ScriptWorkflowRequest,
     generate_images: bool = Query(True, description="Generate and save story images"),
     generate_audio: bool = Query(True, description="Generate and save narration audio"),
+    cast_mode: str = Query("auto", description="auto, story_duo, or recurring_duo"),
+    visual_style: str = Query("animated", description="animated or live_action"),
 ) -> dict[str, object]:
     try:
+        _validate_creative_query(cast_mode, visual_style)
         return run_script_workflow(
             request.date,
             request.language,
             generate_images=generate_images,
             generate_audio=generate_audio,
+            cast_mode=cast_mode,
+            visual_style=visual_style,
         )
     except WorkflowInputError as error:
         raise HTTPException(status_code=422, detail=str(error)) from error
@@ -173,8 +184,21 @@ def _resolve_story_format(requested_format: str, index: int) -> str:
     return requested_format
 
 
-def _generate_or_raise(article, story_format: str, language: str) -> dict[str, object]:
+def _generate_or_raise(
+    article,
+    story_format: str,
+    language: str,
+    cast_mode: str = "auto",
+    visual_style: str = "animated",
+) -> dict[str, object]:
     try:
-        return generate_story(article, story_format, language)
+        return generate_story(article, story_format, language, cast_mode, visual_style)
     except StoryGenerationError as error:
         raise HTTPException(status_code=502, detail=str(error)) from error
+
+
+def _validate_creative_query(cast_mode: str, visual_style: str) -> None:
+    if cast_mode not in CAST_MODES:
+        raise HTTPException(status_code=422, detail={"message": "Unsupported cast mode.", "supportedCastModes": CAST_MODES})
+    if visual_style not in VISUAL_STYLES:
+        raise HTTPException(status_code=422, detail={"message": "Unsupported visual style.", "supportedVisualStyles": VISUAL_STYLES})

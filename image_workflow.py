@@ -8,7 +8,7 @@ from pathlib import Path
 import re
 from typing import Any
 
-from image_generator import generate_story_image
+from visual_story_service import generate_story_visuals
 
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -40,60 +40,29 @@ def prepare_story_images(folder_name: str) -> dict[str, object]:
         except Exception as error:
             failures.append({"articleId": article_id, "error": str(error)})
 
-    image_jobs: list[tuple[dict[str, object], Path, dict[str, Any], dict[str, Any]]] = []
-    image_paths: dict[str, list[str]] = {}
-    images_reused = 0
-    for entry, script_path, script in loaded_scripts:
-        article_id = str(entry.get("articleId") or script_path.stem)
-        image_paths[article_id] = []
-        story = script.get("story")
-        beats = story.get("beats") if isinstance(story, dict) else None
-        if not isinstance(beats, list):
-            failures.append({"articleId": article_id, "error": "Script does not contain visual beats."})
-            continue
-        for beat in beats:
-            if not isinstance(beat, dict) or not isinstance(beat.get("visual"), dict):
-                continue
-            image_path = _image_path(run_dir, entry, script, script_path, beat)
-            visual = beat["visual"]
-            if image_path.is_file():
-                relative_path = _relative(image_path)
-                visual["imagePath"] = relative_path
-                image_paths[article_id].append(relative_path)
-                images_reused += 1
-            else:
-                image_jobs.append((entry, script_path, script, beat))
-
     images_generated = 0
+    images_reused = 0
     with ThreadPoolExecutor(max_workers=MAX_PARALLEL_REQUESTS) as executor:
         futures = {
-            executor.submit(_generate_image, run_dir, entry, script_path, script, beat): (entry, beat)
-            for entry, script_path, script, beat in image_jobs
+            executor.submit(_prepare_saved_story_images, run_dir, entry, script_path, script): (entry, script_path, script)
+            for entry, script_path, script in loaded_scripts
         }
         for future in as_completed(futures):
-            entry, beat = futures[future]
-            article_id = str(entry.get("articleId") or "")
-            beat_id = str(beat.get("id") or "visual")
+            entry, script_path, script = futures[future]
+            article_id = str(entry.get("articleId") or script_path.stem)
             try:
-                relative_path = future.result()
-                image_paths.setdefault(article_id, []).append(relative_path)
-                images_generated += 1
+                result = future.result()
+                entry["imagePaths"] = result["paths"]
+                images_generated += result["generated"]
+                images_reused += result["reused"]
+                _write_json(script_path, script)
             except Exception as error:
-                visual = beat["visual"]
-                visual["imagePath"] = None
                 failures.append(
                     {
                         "articleId": article_id,
-                        "beatId": beat_id,
                         "error": str(error),
                     }
                 )
-
-    for entry, script_path, script in loaded_scripts:
-        article_id = str(entry.get("articleId") or script_path.stem)
-        paths = sorted(image_paths.get(article_id, []))
-        entry["imagePaths"] = paths
-        _write_json(script_path, script)
 
     run_manifest["imagesGenerated"] = images_generated + images_reused
     run_manifest["imagePreparation"] = {
@@ -112,35 +81,18 @@ def prepare_story_images(folder_name: str) -> dict[str, object]:
     }
 
 
-def _generate_image(
+def _prepare_saved_story_images(
     run_dir: Path,
     entry: dict[str, object],
     script_path: Path,
     script: dict[str, Any],
-    beat: dict[str, Any],
-) -> str:
-    visual = beat["visual"]
-    image_bytes = generate_story_image(str(visual.get("imagePrompt") or ""))
-    image_path = _image_path(run_dir, entry, script, script_path, beat)
-    image_path.parent.mkdir(parents=True, exist_ok=True)
-    image_path.write_bytes(image_bytes)
-    relative_path = _relative(image_path)
-    visual["imagePath"] = relative_path
-    return relative_path
-
-
-def _image_path(
-    run_dir: Path,
-    entry: dict[str, object],
-    script: dict[str, Any],
-    script_path: Path,
-    beat: dict[str, Any],
-) -> Path:
+) -> dict[str, object]:
+    story = script.get("story")
+    if not isinstance(story, dict):
+        raise ImageWorkflowInputError("Script does not contain a story module.")
     article = script.get("article")
     article_id = str(article.get("id") or entry.get("articleId") or script_path.stem) if isinstance(article, dict) else script_path.stem
-    source_file = Path(str(script.get("sourceFile") or "uncategorized"))
-    beat_id = str(beat.get("id") or "visual")
-    return run_dir / "images" / _safe_filename(source_file.stem) / _safe_filename(article_id) / f"{_safe_filename(beat_id)}.png"
+    return generate_story_visuals(run_dir, str(script.get("sourceFile") or "uncategorized"), article_id, story)
 
 
 def _run_directory(folder_name: str) -> Path:

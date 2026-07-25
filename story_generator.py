@@ -19,6 +19,8 @@ from taxonomy import SUGGESTED_INTERESTS, taxonomy_prompt
 BASE_DIR = Path(__file__).resolve().parent
 load_dotenv(BASE_DIR / ".env")
 MODEL = os.getenv("OPENAI_MODEL", "gpt-5.6")
+CAST_MODES = ("auto", "story_duo", "recurring_duo")
+VISUAL_STYLES = ("animated", "live_action")
 _STORY_CACHE: dict[str, dict[str, object]] = {}
 _CACHE_LOCK = Lock()
 
@@ -32,6 +34,7 @@ class VoiceCharacter(BaseModel):
     role: str
     voiceProfile: str
     language: str
+    visualIdentity: str
 
 
 class StoryLine(BaseModel):
@@ -50,6 +53,8 @@ class VisualDirection(BaseModel):
     durationSeconds: int = Field(ge=3, le=14)
     caption: str
     imagePrompt: str
+    scenePrompt: str
+    continuityNotes: str
     motion: Literal["hold", "slow push-in", "gentle pan"]
 
 
@@ -74,10 +79,28 @@ class StoryClassification(BaseModel):
         return values
 
 
+class CreativeDirection(BaseModel):
+    genre: str
+    dramaticPremise: str
+    performanceMode: Literal["character-dialogue", "multi-character-self-talk"]
+    castMode: Literal["story_duo", "recurring_duo"]
+    visualStyle: Literal["animated", "live_action"]
+
+
+class VisualBible(BaseModel):
+    setting: str
+    colorAndLighting: str
+    recurringProps: list[str] = Field(min_items=1, max_items=4)
+    storyArc: str
+    referenceImagePrompt: str
+
+
 class GeneratedStory(BaseModel):
     title: str
     skipLabel: str
     classification: StoryClassification
+    creativeDirection: CreativeDirection
+    visualBible: VisualBible
     cast: list[VoiceCharacter]
     beats: list[StoryBeat]
     exit: str
@@ -87,12 +110,15 @@ def generate_story(
     article: NewsArticle,
     story_format: str,
     language: str,
+    cast_mode: str = "auto",
+    visual_style: str = "animated",
 ) -> dict[str, object]:
     if not os.getenv("OPENAI_API_KEY"):
         raise StoryGenerationError("OPENAI_API_KEY is not configured.")
 
     article_text = article.best_available_text[:12000]
-    cache_key = _cache_key(article, story_format, language)
+    _validate_creative_options(cast_mode, visual_style)
+    cache_key = _cache_key(article, story_format, language, cast_mode, visual_style)
     with _CACHE_LOCK:
         cached_story = _STORY_CACHE.get(cache_key)
     if cached_story is not None:
@@ -102,7 +128,7 @@ def generate_story(
         response = OpenAI().responses.parse(
             model=MODEL,
             input=[
-                {"role": "system", "content": _system_prompt(story_format, language)},
+                {"role": "system", "content": _system_prompt(story_format, language, cast_mode, visual_style)},
                 {"role": "user", "content": _article_prompt(article, article_text)},
             ],
             text_format=GeneratedStory,
@@ -120,6 +146,8 @@ def generate_story(
     story["sourceCategory"] = _primary_category(article.categories)
     story["topics"] = article.categories
     story["format"] = story_format
+    story["requestedCastMode"] = cast_mode
+    story["requestedVisualStyle"] = visual_style
     story["sources"] = [{"name": article.source_name, "url": article.url, "publishedAt": article.published_at}]
     story["durationSeconds"] = sum(beat["visual"]["durationSeconds"] for beat in story["beats"])
     story["entry"] = {
@@ -132,32 +160,48 @@ def generate_story(
     return story
 
 
-def _cache_key(article: NewsArticle, story_format: str, language: str) -> str:
+def _cache_key(
+    article: NewsArticle,
+    story_format: str,
+    language: str,
+    cast_mode: str,
+    visual_style: str,
+) -> str:
     source_hash = hashlib.sha256(article.best_available_text.encode("utf-8")).hexdigest()
-    return f"{article.id}:{source_hash}:{story_format}:{language}:{MODEL}"
+    return f"{article.id}:{source_hash}:{story_format}:{language}:{cast_mode}:{visual_style}:{MODEL}"
 
 
-def _system_prompt(story_format: str, language: str) -> str:
+def _system_prompt(story_format: str, language: str, cast_mode: str, visual_style: str) -> str:
     return f"""
-You write one accurate, funny, cinematic news scene for an AI news episode.
+You write one accurate, cinematic fictional short-film scene that carries a news story.
 Return only the structured story required by the schema.
 
 Target narration language: {language}
 Required format: {story_format}
+Requested cast mode: {cast_mode}
+Requested visual style: {visual_style}
 
 Classify the story using exactly one category and one or two subcategories from this fixed taxonomy:
 {taxonomy_prompt()}
 
 Rules:
 - Use only facts in the supplied article. Do not add claims, quotes, dates, motives, or outcomes.
-- Make the entertainment come from framing and reactions, not invented facts.
+- This must feel like a miniature movie, not a news bulletin, explainer, reporter script, or article summary.
+- Reveal the news through a fictional dramatic situation: a discovery, disagreement, chase for an answer, emotional turn, mystery, or escalating consequence.
+- Choose a genre that makes the story compelling: comedy, drama, mystery, thriller, emotional drama, light horror, or another suitable genre. Treat sensitive events with appropriate care.
+- Make the entertainment come from fictional framing, action, and reactions, never invented facts.
 - Do not imitate any real person's voice or write generated dialogue as a quote from a real person.
-- Use original fictional performers only. Every spoken line must name a speaker from cast.
+- Use two or more original fictional performers only. Every spoken line must name a speaker from cast.
+- If requested cast mode is auto, choose either a custom two-character scene or multi-character self-talk. If story_duo, create exactly two new fictional characters. If recurring_duo, use exactly Mira and Kabir: Mira is an impulsive, sharp-eyed Indian creative strategist with a cropped black bob, amber jacket, and silver ear cuff; Kabir is a calm, deadpan Indian systems thinker with close-cropped hair, round glasses, and a forest-green overshirt. Preserve these names, personalities, and visual identities.
+- creativeDirection.visualStyle must exactly equal the requested visual style. creativeDirection.castMode must be story_duo or recurring_duo, never auto.
+- No detached narrator is allowed. Every fact must surface through character dialogue, self-talk, discovery, or visible consequence.
 - The title-cue beat must be first. Its first line must start with "Quick story:" and clearly name the news item so it can be skipped.
 - Return exactly five beats in this order: title-cue, hook, what-happened, why-it-matters, takeaway.
 - Make the complete scene about 45 to 90 seconds. Keep spoken lines short and natural for text-to-speech.
-- Each beat needs a cinematic vertical 9:16 image prompt with subject, action, setting, camera, lighting, mood, caption-safe upper-third space, and "no text, logos, or watermark".
-- Generated visuals must be editorial illustrations, not fake documentary evidence. Avoid depicting real public figures performing unverified actions.
+- Build a visual bible that fixes character appearance, wardrobe, setting, props, color/lighting, and story arc for the entire scene. The reference image prompt must establish every recurring character together in the core location.
+- Every beat must be a consecutive shot in one continuous scene. Include a scene prompt and continuity notes explaining what must remain from the previous shot and what advances.
+- Each beat image prompt needs subject, action, setting, camera, lighting, mood, the recurring visual details, caption-safe upper-third space, and "no text, logos, or watermark".
+- For animated style, use editorial animated-film imagery. For live_action style, use fictional actors and clearly cinematic staging, never fake documentary evidence. Avoid depicting real public figures performing unverified actions.
 - The final takeaway must make sense even when this is the only story a listener hears.
 """.strip()
 
@@ -182,3 +226,10 @@ def _primary_category(categories: list[str]) -> str:
 
 def _title_cue(title: str) -> str:
     return f"Quick story: {title}."
+
+
+def _validate_creative_options(cast_mode: str, visual_style: str) -> None:
+    if cast_mode not in CAST_MODES:
+        raise StoryGenerationError(f"Unsupported cast mode. Use one of: {', '.join(CAST_MODES)}.")
+    if visual_style not in VISUAL_STYLES:
+        raise StoryGenerationError(f"Unsupported visual style. Use one of: {', '.join(VISUAL_STYLES)}.")
