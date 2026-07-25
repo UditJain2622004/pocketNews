@@ -68,6 +68,18 @@ export default function EpisodePage({ episodeId, token }) {
         }))
         const playableStories = loadedStories.filter((story) => story.tracks.length > 0)
         if (!playableStories.length) throw new Error('This episode has no playable audio yet.')
+        if (token && playableStories.length > 1) {
+          try {
+            const bridgeResponse = await fetch(`${API_BASE}/api/episodes/${encodeURIComponent(episodeId)}/bridges`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+              body: JSON.stringify({ runId, storyIds: playableStories.map((story) => story.storyId) }),
+            })
+            if (bridgeResponse.ok) addBridgeTracks(playableStories, (await bridgeResponse.json()).bridges || [])
+          } catch (_) {
+            // Bridges are enhancement-only; direct story playback remains available.
+          }
+        }
         if (!active) return
         setStories(playableStories)
         setStoryIndex(0)
@@ -144,11 +156,13 @@ export default function EpisodePage({ episodeId, token }) {
     return Math.min(1, (completedTrackTime + playbackTime) / currentStory.duration)
   }
 
-  const selectStory = (nextStoryIndex, autoPlay = playing) => {
+  const selectStory = (nextStoryIndex, autoPlay = playing, includeBridge = false) => {
     pause()
+    const nextStory = stories[nextStoryIndex]
+    const nextTrackIndex = includeBridge ? 0 : Math.max(0, nextStory?.tracks.findIndex((track) => !track.isBridge) || 0)
     setStoryIndex(nextStoryIndex)
-    setTrackIndex(0)
-    setElapsed(storyElapsedBefore(nextStoryIndex))
+    setTrackIndex(nextTrackIndex)
+    setElapsed(storyElapsedBefore(nextStoryIndex) + (includeBridge ? 0 : (nextStory?.tracks.slice(0, nextTrackIndex).reduce((sum, track) => sum + track.duration, 0) || 0)))
     setPlaybackTime(0)
     if (autoPlay) setPlaying(true)
   }
@@ -167,7 +181,7 @@ export default function EpisodePage({ episodeId, token }) {
       if (!completedStoriesRef.current.has(`${episodeId}:${currentStory.storyId}`)) {
         sendStoryEvent(currentStory, 'skipped', currentStoryProgress())
       }
-      selectStory(storyIndex + 1, shouldPlay)
+      selectStory(storyIndex + 1, shouldPlay, true)
       return
     } else if (direction > 0) {
       setStoryIndex(0)
@@ -181,7 +195,7 @@ export default function EpisodePage({ episodeId, token }) {
 
   const skipStory = () => {
     sendStoryEvent(currentStory, 'skipped', currentStoryProgress())
-    if (storyIndex < stories.length - 1) selectStory(storyIndex + 1, playing)
+    if (storyIndex < stories.length - 1) selectStory(storyIndex + 1, playing, false)
     else {
       pause()
       setStoryIndex(0)
@@ -325,4 +339,15 @@ function buildStory(script, audioManifest, stem, episodeId, entryStoryId) {
     tracks,
     duration: tracks.reduce((sum, track) => sum + track.duration, 0),
   }
+}
+
+function addBridgeTracks(stories, bridges) {
+  const byNextStory = new Map(bridges.map((bridge) => [bridge.beforeStoryId, bridge]))
+  stories.forEach((story, index) => {
+    if (!index) return
+    const bridge = byNextStory.get(story.storyId)
+    if (!bridge?.url) return
+    story.tracks.unshift({ url: `${API_BASE}${bridge.url}`, duration: Number(bridge.durationSeconds) || 0, text: bridge.text, speaker: bridge.speaker || 'StoryCast', image: story.tracks.find((track) => track.image)?.image || '', beatId: 'transition', isBridge: true })
+    story.duration = story.tracks.reduce((sum, track) => sum + track.duration, 0)
+  })
 }
