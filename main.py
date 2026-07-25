@@ -1,8 +1,7 @@
 from pydantic import BaseModel
 from fastapi import FastAPI, Query, BackgroundTasks
-from fastapi.responses import HTMLResponse
 from dotenv import load_dotenv
-from typing import List, Union, Optional
+from typing import List, Optional
 from news_collection import fetch_google_news_rss
 from news_collection.taxonomy import NEWS_TAXONOMY
 from news_collection.sync_news import run_news_sync
@@ -14,6 +13,7 @@ load_dotenv()
 # Ensure the parent directory is in path so we can import translator
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from multilingual.translator import translate_text
+from fastapi.middleware.cors import CORSMiddleware
 from auth.database import setup_db_indexes
 from auth.router import router as auth_router
 
@@ -21,6 +21,15 @@ app = FastAPI(
     title="PocketNews API",
     description="A basic FastAPI application with Multilingual Translation and Auth API support",
     version="0.3.0"
+)
+
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins for local development
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 app.include_router(auth_router)

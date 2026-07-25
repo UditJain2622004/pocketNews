@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr, Field
-from typing import List, Optional, Dict
+from typing import List, Dict
 
 class UserSignup(BaseModel):
     username: str = Field(..., min_length=3, max_length=50)
@@ -7,7 +7,7 @@ class UserSignup(BaseModel):
     password: str = Field(..., min_length=6)
     topics: List[str] = []
     subtopics: List[str] = []
-    language: str = "english"
+    language: str = "English"
 
 class UserLogin(BaseModel):
     username_or_email: str
@@ -22,7 +22,7 @@ class UserProfile(BaseModel):
     email: EmailStr
     topics: List[str]
     subtopics: List[str]
-    language: str = "english"
+    language: str
 
 class UserProfileResponse(BaseModel):
     id: str

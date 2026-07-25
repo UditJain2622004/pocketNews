@@ -193,5 +193,5 @@ def get_me(user_id: str = Depends(get_current_user_id)):
         "email": user["email"],
         "topics": user.get("topics", []),
         "subtopics": user.get("subtopics", []),
-        "language": user.get("language", "english")
+        "language": user.get("language", "English")
     }
