@@ -129,7 +129,7 @@
         try {
           audioManifest = await fetchJson(mediaUrl(`audio/${scriptStem(entry.scriptPath)}/manifest.json`));
         } catch (_) {}
-        return buildStory(script, audioManifest);
+        return buildStory(script, audioManifest, scriptStem(entry.scriptPath));
       }));
       state.stories = stories.filter((story) => story.tracks.length);
       if (!state.stories.length) throw new Error("No playable audio was found in this folder.");
@@ -140,15 +140,19 @@
       renderCurrentTrack();
     }
 
-    function buildStory(script, audioManifest) {
+    function buildStory(script, audioManifest, stem) {
       const story = script.story;
       const clips = new Map((audioManifest.clips || []).map((clip) => [`${clip.beatId}-${clip.lineIndex}`, clip]));
+      const canRecoverFromFailedManifest = (audioManifest.failures || []).length > 0;
       const tracks = [];
       (story.beats || []).forEach((beat) => (beat.lines || []).forEach((line, lineIndex) => {
         const clip = clips.get(`${beat.id}-${lineIndex}`);
-        if (!clip || !clip.url) return;
+        const fallbackUrl = canRecoverFromFailedManifest
+          ? mediaUrl(`audio/${stem}/${beat.id}/${lineIndex}.wav`)
+          : "";
+        if (!clip?.url && !fallbackUrl) return;
         tracks.push({
-          url: clip.url,
+          url: clip?.url || fallbackUrl,
           duration: Number(clip.durationSeconds) || 0,
           text: line.text,
           speaker: line.speaker,
@@ -266,6 +270,14 @@
     elements.skip.addEventListener("click", skipStory);
     audio.addEventListener("ended", nextTrack);
     audio.addEventListener("timeupdate", updateProgress);
+    audio.addEventListener("loadedmetadata", () => {
+      const story = state.stories[state.storyIndex];
+      const track = story && story.tracks[state.trackIndex];
+      if (track && !track.duration && Number.isFinite(audio.duration)) {
+        track.duration = audio.duration;
+        updateProgress();
+      }
+    });
     loadEpisode().catch((error) => { elements.empty.textContent = error.message; });
   </script>
 </body>
