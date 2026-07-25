@@ -124,6 +124,7 @@ def signup(user_data: UserSignup):
         "salt": salt,
         "topics": user_data.topics,
         "subtopics": user_data.subtopics,
+        "language": user_data.language,
         "created_at": datetime.utcnow()
     }
 
@@ -191,5 +192,6 @@ def get_me(user_id: str = Depends(get_current_user_id)):
         "username": user["username"],
         "email": user["email"],
         "topics": user.get("topics", []),
-        "subtopics": user.get("subtopics", [])
+        "subtopics": user.get("subtopics", []),
+        "language": user.get("language", "english")
     }

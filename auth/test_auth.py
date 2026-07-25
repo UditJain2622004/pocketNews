@@ -40,7 +40,8 @@ def run_tests():
         "email": test_email,
         "password": "supersecurepassword123",
         "topics": ["Technology", "Science", "Custom Manual Topic"],
-        "subtopics": ["Artificial Intelligence", "Space Exploration", "My Custom Subtopic"]
+        "subtopics": ["Artificial Intelligence", "Space Exploration", "My Custom Subtopic"],
+        "language": "hindi"
     }
     response = client.post("/auth/signup", json=signup_payload)
     assert response.status_code == 201, f"Signup failed: {response.text}"
@@ -69,7 +70,8 @@ def run_tests():
     print(" - Username:", profile["username"])
     print(" - Email:", profile["email"])
     print(" - Selected Topics:", profile["topics"])
-    print(" - Selected Subtopics:", profile["subtopics"])
+    assert profile.get("language") == "hindi", f"Incorrect language: {profile.get('language')}"
+    print(" - Selected Language:", profile["language"])
 
     # Clean up test user
     db.users.delete_one({"username": test_username})
