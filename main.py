@@ -1,7 +1,7 @@
-import os
+﻿import os
 import sys
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Query
@@ -10,6 +10,7 @@ from pydantic import BaseModel
 from episode_service import compose_episode, select_articles, story_format_for_index, supported_story_formats
 from news_adapter import load_mock_articles
 from story_generator import StoryGenerationError, generate_story
+from workflow_service import WorkflowInputError, run_script_workflow
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from multilingual.translator import translate_text
@@ -21,13 +22,18 @@ NEWS_FEED_PATH = BASE_DIR / "news_format.json"
 app = FastAPI(
     title="PocketNews API",
     description="Multilingual, AI-generated news episode API.",
-    version="0.3.0",
+    version="0.4.0",
 )
 
 
 class TranslationRequest(BaseModel):
     text: str
     languages: List[str]
+
+
+class ScriptWorkflowRequest(BaseModel):
+    date: Optional[str] = None
+    language: str = "en-IN"
 
 
 @app.post("/translate")
@@ -40,7 +46,7 @@ def read_root() -> dict[str, str]:
     return {
         "message": "PocketNews API is running.",
         "docs_url": "/docs",
-        "episode_url": "/api/episodes",
+        "workflow_url": "/api/workflows/generate-scripts",
     }
 
 
@@ -51,11 +57,7 @@ def health_check() -> dict[str, str]:
 
 @app.get("/api/news")
 def get_news() -> dict[str, object]:
-    try:
-        articles = load_mock_articles(NEWS_FEED_PATH)
-    except (OSError, ValueError) as error:
-        raise HTTPException(status_code=500, detail="Unable to load the news feed.") from error
-    return {"articles": [article.to_dict() for article in articles]}
+    return {"articles": [article.to_dict() for article in _load_articles()]}
 
 
 @app.get("/api/stories/{article_id}")
@@ -64,12 +66,10 @@ def get_story(
     language: str = Query("en-IN", description="Requested narration language locale"),
     story_format: str = Query("auto", description="auto, solo-hot-take, two-person-banter, or dramatized-pov"),
 ) -> dict[str, object]:
-    articles = _load_articles()
-    article = next((item for item in articles if item.id == article_id), None)
+    article = next((item for item in _load_articles() if item.id == article_id), None)
     if article is None:
         raise HTTPException(status_code=404, detail="News article not found.")
-    selected_format = _resolve_story_format(story_format, 0)
-    return _generate_or_raise(article, selected_format, language)
+    return _generate_or_raise(article, _resolve_story_format(story_format, 0), language)
 
 
 @app.get("/api/episodes")
@@ -86,6 +86,14 @@ def get_episode(
         for index, article in enumerate(articles)
     ]
     return compose_episode(stories, selected_interests or ["top"], cadence, language)
+
+
+@app.post("/api/workflows/generate-scripts")
+def generate_scripts(request: ScriptWorkflowRequest) -> dict[str, object]:
+    try:
+        return run_script_workflow(request.date, request.language)
+    except WorkflowInputError as error:
+        raise HTTPException(status_code=422, detail=str(error)) from error
 
 
 def _load_articles():

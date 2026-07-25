@@ -2,3 +2,5 @@
 .env
 myenv/
 __pycache__/
+scripts/
+articles/

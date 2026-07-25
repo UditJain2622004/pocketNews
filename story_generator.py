@@ -1,4 +1,4 @@
-"""OpenAI-backed generation of reusable PocketNews story modules."""
+﻿"""OpenAI-backed generation of reusable PocketNews story modules."""
 from __future__ import annotations
 
 import copy
@@ -10,14 +10,15 @@ from typing import Literal
 
 from dotenv import load_dotenv
 from openai import OpenAI
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, root_validator
 
 from news_adapter import NewsArticle
+from taxonomy import SUGGESTED_INTERESTS, taxonomy_prompt
 
 
 BASE_DIR = Path(__file__).resolve().parent
 load_dotenv(BASE_DIR / ".env")
-MODEL = os.getenv("OPENAI_MODEL", "gpt-5.6-luna")
+MODEL = os.getenv("OPENAI_MODEL", "gpt-5.6")
 _STORY_CACHE: dict[str, dict[str, object]] = {}
 _CACHE_LOCK = Lock()
 
@@ -58,9 +59,25 @@ class StoryBeat(BaseModel):
     lines: list[StoryLine]
 
 
+class StoryClassification(BaseModel):
+    category: Literal["Technology", "Sports", "Business", "Entertainment", "Science", "Lifestyle"]
+    subcategories: list[str] = Field(min_items=1, max_items=2)
+
+    @root_validator
+    def validate_subcategories(cls, values):
+        category = values.get("category")
+        subcategories = values.get("subcategories") or []
+        valid_subcategories = set(SUGGESTED_INTERESTS.get(category, []))
+        invalid = [item for item in subcategories if item not in valid_subcategories]
+        if invalid:
+            raise ValueError(f"Invalid subcategories for {category}: {', '.join(invalid)}")
+        return values
+
+
 class GeneratedStory(BaseModel):
     title: str
     skipLabel: str
+    classification: StoryClassification
     cast: list[VoiceCharacter]
     beats: list[StoryBeat]
     exit: str
@@ -85,26 +102,21 @@ def generate_story(
         response = OpenAI().responses.parse(
             model=MODEL,
             input=[
-                {
-                    "role": "system",
-                    "content": _system_prompt(story_format, language),
-                },
-                {
-                    "role": "user",
-                    "content": _article_prompt(article, article_text),
-                },
+                {"role": "system", "content": _system_prompt(story_format, language)},
+                {"role": "user", "content": _article_prompt(article, article_text)},
             ],
             text_format=GeneratedStory,
         )
     except Exception as error:
         raise StoryGenerationError("OpenAI story generation request failed.") from error
+
     generated = response.output_parsed
     if generated is None:
         raise StoryGenerationError("OpenAI returned no structured story output.")
 
     story = generated.dict()
     story["storyId"] = article.id
-    story["category"] = _primary_category(article.categories)
+    story["sourceCategory"] = _primary_category(article.categories)
     story["topics"] = article.categories
     story["format"] = story_format
     story["sources"] = [{"name": article.source_name, "url": article.url, "publishedAt": article.published_at}]
@@ -123,6 +135,7 @@ def _cache_key(article: NewsArticle, story_format: str, language: str) -> str:
     source_hash = hashlib.sha256(article.best_available_text.encode("utf-8")).hexdigest()
     return f"{article.id}:{source_hash}:{story_format}:{language}:{MODEL}"
 
+
 def _system_prompt(story_format: str, language: str) -> str:
     return f"""
 You write one accurate, funny, cinematic news scene for an AI news episode.
@@ -130,6 +143,9 @@ Return only the structured story required by the schema.
 
 Target narration language: {language}
 Required format: {story_format}
+
+Classify the story using exactly one category and one or two subcategories from this fixed taxonomy:
+{taxonomy_prompt()}
 
 Rules:
 - Use only facts in the supplied article. Do not add claims, quotes, dates, motives, or outcomes.
@@ -151,7 +167,7 @@ Create a story from this source material.
 
 Article ID: {article.id}
 Headline: {article.title}
-Categories: {", ".join(article.categories)}
+Source categories: {", ".join(article.categories)}
 Source: {article.source_name}
 Published: {article.published_at or "not supplied"}
 Article text:
@@ -165,5 +181,3 @@ def _primary_category(categories: list[str]) -> str:
 
 def _title_cue(title: str) -> str:
     return f"Quick story: {title}."
-
-
