@@ -14,6 +14,7 @@ from openai import OpenAI
 BASE_DIR = Path(__file__).resolve().parent
 load_dotenv(BASE_DIR / ".env")
 IMAGE_MODEL = "gpt-image-2"
+IMAGE_SIZE = "1536x1024"
 
 
 class ImageGenerationError(RuntimeError):
@@ -55,7 +56,7 @@ def generate_story_image(
                 model=IMAGE_MODEL,
                 image=image_files,
                 prompt=prompt,
-                size="1024x1536",
+                size=IMAGE_SIZE,
                 quality="medium",
             )
         return _decode_image(result)
@@ -68,7 +69,7 @@ def _generate_image(prompt: str) -> bytes:
         raise ImageGenerationError("OPENAI_API_KEY is not configured.")
 
     prompt = (
-        "Create one portrait 2:3 cinematic still for a fictional news movie. "
+        "Create one landscape 3:2 widescreen cinematic still for a fictional news movie. "
         "Keep it visually clear, genre-faithful, dramatic, and suitable as a video companion. "
         "Use one moment, one camera view, and one continuous composition only. Never create a collage, split screen, "
         "diptych, triptych, storyboard, contact sheet, montage, or multiple frames in one image. "
@@ -79,7 +80,7 @@ def _generate_image(prompt: str) -> bytes:
         result = OpenAI().images.generate(
             model=IMAGE_MODEL,
             prompt=prompt,
-            size="1024x1536",
+            size=IMAGE_SIZE,
             quality="medium",
         )
         return _decode_image(result)
