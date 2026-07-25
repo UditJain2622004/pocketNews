@@ -1,7 +1,7 @@
 ﻿import os
 import sys
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Literal, Optional
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Query
@@ -9,6 +9,7 @@ from pydantic import BaseModel
 
 from audio_workflow import AudioWorkflowInputError, media_file, prepare_story_audio
 from episode_service import compose_episode, select_articles, story_format_for_index, supported_story_formats
+from image_workflow import ImageWorkflowInputError, prepare_story_images
 from news_adapter import load_mock_articles
 from story_generator import StoryGenerationError, generate_story
 from workflow_service import WorkflowInputError, run_script_workflow
@@ -42,6 +43,11 @@ class AudioWorkflowRequest(BaseModel):
     articleIds: Optional[List[str]] = None
 
 
+class MediaWorkflowRequest(BaseModel):
+    folderName: str
+    generate: Literal["images", "audio", "both"]
+
+
 @app.post("/translate")
 def translate(req: TranslationRequest):
     return translate_text(req.text, req.languages)
@@ -54,6 +60,7 @@ def read_root() -> dict[str, str]:
         "docs_url": "/docs",
         "workflow_url": "/api/workflows/generate-scripts",
         "audio_workflow_url": "/api/workflows/generate-audio",
+        "media_workflow_url": "/api/workflows/generate-media",
     }
 
 
@@ -117,6 +124,19 @@ def generate_audio(request: AudioWorkflowRequest) -> dict[str, object]:
     try:
         return prepare_story_audio(request.runId, request.articleIds)
     except AudioWorkflowInputError as error:
+        raise HTTPException(status_code=422, detail=str(error)) from error
+
+
+@app.post("/api/workflows/generate-media")
+def generate_media(request: MediaWorkflowRequest) -> dict[str, object]:
+    result: dict[str, object] = {"folderName": request.folderName, "generate": request.generate}
+    try:
+        if request.generate in ("images", "both"):
+            result["images"] = prepare_story_images(request.folderName)
+        if request.generate in ("audio", "both"):
+            result["audio"] = prepare_story_audio(request.folderName)
+        return result
+    except (ImageWorkflowInputError, AudioWorkflowInputError) as error:
         raise HTTPException(status_code=422, detail=str(error)) from error
 
 
