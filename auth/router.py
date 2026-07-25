@@ -8,7 +8,7 @@ from bson import ObjectId
 from dotenv import load_dotenv
 
 from auth.database import db
-from auth.schemas import UserSignup, UserLogin, TokenResponse, UserProfileResponse, SuggestionResponse
+from auth.schemas import UserSignup, UserLogin, TokenResponse, UserProfileResponse, SuggestionResponse, ProfileUpdateRequest
 
 load_dotenv()
 logger = logging.getLogger("auth.router")
@@ -195,3 +195,44 @@ def get_me(user_id: str = Depends(get_current_user_id)):
         "subtopics": user.get("subtopics", []),
         "language": user.get("language", "English")
     }
+
+@router.put("/profile", response_model=UserProfileResponse)
+def update_profile(
+    profile_data: ProfileUpdateRequest,
+    user_id: str = Depends(get_current_user_id)
+):
+    """
+    Updates the authenticated user's language preferences and interest topics/subtopics.
+    """
+    if db is None:
+        raise HTTPException(status_code=500, detail="Database connection is unavailable.")
+
+    try:
+        oid = ObjectId(user_id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid User ID structure")
+
+    update_fields = {
+        "topics": profile_data.topics,
+        "subtopics": profile_data.subtopics,
+        "language": profile_data.language
+    }
+
+    result = db.users.update_one(
+        {"_id": oid},
+        {"$set": update_fields}
+    )
+
+    user = db.users.find_one({"_id": oid})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found after update")
+
+    return {
+        "id": str(user["_id"]),
+        "username": user["username"],
+        "email": user["email"],
+        "topics": user.get("topics", []),
+        "subtopics": user.get("subtopics", []),
+        "language": user.get("language", "English")
+    }
+

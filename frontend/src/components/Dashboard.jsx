@@ -1,477 +1,238 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import HomeTab from './HomeTab'
+import ProfileTab from './ProfileTab'
 
 export default function Dashboard({
-  currentStory,
-  episodes,
   setShowLanding,
-  profession,
-  setProfession,
-  level,
-  setLevel,
-  format,
-  setFormat,
-  activeNarrator,
-  setActiveNarrator,
-  activePerspective,
-  setActivePerspective,
-  userQuestion,
-  setUserQuestion,
-  chatLog,
-  handleAskQuestion,
-  voted,
-  voteCount,
-  castVote,
-  isPlaying,
-  setIsPlaying,
-  audioProgress,
-  videoFrameIndex,
-  demoWaveHeight,
   user,
-  onLogout
+  onLogout,
+  token,
+  onProfileUpdate,
+  storiesList,
+  setActiveStoryId
 }) {
+  const [activeTab, setActiveTab] = useState('home')
+
   return (
-    <div className="min-h-screen bg-[#F5F5F7] text-[#1D1D1F] font-sans antialiased overflow-x-hidden relative selection:bg-[#7C3AED]/20 selection:text-slate-900">
+    <div className="min-h-screen bg-gradient-to-tr from-[#EBEBF2] via-[#F5F5F7] to-[#E9EFF7] text-zinc-800 font-sans antialiased overflow-x-hidden relative selection:bg-[#E11D48]/15 selection:text-[#E11D48] flex flex-col md:flex-row">
       
-      {/* Background glow effects */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#7C3AED]/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-[#2563EB]/5 rounded-full blur-3xl pointer-events-none" />
+      {/* Background decoration blur spheres (glassmorphism backdrops) */}
+      <motion.div 
+        animate={{ 
+          x: [0, 80, -50, 0], 
+          y: [0, -60, 40, 0],
+          scale: [1, 1.08, 0.92, 1]
+        }}
+        transition={{ 
+          repeat: Infinity, 
+          duration: 25, 
+          ease: "easeInOut" 
+        }}
+        className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#7C3AED]/8 rounded-full blur-3xl pointer-events-none" 
+      />
+      <motion.div 
+        animate={{ 
+          x: [0, -90, 60, 0], 
+          y: [0, 80, -40, 0],
+          scale: [1, 0.92, 1.08, 1]
+        }}
+        transition={{ 
+          repeat: Infinity, 
+          duration: 30, 
+          ease: "easeInOut" 
+        }}
+        className="absolute top-1/3 right-1/4 w-[600px] h-[600px] bg-[#EC4899]/8 rounded-full blur-3xl pointer-events-none" 
+      />
 
-      {/* Main Header / Navigation */}
-      <header className="sticky top-0 z-50 backdrop-blur-lg bg-white/70 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <button 
-              onClick={() => setShowLanding(true)}
-              className="mr-2 text-slate-650 hover:text-slate-900 text-sm flex items-center gap-1 font-semibold"
-            >
-              ← <span className="hidden sm:inline">Home</span>
-            </button>
-            <img src="/logo.png" className="w-12 h-12 object-contain rounded-xl" alt="StoryCast AI Logo" />
-            <div>
-              <span className="text-base sm:text-xl font-bold tracking-tight text-slate-800">StoryCast AI</span>
-              <span className="block text-[8px] sm:text-[9px] text-[#7C3AED] font-bold tracking-widest uppercase">Cinematic News Engine</span>
-            </div>
-          </div>
+      {/* SIDEBAR NAVIGATION (Desktop - Rendered with light theme glassmorphism) */}
+      <aside className="hidden md:flex w-20 bg-white/70 backdrop-blur-xl border-r border-white/40 fixed inset-y-0 left-0 flex-col justify-between z-40 py-8 px-2 items-center shadow-md">
+        
+        {/* Logo (logo.png from public folder) */}
+        <div 
+          onClick={() => setShowLanding(true)}
+          className="flex items-center justify-center select-none cursor-pointer hover:scale-105 active:scale-95 transition-transform"
+        >
+          <img src="/logo.png" className="w-11 h-11 object-contain rounded-xl bg-white/90 shadow-sm border border-white/50" alt="Logo" />
+        </div>
 
-          {/* User profile / Personalization controls */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            {user && (
-              <div className="hidden lg:flex flex-wrap gap-1 max-w-[200px] justify-end">
-                {user.topics?.map(topic => (
-                  <span key={topic} className="px-2 py-0.5 bg-[#7C3AED]/10 text-[#7C3AED] rounded-md text-[9px] font-bold uppercase tracking-wider">
-                    {topic}
-                  </span>
-                ))}
-              </div>
-            )}
-
-            <div className="flex items-center gap-2 bg-white border border-slate-200 px-2 sm:px-3 py-1.5 rounded-2xl shadow-sm">
-              <div className="text-right hidden md:block">
-                <span className="block text-xs font-semibold text-slate-700">Persona Editor</span>
-                <span className="block text-[10px] text-slate-500">{profession} • {level}</span>
-              </div>
-              <select 
-                value={profession} 
-                onChange={(e) => setProfession(e.target.value)}
-                className="bg-white border border-slate-200 text-[11px] sm:text-xs text-slate-750 rounded-lg px-1.5 sm:px-2 py-1 focus:outline-none focus:border-[#7C3AED]"
+        {/* Nav Items (Centered vertically using my-auto) */}
+        <nav className="flex flex-col gap-6 w-full items-center my-auto">
+          {[
+            { 
+              id: 'home', 
+              label: 'HOME', 
+              icon: (
+                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
+              )
+            }
+          ].map(item => (
+            <div key={item.id} className="relative w-full flex justify-center py-2">
+              {/* Soft Active Highlight behind active item */}
+              {activeTab === item.id && (
+                <motion.div 
+                  layoutId="activeTabBackdrop"
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-[#E11D48]/8 rounded-2xl blur-md -z-10 pointer-events-none"
+                  transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                />
+              )}
+              <motion.button
+                onClick={() => setActiveTab(item.id)}
+                whileHover={{ scale: 1.12, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                className={`flex flex-col items-center py-1 transition-all cursor-pointer z-10 ${
+                  activeTab === item.id 
+                    ? 'text-[#E11D48]' 
+                    : 'text-zinc-400 hover:text-zinc-700'
+                }`}
               >
-                <option>Software Engineer</option>
-                <option>Student</option>
-                <option>Investor</option>
-                <option>Creative Writer</option>
-              </select>
-              <select 
-                value={level} 
-                onChange={(e) => setLevel(e.target.value)}
-                className="bg-white border border-slate-200 text-[11px] sm:text-xs text-slate-750 rounded-lg px-1.5 sm:px-2 py-1 focus:outline-none focus:border-[#7C3AED]"
-              >
-                <option>Analogy-driven</option>
-                <option>Standard Narrative</option>
-                <option>Deep Dive</option>
-              </select>
+                <span>{item.icon}</span>
+                <span className="text-[11px] font-black tracking-widest mt-2">{item.label}</span>
+              </motion.button>
             </div>
+          ))}
+        </nav>
 
-            {user ? (
-              <div className="flex items-center gap-2 bg-white border border-slate-200 px-2 sm:px-3 py-1.5 rounded-2xl shadow-sm">
-                <div className="text-right hidden sm:block">
-                  <span className="block text-xs font-bold text-slate-800">@{user.username}</span>
-                  <span className="block text-[9px] text-slate-500 font-bold uppercase tracking-wider">{user.language}</span>
-                </div>
-                <button 
-                  onClick={onLogout}
-                  className="px-3 py-1 text-[11px] font-bold text-red-650 bg-red-50 hover:bg-red-100 rounded-lg transition-all"
-                >
-                  Logout
-                </button>
+        {/* Profile Card at bottom (with aura highlight when active) */}
+        <div className="relative w-full flex justify-center py-2">
+          {activeTab === 'profile' && (
+            <motion.div 
+              layoutId="activeTabBackdrop"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-[#E11D48]/8 rounded-2xl blur-md -z-10 pointer-events-none"
+              transition={{ type: "spring", stiffness: 350, damping: 30 }}
+            />
+          )}
+          <motion.button 
+            onClick={() => setActiveTab('profile')}
+            whileHover={{ scale: 1.12, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+            className={`flex flex-col items-center py-1 transition-all cursor-pointer z-10 ${
+              activeTab === 'profile' ? 'text-[#E11D48]' : 'text-zinc-400 hover:text-zinc-700'
+            }`}
+          >
+            <div className="w-8 h-8 rounded-full bg-[#F97316] flex items-center justify-center text-white text-xs font-black shadow-sm border border-zinc-200">
+              {user?.username ? user.username.substring(0, 1).toUpperCase() : 'A'}
+            </div>
+            <span className="text-[11px] font-black tracking-widest mt-2">PROFILE</span>
+          </motion.button>
+        </div>
+      </aside>
+
+      {/* MOBILE HEADER BAR */}
+      <header className="md:hidden sticky top-0 z-50 bg-white/70 backdrop-blur-lg border-b border-white/40 p-4 flex items-center justify-between shadow-sm">
+        <div className="flex items-center gap-2">
+          <img src="/logo.png" className="w-8 h-8 object-contain rounded-lg bg-white/90 border border-white/50" alt="Logo" />
+          <span className="text-sm font-black text-zinc-850 tracking-tight">StoryCast AI</span>
+        </div>
+        <div className="flex items-center gap-3">
+          {user && (
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-bold text-zinc-500">@{user.username}</span>
+              <div 
+                onClick={() => setActiveTab('profile')}
+                className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-orange-600 flex items-center justify-center text-white text-xs font-bold shadow-sm cursor-pointer"
+              >
+                {user.username ? user.username.substring(0, 2).toUpperCase() : 'U'}
               </div>
-            ) : null}
-          </div>
+            </div>
+          )}
         </div>
       </header>
 
-      {/* Hero Header Story Details */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        <div className="flex flex-wrap items-center gap-2 mb-2">
-          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#7C3AED]/10 text-[#7C3AED] border border-[#7C3AED]/15 uppercase tracking-wider">
-            {currentStory.topic}
-          </span>
-          <span className="text-slate-400 text-xs">•</span>
-          <span className="text-slate-500 text-xs font-medium">{currentStory.season}</span>
-        </div>
-        <h1 className="text-2xl sm:text-5xl font-extrabold tracking-tight text-slate-900 mb-6">
-          {currentStory.title}
-        </h1>
-      </div>
+      {/* MOBILE BOTTOM NAVIGATION BAR */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/70 backdrop-blur-xl border-t border-white/40 flex justify-around py-2.5 shadow-lg">
+        {[
+          { id: 'home', label: 'Home', icon: '🏠' },
+          { id: 'profile', label: 'Settings', icon: '⚙️' }
+        ].map(item => (
+          <button
+            key={item.id}
+            onClick={() => setActiveTab(item.id)}
+            className={`flex flex-col items-center text-xs font-black transition-all cursor-pointer ${
+              activeTab === item.id ? 'text-[#E11D48] scale-105' : 'text-zinc-400 hover:text-zinc-600'
+            }`}
+          >
+            <span className="text-base mb-0.5">{item.icon}</span>
+            <span>{item.label}</span>
+          </button>
+        ))}
+      </nav>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
-          {/* Left Column: Formats & Content Player */}
-          <div className="lg:col-span-2 space-y-6">
-            
-            {/* Format Switcher */}
-            <div className="bg-white border border-slate-200 rounded-2xl p-1.5 flex gap-2 shadow-sm">
-              <button
-                onClick={() => { setFormat('text'); setIsPlaying(false); }}
-                className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 ${
-                  format === 'text'
-                    ? 'bg-[#7C3AED] text-white shadow-md'
-                    : 'text-slate-605 hover:text-slate-800 hover:bg-slate-50'
-                }`}
-              >
-                <span>📖</span> Immersive Text
-              </button>
-              <button
-                onClick={() => setFormat('audio')}
-                className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 ${
-                  format === 'audio'
-                    ? 'bg-[#7C3AED] text-white shadow-md'
-                    : 'text-slate-605 hover:text-slate-805 hover:bg-slate-55'
-                }`}
-              >
-                <span>🎙️</span> Audio Podcast
-              </button>
-              <button
-                onClick={() => setFormat('video')}
-                className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 ${
-                  format === 'video'
-                    ? 'bg-[#7C3AED] text-white shadow-md'
-                    : 'text-slate-605 hover:text-slate-800 hover:bg-slate-50'
-                }`}
-              >
-                <span>🎬</span> Short Video
-              </button>
-            </div>
+      {/* MAIN CONTENT CONTAINER */}
+      <div className="flex-1 flex flex-col min-h-screen md:pl-20 pb-20 md:pb-0">
+        
+        {/* Top bar header (Desktop only - Styled like Pocket FM search and hello header in light mode) */}
+        <header className="hidden md:flex h-24 bg-transparent px-8 items-center justify-between shrink-0 select-none">
+          <div className="text-left">
+            <span className="text-sm text-zinc-500 font-bold uppercase tracking-widest block">HELLO</span>
+            <span className="text-[26px] font-black text-zinc-900 block mt-1 leading-tight">
+              {user?.username ? user.username : 'Guest'}
+            </span>
+          </div>
 
-            {/* Immersive Cinematic Text Player */}
-            {format === 'text' && (
-              <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 space-y-8 shadow-sm backdrop-blur-md">
-                <div className="flex items-center gap-2 bg-[#7C3AED]/5 border border-[#7C3AED]/10 rounded-xl px-4 py-2 text-[11px] text-[#7C3AED]">
-                  <span>✨</span> Tailoring explanations for <strong>{profession}</strong> ({level} mode).
-                </div>
+          {/* Search bar (Solid, borderless light gray pill) */}
+          <div className="relative w-[650px]">
+            <span className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+              <svg className="w-6 h-6 text-zinc-400" fill="none" stroke="currentColor" strokeWidth="2.8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+            </span>
+            <input
+              type="text"
+              placeholder="Search for audio series, artists"
+              className="w-full bg-zinc-200/40 border-none rounded-full pl-15 pr-6 py-3.5 text-sm text-zinc-800 placeholder-zinc-400 focus:bg-white/80 focus:outline-none focus:ring-1 focus:ring-[#E11D48]/30 transition-all font-semibold"
+            />
+          </div>
 
-                <div className="space-y-6 text-left">
-                  {/* Hook */}
-                  <div className="relative pl-6 border-l-2 border-[#7C3AED]">
-                    <span className="absolute -left-[5px] top-0 w-2 h-2 rounded-full bg-[#7C3AED]" />
-                    <span className="text-[10px] text-[#7C3AED] font-bold uppercase tracking-wider block mb-1">The Hook</span>
-                    <p className="text-lg text-slate-850 font-semibold leading-relaxed">{currentStory.narrative.hook}</p>
-                  </div>
+          <div className="flex items-center">
+            <button 
+              onClick={() => setActiveTab('profile')}
+              className="w-12 h-12 rounded-full bg-zinc-200/40 hover:bg-zinc-200/60 text-zinc-600 hover:text-zinc-900 flex items-center justify-center text-xl transition-all cursor-pointer border-none"
+              title="Listening Language"
+            >
+              🌐
+            </button>
+          </div>
+        </header>
 
-                  {/* Context */}
-                  <div className="relative pl-6 border-l-2 border-indigo-500/50">
-                    <span className="text-[10px] text-indigo-550 font-bold uppercase tracking-wider block mb-1">The Context</span>
-                    <p className="text-slate-650 leading-relaxed">
-                      {currentStory.narrative.context} 
-                      {profession === 'Software Engineer' && <span className="text-[#7C3AED] font-medium ml-1">Specifically, Extreme Ultraviolet wavelengths sit at 13.5nm, projecting stencils directly onto wafers with atomic precision.</span>}
-                      {profession === 'Student' && <span className="text-[#7C3AED] font-medium ml-1">Think of it like trying to draw micro-details on a grain of rice using a laser instead of a pen.</span>}
-                    </p>
-                  </div>
-
-                  {/* Conflict */}
-                  <div className="relative pl-6 border-l-2 border-amber-500/50">
-                    <span className="text-[10px] text-[#F97316] font-bold uppercase tracking-wider block mb-1">The Conflict</span>
-                    <p className="text-slate-650 leading-relaxed">{currentStory.narrative.conflict}</p>
-                  </div>
-
-                  {/* Climax */}
-                  <div className="relative pl-6 border-l-2 border-[#EC4899]/50">
-                    <span className="text-[10px] text-[#EC4899] font-bold uppercase tracking-wider block mb-1">The Climax</span>
-                    <p className="text-slate-650 leading-relaxed font-semibold">{currentStory.narrative.climax}</p>
-                  </div>
-
-                  {/* Takeaway */}
-                  <div className="relative pl-6 border-l-2 border-emerald-550/50">
-                    <span className="text-[10px] text-emerald-600 font-bold uppercase tracking-wider block mb-1">The Takeaway</span>
-                    <p className="text-slate-650 leading-relaxed">{currentStory.narrative.takeaway}</p>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Audio Podcast Player Simulator */}
-            {format === 'audio' && (
-              <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 space-y-6 flex flex-col items-center text-center shadow-sm">
-                <div className="w-28 h-28 rounded-2xl bg-gradient-to-tr from-[#7C3AED] to-[#EC4899] flex items-center justify-center shadow-2xl relative group">
-                  <span className="text-4xl">🎙️</span>
-                  {isPlaying && (
-                    <div className="absolute inset-0 bg-black/30 rounded-2xl flex items-center justify-center gap-1">
-                      <span className="w-1 bg-white rounded-full animate-bounce h-8" style={{ animationDelay: '0.1s' }} />
-                      <span className="w-1 bg-white rounded-full animate-bounce h-12" style={{ animationDelay: '0.2s' }} />
-                      <span className="w-1 bg-white rounded-full animate-bounce h-6" style={{ animationDelay: '0.3s' }} />
-                    </div>
-                  )}
-                </div>
-                
-                <div>
-                  <h3 className="text-xl font-bold text-slate-800 mb-1">The Silicon Shield Podcast</h3>
-                  <p className="text-xs text-violet-650 font-medium">Narrated by: {activeNarrator.toUpperCase()}</p>
-                </div>
-
-                {/* Simulated Waveform */}
-                <div className="w-full h-12 flex items-end justify-center gap-[3px] py-2">
-                  {demoWaveHeight.map((h, idx) => (
-                    <span
-                      key={idx}
-                      className={`w-1 rounded-full transition-all duration-150 ${isPlaying ? 'bg-[#7C3AED]' : 'bg-slate-300'}`}
-                      style={{ height: isPlaying ? `${h}px` : '12px' }}
-                    />
-                  ))}
-                </div>
-
-                {/* Player Controls */}
-                <div className="w-full space-y-4">
-                  <div className="flex items-center justify-between text-xs text-slate-400">
-                    <span>1:24</span>
-                    <span>4:15</span>
-                  </div>
-                  <div className="w-full bg-slate-200 rounded-full h-1.5 overflow-hidden cursor-pointer">
-                    <div className="bg-[#7C3AED] h-1.5 rounded-full transition-all duration-300" style={{ width: `${audioProgress}%` }} />
-                  </div>
-                  <div className="flex items-center justify-center gap-6">
-                    <button className="text-slate-400 hover:text-slate-850 text-lg">⏪</button>
-                    <button 
-                      onClick={() => setIsPlaying(!isPlaying)}
-                      className="w-14 h-14 rounded-full bg-[#7C3AED] text-white flex items-center justify-center font-bold text-xl hover:scale-105 transition-transform"
-                    >
-                      {isPlaying ? '⏸️' : '▶️'}
-                    </button>
-                    <button className="text-slate-400 hover:text-slate-850 text-lg">⏩</button>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Video Player Simulator */}
-            {format === 'video' && (
-              <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden relative aspect-video flex flex-col justify-end shadow-sm">
-                <img 
-                  src={currentStory.videoFrames[videoFrameIndex]} 
-                  alt="Video Frame" 
-                  className="absolute inset-0 w-full h-full object-cover opacity-90 transition-all duration-700"
+        {/* Content Panel Area */}
+        <main className="flex-1 p-4 sm:p-8 overflow-y-auto w-full">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.2 }}
+              className="w-full"
+            >
+              
+              {/* TAB 1: Home Tab */}
+              {activeTab === 'home' && (
+                <HomeTab 
+                  onPlayStory={setActiveStoryId}
+                  user={user}
+                  onTabChange={setActiveTab}
+                  storiesList={storiesList}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-905 via-transparent to-black/10" />
+              )}
 
-                {!isPlaying && (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <button 
-                      onClick={() => setIsPlaying(true)}
-                      className="w-16 h-16 rounded-full bg-[#7C3AED]/90 text-white flex items-center justify-center text-2xl hover:scale-110 transition-all shadow-xl"
-                    >
-                      ▶️
-                    </button>
-                  </div>
-                )}
-
-                {/* Captions */}
-                <div className="relative p-6 space-y-4">
-                  <div className="bg-white/90 backdrop-blur-md border border-slate-200 rounded-xl p-3 text-center max-w-xl mx-auto shadow">
-                    <p className="text-sm font-semibold text-slate-800">
-                      {videoFrameIndex === 0 && "🎙️ \"The US pushes restriction limits... lithography supply chain locks down.\""}
-                      {videoFrameIndex === 1 && "💡 \"Suddenly, a breakthrough Nanoimprint process emerges from the shadows...\""}
-                      {videoFrameIndex === 2 && "⚡ \"Geopolitics, semiconductor architecture, and absolute control...\""}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center justify-between text-xs text-slate-650">
-                    <div className="flex items-center gap-3">
-                      <button onClick={() => setIsPlaying(!isPlaying)} className="hover:text-black text-sm">
-                        {isPlaying ? '⏸️ Pause' : '▶️ Play'}
-                      </button>
-                      <span>0:15 / 1:00</span>
-                    </div>
-                    <span className="text-[10px] uppercase font-bold text-[#7C3AED] tracking-wider">AI Generated Visuals</span>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Perspective Switcher Section */}
-            <div className="bg-white border border-slate-200 rounded-3xl p-6 space-y-6 shadow-sm">
-              <div>
-                <h3 className="text-lg font-bold text-slate-800">Explore Alternate Angles</h3>
-                <p className="text-xs text-slate-500 mt-1">Different actors view this same event with completely different stakes.</p>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                {Object.keys(currentStory.perspectives).map((key) => {
-                  const data = currentStory.perspectives[key]
-                  return (
-                    <button
-                      key={key}
-                      onClick={() => setActivePerspective(key)}
-                      className={`px-3 py-2 rounded-xl text-xs font-semibold border transition-all duration-200 ${
-                        activePerspective === key
-                          ? 'bg-[#7C3AED]/10 border-[#7C3AED] text-[#7C3AED]'
-                          : 'bg-white border-slate-200 text-slate-500 hover:text-slate-800'
-                      }`}
-                    >
-                      {data.title}
-                    </button>
-                  )
-                })}
-              </div>
-
-              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 text-left">
-                <span className="text-[10px] font-bold text-[#EC4899] uppercase tracking-widest block mb-2">
-                  {currentStory.perspectives[activePerspective].title} Stake
-                </span>
-                <p className="text-slate-600 text-sm leading-relaxed">
-                  {currentStory.perspectives[activePerspective].text}
-                </p>
-              </div>
-            </div>
-
-          </div>
-
-          {/* Right Column: Narrators, Timeline, Future, Graph */}
-          <div className="space-y-6 text-left">
-            
-            {/* Narrator Picker Panel */}
-            <div className="bg-white border border-slate-200 rounded-3xl p-5 space-y-4 shadow-sm">
-              <div>
-                <h3 className="text-base font-bold text-slate-800">Choose Your Narrator</h3>
-                <p className="text-xs text-slate-500">Selected narrator formats the tone and answers your questions.</p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2">
-                {['detective', 'comedian', 'professor', 'futurist'].map((key) => {
-                  const desc = {
-                    detective: 'Noir Detective Vance',
-                    comedian: 'Comedian Stand-up Sam',
-                    professor: 'Academic Prof. Higgins',
-                    futurist: 'AI Chronos-9'
-                  }
-                  return (
-                    <button
-                      key={key}
-                      onClick={() => setActiveNarrator(key)}
-                      className={`p-3 rounded-xl border text-left transition-all duration-200 ${
-                        activeNarrator === key
-                          ? 'bg-[#7C3AED]/5 border-[#7C3AED] text-[#7C3AED] shadow-sm'
-                          : 'bg-white border-slate-200 hover:bg-slate-50'
-                      }`}
-                    >
-                      <span className="block text-xs font-bold capitalize">{desc[key]}</span>
-                    </button>
-                  )
-                })}
-              </div>
-
-              {/* Chat / Ask Narrator Widget */}
-              <div className="border-t border-slate-100 pt-4 space-y-3">
-                <div className="h-44 overflow-y-auto bg-slate-50 rounded-xl p-3 border border-slate-200 text-xs space-y-2 flex flex-col">
-                  {chatLog.length === 0 ? (
-                    <div className="text-slate-400 text-center my-auto">
-                      Ask a question above to start an ongoing narrative session with your narrator.
-                    </div>
-                  ) : (
-                    chatLog.map((chat, idx) => (
-                      <div 
-                        key={idx} 
-                        className={`max-w-[85%] rounded-xl p-2.5 ${
-                          chat.sender === 'user'
-                            ? 'bg-[#7C3AED] text-white self-end'
-                            : 'bg-white text-slate-700 border border-slate-200 self-start'
-                        }`}
-                      >
-                        {chat.sender !== 'user' && <span className="block font-bold text-[9px] text-[#EC4899] mb-1">{chat.name}</span>}
-                        <p>{chat.text}</p>
-                      </div>
-                    ))
-                  )}
-                </div>
-
-                <form onSubmit={handleAskQuestion} className="flex gap-2">
-                  <input
-                    type="text"
-                    value={userQuestion}
-                    onChange={(e) => setUserQuestion(e.target.value)}
-                    placeholder="Ask about this event..."
-                    className="flex-1 bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#7C3AED] text-slate-700"
-                  />
-                  <button 
-                    type="submit"
-                    className="bg-[#7C3AED] hover:bg-[#7C3AED]/90 text-white font-semibold text-xs px-3 rounded-xl"
-                  >
-                    Ask
-                  </button>
-                </form>
-              </div>
-            </div>
-
-            {/* Predict Future Scenarios Widget */}
-            <div className="bg-white border border-slate-200 rounded-3xl p-5 space-y-4 shadow-sm">
-              <div>
-                <h3 className="text-base font-bold text-slate-800">Future Scenario Simulator</h3>
-                <p className="text-xs text-slate-500">Predict the next chapter. Your vote impacts the story progression.</p>
-              </div>
-
-              <div className="bg-slate-55 border border-slate-200 rounded-2xl p-4 space-y-3">
-                <span className="text-xs font-bold text-slate-700">{currentStory.whatNext.question}</span>
-                <div className="space-y-2">
-                  {['optA', 'optB', 'optC'].map((optKey) => {
-                    const option = currentStory.whatNext.options.find(o => o.id === optKey)
-                    const totalVotes = voteCount.optA + voteCount.optB + voteCount.optC
-                    const percentage = Math.round((voteCount[optKey] / totalVotes) * 100)
-                    return (
-                      <button
-                        key={optKey}
-                        onClick={() => castVote(optKey)}
-                        disabled={voted}
-                        className="w-full text-left p-3 rounded-xl border border-slate-200 bg-white relative overflow-hidden group transition-all"
-                      >
-                        <div 
-                          className="absolute inset-y-0 left-0 bg-[#7C3AED]/10 transition-all duration-500" 
-                          style={{ width: voted ? `${percentage}%` : '0%' }}
-                        />
-                        <div className="relative flex justify-between items-center text-xs font-medium">
-                          <span className="text-slate-650 pr-4">{option?.text}</span>
-                          {voted && <span className="text-[#EC4899] font-bold">{percentage}%</span>}
-                        </div>
-                      </button>
-                    )
-                  })}
-                </div>
-              </div>
-            </div>
-
-            {/* Timelines and Connections */}
-            <div className="bg-white border border-slate-200 rounded-3xl p-5 space-y-4 shadow-sm">
-              <h3 className="text-base font-bold text-slate-800">Timeline Episodes</h3>
-              <div className="space-y-2">
-                {episodes.map((ep, idx) => (
-                  <div key={idx} className={`p-3 rounded-xl border flex items-center justify-between text-xs ${ep.isToday ? 'border-[#7C3AED]' : 'border-slate-100 bg-slate-50'}`}>
-                    <span className="font-semibold text-slate-800">Ep {ep.num}: {ep.title}</span>
-                    <span className="text-[10px] text-slate-400">{ep.date}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </main>
+              {/* TAB 3: Profile Tab */}
+              {activeTab === 'profile' && (
+                <ProfileTab 
+                  user={user}
+                  token={token}
+                  onProfileUpdate={onProfileUpdate}
+                  onLogout={onLogout}
+                />
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </main>
+      </div>
     </div>
   )
 }
