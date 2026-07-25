@@ -6,6 +6,12 @@ const formatTime = (seconds) => {
   return `${Math.floor(value / 60)}:${String(value % 60).padStart(2, '0')}`
 }
 
+const safeDuration = (duration, text = '') => {
+  const value = Number(duration)
+  if (Number.isFinite(value) && value > 0 && value <= 60) return value
+  return Math.max(1.5, Math.min(20, String(text).trim().split(/\s+/).filter(Boolean).length / 2.3))
+}
+
 const mediaUrl = (runId, path) => {
   const prefix = `scripts/${runId}/`
   const relativePath = path.startsWith(prefix) ? path.slice(prefix.length) : path
@@ -213,7 +219,7 @@ export default function EpisodePage({ episodeId, token }) {
   }
   const handleTimeUpdate = (event) => setPlaybackTime(event.currentTarget.currentTime || 0)
   const handleMetadata = () => {
-    if (currentTrack && !currentTrack.duration && Number.isFinite(audioRef.current.duration)) {
+    if (currentTrack && !currentTrack.duration && Number.isFinite(audioRef.current.duration) && audioRef.current.duration <= 60) {
       currentTrack.duration = audioRef.current.duration
     }
   }
@@ -324,7 +330,7 @@ function buildStory(script, audioManifest, stem, episodeId, entryStoryId) {
     if (!clip?.url && !fallback) return
     tracks.push({
       url: clip?.url ? `${API_BASE}${clip.url}` : fallback,
-      duration: Number(clip?.durationSeconds) || 0,
+      duration: safeDuration(clip?.durationSeconds, line.text),
       text: line.text,
       speaker: line.speaker,
       image: beat.visual?.imagePath ? mediaUrl(episodeId, beat.visual.imagePath) : '',
@@ -347,7 +353,7 @@ function addBridgeTracks(stories, bridges) {
     if (!index) return
     const bridge = byNextStory.get(story.storyId)
     if (!bridge?.url) return
-    story.tracks.unshift({ url: `${API_BASE}${bridge.url}`, duration: Number(bridge.durationSeconds) || 0, text: bridge.text, speaker: bridge.speaker || 'StoryCast', image: story.tracks.find((track) => track.image)?.image || '', beatId: 'transition', isBridge: true })
+    story.tracks.unshift({ url: `${API_BASE}${bridge.url}`, duration: safeDuration(bridge.durationSeconds, bridge.text), text: bridge.text, speaker: bridge.speaker || 'StoryCast', image: story.tracks.find((track) => track.image)?.image || '', beatId: 'transition', isBridge: true })
     story.duration = story.tracks.reduce((sum, track) => sum + track.duration, 0)
   })
 }

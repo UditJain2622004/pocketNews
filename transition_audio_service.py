@@ -14,6 +14,7 @@ from audio_generator import AUDIO_VOICES, generate_story_line
 
 BASE_DIR = Path(__file__).resolve().parent
 SCRIPTS_DIR = BASE_DIR / "scripts"
+MAX_CLIP_DURATION_SECONDS = 60
 
 
 def prepare_episode_bridges(run_id: str, story_ids: list[str]) -> dict[str, object]:
@@ -105,6 +106,7 @@ def _read_json(path: Path) -> dict[str, Any]:
 def _duration_seconds(path: Path) -> float:
     try:
         with wave.open(str(path), "rb") as audio_file:
-            return round(audio_file.getnframes() / audio_file.getframerate(), 3)
+            duration = audio_file.getnframes() / audio_file.getframerate()
+            return round(duration, 3) if 0 < duration <= MAX_CLIP_DURATION_SECONDS else 0.0
     except (wave.Error, OSError, ZeroDivisionError):
         return 0.0
