@@ -9,6 +9,7 @@ from image_generator import generate_story_image, generate_story_reference
 
 
 BASE_DIR = Path(__file__).resolve().parent
+THREE_IMAGE_BEAT_IDS = {"hook", "what-happened", "takeaway"}
 
 
 def generate_story_visuals(
@@ -16,6 +17,7 @@ def generate_story_visuals(
     source_file: str | Path,
     article_id: str,
     story: dict[str, Any],
+    three_images_per_story: bool = False,
 ) -> dict[str, object]:
     image_dir = output_dir / "images" / _safe_filename(Path(source_file).stem) / _safe_filename(article_id)
     beats = story.get("beats")
@@ -24,7 +26,7 @@ def generate_story_visuals(
 
     visual_bible = story.get("visualBible")
     if not isinstance(visual_bible, dict):
-        return _generate_legacy_visuals(image_dir, beats)
+        return _generate_legacy_visuals(image_dir, beats, three_images_per_story)
 
     context = _story_context(story, visual_bible)
     reference_path = image_dir / "reference.png"
@@ -54,6 +56,8 @@ def generate_story_visuals(
             continue
         visual = beat["visual"]
         beat_id = str(beat.get("id") or "visual")
+        if three_images_per_story and beat_id not in THREE_IMAGE_BEAT_IDS:
+            continue
         image_path = image_dir / f"{_safe_filename(beat_id)}.png"
         if not image_path.is_file():
             try:
@@ -82,7 +86,7 @@ def generate_story_visuals(
     return {"paths": paths, "generated": generated, "reused": reused, "failures": failures}
 
 
-def _generate_legacy_visuals(image_dir: Path, beats: list[object]) -> dict[str, object]:
+def _generate_legacy_visuals(image_dir: Path, beats: list[object], three_images_per_story: bool = False) -> dict[str, object]:
     paths: list[str] = []
     generated = 0
     reused = 0
@@ -92,6 +96,8 @@ def _generate_legacy_visuals(image_dir: Path, beats: list[object]) -> dict[str, 
             continue
         visual = beat["visual"]
         beat_id = str(beat.get("id") or "visual")
+        if three_images_per_story and beat_id not in THREE_IMAGE_BEAT_IDS:
+            continue
         image_path = image_dir / f"{_safe_filename(beat_id)}.png"
         if not image_path.is_file():
             try:
