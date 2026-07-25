@@ -27,6 +27,26 @@ def build_episode(articles: list[NewsArticle], interests: list[str], cadence: st
             "outro": "That is the update. Knowledge acquired, endless scrolling postponed.",
             "storyCount": len(stories), "estimatedDurationSeconds": sum(story["durationSeconds"] for story in stories), "stories": stories}
 
+def _build_playback_plan(stories: list[dict[str, object]]) -> list[dict[str, object]]:
+    """Keep reusable stories independent while defining their episode-specific entry."""
+    plan: list[dict[str, object]] = []
+    previous_story: dict[str, object] | None = None
+    for story in stories:
+        entry = story["entry"]
+        is_related = previous_story is not None and story["category"] == previous_story["category"]
+        entry_variant = "direct" if previous_story is None else "afterRelated" if is_related else "afterUnrelated"
+        plan.append(
+            {
+                "storyId": story["storyId"],
+                "titleCueBeatId": "title-cue",
+                "entryVariant": entry_variant,
+                "entryText": entry[entry_variant],
+                "skipEntryText": entry["direct"],
+            }
+        )
+        previous_story = story
+    return plan
+
 def build_story(article: NewsArticle, index: int, language: str) -> dict[str, object]:
     category = _primary_category(article.categories)
     details = CATEGORY_DETAILS[category]
@@ -110,5 +130,6 @@ def _story_summary(text: str, fallback: str) -> str:
 def _episode_title(interests: list[str]) -> str:
     focus = " + ".join(item.title() for item in interests[:2] if item != "top") or "Today"
     return f"{focus} in motion"
+
 
 
