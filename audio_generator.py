@@ -19,15 +19,23 @@ class AudioGenerationError(RuntimeError):
     pass
 
 
-def generate_story_line(text: str, voice: str, voice_profile: str, language: str) -> bytes:
+def generate_story_line(
+    text: str,
+    voice: str,
+    voice_profile: str,
+    language: str,
+    story_context: str,
+) -> bytes:
     if not os.getenv("OPENAI_API_KEY"):
         raise AudioGenerationError("OPENAI_API_KEY is not configured.")
 
     instructions = (
-        f"Speak only this exact {language} news-story line. "
-        f"Delivery direction: {voice_profile}. "
-        "Sound expressive, cinematic, and lightly funny where the wording supports it. "
-        "Do not add any words, sound effects, or introductions."
+        f"You are performing one line in a continuous {language} fictional news-story scene. "
+        f"Character delivery direction: {voice_profile}. "
+        "Use the full scene context below to preserve the character's emotional state, pace, "
+        "relationships, and the scene's dramatic progression. "
+        "Speak only the exact requested line. Do not add words, sound effects, or introductions.\n\n"
+        f"FULL STORY CONTEXT:\n{story_context}"
     )
     try:
         response = OpenAI().chat.completions.create(

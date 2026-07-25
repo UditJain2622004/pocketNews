@@ -16,6 +16,7 @@ from audio_generator import AUDIO_MODEL, AUDIO_VOICES, generate_story_line
 BASE_DIR = Path(__file__).resolve().parent
 SCRIPTS_DIR = BASE_DIR / "scripts"
 MAX_PARALLEL_REQUESTS = max(1, int(os.getenv("OPENAI_MAX_PARALLEL_REQUESTS", "4")))
+AUDIO_PROMPT_VERSION = "story-context-v1"
 
 
 class AudioWorkflowInputError(ValueError):
@@ -110,6 +111,7 @@ def _prepare_script_audio(
         raise AudioWorkflowInputError("Story module does not contain cast and beats.")
 
     voice_assignments = _voice_assignments(article_id, cast)
+    story_context = _story_audio_context(story)
     audio_dir = run_dir / "audio" / _safe_filename(script_path.stem)
     manifest_path = audio_dir / "manifest.json"
     previous_manifest = _read_json(manifest_path) if manifest_path.is_file() else {}
@@ -137,7 +139,13 @@ def _prepare_script_audio(
                 continue
 
             clip_id = f"{beat_id}-{line_index}"
-            line_hash = _line_hash(text, speaker, language, voice_assignments.get(speaker, ""))
+            line_hash = _line_hash(
+                text,
+                speaker,
+                language,
+                voice_assignments.get(speaker, ""),
+                story_context,
+            )
             clip_path = audio_dir / _safe_filename(beat_id) / f"{line_index}.wav"
             previous = previous_clips.get(clip_id, {})
             if previous.get("lineHash") == line_hash and clip_path.is_file():
@@ -148,7 +156,13 @@ def _prepare_script_audio(
             cast_member = next((item for item in cast if isinstance(item, dict) and item.get("id") == speaker), {})
             voice_profile = str(cast_member.get("voiceProfile") or "natural news narration")
             try:
-                audio_bytes = generate_story_line(text, voice_assignments.get(speaker, AUDIO_VOICES[0]), voice_profile, language)
+                audio_bytes = generate_story_line(
+                    text,
+                    voice_assignments.get(speaker, AUDIO_VOICES[0]),
+                    voice_profile,
+                    language,
+                    story_context,
+                )
                 clip_path.parent.mkdir(parents=True, exist_ok=True)
                 clip_path.write_bytes(audio_bytes)
                 clips_generated += 1
@@ -217,9 +231,38 @@ def _voice_assignments(article_id: str, cast: list[object]) -> dict[str, str]:
     }
 
 
-def _line_hash(text: str, speaker: str, language: str, voice: str) -> str:
-    value = f"{AUDIO_MODEL}|{language}|{speaker}|{voice}|{text}"
+def _line_hash(text: str, speaker: str, language: str, voice: str, story_context: str) -> str:
+    value = f"{AUDIO_MODEL}|{AUDIO_PROMPT_VERSION}|{language}|{speaker}|{voice}|{story_context}|{text}"
     return hashlib.sha256(value.encode("utf-8")).hexdigest()
+
+
+def _story_audio_context(story: dict[str, Any]) -> str:
+    creative_direction = story.get("creativeDirection")
+    dramatic_spine = story.get("dramaticSpine")
+    context_lines = [
+        f"Title: {story.get('title') or 'Untitled story'}",
+        f"Genre: {creative_direction.get('genre') if isinstance(creative_direction, dict) else 'cinematic news story'}",
+        f"Premise: {creative_direction.get('dramaticPremise') if isinstance(creative_direction, dict) else ''}",
+    ]
+    if isinstance(dramatic_spine, dict):
+        context_lines.extend(
+            [
+                f"Character goal: {dramatic_spine.get('characterGoal') or ''}",
+                f"Obstacle: {dramatic_spine.get('obstacle') or ''}",
+                f"News catalyst: {dramatic_spine.get('newsCatalyst') or ''}",
+                f"Emotional turn: {dramatic_spine.get('emotionalTurn') or ''}",
+                f"Resolution: {dramatic_spine.get('resolution') or ''}",
+            ]
+        )
+
+    for beat in story.get("beats") or []:
+        if not isinstance(beat, dict):
+            continue
+        context_lines.append(f"[{beat.get('id') or 'beat'}] Action: {beat.get('dramaticAction') or ''}")
+        for line in beat.get("lines") or []:
+            if isinstance(line, dict) and line.get("text"):
+                context_lines.append(f"{line.get('speaker') or 'Speaker'}: {line['text']}")
+    return "\n".join(context_lines)
 
 
 def _duration_seconds(path: Path) -> float:
