@@ -7,12 +7,20 @@ from typing import List
 # Ensure the parent directory is in path so we can import translator
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from multilingual.translator import translate_text
+from auth.database import setup_db_indexes
+from auth.router import router as auth_router
 
 app = FastAPI(
     title="PocketNews API",
-    description="A basic FastAPI application with Multilingual Translation API support",
-    version="0.2.0"
+    description="A basic FastAPI application with Multilingual Translation and Auth API support",
+    version="0.3.0"
 )
+
+app.include_router(auth_router)
+
+@app.on_event("startup")
+def on_startup():
+    setup_db_indexes()
 
 class TranslationRequest(BaseModel):
     text: str
