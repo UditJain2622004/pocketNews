@@ -1,9 +1,10 @@
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, BackgroundTasks
 from fastapi.responses import HTMLResponse
 from dotenv import load_dotenv
 from typing import List, Union, Optional
 from news_collection import fetch_google_news_rss
 from news_collection.taxonomy import NEWS_TAXONOMY
+from news_collection.sync_news import run_news_sync
 
 # Load environment variables
 load_dotenv()
@@ -214,4 +215,16 @@ async def get_news(
     except Exception as e:
         from fastapi import HTTPException
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/news/sync")
+def trigger_news_sync(background_tasks: BackgroundTasks):
+    """
+    Manually trigger background synchronization of latest news for all categories.
+    """
+    background_tasks.add_task(run_news_sync)
+    return {
+        "status": "sync_started",
+        "message": "Bulk news scraping process initiated in the background.",
+        "categories": list(NEWS_TAXONOMY.keys())
+    }
 

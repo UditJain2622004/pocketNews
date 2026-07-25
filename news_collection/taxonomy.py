@@ -82,6 +82,31 @@ NEWS_TAXONOMY = {
                 }
             }
         }
+    },
+    "sports": {
+        "name": "Sports",
+        "rss_topic": "SPORTS",
+        "sub_topics": {
+            "cricket": {
+                "name": "Cricket",
+                "query": 'cricket OR ICC OR "T20" OR "IPL"',
+                "micro_niches": {
+                    "ipl": {"name": "IPL", "query": '"IPL" OR "Indian Premier League"'},
+                    "t20": {"name": "T20", "query": '"T20" OR "T20 World Cup"'},
+                    "test_cricket": {"name": "Test Cricket", "query": '"Test cricket" OR "WTC"'}
+                }
+            },
+            "football": {
+                "name": "Football",
+                "query": 'football OR soccer OR FIFA OR UEFA',
+                "micro_niches": {
+                    "premier_league": {"name": "Premier League", "query": '"Premier League" OR "EPL"'},
+                    "champions_league": {"name": "Champions League", "query": '"Champions League" OR "UEFA"'},
+                    "world_cup": {"name": "World Cup", "query": '"World Cup" OR "FIFA World Cup"'}
+                }
+            }
+        }
     }
 }
+
 
