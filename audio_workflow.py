@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 import re
+import struct
 from typing import Any
 import wave
 
@@ -16,7 +17,7 @@ from audio_generator import AUDIO_MODEL, AUDIO_VOICES, generate_story_line
 BASE_DIR = Path(__file__).resolve().parent
 SCRIPTS_DIR = BASE_DIR / "scripts"
 MAX_PARALLEL_REQUESTS = max(1, int(os.getenv("OPENAI_MAX_PARALLEL_REQUESTS", "4")))
-AUDIO_PROMPT_VERSION = "story-context-v1"
+AUDIO_PROMPT_VERSION = "story-context-v3"
 
 
 class AudioWorkflowInputError(ValueError):
@@ -111,7 +112,6 @@ def _prepare_script_audio(
         raise AudioWorkflowInputError("Story module does not contain cast and beats.")
 
     voice_assignments = _voice_assignments(article_id, cast)
-    story_context = _story_audio_context(story)
     audio_dir = run_dir / "audio" / _safe_filename(script_path.stem)
     manifest_path = audio_dir / "manifest.json"
     previous_manifest = _read_json(manifest_path) if manifest_path.is_file() else {}
@@ -139,6 +139,7 @@ def _prepare_script_audio(
                 continue
 
             clip_id = f"{beat_id}-{line_index}"
+            story_context = _story_audio_context(story, beat_id, line_index)
             line_hash = _line_hash(
                 text,
                 speaker,
@@ -236,7 +237,7 @@ def _line_hash(text: str, speaker: str, language: str, voice: str, story_context
     return hashlib.sha256(value.encode("utf-8")).hexdigest()
 
 
-def _story_audio_context(story: dict[str, Any]) -> str:
+def _story_audio_context(story: dict[str, Any], target_beat_id: str, target_line_index: int) -> str:
     creative_direction = story.get("creativeDirection")
     dramatic_spine = story.get("dramaticSpine")
     context_lines = [
@@ -259,7 +260,9 @@ def _story_audio_context(story: dict[str, Any]) -> str:
         if not isinstance(beat, dict):
             continue
         context_lines.append(f"[{beat.get('id') or 'beat'}] Action: {beat.get('dramaticAction') or ''}")
-        for line in beat.get("lines") or []:
+        for line_index, line in enumerate(beat.get("lines") or []):
+            if beat.get("id") == target_beat_id and line_index == target_line_index:
+                continue
             if isinstance(line, dict) and line.get("text"):
                 context_lines.append(f"{line.get('speaker') or 'Speaker'}: {line['text']}")
     return "\n".join(context_lines)
@@ -267,7 +270,29 @@ def _story_audio_context(story: dict[str, Any]) -> str:
 
 def _duration_seconds(path: Path) -> float:
     with wave.open(str(path), "rb") as audio_file:
-        return round(audio_file.getnframes() / audio_file.getframerate(), 3)
+        frame_rate = audio_file.getframerate()
+        frame_size = audio_file.getnchannels() * audio_file.getsampwidth()
+        frame_count = _wav_data_size(path)
+        if frame_count is None:
+            frame_count = audio_file.getnframes() * frame_size
+    return round(frame_count / (frame_rate * frame_size), 3)
+
+
+def _wav_data_size(path: Path) -> int | None:
+    """Read the actual data chunk size when a WAV header uses an unknown-length marker."""
+    with path.open("rb") as audio_file:
+        if audio_file.read(12)[0:4] != b"RIFF":
+            return None
+        while True:
+            chunk_header = audio_file.read(8)
+            if len(chunk_header) != 8:
+                return None
+            chunk_id, declared_size = struct.unpack("<4sI", chunk_header)
+            if chunk_id == b"data":
+                if declared_size == 0xFFFFFFFF:
+                    return path.stat().st_size - audio_file.tell()
+                return declared_size
+            audio_file.seek(declared_size + (declared_size % 2), 1)
 
 
 def _run_directory(run_id: str) -> Path:

@@ -34,8 +34,17 @@ def generate_story_line(
         f"Character delivery direction: {voice_profile}. "
         "Use the full scene context below to preserve the character's emotional state, pace, "
         "relationships, and the scene's dramatic progression. "
-        "Speak only the exact requested line. Do not add words, sound effects, or introductions.\n\n"
-        f"FULL STORY CONTEXT:\n{story_context}"
+        "The scene context is silent reference material: never speak, quote, or repeat it. "
+        "Speak the target line exactly once. Never repeat a phrase, sentence, or the full line for emphasis. "
+        "You may use a brief natural nonverbal performance beat such as a tiny breath, soft amused exhale, "
+        "or thoughtful pause only when the character direction and wording clearly support it. Do not add words, "
+        "sound effects, or introductions.\n\n"
+        "PERFORMANCE EXAMPLE:\n"
+        "Character direction: nervous but warm, becoming decisive.\n"
+        "Target line: No. That sounded like a robot asking for directions.\n"
+        "Performance: a small embarrassed breath before 'No', a short pause after it, then the target sentence "
+        "once with a self-aware half-laugh. Do not say the line twice and do not add any new words.\n\n"
+        f"SILENT SCENE CONTEXT:\n{story_context}"
     )
     try:
         response = OpenAI().chat.completions.create(
@@ -44,7 +53,7 @@ def generate_story_line(
             audio={"voice": voice, "format": "wav"},
             messages=[
                 {"role": "system", "content": instructions},
-                {"role": "user", "content": text},
+                {"role": "user", "content": f"TARGET LINE TO SPEAK ONCE:\n{text}"},
             ],
         )
         audio = response.choices[0].message.audio

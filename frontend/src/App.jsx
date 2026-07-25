@@ -3,6 +3,7 @@ import Home from './pages/Home'
 import LoginPage from './pages/LoginPage'
 import SignUpPage from './pages/SignUpPage'
 import DashboardPage from './pages/DashboardPage'
+import EpisodePage from './pages/EpisodePage'
 
 const API_BASE = 'http://localhost:8000'
 
@@ -68,6 +69,11 @@ function App() {
   }
 
   // Routing rendering logic
+  const episodeMatch = currentPath.match(/^\/episode\/([^/]+)\/?$/)
+  if (episodeMatch) {
+    return <EpisodePage episodeId={decodeURIComponent(episodeMatch[1])} />
+  }
+
   if (currentPath === '/login') {
     return (
       <LoginPage 

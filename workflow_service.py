@@ -215,7 +215,17 @@ def _generate_images(
         for future in as_completed(futures):
             index, article, source_file = futures[future]
             try:
-                image_paths[index].extend(future.result()["paths"])
+                result = future.result()
+                image_paths[index].extend(result["paths"])
+                for failure in result.get("failures", []):
+                    failures.append(
+                        {
+                            "articleId": article.id,
+                            "sourceFile": _relative(source_file),
+                            "beatId": str(failure.get("beatId") or "image"),
+                            "error": str(failure.get("error") or "Image generation failed."),
+                        }
+                    )
             except Exception as error:
                 failures.append(
                     {

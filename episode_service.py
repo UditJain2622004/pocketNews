@@ -4,13 +4,10 @@ from __future__ import annotations
 from typing import Iterable
 
 from news_adapter import NewsArticle
+from story_generation.mode_registry import mode_for_index, supported_story_formats
 
 
-STORY_FORMATS = (
-    "solo-hot-take",
-    "two-person-banter",
-    "dramatized-pov",
-)
+STORY_FORMATS = supported_story_formats()
 
 
 def supported_story_formats() -> tuple[str, ...]:
@@ -62,7 +59,7 @@ def compose_episode(
 
 
 def story_format_for_index(index: int) -> str:
-    return STORY_FORMATS[index % len(STORY_FORMATS)]
+    return mode_for_index(index)
 
 
 def _build_playback_plan(stories: list[dict[str, object]]) -> list[dict[str, object]]:
