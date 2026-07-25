@@ -5,6 +5,7 @@ from typing import List, Literal, Optional
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
 from audio_workflow import AudioWorkflowInputError, media_file, prepare_story_audio
@@ -20,6 +21,7 @@ from multilingual.translator import translate_text
 BASE_DIR = Path(__file__).resolve().parent
 load_dotenv(BASE_DIR / ".env")
 NEWS_FEED_PATH = BASE_DIR / "news_format.json"
+EPISODE_PLAYER_PATH = BASE_DIR / "episode_player.html"
 
 app = FastAPI(
     title="PocketNews API",
@@ -67,6 +69,11 @@ def read_root() -> dict[str, str]:
 @app.get("/api/health")
 def health_check() -> dict[str, str]:
     return {"status": "healthy", "service": "PocketNews API"}
+
+
+@app.get("/episode-player")
+def episode_player():
+    return FileResponse(EPISODE_PLAYER_PATH)
 
 
 @app.get("/api/news")
@@ -143,8 +150,6 @@ def generate_media(request: MediaWorkflowRequest) -> dict[str, object]:
 @app.get("/api/media/{run_id}/{media_path:path}")
 def get_media(run_id: str, media_path: str):
     try:
-        from fastapi.responses import FileResponse
-
         return FileResponse(media_file(run_id, media_path))
     except AudioWorkflowInputError as error:
         raise HTTPException(status_code=404, detail=str(error)) from error
