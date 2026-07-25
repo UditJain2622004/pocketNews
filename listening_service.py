@@ -55,7 +55,7 @@ def record_listening_event(
     }
     try:
         database.listening_events.insert_one(document)
-        return {"accepted": True, "duplicate": False, "event": document}
+        return {"accepted": True, "duplicate": False, "event": {key: value for key, value in document.items() if key != "_id"}}
     except DuplicateKeyError:
         existing = database.listening_events.find_one(
             {"userId": user_id, "eventId": event_id}, {"_id": 0}

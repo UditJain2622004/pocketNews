@@ -24,6 +24,7 @@ from automated_workflows import run_daily_workflow
 from localization_service import locale_for_language, prepare_localized_episode
 from publication_store import backfill_complete_episodes, delete_published_episode, episode_playback, list_episodes, list_published_episodes, set_localized_run, setup_publication_indexes, workflow_status
 from listening_service import ListeningEventError, learned_scores as get_learned_scores, record_listening_event as store_listening_event
+from transition_audio_service import prepare_episode_bridges
 from scheduler_service import start_scheduler, stop_scheduler
 from news_collection import fetch_google_news_rss
 from news_collection.sync_news import run_news_sync
@@ -90,6 +91,11 @@ class ListeningEventRequest(BaseModel):
     storyId: str = Field(..., min_length=1, max_length=200)
     event: Literal["completed", "skipped"]
     progressRatio: float = Field(default=0.0, ge=0.0, le=1.0)
+
+
+class EpisodeBridgeRequest(BaseModel):
+    runId: str
+    storyIds: List[str]
 
 
 class AdminDailyWorkflowRequest(BaseModel):
@@ -296,6 +302,16 @@ def get_published_episode_playback(episode_id: str, background_tasks: Background
         episode["localizedStatus"] = "canonical"
     episode["requestedLanguage"] = profile_language
     return episode
+
+
+@app.post("/api/episodes/{episode_id}/bridges")
+def generate_episode_bridges(episode_id: str, request: EpisodeBridgeRequest, user_id: str = Depends(get_current_user_id)) -> dict[str, object]:
+    if not request.storyIds:
+        return {"runId": request.runId, "bridges": []}
+    try:
+        return prepare_episode_bridges(request.runId, request.storyIds)
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error)) from error
 
 
 @app.post("/api/episodes/{episode_id}/events")

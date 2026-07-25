@@ -6,6 +6,12 @@ const formatTime = (seconds) => {
   return `${Math.floor(value / 60)}:${String(value % 60).padStart(2, '0')}`
 }
 
+const safeDuration = (duration, text = '') => {
+  const value = Number(duration)
+  if (Number.isFinite(value) && value > 0 && value <= 60) return value
+  return Math.max(1.5, Math.min(20, String(text).trim().split(/\s+/).filter(Boolean).length / 2.3))
+}
+
 const mediaUrl = (runId, path) => {
   const prefix = `scripts/${runId}/`
   const relativePath = path.startsWith(prefix) ? path.slice(prefix.length) : path
@@ -25,6 +31,7 @@ export default function EpisodePage({ episodeId, token }) {
   const [playbackTime, setPlaybackTime] = useState(0)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [sidePanel, setSidePanel] = useState('stories')
   const sessionIdRef = useRef(globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random()}`)
   const sentEventsRef = useRef(new Set())
   const completedStoriesRef = useRef(new Set())
@@ -67,6 +74,18 @@ export default function EpisodePage({ episodeId, token }) {
         }))
         const playableStories = loadedStories.filter((story) => story.tracks.length > 0)
         if (!playableStories.length) throw new Error('This episode has no playable audio yet.')
+        if (token && playableStories.length > 1) {
+          try {
+            const bridgeResponse = await fetch(`${API_BASE}/api/episodes/${encodeURIComponent(episodeId)}/bridges`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+              body: JSON.stringify({ runId, storyIds: playableStories.map((story) => story.storyId) }),
+            })
+            if (bridgeResponse.ok) addBridgeTracks(playableStories, (await bridgeResponse.json()).bridges || [])
+          } catch (_) {
+            // Bridges are enhancement-only; direct story playback remains available.
+          }
+        }
         if (!active) return
         setStories(playableStories)
         setStoryIndex(0)
@@ -143,11 +162,13 @@ export default function EpisodePage({ episodeId, token }) {
     return Math.min(1, (completedTrackTime + playbackTime) / currentStory.duration)
   }
 
-  const selectStory = (nextStoryIndex, autoPlay = playing) => {
+  const selectStory = (nextStoryIndex, autoPlay = playing, includeBridge = false) => {
     pause()
+    const nextStory = stories[nextStoryIndex]
+    const nextTrackIndex = includeBridge ? 0 : Math.max(0, nextStory?.tracks.findIndex((track) => !track.isBridge) || 0)
     setStoryIndex(nextStoryIndex)
-    setTrackIndex(0)
-    setElapsed(storyElapsedBefore(nextStoryIndex))
+    setTrackIndex(nextTrackIndex)
+    setElapsed(storyElapsedBefore(nextStoryIndex) + (includeBridge ? 0 : (nextStory?.tracks.slice(0, nextTrackIndex).reduce((sum, track) => sum + track.duration, 0) || 0)))
     setPlaybackTime(0)
     if (autoPlay) setPlaying(true)
   }
@@ -166,7 +187,7 @@ export default function EpisodePage({ episodeId, token }) {
       if (!completedStoriesRef.current.has(`${episodeId}:${currentStory.storyId}`)) {
         sendStoryEvent(currentStory, 'skipped', currentStoryProgress())
       }
-      selectStory(storyIndex + 1, shouldPlay)
+      selectStory(storyIndex + 1, shouldPlay, true)
       return
     } else if (direction > 0) {
       setStoryIndex(0)
@@ -180,7 +201,7 @@ export default function EpisodePage({ episodeId, token }) {
 
   const skipStory = () => {
     sendStoryEvent(currentStory, 'skipped', currentStoryProgress())
-    if (storyIndex < stories.length - 1) selectStory(storyIndex + 1, playing)
+    if (storyIndex < stories.length - 1) selectStory(storyIndex + 1, playing, false)
     else {
       pause()
       setStoryIndex(0)
@@ -198,7 +219,7 @@ export default function EpisodePage({ episodeId, token }) {
   }
   const handleTimeUpdate = (event) => setPlaybackTime(event.currentTarget.currentTime || 0)
   const handleMetadata = () => {
-    if (currentTrack && !currentTrack.duration && Number.isFinite(audioRef.current.duration)) {
+    if (currentTrack && !currentTrack.duration && Number.isFinite(audioRef.current.duration) && audioRef.current.duration <= 60) {
       currentTrack.duration = audioRef.current.duration
     }
   }
@@ -221,7 +242,7 @@ export default function EpisodePage({ episodeId, token }) {
           <span className="text-[15px] font-extrabold tracking-tight text-zinc-900">StoryCast <span className="text-[#E11D48]">AI</span></span>
         </a>
         <div className="flex items-center gap-4 text-sm text-zinc-500">
-          <span className="hidden sm:block">Episode {episodeId}</span>
+          {/* <span className="hidden sm:block">Episode {episodeId}</span> */}
           <a href="/" className="rounded-full border border-zinc-300/80 bg-white/50 px-4 py-2 font-bold text-zinc-700 shadow-sm transition hover:border-[#E11D48]/50 hover:text-[#E11D48]">Back to library</a>
         </div>
       </header>
@@ -270,9 +291,9 @@ export default function EpisodePage({ episodeId, token }) {
 
         <aside className="min-w-0 rounded-3xl border border-white/50 bg-white/55 p-4 shadow-md backdrop-blur-md lg:min-h-0 lg:overflow-hidden lg:pt-4">
           <div className="flex items-end gap-8 border-b border-zinc-200/80">
-            <button type="button" className="relative pb-4 text-base font-extrabold text-zinc-900 after:absolute after:bottom-[-1px] after:left-0 after:h-0.5 after:w-full after:bg-[#E11D48]">Stories <sup className="ml-1 text-[10px] text-zinc-400">{stories.length}</sup></button><span className="pb-4 text-base font-bold text-zinc-400">About</span>
+            <button type="button" onClick={() => setSidePanel('stories')} className={`relative pb-4 text-base font-extrabold ${sidePanel === 'stories' ? 'text-zinc-900 after:absolute after:bottom-[-1px] after:left-0 after:h-0.5 after:w-full after:bg-[#E11D48]' : 'text-zinc-400 hover:text-zinc-700'}`}>Stories <sup className="ml-1 text-[10px] text-zinc-400">{stories.length}</sup></button><button type="button" onClick={() => setSidePanel('about')} className={`relative pb-4 text-base font-extrabold ${sidePanel === 'about' ? 'text-zinc-900 after:absolute after:bottom-[-1px] after:left-0 after:h-0.5 after:w-full after:bg-[#E11D48]' : 'text-zinc-400 hover:text-zinc-700'}`}>About</button>
           </div>
-          <div className="flex items-center justify-between py-7">
+          {sidePanel === 'stories' && <><div className="flex items-center justify-between py-7">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#E11D48]">Your queue</p>
               <h2 className="mt-2 text-2xl font-black tracking-tight text-zinc-900">All stories</h2>
@@ -289,7 +310,8 @@ export default function EpisodePage({ episodeId, token }) {
                 </span>
               </button>
             ))}
-          </div>
+          </div></>}
+          {sidePanel === 'about' && <div className="py-7"><p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#E11D48]">Sources used</p><h2 className="mt-2 text-2xl font-black tracking-tight text-zinc-900">{currentStory?.title || 'Current story'}</h2><div className="mt-6 space-y-3">{(currentStory?.sources || []).map((source, index) => <a key={`${source.url}-${index}`} href={source.url || '#'} target="_blank" rel="noreferrer" className="block rounded-xl border border-zinc-200 bg-white/65 p-4 transition hover:border-[#E11D48]/40"><p className="font-extrabold text-zinc-800">{source.name || 'Original source'}</p><p className="mt-1 truncate text-xs text-zinc-500">{source.publishedAt || 'Publication date unavailable'}</p></a>)}{!(currentStory?.sources || []).length && <p className="text-sm font-semibold text-zinc-500">No source link was saved for this story.</p>}</div></div>}
         </aside>
       </section>
       <audio ref={audioRef} onEnded={handleEnded} onTimeUpdate={handleTimeUpdate} onLoadedMetadata={handleMetadata} />
@@ -308,7 +330,7 @@ function buildStory(script, audioManifest, stem, episodeId, entryStoryId) {
     if (!clip?.url && !fallback) return
     tracks.push({
       url: clip?.url ? `${API_BASE}${clip.url}` : fallback,
-      duration: Number(clip?.durationSeconds) || 0,
+      duration: safeDuration(clip?.durationSeconds, line.text),
       text: line.text,
       speaker: line.speaker,
       image: beat.visual?.imagePath ? mediaUrl(episodeId, beat.visual.imagePath) : '',
@@ -319,7 +341,19 @@ function buildStory(script, audioManifest, stem, episodeId, entryStoryId) {
     storyId: story.storyId || entryStoryId || '',
     title: story.title || 'Untitled story',
     category: story.classification?.category || story.category || 'News',
+    sources: story.sources?.length ? story.sources : [{ name: script.article?.sourceName || script.article?.source || 'Original source', url: script.article?.url || '', publishedAt: script.article?.publishedAt || '' }],
     tracks,
     duration: tracks.reduce((sum, track) => sum + track.duration, 0),
   }
+}
+
+function addBridgeTracks(stories, bridges) {
+  const byNextStory = new Map(bridges.map((bridge) => [bridge.beforeStoryId, bridge]))
+  stories.forEach((story, index) => {
+    if (!index) return
+    const bridge = byNextStory.get(story.storyId)
+    if (!bridge?.url) return
+    story.tracks.unshift({ url: `${API_BASE}${bridge.url}`, duration: safeDuration(bridge.durationSeconds, bridge.text), text: bridge.text, speaker: bridge.speaker || 'StoryCast', image: story.tracks.find((track) => track.image)?.image || '', beatId: 'transition', isBridge: true })
+    story.duration = story.tracks.reduce((sum, track) => sum + track.duration, 0)
+  })
 }
