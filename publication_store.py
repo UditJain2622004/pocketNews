@@ -11,6 +11,7 @@ from auth.database import db
 
 
 BASE_DIR = Path(__file__).resolve().parent
+PERSONALIZED_STORY_LIMIT = 4
 
 
 def start_workflow(cadence: str, period_start: str, period_end: str) -> str:
@@ -95,7 +96,8 @@ def episode_playback(episode_id: str, user_topics: list[str]) -> dict[str, Any] 
         return None
     selected = {topic.casefold() for topic in user_topics}
     matching = [entry for entry in episode.get("scripts", []) if entry.get("category", "").casefold() in selected]
-    episode["scripts"] = matching or episode.get("scripts", [])
+    episode["scripts"] = (matching or episode.get("scripts", []))[:PERSONALIZED_STORY_LIMIT]
+    episode["storyLimit"] = PERSONALIZED_STORY_LIMIT
     return episode
 
 
