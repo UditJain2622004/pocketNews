@@ -32,6 +32,16 @@ from news_collection.taxonomy import NEWS_TAXONOMY
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from multilingual.translator import translate_text
+from interactive_service import (
+    AskStoryRequest,
+    ReactStoryRequest,
+    GameSubmission,
+    answer_story_question,
+    get_story_curiosity_path,
+    get_daily_challenge,
+    submit_challenge_answers,
+    get_catch_up_brief,
+)
 
 BASE_DIR = Path(__file__).resolve().parent
 load_dotenv(BASE_DIR / ".env")
@@ -492,3 +502,100 @@ def _validate_creative_query(cast_mode: str, visual_style: str) -> None:
         raise HTTPException(status_code=422, detail={"message": "Unsupported cast mode.", "supportedCastModes": CAST_MODES})
     if visual_style not in VISUAL_STYLES:
         raise HTTPException(status_code=422, detail={"message": "Unsupported visual style.", "supportedVisualStyles": VISUAL_STYLES})
+
+
+from datetime import datetime, timezone
+from interactive_service import find_story
+
+# Interactive endpoints
+@app.post("/api/stories/{story_id}/ask")
+def ask_story_endpoint(story_id: str, request: AskStoryRequest):
+    return {"answer": answer_story_question(story_id, request.question)}
+
+@app.get("/api/stories/{story_id}/path")
+def story_path_endpoint(story_id: str, path_type: str = Query(...)):
+    return {"content": get_story_curiosity_path(story_id, path_type)}
+
+@app.get("/api/game/challenge")
+def game_challenge_endpoint():
+    return get_daily_challenge()
+
+@app.post("/api/game/submit")
+def game_submit_endpoint(request: GameSubmission, user_id: str = Depends(get_current_user_id)):
+    return submit_challenge_answers(user_id, request)
+
+@app.get("/api/dashboard/catch-up")
+def dashboard_catch_up_endpoint(user_id: str = Depends(get_current_user_id)):
+    return get_catch_up_brief(user_id)
+
+@app.post("/api/stories/{story_id}/react")
+def react_story_endpoint(story_id: str, request: ReactStoryRequest, user_id: str = Depends(get_current_user_id)):
+    if db is None:
+        return {"status": "success"}
+    db.story_reactions.update_one(
+        {"userId": user_id, "storyId": story_id},
+        {"$set": {"episodeId": request.episodeId, "reaction": request.reaction, "createdAt": datetime.now(timezone.utc).isoformat()}},
+        upsert=True
+    )
+    # Personalize user topic score if reaction is "useful"
+    if request.reaction in ("useful", "surprising"):
+        story_data = find_story(story_id)
+        if story_data:
+            cat = story_data.get("category") or story_data.get("story", {}).get("category") or "News"
+            db.users.update_one(
+                {"_id": ObjectId(user_id)},
+                {"$addToSet": {"topics": cat}} # Add category to user preferences if found useful
+            )
+    return {"status": "success"}
+
+# Developing Stories endpoints
+class FollowTopicRequest(BaseModel):
+    topic: str
+
+@app.post("/api/topics/follow")
+def follow_topic_endpoint(request: FollowTopicRequest, user_id: str = Depends(get_current_user_id)):
+    if db is None:
+         return {"status": "success"}
+    db.users.update_one(
+        {"_id": ObjectId(user_id)},
+        {"$addToSet": {"followed_topics": request.topic}}
+    )
+    return {"status": "success", "followed": True}
+
+@app.get("/api/topics/followed")
+def get_followed_topics_endpoint(user_id: str = Depends(get_current_user_id)):
+    if db is None:
+         return {"topics": []}
+    user = db.users.find_one({"_id": ObjectId(user_id)})
+    return {"topics": user.get("followed_topics", []) if user else []}
+
+@app.get("/api/topics/{topic}/timeline")
+def get_topic_timeline_endpoint(topic: str):
+    timeline = []
+    if db is not None:
+        episodes = db.episodes.find({"categories": topic}).sort("publishedAt", -1)
+        for ep in episodes:
+            for script in ep.get("scripts", []):
+                cat = script.get("category") or script.get("story", {}).get("category") or ""
+                if cat.lower() == topic.lower():
+                    timeline.append({
+                        "storyId": script["storyId"],
+                        "title": script.get("title", "News Update"),
+                        "date": ep.get("publishedAt", "").strftime("%Y-%m-%d") if isinstance(ep.get("publishedAt"), datetime) else ep.get("publishedAt", ""),
+                        "summary": script.get("story", {}).get("exit", "")
+                    })
+    # If timeline is empty, populate from mock articles matching the category
+    if not timeline:
+        try:
+            articles = _load_articles()
+            for art in articles:
+                if any(t.lower() == topic.lower() for t in art.categories):
+                    timeline.append({
+                        "storyId": art.id,
+                        "title": art.title,
+                        "date": art.published_at or "2026-07-26",
+                        "summary": art.best_available_text[:120] + "..."
+                    })
+        except Exception:
+            pass
+    return {"timeline": timeline}

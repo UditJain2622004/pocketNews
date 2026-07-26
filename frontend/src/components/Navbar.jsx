@@ -34,16 +34,16 @@ export default function Navbar({ onEnterApp, user, onLoginClick, onLogout }) {
             />
           </div>
           <div>
-            <span className="text-lg sm:text-xl font-black tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">Pocket News</span>
+            <span className="text-lg sm:text-xl font-black tracking-tight text-zinc-900">
+              Pocket <span style={{ color: '#D1111E' }}>News</span>
+            </span>
             <span className="block text-[8px] sm:text-[9px] text-[#7C3AED] font-extrabold tracking-widest uppercase">Cinematic News Engine</span>
           </div>
         </div>
 
         <div className="hidden md:flex items-center gap-2 text-xs font-extrabold tracking-wide uppercase text-slate-600">
           <a href="#features" className="hover:bg-slate-100 hover:text-[#7C3AED] px-4 py-2 rounded-xl transition-all">Features</a>
-          <a href="#storytellers" className="hover:bg-slate-100 hover:text-[#7C3AED] px-4 py-2 rounded-xl transition-all">Storytellers</a>
-          <a href="#graph" className="hover:bg-slate-100 hover:text-[#7C3AED] px-4 py-2 rounded-xl transition-all">Universe</a>
-          <a href="#stats" className="hover:bg-slate-100 hover:text-[#7C3AED] px-4 py-2 rounded-xl transition-all">Stats</a>
+          <a href="#demo" className="hover:bg-slate-100 hover:text-[#7C3AED] px-4 py-2 rounded-xl transition-all">Live Demo</a>
         </div>
 
         <div className="flex items-center gap-3">

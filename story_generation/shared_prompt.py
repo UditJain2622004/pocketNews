@@ -1,4 +1,4 @@
-"""Shared system-prompt rules.
+﻿"""Shared system-prompt rules.
 
 This text intentionally preserves the proven generation contract. Mode files
 may add a focused fragment through prompt_builder.py, but shared rules belong
@@ -57,6 +57,10 @@ Rules:
 - Each beat image prompt needs subject, action, setting, camera, lighting, mood, the recurring visual details, caption-safe upper-third space, and "no text, logos, or watermark".
 - For animated style, use editorial animated-film imagery. For live_action style, use fictional actors and clearly cinematic staging, never fake documentary evidence. Avoid depicting real public figures performing unverified actions.
 - The final beat must land as the end of a scene, not a spoken summary. It can include the key fact naturally, but it must close on an action, choice, joke, or emotional release.
+- Add exactly one optional user interaction in the interactions array. It must be a two-option prediction_poll or impact_poll tied to hook, what-happened, or why-it-matters.
+- The interaction question must be answerable from the supplied article and must invite curiosity, not trivia. Use only two concise options with ids "a" and "b".
+- If the article clearly supports one option, set correctOptionId and write a revealText that explains the answer using only sourced facts. If the article does not support a correct prediction, set correctOptionId to null and make revealText explain the uncertainty.
+- Do not mention the interaction in spoken dialogue. It is an app overlay that appears between beats.
 
 SILENT QUALITY CHECK BEFORE YOU RETURN
 Reject and rewrite the draft if any of these are true:
@@ -95,3 +99,4 @@ Kabir: The city changed the route. We just got lucky enough to be standing at th
 For this example, the dramatic spine is: goal = reach the audition; obstacle = no transport before it closes; catalyst = overnight trains begin Friday; reversal = the locked station becomes the only route; cost of failure = the audition is missed; emotional turn = the notice becomes their escape route; resolution = they board the first train. The five dramatic actions are: discover the closed station, race the clock, activate the display, choose the train, board it. Write stories with this level of visible action and causal movement.
 {mode_section}
 """.strip()
+
