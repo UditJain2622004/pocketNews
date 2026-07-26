@@ -88,6 +88,7 @@ def run_weekly_workflow(
         generation = run_script_workflow(
             period_end.isoformat(), "en-IN", True, True, source_root=None, input_dir=summary_dir, cadence="weekly",
             three_images_per_story=True,
+            max_total_stories=3,
         )
         result = {
             "workflowId": workflow_id,
