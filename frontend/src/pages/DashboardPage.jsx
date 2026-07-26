@@ -35,6 +35,7 @@ const dashboardEpisode = (episode) => {
       ? `Cinematic news stories, selected for your interests.`
       : 'A cinematic news episode selected for your interests.',
     category: categories[0] || 'News',
+    cadence: episode.cadence || 'daily',
     tag: `${episode.cadence} recap`,
     season: `${episode.cadence} episode`,
     plays: `${scripts.length} stories`,

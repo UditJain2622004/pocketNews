@@ -19,8 +19,13 @@ from story_generator import CAST_MODES, VISUAL_STYLES, StoryGenerationError, gen
 from workflow_service import WorkflowInputError, run_script_workflow
 from auth.database import setup_db_indexes
 from auth.database import db
+
 from auth.router import get_current_user_id, get_current_user_id_optional, router as auth_router
-from automated_workflows import run_daily_workflow
+
+
+
+from automated_workflows import run_daily_workflow, run_weekly_workflow
+
 from localization_service import locale_for_language, prepare_localized_episode
 from publication_store import backfill_complete_episodes, delete_published_episode, episode_playback, list_episodes, list_published_episodes, publish_local_run, set_localized_run, setup_publication_indexes, workflow_status
 from listening_service import ListeningEventError, learned_scores as get_learned_scores, record_listening_event as store_listening_event
@@ -55,7 +60,11 @@ app = FastAPI(
 )
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "https://pocket-news-nine.vercel.app",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -125,6 +134,11 @@ class AdminDailyWorkflowRequest(BaseModel):
 
 class PublishLocalEpisodeRequest(BaseModel):
     folderName: str = Field(..., min_length=1)
+
+
+class AdminWeeklyWorkflowRequest(BaseModel):
+    periodStart: str
+    periodEnd: str
 
 
 @app.post("/translate")
@@ -244,6 +258,23 @@ def get_admin_workflow_status(workflow_id: str) -> dict[str, object]:
     if record is None:
         raise HTTPException(status_code=404, detail="Workflow was not found.")
     return record
+
+
+@app.post("/api/admin/workflows/weekly")
+def start_admin_weekly_workflow(request: AdminWeeklyWorkflowRequest, background_tasks: BackgroundTasks) -> dict[str, object]:
+    task_id = uuid4().hex
+    ADMIN_TASKS[task_id] = {"taskId": task_id, "status": "queued"}
+
+    def run_task() -> None:
+        ADMIN_TASKS[task_id] = {"taskId": task_id, "status": "running"}
+        try:
+            result = run_weekly_workflow(period_start=request.periodStart, period_end=request.periodEnd)
+            ADMIN_TASKS[task_id] = {"taskId": task_id, "status": "completed", "result": result}
+        except Exception as error:
+            ADMIN_TASKS[task_id] = {"taskId": task_id, "status": "failed", "error": str(error)}
+
+    background_tasks.add_task(run_task)
+    return ADMIN_TASKS[task_id]
 
 
 @app.post("/api/admin/episodes/backfill")

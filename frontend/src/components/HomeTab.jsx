@@ -136,6 +136,9 @@ export default function HomeTab({ onPlayStory, user, onTabChange, storiesList = 
            d.topic.toLowerCase().includes(searchQuery.toLowerCase()) ||
            d.summary.toLowerCase().includes(searchQuery.toLowerCase())
   })
+  const weeklyEpisodes = filteredDramas.filter((story) => story.cadence === 'weekly')
+  const monthlyEpisodes = filteredDramas.filter((story) => story.cadence === 'monthly')
+  const dailyEpisodes = filteredDramas.filter((story) => story.cadence !== 'weekly' && story.cadence !== 'monthly')
 
   const renderNewsRow = (title, dramas) => {
     return (
@@ -627,7 +630,9 @@ export default function HomeTab({ onPlayStory, user, onTabChange, storiesList = 
 
       {/* Main Show Cards Rows */}
       <div className="space-y-12">
-        {renderNewsRow(user ? 'Daily episodes' : 'Available episodes', filteredDramas)}
+        {renderNewsRow(user ? 'Daily episodes' : 'Available episodes', dailyEpisodes)}
+        {weeklyEpisodes.length > 0 && renderNewsRow('Weekly recaps', weeklyEpisodes)}
+        {monthlyEpisodes.length > 0 && renderNewsRow('Monthly recaps', monthlyEpisodes)}
       </div>
 
       {/* Quick Stats section */}
