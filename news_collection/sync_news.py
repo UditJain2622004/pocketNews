@@ -27,7 +27,7 @@ async def run_news_sync(run_date: date | None = None, categories: list[str] | No
             results[category] = {"status": "error", "error": "Unsupported category."}
             continue
         try:
-            response = await fetch_google_news_rss(category=category)
+            response = await fetch_google_news_rss(category=category, article_date=selected_date)
             payload_path = target_dir / f"{category}.json"
             with payload_path.open("w", encoding="utf-8") as output_file:
                 json.dump(response, output_file, ensure_ascii=False, indent=2)
@@ -45,7 +45,7 @@ async def run_news_sync(run_date: date | None = None, categories: list[str] | No
         "runDate": selected_date.isoformat(),
         "startedAt": started_at,
         "completedAt": datetime.now(timezone.utc).isoformat(),
-        "windowHours": 24,
+        "articleDate": selected_date.isoformat(),
         "source": {
             "provider": "Google News RSS",
             "country": "IN",
