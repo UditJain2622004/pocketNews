@@ -57,7 +57,7 @@ export default function HomeTab({ onPlayStory, user, onTabChange, storiesList = 
       .then(data => setFollowedTopics(data.topics || []))
       
     // Fetch challenge
-    fetch(`${API_BASE}/api/game/challenge`)
+    fetch(`${API_BASE}/api/game/challenge`, token ? { headers: { Authorization: `Bearer ${token}` } } : {})
       .then(res => res.ok ? res.json() : null)
       .then(data => setChallenge(data))
   }, [token])

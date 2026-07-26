@@ -103,6 +103,18 @@ def get_current_user_id(authorization: str = Header(None)) -> str:
             detail="Could not validate credentials"
         )
 
+
+def get_current_user_id_optional(authorization: str = Header(None)) -> str | None:
+    if not authorization or not authorization.startswith("Bearer "):
+        return None
+    token = authorization.split(" ")[1]
+    try:
+        payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        return payload.get("user_id")
+    except Exception:
+        return None
+
+
 # Routes
 @router.get("/suggestions", response_model=SuggestionResponse)
 def get_suggestions():
