@@ -40,7 +40,7 @@ export default function StatsAndReviews() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
           {[
             { name: 'Alex River', handle: '@riverdev', role: 'Software Engineer', text: "The Software Engineer filter makes tech news read like a architectural brief. It explains the mechanics behind compilation. Absolutely outstanding concept." },
-            { name: 'Chloe Madison', handle: '@chloemad', role: 'Product Designer', text: "I hated traditional feeds. StoryCast made me listen to ASML monopolies like a dark detective mystery. The soundwaves and voice narration are top quality." },
+            { name: 'Chloe Madison', handle: '@chloemad', role: 'Product Designer', text: "I hated traditional feeds. Pocket News made me listen to ASML monopolies like a dark detective mystery. The soundwaves and voice narration are top quality." },
             { name: 'Ryan K.', handle: '@ryank_tech', role: 'College Student', text: "The Comedian narrator is hilarious. Explaining quantum physics constraints using bad printer jokes makes concepts stick instantly." }
           ].map((test, idx) => (
             <div key={idx} className="glass-card rounded-2xl p-6 space-y-4">

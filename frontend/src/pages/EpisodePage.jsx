@@ -22,7 +22,7 @@ const getScriptName = (path) => path.split('/').pop()
 const getScriptStem = (path) => getScriptName(path).replace(/\.json$/, '')
 
 const SUPPORTED_LANGUAGES = [
-  'English', 'Hindi', 'Marathi', 'Bengali', 'Kannada', 'Tamil',
+  'English', 'Hindi', 'Marathi', 'Bengali', 'Kannada', 'Tamil', 'Bhojpuri',
   'Spanish', 'Mandarin', 'German', 'French', 'Japanese'
 ]
 
@@ -310,8 +310,8 @@ export default function EpisodePage({ episodeId, token }) {
 
       <header className="mx-auto flex max-w-[1480px] items-center justify-between px-5 py-3 sm:px-8 lg:px-12">
         <a href="/" className="flex items-center gap-3 no-underline">
-          <img src="/logo.png" className="h-9 w-9 rounded-lg object-contain" alt="StoryCast AI" />
-          <span className="text-[15px] font-extrabold tracking-tight text-zinc-900">StoryCast <span className="text-[#E11D48]">AI</span></span>
+          <img src="/logo.png" className="h-9 w-9 rounded-lg object-contain" alt="Pocket News" />
+          <span className="text-[15px] font-extrabold tracking-tight text-zinc-900">Pocket <span className="text-[#E11D48]">News</span></span>
         </a>
         <div className="flex items-center gap-4 text-sm text-zinc-500">
           {token && (
@@ -389,8 +389,7 @@ export default function EpisodePage({ episodeId, token }) {
                 <div className="mb-4 flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.18em] text-fuchsia-300">
                   <span>{currentStory.category}</span><span className="text-white/30">/</span><span className="text-white/55">{beatLabel}</span>
                 </div>
-                <p className="max-w-3xl text-2xl font-extrabold leading-[1.12] tracking-[-0.035em] sm:text-4xl">{currentTrack.text}</p>
-                <p className="mt-4 text-sm font-bold text-white/50">{currentTrack.speaker || 'StoryCast narrator'}</p>
+                <p className="max-w-3xl text-lg font-bold leading-snug tracking-tight sm:text-2xl">{currentTrack.text}</p>
               </div>
             )}
           </section>
@@ -473,7 +472,7 @@ function addBridgeTracks(stories, bridges) {
     if (!index) return
     const bridge = byNextStory.get(story.storyId)
     if (!bridge?.url) return
-    story.tracks.unshift({ url: `${API_BASE}${bridge.url}`, duration: safeDuration(bridge.durationSeconds, bridge.text), text: bridge.text, speaker: bridge.speaker || 'StoryCast', image: story.tracks.find((track) => track.image)?.image || '', beatId: 'transition', isBridge: true })
+    story.tracks.unshift({ url: `${API_BASE}${bridge.url}`, duration: safeDuration(bridge.durationSeconds, bridge.text), text: bridge.text, speaker: bridge.speaker || 'Pocket News', image: story.tracks.find((track) => track.image)?.image || '', beatId: 'transition', isBridge: true })
     story.duration = story.tracks.reduce((sum, track) => sum + track.duration, 0)
   })
 }

@@ -62,7 +62,7 @@ def _prepare_bridge(run_dir: Path, run_id: str, previous: dict[str, Any], curren
         "afterStoryId": previous["storyId"],
         "beforeStoryId": current["storyId"],
         "text": text,
-        "speaker": "StoryCast",
+        "speaker": "Pocket News",
         "url": f"/api/media/{run_id}/{relative_path}",
         "durationSeconds": _duration_seconds(path),
     }
