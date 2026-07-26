@@ -5,6 +5,7 @@ const CATEGORIES = ['technology', 'sports', 'business', 'politics', 'entertainme
 
 export default function AdminWorkflowPage() {
   const [form, setForm] = useState({ mode: 'full', generateImages: true, generateAudio: true, threeImagesPerStory: false, storyFormat: 'mix', castMode: 'auto', visualStyle: 'animated', language: 'en-IN', maxArticlesPerCategory: 1, maxTotalStories: 6 })
+  const [weeklyForm, setWeeklyForm] = useState({ periodStart: '2026-07-20', periodEnd: '2026-07-25' })
   const [categories, setCategories] = useState(CATEGORIES)
   const [task, setTask] = useState(null)
   const [episodes, setEpisodes] = useState([])
@@ -30,6 +31,15 @@ export default function AdminWorkflowPage() {
     if (!window.confirm(`Delete ${episode.title || episode.episodeId} and all of its generated media?`)) return
     const response = await fetch(`${API_BASE}/api/admin/episodes/${encodeURIComponent(episode.episodeId)}`, { method: 'DELETE' })
     if (response.ok) loadEpisodes()
+  }
+  const runWeekly = async (event) => {
+    event.preventDefault()
+    const response = await fetch(`${API_BASE}/api/admin/workflows/weekly`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(weeklyForm),
+    })
+    setTask(await response.json())
   }
 
   return <main className="min-h-screen bg-[#08090b] px-5 py-10 text-white sm:px-10">
@@ -63,6 +73,15 @@ export default function AdminWorkflowPage() {
           <label><input type="checkbox" checked={form.threeImagesPerStory} onChange={(event) => setForm({ ...form, threeImagesPerStory: event.target.checked })} className="mr-2" />3 images per story</label>
         </div>
         <button className="rounded-xl bg-gradient-to-r from-fuchsia-600 to-pink-500 px-5 py-3 text-sm font-black">Run daily workflow</button>
+      </form>
+
+      <form onSubmit={runWeekly} className="mt-8 space-y-5 rounded-3xl border border-white/10 bg-white/[0.04] p-6">
+        <div><h2 className="text-xl font-black">Weekly recap</h2><p className="mt-1 text-sm text-white/55">Summarize the available daily archives in this inclusive date range, then generate and publish one story per category.</p></div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <label className="block text-sm font-bold">Start date<input type="date" value={weeklyForm.periodStart} onChange={(event) => setWeeklyForm({ ...weeklyForm, periodStart: event.target.value })} required className="mt-2 w-full rounded-xl border border-white/10 bg-black/20 p-3 text-white" /></label>
+          <label className="block text-sm font-bold">End date<input type="date" value={weeklyForm.periodEnd} onChange={(event) => setWeeklyForm({ ...weeklyForm, periodEnd: event.target.value })} required className="mt-2 w-full rounded-xl border border-white/10 bg-black/20 p-3 text-white" /></label>
+        </div>
+        <button className="rounded-xl bg-cyan-500 px-5 py-3 text-sm font-black text-black">Run weekly workflow</button>
       </form>
 
       {task && <pre className="mt-6 overflow-auto rounded-2xl bg-black/30 p-4 text-xs text-white/70">{JSON.stringify(task, null, 2)}</pre>}
