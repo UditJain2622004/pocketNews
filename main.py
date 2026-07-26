@@ -348,7 +348,7 @@ def post_episode_event(
 def get_story(
     article_id: str,
     language: str = Query("en-IN", description="Requested narration language locale"),
-    story_format: str = Query("mix", description="mix, auto, solo-hot-take, two-person-banter, or dramatized-pov"),
+    story_format: str = Query("mix", description="mix, auto, solo-hot-take, two-person-banter, dramatized-pov, group-chat-meltdown, fourth-wall, or game-show-round"),
     cast_mode: str = Query("auto", description="auto, story_duo, or recurring_duo"),
     visual_style: str = Query("animated", description="animated or live_action"),
 ) -> dict[str, object]:

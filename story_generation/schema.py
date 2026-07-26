@@ -66,9 +66,13 @@ class StoryClassification(BaseModel):
 class CreativeDirection(BaseModel):
     genre: str
     dramaticPremise: str
-    selectedFormat: Literal["solo-hot-take", "two-person-banter", "dramatized-pov"]
-    performanceMode: Literal["character-dialogue", "solo-character-hot-take", "first-person-pov"]
-    castMode: Literal["story_duo", "recurring_duo", "solo_host", "pov_lead"]
+    selectedFormat: Literal[
+        "solo-hot-take", "two-person-banter", "dramatized-pov", "group-chat-meltdown", "fourth-wall", "game-show-round"
+    ]
+    performanceMode: Literal[
+        "character-dialogue", "solo-character-hot-take", "first-person-pov", "group-chat-voices", "fourth-wall-solo", "game-show-ensemble"
+    ]
+    castMode: Literal["story_duo", "recurring_duo", "solo_host", "pov_lead", "group_chat", "game_show"]
     visualStyle: Literal["animated", "live_action"]
 
 
