@@ -67,17 +67,6 @@ export default function ProfileTab({ user, token, onProfileUpdate, onLogout }) {
     }
   }
 
-  const handleAddCustomTopic = (e) => {
-    e.preventDefault()
-    const trimmed = customTopic.trim()
-    if (trimmed) {
-      if (!selectedTopics.includes(trimmed)) {
-        setSelectedTopics([...selectedTopics, trimmed])
-      }
-      setCustomTopic('')
-    }
-  }
-
   const handleRemoveTopic = (topic) => {
     setSelectedTopics(selectedTopics.filter(t => t !== topic))
     if (suggestions[topic]) {
@@ -85,7 +74,7 @@ export default function ProfileTab({ user, token, onProfileUpdate, onLogout }) {
     }
   }
 
-  const handleSave = async () => {
+  const saveProfile = async (topics = selectedTopics, subtopics = selectedSubtopics, selectedLanguage = language) => {
     setLoading(true)
     setSaveStatus({ type: '', message: '' })
 
@@ -97,9 +86,9 @@ export default function ProfileTab({ user, token, onProfileUpdate, onLogout }) {
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          topics: selectedTopics,
-          subtopics: selectedSubtopics,
-          language: language
+          topics,
+          subtopics,
+          language: selectedLanguage
         })
       })
 
@@ -121,6 +110,19 @@ export default function ProfileTab({ user, token, onProfileUpdate, onLogout }) {
       setLoading(false)
     }
   }
+
+  const handleAddCustomTopic = (e) => {
+    e.preventDefault()
+    const trimmed = customTopic.trim()
+    if (!trimmed) return
+
+    const nextTopics = selectedTopics.includes(trimmed) ? selectedTopics : [...selectedTopics, trimmed]
+    setSelectedTopics(nextTopics)
+    setCustomTopic('')
+    void saveProfile(nextTopics)
+  }
+
+  const handleSave = () => saveProfile()
 
   return (
     <div className="max-w-6xl mx-auto py-4 px-2 text-zinc-800 text-left">

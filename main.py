@@ -22,7 +22,7 @@ from auth.database import db
 from auth.router import get_current_user_id, router as auth_router
 from automated_workflows import run_daily_workflow
 from localization_service import locale_for_language, prepare_localized_episode
-from publication_store import backfill_complete_episodes, delete_published_episode, episode_playback, list_episodes, list_published_episodes, set_localized_run, setup_publication_indexes, workflow_status
+from publication_store import backfill_complete_episodes, delete_published_episode, episode_playback, list_episodes, list_published_episodes, publish_local_run, set_localized_run, setup_publication_indexes, workflow_status
 from listening_service import ListeningEventError, learned_scores as get_learned_scores, record_listening_event as store_listening_event
 from transition_audio_service import prepare_episode_bridges
 from scheduler_service import start_scheduler, stop_scheduler
@@ -121,6 +121,10 @@ class AdminDailyWorkflowRequest(BaseModel):
     maxTotalStories: Optional[int] = Field(default=12, ge=1)
     threeImagesPerStory: bool = False
     storyFormat: str = "mix"
+
+
+class PublishLocalEpisodeRequest(BaseModel):
+    folderName: str = Field(..., min_length=1)
 
 
 @app.post("/translate")
@@ -248,6 +252,16 @@ def backfill_historical_episodes() -> dict[str, object]:
         return backfill_complete_episodes()
     except RuntimeError as error:
         raise HTTPException(status_code=503, detail=str(error)) from error
+
+
+@app.post("/api/admin/episodes/publish")
+def publish_local_episode(request: PublishLocalEpisodeRequest) -> dict[str, object]:
+    try:
+        return publish_local_run(request.folderName)
+    except FileNotFoundError as error:
+        raise HTTPException(status_code=404, detail=str(error)) from error
+    except (RuntimeError, ValueError) as error:
+        raise HTTPException(status_code=400, detail=str(error)) from error
 
 
 @app.get("/api/admin/episodes")

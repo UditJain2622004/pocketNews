@@ -43,6 +43,7 @@ def run_script_workflow(
     max_total_stories: int | None = None,
     three_images_per_story: bool = False,
     story_format: str = "mix",
+    categories: list[str] | None = None,
 ) -> dict[str, object]:
     if cast_mode not in CAST_MODES:
         raise WorkflowInputError(f"Unsupported cast mode. Use one of: {', '.join(CAST_MODES)}.")
@@ -65,8 +66,11 @@ def run_script_workflow(
     images_generated = 0
     started_at = datetime.now(timezone.utc).isoformat()
     article_jobs: list[tuple[int, NewsArticle, Path]] = []
+    selected_categories = {category.strip().casefold() for category in categories or [] if category.strip()}
 
     for source_file in sorted(path for path in resolved_input_dir.glob("*.json") if path.name != "manifest.json"):
+        if selected_categories and source_file.stem.casefold() not in selected_categories:
+            continue
         try:
             articles = _read_articles(source_file)
         except Exception as error:
@@ -114,6 +118,7 @@ def run_script_workflow(
         "castMode": cast_mode,
         "visualStyle": visual_style,
         "storyFormat": story_format,
+        "requestedCategories": sorted(selected_categories),
         "scripts": generated_scripts,
         "failures": failures,
     }
@@ -149,6 +154,7 @@ def run_script_workflow(
         "castMode": cast_mode,
         "visualStyle": visual_style,
         "storyFormat": story_format,
+        "requestedCategories": sorted(selected_categories),
         "audio": audio_result,
         "failures": failures,
     }

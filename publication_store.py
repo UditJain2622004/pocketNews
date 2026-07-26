@@ -102,19 +102,32 @@ def backfill_complete_episodes() -> dict[str, Any]:
     skipped: list[dict[str, str]] = []
     for run_dir in sorted(path for path in SCRIPTS_DIR.iterdir() if path.is_dir()):
         try:
-            manifest = _read_json(run_dir / "manifest.json")
-            reason = _missing_media_reason(run_dir, manifest)
-            if reason:
-                skipped.append({"runId": run_dir.name, "reason": reason})
-                continue
-
-            run_date = str(manifest.get("runDate") or run_dir.name.split("_", 1)[0])
-            cadence = str(manifest.get("cadence") or "daily")
-            episode = publish_episode(cadence, run_dir.name, run_date, run_date)
+            episode = publish_local_run(run_dir.name)
             published.append({"runId": run_dir.name, "episodeId": str(episode["episodeId"])})
         except Exception as error:
             skipped.append({"runId": run_dir.name, "reason": str(error)})
     return {"published": published, "skipped": skipped}
+
+
+def publish_local_run(folder_name: str) -> dict[str, Any]:
+    """Publish one complete local script run without scanning the whole archive."""
+    if db is None:
+        raise RuntimeError("MongoDB is required for episode publishing.")
+    if not folder_name or Path(folder_name).name != folder_name:
+        raise ValueError("folderName must be a scripts run folder name.")
+
+    run_dir = (SCRIPTS_DIR / folder_name).resolve()
+    if run_dir.parent != SCRIPTS_DIR.resolve() or not run_dir.is_dir():
+        raise FileNotFoundError(f"Script run folder was not found: {folder_name}")
+
+    manifest = _read_json(run_dir / "manifest.json")
+    reason = _missing_media_reason(run_dir, manifest)
+    if reason:
+        raise ValueError(reason)
+
+    run_date = str(manifest.get("runDate") or folder_name.split("_", 1)[0])
+    cadence = str(manifest.get("cadence") or "daily")
+    return publish_episode(cadence, folder_name, run_date, run_date)
 
 
 def list_published_episodes() -> list[dict[str, Any]]:

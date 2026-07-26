@@ -56,7 +56,7 @@ def generate_story(
             text_format=GeneratedStory,
         )
     except Exception as error:
-        raise StoryGenerationError("OpenAI story generation request failed.") from error
+        raise StoryGenerationError(f"OpenAI story generation request failed: {error}") from error
 
     generated = response.output_parsed
     if generated is None:

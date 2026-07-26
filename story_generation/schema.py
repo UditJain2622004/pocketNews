@@ -7,10 +7,6 @@ from pydantic import BaseModel, Field, root_validator
 
 from taxonomy import SUGGESTED_INTERESTS
 
-MAX_STORY_DURATION_SECONDS = 70
-MAX_STORY_SPOKEN_WORDS = 105
-
-
 class VoiceCharacter(BaseModel):
     id: str
     role: str
@@ -120,19 +116,3 @@ class GeneratedStory(BaseModel):
     beats: list[StoryBeat]
     interactions: list[StoryInteraction] = Field(default_factory=list, max_items=1)
     exit: str
-
-    @root_validator(skip_on_failure=True)
-    def validate_story_length(cls, values):
-        beats = values.get("beats") or []
-        visual_duration = sum(beat.visual.durationSeconds for beat in beats)
-        spoken_words = sum(
-            len(line.text.split())
-            for beat in beats
-            for line in beat.lines
-        )
-        if visual_duration > MAX_STORY_DURATION_SECONDS:
-            raise ValueError(f"Story visual duration must not exceed {MAX_STORY_DURATION_SECONDS} seconds.")
-        if spoken_words > MAX_STORY_SPOKEN_WORDS:
-            raise ValueError(f"Story dialogue must not exceed {MAX_STORY_SPOKEN_WORDS} words.")
-        return values
-
