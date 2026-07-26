@@ -630,9 +630,9 @@ export default function HomeTab({ onPlayStory, user, onTabChange, storiesList = 
 
       {/* Main Show Cards Rows */}
       <div className="space-y-12">
+        {renderNewsRow(user ? 'Daily episodes' : 'Available episodes', dailyEpisodes)}
         {weeklyEpisodes.length > 0 && renderNewsRow('Weekly recaps', weeklyEpisodes)}
         {monthlyEpisodes.length > 0 && renderNewsRow('Monthly recaps', monthlyEpisodes)}
-        {renderNewsRow(user ? 'Daily episodes' : 'Available episodes', dailyEpisodes)}
       </div>
 
       {/* Quick Stats section */}
