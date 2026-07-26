@@ -20,7 +20,7 @@ export default function Hero({ onEnterApp, heroMorphStep }) {
           </h1>
 
           <p className="text-slate-600 text-lg sm:text-xl max-w-xl leading-relaxed">
-            StoryCast AI transforms today's dry headlines into personalized, cinematic podcasts and interactive experiences you will actually enjoy consuming.
+            Pocket News transforms today's dry headlines into personalized, cinematic podcasts and interactive experiences you will actually enjoy consuming.
           </p>
 
           <div className="flex flex-wrap gap-4 pt-2">

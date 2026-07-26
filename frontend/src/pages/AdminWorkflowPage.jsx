@@ -34,7 +34,7 @@ export default function AdminWorkflowPage() {
 
   return <main className="min-h-screen bg-[#08090b] px-5 py-10 text-white sm:px-10">
     <div className="mx-auto max-w-2xl">
-      <a href="/" className="text-sm font-bold text-fuchsia-300">Back to StoryCast</a>
+      <a href="/" className="text-sm font-bold text-fuchsia-300">Back to Pocket News</a>
       <h1 className="mt-8 text-4xl font-black">Daily workflow</h1>
       <p className="mt-2 text-white/55">Fetch, curate, and publish one canonical daily episode run.</p>
 

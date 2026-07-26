@@ -46,6 +46,11 @@ PROFILE_TAXONOMY = {
         "Fashion & Beauty",
         "Campus & Careers",
     ],
+    "Politics": [
+        "Elections",
+        "Policy & Laws",
+        "Government",
+    ],
 }
 
 # Queries are deliberately simple: Google News adds the India constraint at fetch time.
@@ -125,6 +130,15 @@ COLLECTOR_TAXONOMY = {
             "food_culture": {"display": "Food & Culture", "query": "food OR restaurants OR culture"},
             "fashion_beauty": {"display": "Fashion & Beauty", "query": "fashion OR beauty OR style"},
             "campus_careers": {"display": "Campus & Careers", "query": "campus OR college OR careers OR jobs"},
+        },
+    },
+    "politics": {
+        "display": "Politics",
+        "rss_topic": "NATION",
+        "sub_topics": {
+            "elections": {"display": "Elections", "query": "elections OR voting OR polls"},
+            "policy_laws": {"display": "Policy & Laws", "query": "policy OR parliament OR legislation OR laws"},
+            "government": {"display": "Government", "query": "government OR cabinet OR prime minister OR state administration"},
         },
     },
 }
