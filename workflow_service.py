@@ -13,7 +13,7 @@ from typing import Any
 from audio_workflow import prepare_story_audio
 from editorial_selection import select_story_candidates
 from episode_title_generator import generate_episode_title
-from episode_service import story_format_for_index
+from episode_service import story_format_for_index, supported_story_formats
 from news_adapter import NewsArticle, normalize_news_feed
 from story_generator import CAST_MODES, VISUAL_STYLES, generate_story
 from visual_story_service import generate_story_visuals
@@ -42,11 +42,14 @@ def run_script_workflow(
     max_articles_per_category: int | None = None,
     max_total_stories: int | None = None,
     three_images_per_story: bool = False,
+    story_format: str = "mix",
 ) -> dict[str, object]:
     if cast_mode not in CAST_MODES:
         raise WorkflowInputError(f"Unsupported cast mode. Use one of: {', '.join(CAST_MODES)}.")
     if visual_style not in VISUAL_STYLES:
         raise WorkflowInputError(f"Unsupported visual style. Use one of: {', '.join(VISUAL_STYLES)}.")
+    if story_format != "auto" and story_format not in supported_story_formats():
+        raise WorkflowInputError(f"Unsupported story format. Use auto or one of: {', '.join(supported_story_formats())}.")
     selected_date = _resolve_date(run_date)
     resolved_input_dir = input_dir or (source_root or ARTICLES_DIR) / selected_date.isoformat()
     if not resolved_input_dir.is_dir():
@@ -77,7 +80,7 @@ def run_script_workflow(
     selected_jobs, selection = select_story_candidates(
         article_jobs, max_articles_per_category, max_total_stories
     )
-    generated_stories = _generate_stories(selected_jobs, language, cast_mode, visual_style, failures)
+    generated_stories = _generate_stories(selected_jobs, language, cast_mode, visual_style, story_format, failures)
     episode_title = generate_episode_title([story for _, _, _, story in generated_stories], cadence)
     image_paths = _generate_images(output_dir, generated_stories, failures, three_images_per_story) if generate_images else {}
     images_generated = sum(len(paths) for paths in image_paths.values())
@@ -110,6 +113,7 @@ def run_script_workflow(
         "generateAudio": generate_audio,
         "castMode": cast_mode,
         "visualStyle": visual_style,
+        "storyFormat": story_format,
         "scripts": generated_scripts,
         "failures": failures,
     }
@@ -144,6 +148,7 @@ def run_script_workflow(
         "generateAudio": generate_audio,
         "castMode": cast_mode,
         "visualStyle": visual_style,
+        "storyFormat": story_format,
         "audio": audio_result,
         "failures": failures,
     }
@@ -198,13 +203,19 @@ def _generate_stories(
     language: str,
     cast_mode: str,
     visual_style: str,
+    story_format: str,
     failures: list[dict[str, str]],
 ) -> list[tuple[int, NewsArticle, Path, dict[str, object]]]:
     generated_stories: list[tuple[int, NewsArticle, Path, dict[str, object]]] = []
     with ThreadPoolExecutor(max_workers=MAX_PARALLEL_REQUESTS) as executor:
         futures = {
             executor.submit(
-                generate_story, article, story_format_for_index(index), language, cast_mode, visual_style
+                generate_story,
+                article,
+                story_format_for_index(index) if story_format == "auto" else story_format,
+                language,
+                cast_mode,
+                visual_style,
             ): (index, article, source_file)
             for index, article, source_file in article_jobs
         }

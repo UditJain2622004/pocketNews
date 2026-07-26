@@ -68,13 +68,13 @@ export default function SignUpForm({
             </button>
           ))}
         </div>
-        <input
+        {/* <input
           type="text"
           placeholder="Or type custom language..."
           value={!['English', 'Hindi', 'Marathi', 'Bengali', 'Kannada', 'Tamil'].includes(language) ? language : ''}
           onChange={(e) => setLanguage(e.target.value)}
           className="w-full bg-white/70 border border-black/5 hover:border-black/10 focus:border-[#7C3AED] focus:bg-white rounded-xl px-4 py-2.5 text-xs transition-all focus:outline-none shadow-sm placeholder-slate-400 text-slate-800"
-        />
+        /> */}
       </div>
 
       <button 

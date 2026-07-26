@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { API_BASE } from '../api'
+import { PROFILE_TAXONOMY } from '../taxonomy'
 
 export default function ProfileTab({ user, token, onProfileUpdate, onLogout }) {
   const [selectedTopics, setSelectedTopics] = useState([])
@@ -21,15 +22,6 @@ export default function ProfileTab({ user, token, onProfileUpdate, onLogout }) {
     { name: 'Japanese', desc: 'Japanese Voiceover' }
   ]
 
-  const fallbackSuggestions = {
-    "Technology": ["Artificial Intelligence", "Web Development", "Mobile Applications", "Cybersecurity", "Blockchain"],
-    "Sports": ["Cricket", "Football", "Basketball", "Tennis", "Athletics"],
-    "Business": ["Finance", "Stocks", "Real Estate", "Startups", "Cryptocurrency"],
-    "Entertainment": ["Movies", "Music", "Gaming", "Celebrity News", "Television"],
-    "Science": ["Space Exploration", "Physics", "Biology", "Environment", "Medicine"],
-    "Lifestyle": ["Health & Fitness", "Travel", "Food & Cooking", "Fashion", "DIY"]
-  }
-
   useEffect(() => {
     fetch(`${API_BASE}/auth/suggestions`)
       .then(res => res.json())
@@ -37,12 +29,12 @@ export default function ProfileTab({ user, token, onProfileUpdate, onLogout }) {
         if (data && data.suggestions) {
           setSuggestions(data.suggestions)
         } else {
-          setSuggestions(fallbackSuggestions)
+          setSuggestions(PROFILE_TAXONOMY)
         }
       })
       .catch(err => {
         console.error('Failed to fetch suggestions:', err)
-        setSuggestions(fallbackSuggestions)
+        setSuggestions(PROFILE_TAXONOMY)
       })
 
     if (user) {

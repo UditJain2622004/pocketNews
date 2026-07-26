@@ -11,6 +11,11 @@ from typing import Dict, Any, Optional, List, Union
 from googlenewsdecoder import gnewsdecoder
 from .taxonomy import NEWS_TAXONOMY
 
+GOOGLE_NEWS_LANGUAGE = "en-IN"
+GOOGLE_NEWS_COUNTRY = "IN"
+GOOGLE_NEWS_EDITION = "IN:en"
+INDIA_NEWS_TERM = "India"
+
 # Topic Mapping for Google News India RSS (Fallback map)
 TOPIC_MAP = {
     "world": "WORLD",
@@ -120,11 +125,13 @@ async def fetch_google_news_rss(
     micro_niche: Optional[Union[str, List[str]]] = None
 ) -> Dict[str, Any]:
     """
-    Fetch and parse news from Google News India RSS feeds based on hierarchical taxonomy.
+    Fetch and parse India-focused news from Google News RSS feeds based on hierarchical taxonomy.
     Supports fetching and merging multiple sub-topics or micro-niches concurrently.
     Filters articles to only return news from the last 48 hours.
     """
-    base_params = "hl=en-IN&gl=IN&ceid=IN:en"
+    base_params = (
+        f"hl={GOOGLE_NEWS_LANGUAGE}&gl={GOOGLE_NEWS_COUNTRY}&ceid={GOOGLE_NEWS_EDITION}"
+    )
     
     # Parse inputs to normalized lists of strings
     categories = parse_list_param(category)
@@ -134,11 +141,22 @@ async def fetch_google_news_rss(
     # List of tuples containing (rss_url, feed_category_label)
     rss_urls = []
     
-    # We restrict search queries to the last 24 hours using the when:1d operator
+    # Search queries are constrained to the Indian edition and require India relevance.
     time_filter = " when:1d"
+
+    def india_query(query: str) -> str:
+        return f"({query}) {INDIA_NEWS_TERM}{time_filter}"
+
+    def category_query(meta: Dict[str, Any]) -> str:
+        queries = [
+            str(subtopic["query"])
+            for subtopic in meta.get("sub_topics", {}).values()
+            if subtopic.get("query")
+        ]
+        return " OR ".join(queries) or str(meta.get("name", "news"))
     
     if q:
-        query_str = f"{q}{time_filter}"
+        query_str = india_query(q)
         encoded_query = urllib.parse.quote(query_str)
         rss_urls.append((f"https://news.google.com/rss/search?q={encoded_query}&{base_params}", "search"))
     elif micro_niches:
@@ -158,9 +176,9 @@ async def fetch_google_news_rss(
             
             if parent_query:
                 # Combine parent query and niche query flatly (implied AND)
-                query_str = f"{parent_query} {niche_query}{time_filter}"
+                query_str = india_query(f"{parent_query} {niche_query}")
             else:
-                query_str = f"{niche}{time_filter}"
+                query_str = india_query(niche)
             encoded_query = urllib.parse.quote(query_str)
             rss_urls.append((f"https://news.google.com/rss/search?q={encoded_query}&{base_params}", niche))
     elif sub_topics:
@@ -171,20 +189,22 @@ async def fetch_google_news_rss(
                 if cat in NEWS_TAXONOMY and sub in NEWS_TAXONOMY[cat]["sub_topics"]:
                     found_query = NEWS_TAXONOMY[cat]["sub_topics"][sub]["query"]
                     break
-            query_str = f"{found_query if found_query else sub}{time_filter}"
+            query_str = india_query(found_query if found_query else sub)
             encoded_query = urllib.parse.quote(query_str)
             rss_urls.append((f"https://news.google.com/rss/search?q={encoded_query}&{base_params}", sub))
     elif categories:
-        # Fetch separate headline or search feeds for each category concurrently
+        # Use taxonomy searches rather than broad global topic feeds, so every category is India-focused.
         for cat in categories:
             if cat in NEWS_TAXONOMY:
                 meta = NEWS_TAXONOMY[cat]
-                rss_urls.append((f"https://news.google.com/rss/headlines/section/topic/{meta['rss_topic']}?{base_params}", cat))
+                query_str = india_query(category_query(meta))
+                encoded_query = urllib.parse.quote(query_str)
+                rss_urls.append((f"https://news.google.com/rss/search?q={encoded_query}&{base_params}", cat))
             elif cat in TOPIC_MAP:
                 topic_code = TOPIC_MAP[cat]
                 rss_urls.append((f"https://news.google.com/rss/headlines/section/topic/{topic_code}?{base_params}", cat))
             else:
-                query_str = f"{cat}{time_filter}"
+                query_str = india_query(cat)
                 encoded_query = urllib.parse.quote(query_str)
                 rss_urls.append((f"https://news.google.com/rss/search?q={encoded_query}&{base_params}", cat))
     else:
@@ -251,6 +271,12 @@ async def fetch_google_news_rss(
             return {
                 "status": "success",
                 "totalResults": len(results),
+                "locale": {
+                    "country": GOOGLE_NEWS_COUNTRY,
+                    "language": GOOGLE_NEWS_LANGUAGE,
+                    "edition": GOOGLE_NEWS_EDITION,
+                    "relevanceTerm": INDIA_NEWS_TERM,
+                },
                 "results": results
             }
             

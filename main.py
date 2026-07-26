@@ -110,6 +110,7 @@ class AdminDailyWorkflowRequest(BaseModel):
     maxArticlesPerCategory: Optional[int] = Field(default=3, ge=1)
     maxTotalStories: Optional[int] = Field(default=12, ge=1)
     threeImagesPerStory: bool = False
+    storyFormat: str = "mix"
 
 
 @app.post("/translate")
@@ -211,6 +212,7 @@ def start_admin_daily_workflow(request: AdminDailyWorkflowRequest, background_ta
                 request.generateAudio, request.castMode, request.visualStyle, request.language,
                 request.maxArticlesPerCategory, request.maxTotalStories,
                 request.threeImagesPerStory,
+                request.storyFormat,
             )
             ADMIN_TASKS[task_id] = {"taskId": task_id, "status": "completed", "result": result}
         except Exception as error:
@@ -346,7 +348,7 @@ def post_episode_event(
 def get_story(
     article_id: str,
     language: str = Query("en-IN", description="Requested narration language locale"),
-    story_format: str = Query("auto", description="auto, solo-hot-take, two-person-banter, or dramatized-pov"),
+    story_format: str = Query("mix", description="mix, auto, solo-hot-take, two-person-banter, or dramatized-pov"),
     cast_mode: str = Query("auto", description="auto, story_duo, or recurring_duo"),
     visual_style: str = Query("animated", description="animated or live_action"),
 ) -> dict[str, object]:

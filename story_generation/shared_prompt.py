@@ -24,7 +24,7 @@ Return only the structured story required by the schema.
 Target narration language: {language}
 Required format: {story_format}
 {cast_prompt_line}
-{visual_prompt_line}{mode_section}
+{visual_prompt_line}
 
 Classify the story using exactly one category and one or two subcategories from this fixed taxonomy:
 {taxonomy_prompt()}
@@ -41,17 +41,16 @@ Rules:
 - Choose a genre that makes the story compelling: comedy, drama, mystery, thriller, emotional drama, light horror, or another suitable genre. Treat sensitive events with appropriate care.
 - Make the entertainment come from fictional framing, action, and reactions, never invented facts.
 - Do not imitate any real person's voice or write generated dialogue as a quote from a real person.
-- Use two or more original fictional performers only. Every spoken line must name a speaker from cast.
-- If requested cast mode is auto, choose either a custom two-character scene or multi-character self-talk. If story_duo, create exactly two new fictional characters. If recurring_duo, use exactly Mira and Kabir: Mira is an impulsive, sharp-eyed Indian creative strategist with a cropped black bob, amber jacket, and silver ear cuff; Kabir is a calm, deadpan Indian systems thinker with close-cropped hair, round glasses, and a forest-green overshirt. Preserve these names, personalities, and visual identities.
-- creativeDirection.visualStyle must exactly equal the requested visual style. creativeDirection.castMode must be story_duo or recurring_duo, never auto.
-- No detached narrator is allowed. Every fact must surface through character dialogue, self-talk, discovery, or visible consequence.
+- Follow the selected format's cast and performance rules exactly. Every spoken line must name a speaker from cast.
+- creativeDirection.visualStyle must exactly equal the requested visual style. creativeDirection.castMode and creativeDirection.performanceMode must match the selected format's rules.
+- No detached news narrator is allowed. Every fact must surface through character dialogue, self-talk, discovery, or visible consequence.
 - After the title cue, do not use news-reader language such as "the headline is", "the article says", "the report says", "the takeaway is", "what this means is", or "bottom line". State facts only as part of a discovery, argument, choice, or consequence inside the scene.
 - Do not use characters as human PowerPoint pointers. Avoid scenes where they merely arrange, pin, read, tap, compare, or point at cards, screens, scoreboards, maps, folders, scales, displays, or labels so they can repeat article facts. Use those objects only when the article itself is about them or when they create a real obstacle.
 - Ban explanatory exchange patterns such as "so this means", "that is the point", "the whole picture", "not a tiny warning", or one character stating a fact and the other paraphrasing it. Replace them with a move, a rebuttal, a joke with consequences, or a choice.
 - By the middle beat, something must go wrong or reverse unexpectedly. By the final beat, somebody must have paid a small cost, changed their plan, or committed to a choice because of the factual development.
 - The title-cue beat must be first. Its first line must clearly name the news item so it can be skipped, but it must sound like the beginning of this scene. Never use the literal phrase "Quick story:" and never rely on a repeated canned intro. Put the news subject in a natural, situation-specific opening line instead.
 - Return exactly five beats in this order: title-cue, hook, what-happened, why-it-matters, takeaway.
-- Make the complete scene about 45 to 90 seconds. Keep spoken lines short and natural for text-to-speech.
+- The complete scene must be 35 to 65 seconds and must never exceed 70 seconds. Use no more than 105 spoken words across all five beats. Keep spoken lines short and natural for text-to-speech; leave room for the emotional pacing in the voice performance.
 - Make every voiceProfile performance-ready: specify voice texture, pace, emotional baseline, emotional shift by the ending, and comic or dramatic timing rather than generic narration. Write for an expressive, intimate podcast performance, not a clean read-aloud. Let characters reveal surprise, contained laughter, disbelief, warmth, nerves, relief, frustration, or excitement through the shape of their dialogue. Use a few earned pauses, interruptions, clipped reactions, or self-aware turns when the scene supports them, but never pad it with repetitive filler.
 - Build a visual bible that fixes character appearance, wardrobe, setting, props, color/lighting, and story arc for the entire scene. The reference image prompt must establish every recurring character together in the core location.
 - Every beat must be a consecutive shot in one continuous scene. Include a scene prompt and continuity notes explaining what must remain from the previous shot and what advances.
@@ -94,4 +93,5 @@ Mira: We make the train, and the headline is clear: overnight service begins Fri
 Kabir: The city changed the route. We just got lucky enough to be standing at the first door.
 
 For this example, the dramatic spine is: goal = reach the audition; obstacle = no transport before it closes; catalyst = overnight trains begin Friday; reversal = the locked station becomes the only route; cost of failure = the audition is missed; emotional turn = the notice becomes their escape route; resolution = they board the first train. The five dramatic actions are: discover the closed station, race the clock, activate the display, choose the train, board it. Write stories with this level of visible action and causal movement.
+{mode_section}
 """.strip()

@@ -46,6 +46,12 @@ async def run_news_sync(run_date: date | None = None, categories: list[str] | No
         "startedAt": started_at,
         "completedAt": datetime.now(timezone.utc).isoformat(),
         "windowHours": 24,
+        "source": {
+            "provider": "Google News RSS",
+            "country": "IN",
+            "language": "en-IN",
+            "relevanceTerm": "India",
+        },
         "categories": results,
     }
     with (target_dir / "manifest.json").open("w", encoding="utf-8") as output_file:

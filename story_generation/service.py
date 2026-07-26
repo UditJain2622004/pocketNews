@@ -19,7 +19,7 @@ from story_generation.schema import GeneratedStory
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / ".env")
 MODEL = os.getenv("OPENAI_MODEL", "gpt-5.6")
-PROMPT_VERSION = "cinematic-scene-v3-podcast"
+PROMPT_VERSION = "cinematic-scene-v5-70-second-cap"
 _STORY_CACHE: dict[str, dict[str, object]] = {}
 _CACHE_LOCK = Lock()
 
@@ -68,6 +68,7 @@ def generate_story(
     story["sourceCategory"] = _primary_category(article.categories)
     story["topics"] = article.categories
     story["format"] = story_format
+    story["selectedFormat"] = story["creativeDirection"]["selectedFormat"]
     story["requestedCastMode"] = cast_mode
     story["requestedVisualStyle"] = visual_style
     story["sources"] = [{"name": article.source_name, "url": article.url, "publishedAt": article.published_at}]
