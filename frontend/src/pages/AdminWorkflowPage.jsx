@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { API_BASE } from '../api'
 
-const CATEGORIES = ['technology', 'sports', 'business', 'entertainment', 'science', 'lifestyle']
+const CATEGORIES = ['technology', 'sports', 'business', 'politics', 'entertainment', 'science', 'lifestyle']
 
 export default function AdminWorkflowPage() {
   const [form, setForm] = useState({ mode: 'full', generateImages: true, generateAudio: true, threeImagesPerStory: false, storyFormat: 'mix', castMode: 'auto', visualStyle: 'animated', language: 'en-IN', maxArticlesPerCategory: 1, maxTotalStories: 6 })

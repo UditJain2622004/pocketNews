@@ -49,7 +49,7 @@ class StoryBeat(BaseModel):
 
 
 class StoryClassification(BaseModel):
-    category: Literal["Technology", "Sports", "Business", "Entertainment", "Science", "Lifestyle"]
+    category: Literal["Technology", "Sports", "Business", "Politics", "Entertainment", "Science", "Lifestyle"]
     subcategories: list[str] = Field(min_items=1, max_items=2)
 
     @root_validator(skip_on_failure=True)
