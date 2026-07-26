@@ -19,7 +19,7 @@ from story_generation.schema import GeneratedStory
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / ".env")
 MODEL = os.getenv("OPENAI_MODEL", "gpt-5.6")
-PROMPT_VERSION = "cinematic-scene-v5-70-second-cap"
+PROMPT_VERSION = "cinematic-scene-v6-expanded-mix"
 _STORY_CACHE: dict[str, dict[str, object]] = {}
 _CACHE_LOCK = Lock()
 

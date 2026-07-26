@@ -18,6 +18,13 @@ PROFILE_TAXONOMY = {
         "Companies",
         "Crypto & Fintech",
     ],
+    "Politics": [
+        "Elections & Governance",
+        "Policy & Laws",
+        "Parliament & Parties",
+        "Foreign Affairs",
+        "State & Local Politics",
+    ],
     "Entertainment": [
         "Movies & OTT",
         "Music",
@@ -79,6 +86,17 @@ COLLECTOR_TAXONOMY = {
             "personal_finance": {"display": "Personal Finance", "query": "personal finance OR mutual funds OR income tax"},
             "companies": {"display": "Companies", "query": "companies OR corporate earnings OR mergers"},
             "crypto_fintech": {"display": "Crypto & Fintech", "query": "fintech OR digital payments OR cryptocurrency"},
+        },
+    },
+    "politics": {
+        "display": "Politics",
+        "rss_topic": "NATION",
+        "sub_topics": {
+            "elections_governance": {"display": "Elections & Governance", "query": "elections OR governance OR Election Commission"},
+            "policy_laws": {"display": "Policy & Laws", "query": "government policy OR law OR legislation"},
+            "parliament_parties": {"display": "Parliament & Parties", "query": "Parliament OR political parties OR Lok Sabha"},
+            "foreign_affairs": {"display": "Foreign Affairs", "query": "foreign affairs OR diplomacy OR international relations"},
+            "state_local_politics": {"display": "State & Local Politics", "query": "state government OR local politics OR chief minister"},
         },
     },
     "entertainment": {
