@@ -129,7 +129,7 @@ export default function SignUpPage({ onSignupSuccess, onCancel, onSwitchToSignIn
         onClick={onCancel}
         className="absolute top-6 left-6 text-slate-500 hover:text-slate-900 transition-colors flex items-center gap-1.5 font-bold text-sm bg-white/80 border border-black/5 px-4 py-2 rounded-xl shadow-sm z-10"
       >
-        ← Back to StoryCast
+        ← Back to Pocket News
       </button>
 
       {/* Main Glass Card */}
@@ -138,7 +138,7 @@ export default function SignUpPage({ onSignupSuccess, onCancel, onSwitchToSignIn
           <div className="flex flex-col items-center mb-8">
             <img src="/logo.png" className="w-16 h-16 object-contain rounded-2xl mb-3" alt="Logo" />
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-800 text-center">
-              Create Your StoryCast Persona
+              Create Your Pocket News Persona
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 mt-1 text-center">
               Configure your customized news preferences & interests

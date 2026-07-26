@@ -6,6 +6,8 @@ import re
 import asyncio
 import time
 import calendar
+from datetime import date as CalendarDate, datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 from bs4 import BeautifulSoup
 from typing import Dict, Any, Optional, List, Union
 from googlenewsdecoder import gnewsdecoder
@@ -15,6 +17,7 @@ GOOGLE_NEWS_LANGUAGE = "en-IN"
 GOOGLE_NEWS_COUNTRY = "IN"
 GOOGLE_NEWS_EDITION = "IN:en"
 INDIA_NEWS_TERM = "India"
+INDIA_TIMEZONE = ZoneInfo("Asia/Kolkata")
 
 # Topic Mapping for Google News India RSS (Fallback map)
 TOPIC_MAP = {
@@ -122,12 +125,13 @@ async def fetch_google_news_rss(
     q: Optional[str] = None,
     category: Optional[Union[str, List[str]]] = None,
     sub_topic: Optional[Union[str, List[str]]] = None,
-    micro_niche: Optional[Union[str, List[str]]] = None
+    micro_niche: Optional[Union[str, List[str]]] = None,
+    article_date: Optional[CalendarDate] = None,
 ) -> Dict[str, Any]:
     """
     Fetch and parse India-focused news from Google News RSS feeds based on hierarchical taxonomy.
     Supports fetching and merging multiple sub-topics or micro-niches concurrently.
-    Filters articles to only return news from the last 48 hours.
+    When article_date is supplied, returns only articles published on that calendar date in Asia/Kolkata.
     """
     base_params = (
         f"hl={GOOGLE_NEWS_LANGUAGE}&gl={GOOGLE_NEWS_COUNTRY}&ceid={GOOGLE_NEWS_EDITION}"
@@ -142,10 +146,16 @@ async def fetch_google_news_rss(
     rss_urls = []
     
     # Search queries are constrained to the Indian edition and require India relevance.
-    time_filter = " when:1d"
+    if article_date:
+        search_filter = (
+            f" after:{(article_date - timedelta(days=1)).isoformat()}"
+            f" before:{(article_date + timedelta(days=1)).isoformat()}"
+        )
+    else:
+        search_filter = " when:1d"
 
     def india_query(query: str) -> str:
-        return f"({query}) {INDIA_NEWS_TERM}{time_filter}"
+        return f"({query}) {INDIA_NEWS_TERM}{search_filter}"
 
     def category_query(meta: Dict[str, Any]) -> str:
         queries = [
@@ -222,19 +232,24 @@ async def fetch_google_news_rss(
             
             current_time = calendar.timegm(time.gmtime())
             
-            # 2. Parse feeds, filter by date (under 48h), and merge entries cleanly
+            # 2. Parse feeds, enforce the requested publication date, and merge entries cleanly.
             for idx, response in enumerate(feed_responses):
                 response.raise_for_status()
                 feed_category = rss_urls[idx][1]
                 
                 feed = feedparser.parse(response.content)
                 for entry in feed.entries:
-                    # Filter: Only keep news that is under 24 hours old
+                    # A dated run is exact to the India calendar day; live requests keep the rolling 24-hour behavior.
                     if entry.get("published_parsed"):
                         entry_time = calendar.timegm(entry.published_parsed)
-                        # 24 hours = 24 * 3600 = 86400 seconds
-                        if (current_time - entry_time) > 86400:
+                        if article_date:
+                            published_date = datetime.fromtimestamp(entry_time, timezone.utc).astimezone(INDIA_TIMEZONE).date()
+                            if published_date != article_date:
+                                continue
+                        elif (current_time - entry_time) > 86400:
                             continue
+                    elif article_date:
+                        continue
                             
                     link = entry.get("link", "")
                     entry_id = entry.get("id") or entry.get("guid")
@@ -277,6 +292,7 @@ async def fetch_google_news_rss(
                     "edition": GOOGLE_NEWS_EDITION,
                     "relevanceTerm": INDIA_NEWS_TERM,
                 },
+                "articleDate": article_date.isoformat() if article_date else None,
                 "results": results
             }
             

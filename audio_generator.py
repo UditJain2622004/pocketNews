@@ -38,6 +38,8 @@ LANGUAGE_TO_LOCALE = {
     "ta-in": "ta-IN",
     "kannada": "kn-IN",
     "kn-in": "kn-IN",
+    "bhojpuri": "bho-IN",
+    "bho-in": "bho-IN",
 }
 
 

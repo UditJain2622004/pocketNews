@@ -17,34 +17,6 @@ export default function Dashboard({
   return (
     <div className="min-h-screen bg-gradient-to-tr from-[#EBEBF2] via-[#F5F5F7] to-[#E9EFF7] text-zinc-800 font-sans antialiased overflow-x-hidden relative selection:bg-[#E11D48]/15 selection:text-[#E11D48] flex flex-col md:flex-row">
       
-      {/* Background decoration blur spheres (glassmorphism backdrops) */}
-      <motion.div 
-        animate={{ 
-          x: [0, 80, -50, 0], 
-          y: [0, -60, 40, 0],
-          scale: [1, 1.08, 0.92, 1]
-        }}
-        transition={{ 
-          repeat: Infinity, 
-          duration: 25, 
-          ease: "easeInOut" 
-        }}
-        className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#7C3AED]/8 rounded-full blur-3xl pointer-events-none" 
-      />
-      <motion.div 
-        animate={{ 
-          x: [0, -90, 60, 0], 
-          y: [0, 80, -40, 0],
-          scale: [1, 0.92, 1.08, 1]
-        }}
-        transition={{ 
-          repeat: Infinity, 
-          duration: 30, 
-          ease: "easeInOut" 
-        }}
-        className="absolute top-1/3 right-1/4 w-[600px] h-[600px] bg-[#EC4899]/8 rounded-full blur-3xl pointer-events-none" 
-      />
-
       {/* SIDEBAR NAVIGATION (Desktop - Rendered with light theme glassmorphism) */}
       <aside className="hidden md:flex w-20 bg-white/70 backdrop-blur-xl border-r border-white/40 fixed inset-y-0 left-0 flex-col justify-between z-40 py-8 px-2 items-center shadow-md">
         
@@ -125,7 +97,7 @@ export default function Dashboard({
       <header className="md:hidden sticky top-0 z-50 bg-white/70 backdrop-blur-lg border-b border-white/40 p-4 flex items-center justify-between shadow-sm">
         <div className="flex items-center gap-2">
           <img src="/logo.png" className="w-8 h-8 object-contain rounded-lg bg-white/90 border border-white/50" alt="Logo" />
-          <span className="text-sm font-black text-zinc-850 tracking-tight">StoryCast AI</span>
+          <span className="text-sm font-black text-zinc-850 tracking-tight">Pocket News</span>
         </div>
         <div className="flex items-center gap-3">
           {user && (

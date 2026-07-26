@@ -51,7 +51,7 @@ export default function LoginPage({ onLoginSuccess, onCancel, onSwitchToSignUp }
         onClick={onCancel}
         className="absolute top-6 left-6 text-slate-500 hover:text-slate-900 transition-colors flex items-center gap-1.5 font-bold text-sm bg-white/80 border border-black/5 px-4 py-2 rounded-xl shadow-sm z-10"
       >
-        ← Back to StoryCast
+        ← Back to Pocket News
       </button>
 
       {/* Main Glass Card */}

@@ -578,7 +578,7 @@ export default function HomeTab({ onPlayStory, user, onTabChange, storiesList = 
                   {featuredDrama.tag}
                 </span>
                 <span className="text-xs font-bold text-black/10 uppercase tracking-widest mt-2 select-none">
-                  StoryCast Original Broadcast
+                  Pocket News Original Broadcast
                 </span>
               </div>
             </div>
@@ -587,7 +587,7 @@ export default function HomeTab({ onPlayStory, user, onTabChange, storiesList = 
         </AnimatePresence>
 
           {/* Carousel Navigator Controls */}
-          <div className="absolute bottom-6 right-6 sm:right-16 flex items-center gap-3.5 z-30">
+          {/* <div className="absolute bottom-6 right-6 sm:right-16 flex items-center gap-3.5 z-30">
             <button 
               onClick={handlePrevStory}
               className="w-8 h-8 rounded-full bg-white/75 hover:bg-white border border-zinc-300 text-zinc-700 flex items-center justify-center text-xs transition-all cursor-pointer shadow-md"
@@ -621,7 +621,7 @@ export default function HomeTab({ onPlayStory, user, onTabChange, storiesList = 
             >
               ⟩
             </button>
-          </div>
+          </div> */}
         </div>
       )}
 

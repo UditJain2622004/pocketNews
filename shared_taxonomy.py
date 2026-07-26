@@ -18,6 +18,13 @@ PROFILE_TAXONOMY = {
         "Companies",
         "Crypto & Fintech",
     ],
+    "Politics": [
+        "Elections & Governance",
+        "Policy & Laws",
+        "Parliament & Parties",
+        "Foreign Affairs",
+        "State & Local Politics",
+    ],
     "Entertainment": [
         "Movies & OTT",
         "Music",
@@ -38,6 +45,11 @@ PROFILE_TAXONOMY = {
         "Food & Culture",
         "Fashion & Beauty",
         "Campus & Careers",
+    ],
+    "Politics": [
+        "Elections",
+        "Policy & Laws",
+        "Government",
     ],
 }
 
@@ -76,6 +88,17 @@ COLLECTOR_TAXONOMY = {
             "crypto_fintech": {"display": "Crypto & Fintech", "query": "fintech OR digital payments OR cryptocurrency"},
         },
     },
+    "politics": {
+        "display": "Politics",
+        "rss_topic": "NATION",
+        "sub_topics": {
+            "elections_governance": {"display": "Elections & Governance", "query": "elections OR governance OR Election Commission"},
+            "policy_laws": {"display": "Policy & Laws", "query": "government policy OR law OR legislation"},
+            "parliament_parties": {"display": "Parliament & Parties", "query": "Parliament OR political parties OR Lok Sabha"},
+            "foreign_affairs": {"display": "Foreign Affairs", "query": "foreign affairs OR diplomacy OR international relations"},
+            "state_local_politics": {"display": "State & Local Politics", "query": "state government OR local politics OR chief minister"},
+        },
+    },
     "entertainment": {
         "display": "Entertainment",
         "rss_topic": "ENTERTAINMENT",
@@ -107,6 +130,15 @@ COLLECTOR_TAXONOMY = {
             "food_culture": {"display": "Food & Culture", "query": "food OR restaurants OR culture"},
             "fashion_beauty": {"display": "Fashion & Beauty", "query": "fashion OR beauty OR style"},
             "campus_careers": {"display": "Campus & Careers", "query": "campus OR college OR careers OR jobs"},
+        },
+    },
+    "politics": {
+        "display": "Politics",
+        "rss_topic": "NATION",
+        "sub_topics": {
+            "elections": {"display": "Elections", "query": "elections OR voting OR polls"},
+            "policy_laws": {"display": "Policy & Laws", "query": "policy OR parliament OR legislation OR laws"},
+            "government": {"display": "Government", "query": "government OR cabinet OR prime minister OR state administration"},
         },
     },
 }

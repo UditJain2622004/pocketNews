@@ -5,7 +5,7 @@ export default function NewsComparison() {
     <section className="max-w-6xl mx-auto px-4 py-24 border-t border-slate-200 space-y-12">
       <div className="text-center space-y-3">
         <h2 className="text-3xl sm:text-5xl font-extrabold text-[#1D1D1F]">Why Gen Z Doesn't Read Traditional News</h2>
-        <p className="text-slate-600 max-w-md mx-auto text-sm">Dry text and static newspapers belong to the past. StoryCast is built for the now.</p>
+        <p className="text-slate-600 max-w-md mx-auto text-sm">Dry text and static newspapers belong to the past. Pocket News is built for the now.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
@@ -37,7 +37,7 @@ export default function NewsComparison() {
         <div className="bg-white border border-[#7C3AED]/25 rounded-3xl p-6 sm:p-8 space-y-6 flex flex-col justify-between shadow-sm">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-[#7C3AED] uppercase tracking-wider">The StoryCast Way</span>
+              <span className="text-xs font-bold text-[#7C3AED] uppercase tracking-wider">The Pocket News Way</span>
               <span className="w-8 h-8 rounded-full bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-bold">✓</span>
             </div>
             <h3 className="text-lg font-bold text-slate-800">Cinematic Episodic Feeds</h3>

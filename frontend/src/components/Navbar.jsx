@@ -30,11 +30,11 @@ export default function Navbar({ onEnterApp, user, onLoginClick, onLogout }) {
               className={`relative object-contain rounded-xl bg-white shadow-sm transition-all duration-300 ${
                 isScrolled ? 'w-10 h-10' : 'w-16 h-16'
               }`} 
-              alt="StoryCast AI Logo" 
+              alt="Pocket News Logo" 
             />
           </div>
           <div>
-            <span className="text-lg sm:text-xl font-black tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">StoryCast AI</span>
+            <span className="text-lg sm:text-xl font-black tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">Pocket News</span>
             <span className="block text-[8px] sm:text-[9px] text-[#7C3AED] font-extrabold tracking-widest uppercase">Cinematic News Engine</span>
           </div>
         </div>
@@ -72,7 +72,7 @@ export default function Navbar({ onEnterApp, user, onLoginClick, onLogout }) {
             onClick={onEnterApp}
             className="px-5 py-2.5 rounded-xl text-xs font-extrabold bg-gradient-to-r from-[#7C3AED] to-[#EC4899] hover:opacity-90 text-white transition-all shadow-md shadow-[#7C3AED]/20 hover:scale-105 active:scale-95 cursor-pointer uppercase tracking-wider"
           >
-            Enter StoryCast
+            Enter Pocket News
           </button>
         </div>
       </nav>

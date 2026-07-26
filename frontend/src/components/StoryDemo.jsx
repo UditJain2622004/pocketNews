@@ -5,7 +5,7 @@ export default function StoryDemo({ demoStep, demoWaveHeight }) {
     <section id="demo" className="max-w-5xl mx-auto px-4 py-24 border-t border-slate-200 space-y-8 text-center relative">
       <div className="space-y-3">
         <h2 className="text-3xl sm:text-5xl font-extrabold text-[#1D1D1F]">Watch The Magic Happen</h2>
-        <p className="text-slate-600 max-w-lg mx-auto text-sm sm:text-base">Experience how StoryCast AI translates technical stats into immersive digital beats in real-time.</p>
+        <p className="text-slate-600 max-w-lg mx-auto text-sm sm:text-base">Experience how Pocket News translates technical stats into immersive digital beats in real-time.</p>
       </div>
 
       <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 text-left relative overflow-hidden shadow-sm">
@@ -13,7 +13,7 @@ export default function StoryDemo({ demoStep, demoWaveHeight }) {
 
         <div className="flex flex-wrap items-center justify-between border-b border-slate-100 pb-6 mb-6 gap-4">
           <div>
-            <span className="text-xs font-bold text-[#7C3AED] uppercase tracking-widest">StoryCast AI Engine</span>
+            <span className="text-xs font-bold text-[#7C3AED] uppercase tracking-widest">Pocket News Engine</span>
             <h3 className="text-lg font-bold text-slate-800 mt-1">Live Translation Demo</h3>
           </div>
           <div className="flex gap-2">

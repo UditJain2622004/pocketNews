@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { API_BASE } from '../api'
 
-const CATEGORIES = ['technology', 'sports', 'business', 'entertainment', 'science', 'lifestyle']
+const CATEGORIES = ['technology', 'sports', 'business', 'politics', 'entertainment', 'science', 'lifestyle']
 
 export default function AdminWorkflowPage() {
   const [form, setForm] = useState({ mode: 'full', generateImages: true, generateAudio: true, threeImagesPerStory: false, storyFormat: 'mix', castMode: 'auto', visualStyle: 'animated', language: 'en-IN', maxArticlesPerCategory: 1, maxTotalStories: 6 })
@@ -34,7 +34,7 @@ export default function AdminWorkflowPage() {
 
   return <main className="min-h-screen bg-[#08090b] px-5 py-10 text-white sm:px-10">
     <div className="mx-auto max-w-2xl">
-      <a href="/" className="text-sm font-bold text-fuchsia-300">Back to StoryCast</a>
+      <a href="/" className="text-sm font-bold text-fuchsia-300">Back to Pocket News</a>
       <h1 className="mt-8 text-4xl font-black">Daily workflow</h1>
       <p className="mt-2 text-white/55">Fetch, curate, and publish one canonical daily episode run.</p>
 
@@ -49,7 +49,7 @@ export default function AdminWorkflowPage() {
         </label>
         <label className="block text-sm font-bold">Story format
           <select value={form.storyFormat} onChange={(event) => setForm({ ...form, storyFormat: event.target.value })} className="mt-2 w-full rounded-xl border border-white/10 bg-black/20 p-3 text-white">
-            <option value="mix">AI chooses per story</option><option value="auto">Auto rotate formats</option><option value="solo-hot-take">Solo hot take</option><option value="two-person-banter">Two-person banter</option><option value="dramatized-pov">Dramatized POV</option>
+            <option value="mix">AI chooses per story</option><option value="auto">Auto rotate formats</option><option value="solo-hot-take">Solo hot take</option><option value="two-person-banter">Two-person banter</option><option value="dramatized-pov">Dramatized POV</option><option value="group-chat-meltdown">Group chat meltdown</option><option value="fourth-wall">Breaking the fourth wall</option><option value="game-show-round">Game show round</option>
           </select>
         </label>
         <div><p className="text-sm font-bold">Categories</p><div className="mt-3 flex flex-wrap gap-2">{CATEGORIES.map((category) => <label key={category} className="rounded-full border border-white/10 px-3 py-2 text-xs font-bold"><input type="checkbox" checked={categories.includes(category)} onChange={() => toggleCategory(category)} className="mr-2" />{category}</label>)}</div></div>
