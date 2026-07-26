@@ -21,6 +21,32 @@ const mediaUrl = (runId, path) => {
 const getScriptName = (path) => path.split('/').pop()
 const getScriptStem = (path) => getScriptName(path).replace(/\.json$/, '')
 
+const parseTimeline = (text) => {
+  if (!text) return []
+  const lines = text.split('\n').map((line) => line.trim()).filter(Boolean)
+  return lines.map((line) => {
+    let cleanLine = line.replace(/^[-*•]\s*/, '')
+    let date = ''
+    let description = cleanLine
+
+    const bracketMatch = cleanLine.match(/^\[(.*?)\]:?\s*(.*)/)
+    if (bracketMatch) {
+      date = bracketMatch[1]
+      description = bracketMatch[2]
+    } else {
+      const colonIndex = cleanLine.indexOf(':')
+      if (colonIndex > 0 && colonIndex < 35) {
+        date = cleanLine.substring(0, colonIndex).trim()
+        description = cleanLine.substring(colonIndex + 1).trim()
+      }
+    }
+    // Remove all double asterisks from date and description
+    date = date.replace(/\*\*/g, '').trim()
+    description = description.replace(/\*\*/g, '').trim()
+    return { date, description }
+  })
+}
+
 const SUPPORTED_LANGUAGES = [
   'English', 'Hindi', 'Marathi', 'Bengali', 'Kannada', 'Tamil', 'Bhojpuri',
   'Spanish', 'Mandarin', 'German', 'French', 'Japanese'
@@ -40,6 +66,63 @@ export default function EpisodePage({ episodeId, token }) {
   const sessionIdRef = useRef(globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random()}`)
   const sentEventsRef = useRef(new Set())
   const completedStoriesRef = useRef(new Set())
+  const [activeInteraction, setActiveInteraction] = useState(null)
+  const [selectedInteractionOption, setSelectedInteractionOption] = useState(null)
+  const answeredInteractionsRef = useRef(new Set())
+  const shouldResumeAfterInteractionRef = useRef(false)
+
+  const [askQuery, setAskQuery] = useState('')
+  const [askAnswer, setAskAnswer] = useState('')
+  const [asking, setAsking] = useState(false)
+  const [pathContent, setPathContent] = useState('')
+  const [pathType, setPathType] = useState('')
+  const [loadingPath, setLoadingPath] = useState(false)
+  const [reactions, setReactions] = useState({}) // storyId -> reactionType
+
+  const reactToStory = async (reactionType) => {
+    if (!currentStory?.storyId || !token) return
+    setReactions(prev => ({ ...prev, [currentStory.storyId]: reactionType }))
+    try {
+      await fetch(`${API_BASE}/api/stories/${encodeURIComponent(currentStory.storyId)}/react`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ episodeId, reaction: reactionType }),
+      })
+    } catch (_) {}
+  }
+
+  const handleAskAI = async (questionText) => {
+    if (!currentStory?.storyId || !questionText.trim()) return
+    setAsking(true)
+    setAskAnswer('')
+    try {
+      const response = await fetch(`${API_BASE}/api/stories/${encodeURIComponent(currentStory.storyId)}/ask`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ question: questionText }),
+      })
+      if (response.ok) {
+        const data = await response.json()
+        setAskAnswer(data.answer)
+      }
+    } catch (_) {}
+    setAsking(false)
+  }
+
+  const handleFetchPath = async (pType) => {
+    if (!currentStory?.storyId) return
+    setLoadingPath(true)
+    setPathType(pType)
+    setPathContent('')
+    try {
+      const response = await fetch(`${API_BASE}/api/stories/${encodeURIComponent(currentStory.storyId)}/path?path_type=${pType}`)
+      if (response.ok) {
+        const data = await response.json()
+        setPathContent(data.content)
+      }
+    } catch (_) {}
+    setLoadingPath(false)
+  }
 
   const [currentLanguage, setCurrentLanguage] = useState(null)
   const [showLangDropdown, setShowLangDropdown] = useState(false)
@@ -190,6 +273,13 @@ export default function EpisodePage({ episodeId, token }) {
     setPlaybackTime(0)
     if (playing) audio.play().catch(() => setPlaying(false))
   }, [currentTrack?.url])
+
+  // Auto-fetch timeline when timeline tab is active or story changes
+  useEffect(() => {
+    if (sidePanel === 'timeline' && currentStory?.storyId) {
+      handleFetchPath('timeline')
+    }
+  }, [sidePanel, storyIndex, currentStory?.storyId])
 
   const storyElapsedBefore = (targetIndex) => stories
     .slice(0, targetIndex)
@@ -391,6 +481,78 @@ export default function EpisodePage({ episodeId, token }) {
                 <p className="max-w-3xl text-sm font-bold leading-normal sm:text-lg">{currentTrack.text}</p>
               </div>
             )}
+            {activeInteraction && (
+              <div className="absolute inset-0 bg-black/85 backdrop-blur-md flex items-center justify-center p-6 z-30">
+                <div className="bg-white/10 border border-white/20 rounded-3xl p-6 sm:p-8 max-w-md w-full space-y-6 text-white shadow-2xl">
+                  <div className="space-y-2">
+                    <span className="text-xs font-black text-[#E11D48] uppercase tracking-wider block">
+                      {activeInteraction.interaction.type === 'impact_poll' ? 'Impact Poll' : 'Prediction Challenge'}
+                    </span>
+                    <h3 className="text-lg sm:text-xl font-extrabold leading-tight">
+                      {activeInteraction.interaction.question}
+                    </h3>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-3">
+                    {activeInteraction.interaction.options.map((option) => {
+                      const isSelected = selectedInteractionOption?.id === option.id
+                      const isCorrect = activeInteraction.interaction.correctOptionId 
+                        ? option.id === activeInteraction.interaction.correctOptionId.toLowerCase()
+                        : null
+                      const showResult = selectedInteractionOption !== null
+
+                      let btnStyle = "bg-white/10 border-white/20 text-white hover:bg-white/25"
+                      if (isSelected) {
+                        if (isCorrect === true || isCorrect === null) {
+                          btnStyle = "bg-emerald-500/25 border-emerald-550 text-emerald-200"
+                        } else {
+                          btnStyle = "bg-rose-500/25 border-rose-550 text-rose-200"
+                        }
+                      } else if (showResult && isCorrect) {
+                        btnStyle = "bg-emerald-500/20 border-emerald-550 text-emerald-200"
+                      }
+
+                      return (
+                        <button
+                          key={option.id}
+                          onClick={() => chooseInteractionOption(option)}
+                          disabled={showResult}
+                          className={`p-4 rounded-xl border text-left text-xs font-bold transition-all flex items-center cursor-pointer ${btnStyle}`}
+                        >
+                          <span className="inline-block w-6 h-6 rounded-lg bg-white/15 border border-white/10 text-center leading-6 mr-3 font-mono text-[10px]">
+                            {option.id.toUpperCase()}
+                          </span>
+                          {option.text}
+                        </button>
+                      )
+                    })}
+                  </div>
+
+                  {selectedInteractionOption && (
+                    <div className="bg-white/5 border border-white/10 p-4 rounded-2xl text-xs space-y-2 animate-fadeIn">
+                      {activeInteraction.interaction.correctOptionId ? (
+                        selectedInteractionOption.id === activeInteraction.interaction.correctOptionId.toLowerCase() ? (
+                          <p className="font-extrabold text-emerald-400">✓ Correct Answer!</p>
+                        ) : (
+                          <p className="font-extrabold text-rose-400">✗ Incorrect Answer!</p>
+                        )
+                      ) : (
+                        <p className="font-extrabold text-fuchsia-400">✓ Vote Registered!</p>
+                      )}
+                      <p className="text-white/80 italic leading-relaxed">
+                        {activeInteraction.interaction.revealText}
+                      </p>
+                      <button 
+                        onClick={continueAfterInteraction}
+                        className="w-full mt-2 py-2 px-4 bg-gradient-to-r from-fuchsia-600 to-pink-500 hover:brightness-110 text-white rounded-xl font-black uppercase tracking-wider transition-all cursor-pointer border-none"
+                      >
+                        Continue Story ➔
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </section>
 
           <section className="mt-3 shrink-0 border-b border-zinc-200/80 pb-3">
@@ -404,12 +566,44 @@ export default function EpisodePage({ episodeId, token }) {
               <button type="button" aria-label="Next story" onClick={() => moveTrack(1)} className="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-base text-white/70 transition hover:border-white/40 hover:text-white">›</button>
               <button type="button" onClick={skipStory} className="ml-1 hidden rounded-full border border-white/10 px-3 py-2 text-[11px] font-extrabold text-white/45 transition hover:border-white/30 hover:text-white sm:block">Skip story</button>
             </div>
+
+            {/* Meaningful Reactions Row */}
+            {currentStory && (
+              <div className="mt-4 flex flex-wrap items-center gap-2 justify-center sm:justify-start">
+                <span className="text-[10px] font-black text-zinc-450 uppercase tracking-widest mr-2">React:</span>
+                {[
+                  { type: "useful", label: "Useful 👍" },
+                  { type: "surprising", label: "Surprising 😮" },
+                  { type: "need_more_context", label: "Context 🤔" },
+                  { type: "i_disagree", label: "Disagree 👎" }
+                ].map((reaction) => {
+                  const isSelected = reactions[currentStory.storyId] === reaction.type
+                  return (
+                    <button
+                      key={reaction.type}
+                      onClick={() => reactToStory(reaction.type)}
+                      className={`px-3 py-1.5 rounded-full border text-[11px] font-extrabold transition-all cursor-pointer ${
+                        isSelected
+                          ? 'bg-[#E11D48] border-[#E11D48] text-white shadow-md scale-105'
+                          : 'bg-white/50 border-zinc-200 text-zinc-600 hover:border-zinc-350 hover:text-zinc-900'
+                      }`}
+                    >
+                      {reaction.label}
+                    </button>
+                  )
+                })}
+              </div>
+            )}
           </section>
         </div>
 
         <aside className="min-w-0 rounded-3xl border border-white/50 bg-white/55 p-4 shadow-md backdrop-blur-md lg:min-h-0 lg:overflow-hidden lg:pt-4">
-          <div className="flex items-end gap-8 border-b border-zinc-200/80">
-            <button type="button" onClick={() => setSidePanel('stories')} className={`relative pb-4 text-base font-extrabold ${sidePanel === 'stories' ? 'text-zinc-900 after:absolute after:bottom-[-1px] after:left-0 after:h-0.5 after:w-full after:bg-[#E11D48]' : 'text-zinc-400 hover:text-zinc-700'}`}>Stories <sup className="ml-1 text-[10px] text-zinc-400">{stories.length}</sup></button><button type="button" onClick={() => setSidePanel('about')} className={`relative pb-4 text-base font-extrabold ${sidePanel === 'about' ? 'text-zinc-900 after:absolute after:bottom-[-1px] after:left-0 after:h-0.5 after:w-full after:bg-[#E11D48]' : 'text-zinc-400 hover:text-zinc-700'}`}>About</button>
+          <div className="flex items-end gap-5 border-b border-zinc-200/80 overflow-x-auto scrollbar-none shrink-0">
+            <button type="button" onClick={() => setSidePanel('stories')} className={`relative pb-4 text-xs font-black uppercase tracking-wider ${sidePanel === 'stories' ? 'text-zinc-900 after:absolute after:bottom-[-1px] after:left-0 after:h-0.5 after:w-full after:bg-[#E11D48]' : 'text-zinc-400 hover:text-zinc-700'}`}>Stories <sup className="text-zinc-400">{stories.length}</sup></button>
+            <button type="button" onClick={() => setSidePanel('ask')} className={`relative pb-4 text-xs font-black uppercase tracking-wider ${sidePanel === 'ask' ? 'text-zinc-900 after:absolute after:bottom-[-1px] after:left-0 after:h-0.5 after:w-full after:bg-[#E11D48]' : 'text-zinc-400 hover:text-zinc-700'}`}>Ask AI 🎙️</button>
+            <button type="button" onClick={() => setSidePanel('paths')} className={`relative pb-4 text-xs font-black uppercase tracking-wider ${sidePanel === 'paths' ? 'text-zinc-900 after:absolute after:bottom-[-1px] after:left-0 after:h-0.5 after:w-full after:bg-[#E11D48]' : 'text-zinc-400 hover:text-zinc-700'}`}>Paths 🗺️</button>
+            <button type="button" onClick={() => setSidePanel('timeline')} className={`relative pb-4 text-xs font-black uppercase tracking-wider ${sidePanel === 'timeline' ? 'text-zinc-900 after:absolute after:bottom-[-1px] after:left-0 after:h-0.5 after:w-full after:bg-[#E11D48]' : 'text-zinc-400 hover:text-zinc-700'}`}>Timeline 📅</button>
+            <button type="button" onClick={() => setSidePanel('about')} className={`relative pb-4 text-xs font-black uppercase tracking-wider ${sidePanel === 'about' ? 'text-zinc-900 after:absolute after:bottom-[-1px] after:left-0 after:h-0.5 after:w-full after:bg-[#E11D48]' : 'text-zinc-400 hover:text-zinc-700'}`}>About</button>
           </div>
           {sidePanel === 'stories' && <><div className="flex items-center justify-between py-7">
             <div>
@@ -418,6 +612,7 @@ export default function EpisodePage({ episodeId, token }) {
             </div>
             <span className="text-xs font-bold text-zinc-400">{stories.length} stories</span>
           </div>
+<<<<<<< HEAD
             <div className="max-h-[34rem] space-y-1 overflow-y-auto pr-1 scrollbar-none">
               {stories.map((story, index) => (
                 <button key={`${story.title}-${index}`} type="button" onClick={() => selectStory(index)} className={`group relative flex w-full items-center gap-4 rounded-xl px-3 py-4 text-left transition ${index === storyIndex ? 'bg-[#E11D48]/10' : 'hover:bg-zinc-100/70'}`}>
@@ -429,6 +624,136 @@ export default function EpisodePage({ episodeId, token }) {
                 </button>
               ))}
             </div></>}
+=======
+          <div className="max-h-[34rem] space-y-1 overflow-y-auto pr-1 scrollbar-none">
+            {stories.map((story, index) => (
+              <button key={`${story.title}-${index}`} type="button" onClick={() => selectStory(index)} className={`group relative flex w-full items-center gap-4 rounded-xl px-3 py-4 text-left transition ${index === storyIndex ? 'bg-[#E11D48]/10' : 'hover:bg-zinc-100/70'}`}>
+                <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-full border text-xs font-black ${index === storyIndex ? 'border-[#E11D48] bg-[#E11D48]/10 text-[#E11D48]' : 'border-zinc-200 bg-white/70 text-zinc-400'}`}>{String(index + 1).padStart(2, '0')}</span>
+                <span className="min-w-0">
+                  <span className={`block truncate text-[15px] font-extrabold ${index === storyIndex ? 'text-zinc-900' : 'text-zinc-700 group-hover:text-zinc-900'}`}>{story.title}</span>
+                  <span className={`mt-0.5 block text-xs font-semibold ${index === storyIndex ? 'text-white/70' : 'text-slate-400'}`}>{story.category} · {formatTime(story.duration)}</span>
+                </span>
+              </button>
+            ))}
+          </div></>}
+          
+          {sidePanel === 'ask' && (
+            <div className="py-6 flex flex-col max-h-[34rem] overflow-y-auto scrollbar-none">
+              <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#E11D48]">Ask about this story</p>
+              <h2 className="mt-2 text-xl font-black tracking-tight text-zinc-900">Custom Q&A</h2>
+              
+              <div className="mt-4 flex flex-wrap gap-2">
+                {[
+                  "How does this affect my city?",
+                  "Explain in simple terms",
+                  "What is the government's role in this?"
+                ].map((q) => (
+                  <button
+                    key={q}
+                    type="button"
+                    onClick={() => { setAskQuery(q); handleAskAI(q); }}
+                    className="text-left px-3 py-2 rounded-xl bg-white border border-zinc-200 hover:border-[#E11D48]/50 text-xs font-semibold text-zinc-600 transition cursor-pointer"
+                  >
+                    💡 {q}
+                  </button>
+                ))}
+              </div>
+
+              <div className="mt-4 flex gap-2">
+                <input
+                  type="text"
+                  value={askQuery}
+                  onChange={(e) => setAskQuery(e.target.value)}
+                  placeholder="Ask a question about this story..."
+                  className="flex-1 bg-white border border-zinc-200 rounded-xl px-4 py-2 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-[#E11D48]/30"
+                />
+                <button
+                  type="button"
+                  onClick={() => handleAskAI(askQuery)}
+                  className="px-4 py-2 bg-[#E11D48] hover:bg-[#F43F5E] text-white text-xs font-black rounded-xl uppercase tracking-wider cursor-pointer border-none"
+                >
+                  Send
+                </button>
+              </div>
+
+              {asking && <div className="mt-6 text-xs font-bold text-zinc-400 animate-pulse">Thinking... 🤔</div>}
+              {askAnswer && (
+                <div className="mt-6 p-4 rounded-2xl bg-white border border-zinc-200 text-xs font-semibold leading-relaxed text-zinc-700 animate-fadeIn">
+                  <span className="block text-[10px] font-black uppercase text-[#E11D48] tracking-widest mb-2">AI Answer:</span>
+                  {askAnswer}
+                </div>
+              )}
+            </div>
+          )}
+
+          {sidePanel === 'paths' && (
+            <div className="py-6 flex flex-col max-h-[34rem] overflow-y-auto scrollbar-none">
+              <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#E11D48]">Personalised path</p>
+              <h2 className="mt-2 text-xl font-black tracking-tight text-zinc-900">Choose your curiosity</h2>
+              
+              <div className="mt-4 grid grid-cols-2 gap-3">
+                {[
+                  { id: "summary", label: "60s Summary ⚡" },
+                  { id: "why_it_matters", label: "Why it matters 💡" },
+                  { id: "opposite_perspective", label: "Critique ⚖️" },
+                  { id: "next_update", label: "Next Update ⏭️" }
+                ].map((path) => (
+                  <button
+                    key={path.id}
+                    type="button"
+                    onClick={() => handleFetchPath(path.id)}
+                    className="p-4 rounded-xl border bg-white text-center text-xs font-extrabold transition-all hover:scale-103 hover:border-[#E11D48]/40 hover:text-[#E11D48] shadow-sm cursor-pointer"
+                  >
+                    {path.label}
+                  </button>
+                ))}
+              </div>
+
+              {loadingPath && <div className="mt-6 text-xs font-bold text-zinc-400 animate-pulse">Exploring curiosity path... 🗺️</div>}
+              {pathContent && (
+                <div className="mt-6 p-4 rounded-2xl bg-white border border-zinc-200 text-xs font-semibold leading-relaxed text-zinc-700 animate-fadeIn">
+                  <span className="block text-[10px] font-black uppercase text-[#E11D48] tracking-widest mb-2">Details:</span>
+                  {pathContent}
+                </div>
+              )}
+            </div>
+          )}
+
+          {sidePanel === 'timeline' && (
+            <div className="py-6 flex flex-col max-h-[34rem] overflow-y-auto scrollbar-none animate-fadeIn">
+              <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#E11D48]">Chronology</p>
+              <h2 className="mt-2 text-xl font-black tracking-tight text-zinc-900">Event Timeline</h2>
+
+              {loadingPath && <div className="mt-6 text-xs font-bold text-zinc-400 animate-pulse">Reconstructing timeline... 📅</div>}
+              {!loadingPath && pathContent && (
+                <div className="mt-6 p-4 rounded-2xl bg-white border border-zinc-200 text-xs font-semibold leading-relaxed text-zinc-700">
+                  <span className="block text-[10px] font-black uppercase text-[#E11D48] tracking-widest mb-4">Chronological flow:</span>
+                  <div className="relative border-l border-zinc-200 ml-3 pl-6 space-y-6">
+                    {parseTimeline(pathContent).map((item, idx) => (
+                      <div key={idx} className="relative">
+                        {/* Timeline node circle */}
+                        <span className="absolute -left-[31px] top-1.5 flex h-4 w-4 items-center justify-center rounded-full border-2 border-white bg-[#E11D48] shadow-sm" />
+                        
+                        {item.date && (
+                          <span className="inline-block px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-[#E11D48]/10 text-[#E11D48] mb-1">
+                            {item.date}
+                          </span>
+                        )}
+                        <p className="text-xs font-semibold leading-relaxed text-zinc-700">
+                          {item.description}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {!loadingPath && !pathContent && (
+                <p className="mt-6 text-xs font-bold text-zinc-400">No timeline data available for this story.</p>
+              )}
+            </div>
+          )}
+
+>>>>>>> 886d0f3f3fa6f34579a46ce29aae0f14f9d1f531
           {sidePanel === 'about' && <div className="py-7"><p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#E11D48]">Sources used</p><h2 className="mt-2 text-2xl font-black tracking-tight text-zinc-900">{currentStory?.title || 'Current story'}</h2><div className="mt-6 space-y-3">{(currentStory?.sources || []).map((source, index) => <a key={`${source.url}-${index}`} href={source.url || '#'} target="_blank" rel="noreferrer" className="block rounded-xl border border-zinc-200 bg-white/65 p-4 transition hover:border-[#E11D48]/40"><p className="font-extrabold text-zinc-800">{source.name || 'Original source'}</p><p className="mt-1 truncate text-xs text-zinc-500">{source.publishedAt || 'Publication date unavailable'}</p></a>)}{!(currentStory?.sources || []).length && <p className="text-sm font-semibold text-zinc-500">No source link was saved for this story.</p>}</div></div>}
         </aside>
       </section>

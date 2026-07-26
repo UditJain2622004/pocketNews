@@ -1,4 +1,4 @@
-"""Idempotent listening feedback and simple learned-interest scoring."""
+﻿"""Idempotent listening feedback and simple learned-interest scoring."""
 from __future__ import annotations
 
 from datetime import datetime, timezone
@@ -63,6 +63,55 @@ def record_listening_event(
         return {"accepted": True, "duplicate": True, "event": existing or document}
 
 
+
+def record_story_interaction(
+    database: Any,
+    user_id: str,
+    episode_id: str,
+    event_id: str,
+    story_id: str,
+    interaction_id: str,
+    selected_option_id: str,
+    correct_option_id: str | None = None,
+) -> dict[str, Any]:
+    if database is None:
+        raise ListeningEventError("Database connection is unavailable.")
+    if not event_id.strip() or not story_id.strip() or not interaction_id.strip():
+        raise ListeningEventError("eventId, storyId, and interactionId are required.")
+    selected = selected_option_id.strip().lower()
+    if selected not in ("a", "b"):
+        raise ListeningEventError("selectedOptionId must be 'a' or 'b'.")
+    correct = correct_option_id.strip().lower() if isinstance(correct_option_id, str) and correct_option_id.strip() else None
+    if correct is not None and correct not in ("a", "b"):
+        raise ListeningEventError("correctOptionId must be 'a' or 'b'.")
+
+    story_entry = episode_story_entry(episode_id, story_id, database)
+    if story_entry is None:
+        raise ListeningEventError("Published episode or story was not found.")
+
+    document = {
+        "eventId": event_id,
+        "userId": user_id,
+        "episodeId": episode_id,
+        "storyId": story_id,
+        "interactionId": interaction_id,
+        "selectedOptionId": selected,
+        "correctOptionId": correct,
+        "isCorrect": selected == correct if correct else None,
+        "category": story_entry.get("category", ""),
+        "topics": list(story_entry.get("topics") or []),
+        "subcategories": list(story_entry.get("subcategories") or []),
+        "createdAt": datetime.now(timezone.utc).isoformat(),
+    }
+    try:
+        database.story_interactions.insert_one(document)
+        return {"accepted": True, "duplicate": False, "interaction": {key: value for key, value in document.items() if key != "_id"}}
+    except DuplicateKeyError:
+        existing = database.story_interactions.find_one(
+            {"userId": user_id, "eventId": event_id}, {"_id": 0}
+        )
+        return {"accepted": True, "duplicate": True, "interaction": existing or document}
+
 def learned_scores(database: Any, user_id: str) -> dict[str, int]:
     """Return category/subcategory scores as completed minus skipped."""
     scores: dict[str, int] = {}
@@ -74,3 +123,4 @@ def learned_scores(database: Any, user_id: str) -> dict[str, int]:
         for tag in topics | subcategories:
             scores[tag] = scores.get(tag, 0) + delta
     return scores
+

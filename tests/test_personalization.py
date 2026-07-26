@@ -1,6 +1,6 @@
-from pymongo.errors import DuplicateKeyError
+﻿from pymongo.errors import DuplicateKeyError
 
-from listening_service import record_listening_event, learned_scores
+from listening_service import record_listening_event, record_story_interaction, learned_scores
 from personalization_service import select_personalized_stories
 
 
@@ -83,6 +83,7 @@ class FakeDatabase:
             "scripts": [_entries()[0]],
         }])
         self.listening_events = FakeCollection()
+        self.story_interactions = FakeCollection()
 
 
 def test_listening_events_are_idempotent_and_update_learned_scores():
@@ -103,3 +104,13 @@ def test_completed_event_requires_eighty_percent_progress():
         assert "80%" in str(error)
     else:
         raise AssertionError("Expected low-progress completion to be rejected")
+
+def test_story_interactions_are_idempotent_and_mark_correctness():
+    database = FakeDatabase()
+    first = record_story_interaction(database, "user-1", "daily-1", "event-2", "tech-1", "poll-1", "a", "a")
+    duplicate = record_story_interaction(database, "user-1", "daily-1", "event-2", "tech-1", "poll-1", "a", "a")
+
+    assert first["accepted"] is True
+    assert first["interaction"]["isCorrect"] is True
+    assert duplicate["duplicate"] is True
+

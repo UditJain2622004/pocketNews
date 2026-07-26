@@ -7,3 +7,6 @@ articles/
 news/
 summaries/
 episode_player.html
+.npm-cache/
+.tmp/
+venv/
