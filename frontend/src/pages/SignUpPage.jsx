@@ -11,7 +11,6 @@ export default function SignUpPage({ onSignupSuccess, onCancel, onSwitchToSignIn
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [language, setLanguage] = useState('English')
   const [selectedTopics, setSelectedTopics] = useState([])
   const [selectedSubtopics, setSelectedSubtopics] = useState([])
 
@@ -87,7 +86,7 @@ export default function SignUpPage({ onSignupSuccess, onCancel, onSwitchToSignIn
           password,
           topics: selectedTopics,
           subtopics: selectedSubtopics,
-          language
+          language: 'English'
         })
       })
 
@@ -167,8 +166,6 @@ export default function SignUpPage({ onSignupSuccess, onCancel, onSwitchToSignIn
             setEmail={setEmail}
             password={password}
             setPassword={setPassword}
-            language={language}
-            setLanguage={setLanguage}
             onSubmit={handleSignupDetailsSubmit}
             onSwitchToSignIn={onSwitchToSignIn}
           />

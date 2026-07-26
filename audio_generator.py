@@ -1,9 +1,10 @@
-"""OpenAI audio generation for individual PocketNews story lines."""
+"""OpenAI and Sarvam AI audio generation for individual PocketNews story lines."""
 from __future__ import annotations
 
 import base64
 import os
 from pathlib import Path
+import requests
 
 from dotenv import load_dotenv
 from openai import OpenAI
@@ -13,6 +14,31 @@ BASE_DIR = Path(__file__).resolve().parent
 load_dotenv(BASE_DIR / ".env")
 AUDIO_MODEL = "gpt-audio-1.5"
 AUDIO_VOICES = ("alloy", "coral", "sage", "verse", "marin", "cedar")
+
+# Sarvam AI Specific Voice Mappings & Locale Resolution
+SARVAM_VOICES = {
+    "alloy": "arjun",      # Male
+    "coral": "meera",      # Female
+    "sage": "shubh",       # Male
+    "verse": "shreya",     # Female
+    "marin": "manan",      # Male
+    "cedar": "ishita",     # Female
+}
+
+LANGUAGE_TO_LOCALE = {
+    "english": "en-IN",
+    "en-in": "en-IN",
+    "hindi": "hi-IN",
+    "hi-in": "hi-IN",
+    "marathi": "mr-IN",
+    "mr-in": "mr-IN",
+    "bengali": "bn-IN",
+    "bn-in": "bn-IN",
+    "tamil": "ta-IN",
+    "ta-in": "ta-IN",
+    "kannada": "kn-IN",
+    "kn-in": "kn-IN",
+}
 
 
 class AudioGenerationError(RuntimeError):
@@ -26,6 +52,47 @@ def generate_story_line(
     language: str,
     story_context: str,
 ) -> bytes:
+    # Force reload environment variables to catch runtime .env updates
+    load_dotenv(BASE_DIR / ".env", override=True)
+    sarvam_key = os.getenv("SARVAM_API_KEY")
+    
+    # Resolve the language string/code to a supported Indian locale code
+    locale = LANGUAGE_TO_LOCALE.get(str(language or "").lower())
+    
+    # Try Sarvam AI first for Indian locales if API key is provided
+    if sarvam_key and locale:
+        sarvam_voice = SARVAM_VOICES.get(voice, "meera")
+        try:
+            payload = {
+                "text": text,
+                "speaker": sarvam_voice,
+                "target_language_code": locale,
+                "model": "bulbul:v3",
+                "pace": 1.0,
+                "speech_sample_rate": 24000,
+            }
+            headers = {
+                "api-subscription-key": sarvam_key,
+                "Content-Type": "application/json",
+            }
+            response = requests.post(
+                "https://api.sarvam.ai/text-to-speech",
+                json=payload,
+                headers=headers,
+                timeout=30
+            )
+            if response.status_code == 200:
+                res_data = response.json()
+                if "audios" in res_data and len(res_data["audios"]) > 0:
+                    return base64.b64decode(res_data["audios"][0])
+                else:
+                    print(f"Warning: Sarvam AI returned no audio array. Response: {res_data}")
+            else:
+                print(f"Warning: Sarvam AI error status {response.status_code}. Response: {response.text}")
+        except Exception as e:
+            print(f"Warning: Sarvam AI TTS request failed: {e}. Falling back to OpenAI.")
+
+    # Fallback to OpenAI gpt-audio-1.5
     if not os.getenv("OPENAI_API_KEY"):
         raise AudioGenerationError("OPENAI_API_KEY is not configured.")
 

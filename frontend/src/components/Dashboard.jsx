@@ -191,7 +191,7 @@ export default function Dashboard({
             <button 
               onClick={() => setActiveTab('profile')}
               className="w-12 h-12 rounded-full bg-zinc-200/40 hover:bg-zinc-200/60 text-zinc-600 hover:text-zinc-900 flex items-center justify-center text-xl transition-all cursor-pointer border-none"
-              title="Listening Language"
+              title="Profile Settings"
             >
               🌐
             </button>
