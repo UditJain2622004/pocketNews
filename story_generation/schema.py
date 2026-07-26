@@ -1,4 +1,4 @@
-"""Structured output models shared by every story-generation mode."""
+﻿"""Structured output models shared by every story-generation mode."""
 from __future__ import annotations
 
 from typing import Literal
@@ -46,6 +46,21 @@ class StoryBeat(BaseModel):
     turningPoint: str
     visual: VisualDirection
     lines: list[StoryLine]
+
+
+class InteractionOption(BaseModel):
+    id: Literal["a", "b"]
+    text: str
+
+
+class StoryInteraction(BaseModel):
+    id: str
+    beatId: Literal["hook", "what-happened", "why-it-matters"]
+    type: Literal["prediction_poll", "impact_poll"]
+    question: str
+    options: list[InteractionOption] = Field(min_items=2, max_items=2)
+    correctOptionId: Literal["a", "b"] | None = None
+    revealText: str
 
 
 class StoryClassification(BaseModel):
@@ -99,6 +114,7 @@ class GeneratedStory(BaseModel):
     visualBible: VisualBible
     cast: list[VoiceCharacter] = Field(min_items=1, max_items=3)
     beats: list[StoryBeat]
+    interactions: list[StoryInteraction] = Field(default_factory=list, max_items=1)
     exit: str
 
     @root_validator(skip_on_failure=True)
@@ -115,3 +131,4 @@ class GeneratedStory(BaseModel):
         if spoken_words > MAX_STORY_SPOKEN_WORDS:
             raise ValueError(f"Story dialogue must not exceed {MAX_STORY_SPOKEN_WORDS} words.")
         return values
+

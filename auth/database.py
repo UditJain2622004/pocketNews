@@ -1,4 +1,4 @@
-import os
+﻿import os
 import logging
 import certifi
 from pymongo import MongoClient
@@ -48,3 +48,4 @@ def setup_db_indexes():
         logger.info("Successfully configured unique indexes on 'users' collection.")
     except Exception as e:
         logger.error(f"Failed to create database indexes: {str(e)}")
+

@@ -1,4 +1,4 @@
-import pytest
+﻿import pytest
 
 from episode_service import story_format_for_index, supported_story_formats
 from news_adapter import NewsArticle
@@ -53,6 +53,8 @@ def test_prompt_contains_existing_contract(story_format, cast_mode, visual_style
     assert "Use only facts in the supplied article." in prompt
     assert "Return exactly five beats in this order" in prompt
     assert "Do not imitate any real person's voice" in prompt
+    assert "Add exactly one optional user interaction" in prompt
+    assert "two-option prediction_poll or impact_poll" in prompt
 
 
 def test_mode_prompt_fragment_is_isolated_from_shared_builder(monkeypatch):
@@ -88,3 +90,4 @@ def test_cache_key_changes_for_each_generation_parameter():
         _cache_key(article, "solo-hot-take", "en-IN", "auto", "live_action"),
     ]
     assert len({base, *variants}) == 5
+

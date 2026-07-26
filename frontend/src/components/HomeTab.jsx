@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { API_BASE } from '../api'
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -27,6 +28,87 @@ const slideUpItem = {
 export default function HomeTab({ onPlayStory, user, onTabChange, storiesList = [] }) {
   const [searchQuery, setSearchQuery] = useState('')
   const [activeStoryIdx, setActiveStoryIdx] = useState(0)
+
+  const token = localStorage.getItem('token')
+  const [catchUp, setCatchUp] = useState(null)
+  const [showCatchUpModal, setShowCatchUpModal] = useState(false)
+  const [challenge, setChallenge] = useState(null)
+  const [challengeAnswers, setChallengeAnswers] = useState({})
+  const [challengePrediction, setChallengePrediction] = useState(null)
+  const [challengeResult, setChallengeResult] = useState(null)
+  const [showGame, setShowGame] = useState(false)
+  const [followedTopics, setFollowedTopics] = useState([])
+  const [timelineTopic, setTimelineTopic] = useState(null)
+  const [timelineData, setTimelineData] = useState([])
+
+  useEffect(() => {
+    if (!token) return
+    
+    // Fetch catch-up
+    fetch(`${API_BASE}/api/dashboard/catch-up`, { headers: { Authorization: `Bearer ${token}` } })
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        if (data && data.missedUpdates > 0) setCatchUp(data)
+      })
+      
+    // Fetch followed topics
+    fetch(`${API_BASE}/api/topics/followed`, { headers: { Authorization: `Bearer ${token}` } })
+      .then(res => res.ok ? res.json() : { topics: [] })
+      .then(data => setFollowedTopics(data.topics || []))
+      
+    // Fetch challenge
+    fetch(`${API_BASE}/api/game/challenge`)
+      .then(res => res.ok ? res.json() : null)
+      .then(data => setChallenge(data))
+  }, [token])
+
+  const submitChallenge = async () => {
+    if (!token || !challenge) return
+    const answersArray = Object.entries(challengeAnswers).map(([qId, val]) => ({
+      questionId: qId,
+      selectedOptionId: val
+    }))
+    
+    try {
+      const response = await fetch(`${API_BASE}/api/game/submit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({
+          challengeId: challenge.challengeId,
+          answers: answersArray,
+          prediction: challengePrediction || 'a'
+        })
+      })
+      if (response.ok) {
+        const data = await response.json()
+        setChallengeResult(data)
+      }
+    } catch (_) {}
+  }
+
+  const followTopic = async (topic) => {
+    if (!token) return
+    try {
+      await fetch(`${API_BASE}/api/topics/follow`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ topic }),
+      })
+      setFollowedTopics(prev => [...prev, topic])
+    } catch (_) {}
+  }
+
+  const showTopicTimeline = async (topic) => {
+    setTimelineTopic(topic)
+    setTimelineData([])
+    try {
+      const response = await fetch(`${API_BASE}/api/topics/${encodeURIComponent(topic)}/timeline`)
+      if (response.ok) {
+        const data = await response.json()
+        setTimelineData(data.timeline || [])
+      }
+    } catch (_) {}
+  }
 
   // Autoplay carousel slide rotation every 6 seconds
   useEffect(() => {
@@ -106,9 +188,19 @@ export default function HomeTab({ onPlayStory, user, onTabChange, storiesList = 
 
                 {/* Bottom title display inside poster */}
                 <div className="text-left space-y-1">
-                  <span className="px-2.5 py-0.5 rounded bg-black/35 text-[10px] font-black text-white uppercase tracking-wider backdrop-blur-sm inline-block">
-                    {drama.category}
-                  </span>
+                  <div className="flex items-center">
+                    <span className="px-2.5 py-0.5 rounded bg-black/35 text-[10px] font-black text-white uppercase tracking-wider backdrop-blur-sm inline-block">
+                      {drama.category}
+                    </span>
+                    {token && !followedTopics.includes(drama.category) && (
+                      <button
+                        onClick={(e) => { e.stopPropagation(); followTopic(drama.category); }}
+                        className="ml-2 px-2.5 py-0.5 rounded bg-white/20 hover:bg-white/40 text-[9px] font-black text-white uppercase tracking-wider backdrop-blur-sm cursor-pointer border-none transition-all hover:scale-105"
+                      >
+                        Follow +
+                      </button>
+                    )}
+                  </div>
                   {/* {drama.date && <p className="text-[10px] font-bold text-zinc-200/90 tracking-wide">{drama.date}</p>} */}
                   <h3 className="text-base font-black text-white tracking-wide uppercase leading-tight drop-shadow-md">
                     {drama.title.split(':')[0]}
@@ -141,6 +233,249 @@ export default function HomeTab({ onPlayStory, user, onTabChange, storiesList = 
   return (
     <div className="space-y-8 pb-2 text-zinc-800 text-left bg-transparent">
       
+      {/* 1. Catch-up Banner */}
+      {catchUp && (
+        <motion.div 
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-fuchsia-600 to-pink-500 p-6 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-4"
+        >
+          <div className="space-y-2">
+            <span className="bg-white/20 border border-white/10 px-3 py-1 rounded text-[10px] font-black uppercase tracking-wider">
+              Catch Up Briefing ⚡
+            </span>
+            <p className="text-base sm:text-lg font-extrabold max-w-2xl leading-snug">
+              {catchUp.summary}
+            </p>
+          </div>
+          <button
+            onClick={() => setShowCatchUpModal(true)}
+            className="shrink-0 px-6 py-3 bg-white text-pink-600 hover:scale-105 hover:shadow-lg transition text-xs font-black rounded-full uppercase tracking-wider cursor-pointer border-none"
+          >
+            View Missed Updates ➔
+          </button>
+        </motion.div>
+      )}
+
+      {/* 2. Catch-up Modal */}
+      {showCatchUpModal && catchUp && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-fadeIn">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full space-y-6 shadow-2xl relative">
+            <button 
+              onClick={() => setShowCatchUpModal(false)}
+              className="absolute top-4 right-4 text-zinc-400 hover:text-zinc-700 text-lg cursor-pointer border-none bg-transparent"
+            >
+              ✕
+            </button>
+            <div className="space-y-2">
+              <span className="text-xs font-black text-fuchsia-600 uppercase tracking-wider block">Missed Briefings</span>
+              <h3 className="text-2xl font-black text-zinc-950">You missed {catchUp.missedUpdates} important updates</h3>
+            </div>
+            
+            <div className="space-y-3 max-h-60 overflow-y-auto pr-2 scrollbar-none">
+              {catchUp.stories.map((story) => (
+                <div key={story.storyId} className="p-4 rounded-2xl bg-zinc-50 border border-zinc-150 flex flex-col gap-1">
+                  <span className="text-[10px] font-black text-pink-600 uppercase tracking-wider">{story.category}</span>
+                  <h4 className="text-sm font-extrabold text-zinc-900">{story.title}</h4>
+                  <p className="text-xs text-zinc-600 leading-relaxed mt-1">{story.summary}</p>
+                </div>
+              ))}
+            </div>
+
+            <button
+              onClick={() => {
+                setShowCatchUpModal(false);
+                // Play first story
+                if (catchUp.stories[0]) onPlayStory(catchUp.stories[0].storyId);
+              }}
+              className="w-full py-3 bg-gradient-to-r from-fuchsia-600 to-pink-500 hover:brightness-110 text-white rounded-full font-black uppercase tracking-wider transition cursor-pointer border-none text-center block text-xs"
+            >
+              Play Missed Stories 🎧
+            </button>
+          </div>
+        </div>
+      )}
+
+      <div className="flex gap-4 flex-wrap">
+        <button
+          onClick={() => setShowGame(!showGame)}
+          className="px-5 py-2.5 bg-white border border-zinc-300 hover:border-[#E11D48]/45 hover:text-[#E11D48] text-zinc-700 text-xs font-black rounded-full uppercase tracking-wider cursor-pointer shadow-sm flex items-center gap-2"
+        >
+          🎮 {showGame ? 'Hide Challenge' : 'Daily News Challenge'}
+        </button>
+      </div>
+
+      {showGame && challenge && (
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="p-6 bg-white rounded-3xl border border-zinc-200 shadow-md space-y-6"
+        >
+          <div className="flex items-center justify-between border-b border-zinc-200/80 pb-4">
+            <div>
+              <span className="text-[10px] font-black text-amber-600 uppercase tracking-wider block">Daily Challenge</span>
+              <h3 className="text-xl font-black text-zinc-950">Daily News Challenge</h3>
+            </div>
+            {challengeResult && (
+              <div className="flex gap-2">
+                <span className="px-3 py-1 bg-amber-100 text-amber-800 text-[10px] font-black rounded-full">🔥 Streak: {challengeResult.streak}</span>
+                {challengeResult.newBadges.map(b => (
+                  <span key={b} className="px-3 py-1 bg-emerald-100 text-emerald-800 text-[10px] font-black rounded-full">🏅 Badge: {b}</span>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {!challengeResult ? (
+            <div className="space-y-6">
+              {challenge.questions.map((q, idx) => (
+                <div key={q.id} className="space-y-2.5">
+                  <h4 className="text-sm font-extrabold text-zinc-800">{idx + 1}. {q.question}</h4>
+                  <div className="grid grid-cols-2 gap-3">
+                    {q.options.map((opt) => (
+                      <button
+                        key={opt.id}
+                        onClick={() => setChallengeAnswers(prev => ({ ...prev, [q.id]: opt.id }))}
+                        className={`p-3.5 rounded-xl border text-left text-xs font-semibold transition ${
+                          challengeAnswers[q.id] === opt.id
+                            ? 'bg-[#E11D48]/10 border-[#E11D48] text-[#E11D48]'
+                            : 'bg-zinc-50 border-zinc-200 text-zinc-600 hover:bg-zinc-100/50'
+                        }`}
+                      >
+                        {opt.text}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+
+              {/* Prediction question */}
+              <div className="space-y-2.5 pt-4 border-t border-zinc-200/80">
+                <span className="text-[10px] font-black text-[#E11D48] uppercase tracking-wider block">Bonus Prediction</span>
+                <h4 className="text-sm font-extrabold text-zinc-800">{challenge.prediction.question}</h4>
+                <div className="grid grid-cols-2 gap-3">
+                  {challenge.prediction.options.map((opt) => (
+                    <button
+                      key={opt.id}
+                      onClick={() => setChallengePrediction(opt.id)}
+                      className={`p-3.5 rounded-xl border text-left text-xs font-semibold transition ${
+                        challengePrediction === opt.id
+                          ? 'bg-[#E11D48]/10 border-[#E11D48] text-[#E11D48]'
+                          : 'bg-zinc-50 border-zinc-200 text-zinc-600 hover:bg-zinc-100/50'
+                      }`}
+                    >
+                      {opt.text}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <button
+                onClick={submitChallenge}
+                disabled={Object.keys(challengeAnswers).length < challenge.questions.length || !challengePrediction}
+                className="w-full py-3 bg-[#E11D48] hover:bg-[#F43F5E] disabled:bg-zinc-200 disabled:text-zinc-400 disabled:cursor-not-allowed text-white rounded-full font-black uppercase tracking-wider transition cursor-pointer border-none text-xs"
+              >
+                Submit Answers ➔
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-4 animate-fadeIn">
+              <div className="p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-center">
+                <span className="text-3xl block">🎉</span>
+                <h4 className="text-base font-black text-emerald-800 mt-2">Challenge Completed!</h4>
+                <p className="text-xs text-emerald-700 font-bold mt-1">You got {challengeResult.correctCount} / 3 trivia questions correct.</p>
+              </div>
+              
+              {challengeResult.allBadges && challengeResult.allBadges.length > 0 && (
+                <div className="space-y-2">
+                  <span className="text-[10px] font-black text-zinc-400 uppercase tracking-widest block">Your Badges:</span>
+                  <div className="flex flex-wrap gap-2">
+                    {challengeResult.allBadges.map((badge) => (
+                      <span key={badge} className="px-4 py-2 bg-gradient-to-tr from-amber-500 to-orange-600 text-white text-[11px] font-extrabold rounded-xl shadow-sm">
+                        🏅 {badge}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <button
+                onClick={() => { setChallengeResult(null); setChallengeAnswers({}); setChallengePrediction(null); }}
+                className="w-full py-3 bg-zinc-100 hover:bg-zinc-200 text-zinc-700 rounded-full font-black uppercase tracking-wider transition cursor-pointer border-none text-xs"
+              >
+                Play Again Tomorrow
+              </button>
+            </div>
+          )}
+        </motion.div>
+      )}
+
+      {/* 4. Developing Stories Timeline shelf */}
+      {followedTopics.length > 0 && (
+        <div className="space-y-4">
+          <h3 className="text-sm font-black text-zinc-450 uppercase tracking-widest">Followed Stories</h3>
+          <div className="flex gap-3 overflow-x-auto scrollbar-none pb-2">
+            {followedTopics.map((topic) => (
+              <button
+                key={topic}
+                onClick={() => showTopicTimeline(topic)}
+                className={`px-4 py-2 bg-white border rounded-full text-xs font-extrabold transition cursor-pointer shadow-sm ${
+                  timelineTopic === topic ? 'border-[#E11D48] text-[#E11D48]' : 'border-zinc-200 text-zinc-700 hover:border-[#E11D48]/40'
+                }`}
+              >
+                🔴 {topic} Timeline
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Timeline Side modal/panel */}
+      {timelineTopic && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-end z-50 animate-fadeIn">
+          <motion.div 
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            className="bg-white w-full max-w-md h-full p-6 sm:p-8 flex flex-col justify-between shadow-2xl relative"
+          >
+            <button 
+              onClick={() => setTimelineTopic(null)}
+              className="absolute top-4 right-4 text-zinc-400 hover:text-zinc-800 text-lg cursor-pointer border-none bg-transparent"
+            >
+              ✕
+            </button>
+            <div className="flex-1 flex flex-col min-h-0">
+              <div className="space-y-1 pb-4 border-b border-zinc-200/80">
+                <span className="text-xs font-black text-[#E11D48] uppercase tracking-wider block">Developing Story Timeline</span>
+                <h3 className="text-2xl font-black text-zinc-950">{timelineTopic} Updates</h3>
+              </div>
+              
+              <div className="flex-1 overflow-y-auto scrollbar-none py-6 space-y-6 min-h-0">
+                {timelineData.length > 0 ? (
+                  timelineData.map((item, index) => (
+                    <div key={item.storyId} className="relative pl-6 border-l-2 border-zinc-200 flex flex-col gap-1.5 group cursor-pointer" onClick={() => { setTimelineTopic(null); onPlayStory(item.storyId); }}>
+                      <div className="absolute left-[-5px] top-1.5 w-2 h-2 rounded-full bg-[#E11D48] ring-4 ring-[#E11D48]/10 transition-transform group-hover:scale-125" />
+                      <span className="text-[10px] font-black text-zinc-400">{item.date}</span>
+                      <h4 className="text-sm font-extrabold text-zinc-900 group-hover:text-[#E11D48] transition-colors">{item.title}</h4>
+                      <p className="text-xs text-zinc-500 leading-relaxed">{item.summary}</p>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-xs font-bold text-zinc-400">Loading timeline...</p>
+                )}
+              </div>
+            </div>
+            
+            <button
+              onClick={() => setTimelineTopic(null)}
+              className="w-full py-3 bg-zinc-100 hover:bg-zinc-200 text-zinc-700 rounded-full font-black uppercase tracking-wider transition cursor-pointer border-none text-xs"
+            >
+              Close Timeline
+            </button>
+          </motion.div>
+        </div>
+      )}
+
       {/* Featured Banner (Hero Section styled exactly like Pocket FM screenshot in light mode) */}
       {featuredDrama.id && (
         <div className="relative overflow-hidden rounded-3xl bg-white/60 backdrop-blur-md border border-white/50 shadow-md min-h-[380px] flex items-center group w-full">
