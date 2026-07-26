@@ -212,37 +212,6 @@ export default function ProfileTab({ user, token, onProfileUpdate, onLogout }) {
           className="lg:col-span-2 space-y-6"
         >
           
-          {/* Section A: Preferred Language */}
-          <div className="bg-white/60 backdrop-blur-md border border-white/50 rounded-3xl p-6 shadow-md space-y-5">
-            <div>
-              <h3 className="text-sm font-black text-zinc-900 uppercase tracking-wider flex items-center gap-2">
-                <span>🌐</span> Choose Audio Language
-              </h3>
-              <p className="text-xs text-zinc-500 font-semibold mt-1">
-                Select your preferred default language for all audio podcast narrations and visual subtitles.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-              {languages.map((lang) => (
-                <button
-                  key={lang.name}
-                  onClick={() => setLanguage(lang.name)}
-                  className={`px-4 py-3 rounded-2xl border text-left transition-all duration-250 cursor-pointer flex flex-col justify-center ${
-                    language === lang.name
-                      ? 'bg-[#E11D48] border-transparent text-white shadow-md'
-                      : 'bg-zinc-50 border-zinc-200 text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900'
-                  }`}
-                >
-                  <span className="text-xs font-black">{lang.name}</span>
-                  <span className={`text-[9px] font-bold mt-0.5 ${language === lang.name ? 'text-zinc-100' : 'text-zinc-400'}`}>
-                    {lang.desc}
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
-
           {/* Section B: Topic Personalization */}
           <div className="bg-white/60 backdrop-blur-md border border-white/50 rounded-3xl p-6 shadow-md space-y-6">
             <div>

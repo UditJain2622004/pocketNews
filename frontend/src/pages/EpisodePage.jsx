@@ -21,6 +21,11 @@ const mediaUrl = (runId, path) => {
 const getScriptName = (path) => path.split('/').pop()
 const getScriptStem = (path) => getScriptName(path).replace(/\.json$/, '')
 
+const SUPPORTED_LANGUAGES = [
+  'English', 'Hindi', 'Marathi', 'Bengali', 'Kannada', 'Tamil',
+  'Spanish', 'Mandarin', 'German', 'French', 'Japanese'
+]
+
 export default function EpisodePage({ episodeId, token }) {
   const audioRef = useRef(null)
   const [stories, setStories] = useState([])
@@ -36,6 +41,48 @@ export default function EpisodePage({ episodeId, token }) {
   const sentEventsRef = useRef(new Set())
   const completedStoriesRef = useRef(new Set())
 
+  const [currentLanguage, setCurrentLanguage] = useState(null)
+  const [showLangDropdown, setShowLangDropdown] = useState(false)
+  const [localizedStatus, setLocalizedStatus] = useState('canonical')
+  const [refreshCounter, setRefreshCounter] = useState(0)
+  const dropdownRef = useRef(null)
+
+  // Close dropdown on click outside
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setShowLangDropdown(false)
+      }
+    }
+    document.addEventListener('mousedown', handleOutsideClick)
+    return () => document.removeEventListener('mousedown', handleOutsideClick)
+  }, [])
+
+  // Poll for translation status if fallback is active
+  useEffect(() => {
+    if (localizedStatus !== 'canonical_fallback' || !token || !currentLanguage) return
+    let active = true
+    const interval = setInterval(async () => {
+      try {
+        const url = `${API_BASE}/api/episodes/${encodeURIComponent(episodeId)}/playback?language=${encodeURIComponent(currentLanguage)}`
+        const response = await fetch(url, { headers: { Authorization: `Bearer ${token}` } })
+        if (response.ok) {
+          const playback = await response.json()
+          if (!active) return
+          if (playback.localizedStatus === 'ready') {
+            setRefreshCounter((c) => c + 1)
+          }
+        }
+      } catch (err) {
+        console.error('Failed to poll episode playback status:', err)
+      }
+    }, 5000)
+    return () => {
+      active = false
+      clearInterval(interval)
+    }
+  }, [episodeId, token, currentLanguage, localizedStatus])
+
   useEffect(() => {
     let active = true
     const loadEpisode = async () => {
@@ -45,11 +92,18 @@ export default function EpisodePage({ episodeId, token }) {
         let runId = episodeId
         let manifest
         if (token) {
-          const playbackResponse = await fetch(`${API_BASE}/api/episodes/${encodeURIComponent(episodeId)}/playback`, { headers: { Authorization: `Bearer ${token}` } })
+          const url = `${API_BASE}/api/episodes/${encodeURIComponent(episodeId)}/playback` +
+            (currentLanguage ? `?language=${encodeURIComponent(currentLanguage)}` : '')
+          const playbackResponse = await fetch(url, { headers: { Authorization: `Bearer ${token}` } })
           if (playbackResponse.ok) {
             const playback = await playbackResponse.json()
             runId = playback.runId
             manifest = { scripts: playback.scripts || [] }
+            
+            if (!currentLanguage && playback.requestedLanguage) {
+              setCurrentLanguage(playback.requestedLanguage)
+            }
+            setLocalizedStatus(playback.localizedStatus || 'canonical')
           }
         }
         if (!manifest) {
@@ -88,9 +142,27 @@ export default function EpisodePage({ episodeId, token }) {
         }
         if (!active) return
         setStories(playableStories)
-        setStoryIndex(0)
-        setTrackIndex(0)
-        setElapsed(0)
+        
+        // Preserve storyIndex and trackIndex across language reloads, recalculating elapsed time
+        setStoryIndex((prevStoryIdx) => {
+          const nextStoryIdx = prevStoryIdx < playableStories.length ? prevStoryIdx : 0
+          setTrackIndex((prevTrackIdx) => {
+            const nextStory = playableStories[nextStoryIdx]
+            const nextTrackIdx = nextStory && prevTrackIdx < nextStory.tracks.length ? prevTrackIdx : 0
+            
+            const elapsedBeforeStories = playableStories
+              .slice(0, nextStoryIdx)
+              .flatMap((story) => story.tracks)
+              .reduce((sum, track) => sum + track.duration, 0)
+            const elapsedInStory = nextStory
+              ? nextStory.tracks.slice(0, nextTrackIdx).reduce((sum, track) => sum + track.duration, 0)
+              : 0
+            setElapsed(elapsedBeforeStories + elapsedInStory)
+            
+            return nextTrackIdx
+          })
+          return nextStoryIdx
+        })
         setPlaybackTime(0)
       } catch (loadError) {
         if (active) setError(loadError.message || 'Episode assets could not be loaded.')
@@ -100,7 +172,7 @@ export default function EpisodePage({ episodeId, token }) {
     }
     loadEpisode()
     return () => { active = false }
-  }, [episodeId, token])
+  }, [episodeId, token, currentLanguage, refreshCounter])
 
   const currentStory = stories[storyIndex]
   const currentTrack = currentStory?.tracks[trackIndex]
@@ -242,7 +314,39 @@ export default function EpisodePage({ episodeId, token }) {
           <span className="text-[15px] font-extrabold tracking-tight text-zinc-900">StoryCast <span className="text-[#E11D48]">AI</span></span>
         </a>
         <div className="flex items-center gap-4 text-sm text-zinc-500">
-          {/* <span className="hidden sm:block">Episode {episodeId}</span> */}
+          {token && (
+            <div className="relative" ref={dropdownRef}>
+              <button
+                type="button"
+                onClick={() => setShowLangDropdown(!showLangDropdown)}
+                className="flex items-center gap-2 rounded-full border border-zinc-300/80 bg-white/50 px-4 py-2 font-bold text-zinc-700 shadow-sm transition hover:border-[#E11D48]/50 hover:text-[#E11D48] cursor-pointer"
+              >
+                <span>🌐 {currentLanguage || 'English'}</span>
+                <span className="text-[10px] text-zinc-400">▼</span>
+              </button>
+              {showLangDropdown && (
+                <div className="absolute right-0 mt-2 w-48 rounded-2xl border border-zinc-200 bg-white/95 p-2 shadow-xl backdrop-blur-md z-50 max-h-60 overflow-y-auto">
+                  {SUPPORTED_LANGUAGES.map((lang) => (
+                    <button
+                      key={lang}
+                      type="button"
+                      onClick={() => {
+                        setCurrentLanguage(lang)
+                        setShowLangDropdown(false)
+                      }}
+                      className={`w-full text-left px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                        currentLanguage === lang
+                          ? 'bg-[#E11D48] text-white'
+                          : 'text-zinc-700 hover:bg-zinc-100'
+                      }`}
+                    >
+                      {lang}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
           <a href="/" className="rounded-full border border-zinc-300/80 bg-white/50 px-4 py-2 font-bold text-zinc-700 shadow-sm transition hover:border-[#E11D48]/50 hover:text-[#E11D48]">Back to library</a>
         </div>
       </header>
@@ -256,6 +360,22 @@ export default function EpisodePage({ episodeId, token }) {
             </div>
             <p className="text-sm font-semibold text-zinc-500">A cinematic audio story</p>
           </div>
+
+          {localizedStatus === 'canonical_fallback' && (
+            <div className="mb-4 flex items-center justify-between gap-3 rounded-2xl border border-amber-200 bg-amber-50/80 px-4 py-3 text-xs font-bold text-amber-800 shadow-sm backdrop-blur-sm">
+              <div className="flex items-center gap-2">
+                <span className="animate-spin text-sm">⏳</span>
+                <span>Translating episode to {currentLanguage || 'selected language'}... playing English audio meanwhile.</span>
+              </div>
+              <button 
+                type="button"
+                onClick={() => setRefreshCounter((c) => c + 1)}
+                className="text-[10px] font-black uppercase tracking-wider text-amber-950 underline hover:no-underline cursor-pointer"
+              >
+                Check Status
+              </button>
+            </div>
+          )}
 
           <section className="relative aspect-[1.16/1] min-h-[22rem] overflow-hidden rounded-[1.6rem] border border-white/70 bg-zinc-950 shadow-lg sm:aspect-[1.5/1] lg:aspect-auto lg:min-h-0 lg:flex-1">
             {displayImage && <img src={displayImage} alt="Story scene" className="absolute inset-0 h-full w-full object-contain opacity-90" />}

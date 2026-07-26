@@ -1,4 +1,4 @@
-﻿import os
+import os
 import sys
 from pathlib import Path
 from typing import List, Literal, Optional
@@ -274,19 +274,32 @@ def get_dashboard_episodes(user_id: str = Depends(get_current_user_id)) -> dict[
 
 
 @app.get("/api/episodes/{episode_id}/playback")
-def get_published_episode_playback(episode_id: str, background_tasks: BackgroundTasks, user_id: str = Depends(get_current_user_id)) -> dict[str, object]:
+def get_published_episode_playback(
+    episode_id: str,
+    background_tasks: BackgroundTasks,
+    language: Optional[str] = Query(None),
+    user_id: str = Depends(get_current_user_id)
+) -> dict[str, object]:
     if db is None:
         raise HTTPException(status_code=503, detail="Database connection is unavailable.")
     user = db.users.find_one({"_id": ObjectId(user_id)})
     if not user:
         raise HTTPException(status_code=404, detail="User was not found.")
+    
+    # If a language query parameter is provided, use it and persist it in user's profile
+    if language and language != user.get("language"):
+        db.users.update_one({"_id": ObjectId(user_id)}, {"$set": {"language": language}})
+        profile_language = language
+    else:
+        profile_language = str(user.get("language") or "English")
+
     scores = get_learned_scores(db, user_id)
     episode = episode_playback(
         episode_id, user.get("topics", []), user.get("subtopics", []), scores
     )
     if episode is None:
         raise HTTPException(status_code=404, detail="Published episode was not found.")
-    profile_language = str(user.get("language") or "English")
+    
     locale = locale_for_language(profile_language)
     localized = episode.get("localizedRuns", {}).get(locale) if isinstance(episode.get("localizedRuns"), dict) else None
     if locale != "en-IN" and isinstance(localized, dict) and localized.get("status") == "ready":
