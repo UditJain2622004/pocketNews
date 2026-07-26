@@ -16,6 +16,9 @@ def test_current_modes_are_discovered_in_original_order():
         "two-person-banter",
         "dramatized-pov",
         "mix",
+        "group-chat-meltdown",
+        "fourth-wall",
+        "game-show-round",
     )
     assert supported_story_formats() == tuple(mode.id for mode in discovered_modes())
     assert [story_format_for_index(index) for index in range(4)] == [
