@@ -243,7 +243,7 @@ export default function HomeTab({ onPlayStory, user, onTabChange, storiesList = 
                   {featuredDrama.tag}
                 </span>
                 <span className="text-xs font-bold text-black/10 uppercase tracking-widest mt-2 select-none">
-                  StoryCast Original Broadcast
+                  Pocket News Original Broadcast
                 </span>
               </div>
             </div>

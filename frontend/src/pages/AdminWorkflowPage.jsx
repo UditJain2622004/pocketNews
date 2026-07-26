@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { API_BASE } from '../api'
 
-const CATEGORIES = ['technology', 'sports', 'business', 'entertainment', 'science', 'lifestyle']
+const CATEGORIES = ['technology', 'sports', 'business', 'entertainment', 'science', 'lifestyle', 'politics']
 
 export default function AdminWorkflowPage() {
   const [form, setForm] = useState({ mode: 'full', generateImages: true, generateAudio: true, threeImagesPerStory: false, storyFormat: 'mix', castMode: 'auto', visualStyle: 'animated', language: 'en-IN', maxArticlesPerCategory: 1, maxTotalStories: 6 })
@@ -34,7 +34,7 @@ export default function AdminWorkflowPage() {
 
   return <main className="min-h-screen bg-[#08090b] px-5 py-10 text-white sm:px-10">
     <div className="mx-auto max-w-2xl">
-      <a href="/" className="text-sm font-bold text-fuchsia-300">Back to StoryCast</a>
+      <a href="/" className="text-sm font-bold text-fuchsia-300">Back to Pocket News</a>
       <h1 className="mt-8 text-4xl font-black">Daily workflow</h1>
       <p className="mt-2 text-white/55">Fetch, curate, and publish one canonical daily episode run.</p>
 

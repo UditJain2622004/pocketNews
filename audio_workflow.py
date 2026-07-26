@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import hashlib
+import io
 import json
 import os
 from pathlib import Path
@@ -11,6 +12,7 @@ import struct
 from typing import Any
 import wave
 
+from pydub import AudioSegment
 from audio_generator import AUDIO_MODEL, AUDIO_VOICES, generate_story_line
 
 
@@ -126,6 +128,7 @@ def _prepare_script_audio(
     failures: list[dict[str, str]] = []
     clips_generated = 0
     clips_reused = 0
+    story_duration_ms = 0
 
     for beat in beats:
         if not isinstance(beat, dict):
@@ -152,7 +155,9 @@ def _prepare_script_audio(
             previous = previous_clips.get(clip_id, {})
             if previous.get("lineHash") == line_hash and clip_path.is_file():
                 clips_reused += 1
-                clips.append(_clip_record(run_id, clip_id, beat_id, line_index, speaker, clip_path, line_hash))
+                record = _clip_record(run_id, clip_id, beat_id, line_index, speaker, clip_path, line_hash)
+                clips.append(record)
+                story_duration_ms += int(record.get("durationSeconds", 0.0) * 1000)
                 continue
 
             cast_member = next((item for item in cast if isinstance(item, dict) and item.get("id") == speaker), {})
@@ -165,10 +170,18 @@ def _prepare_script_audio(
                     language,
                     story_context,
                 )
+                
+                # Dynamic Background Music Mixing
+                category = str(story.get("category") or story.get("classification", {}).get("category") or "lifestyle")
+                audio_bytes = _mix_background_music(audio_bytes, category, story_duration_ms)
+
                 clip_path.parent.mkdir(parents=True, exist_ok=True)
                 clip_path.write_bytes(audio_bytes)
                 clips_generated += 1
-                clips.append(_clip_record(run_id, clip_id, beat_id, line_index, speaker, clip_path, line_hash))
+                
+                record = _clip_record(run_id, clip_id, beat_id, line_index, speaker, clip_path, line_hash)
+                clips.append(record)
+                story_duration_ms += int(record.get("durationSeconds", 0.0) * 1000)
             except Exception as error:
                 failures.append(
                     {
@@ -338,3 +351,54 @@ def _safe_filename(value: str) -> str:
 
 def _relative(path: Path) -> str:
     return path.relative_to(BASE_DIR).as_posix()
+
+
+_MUSIC_CACHE: dict[str, AudioSegment] = {}
+
+CATEGORY_MUSIC_MAP = {
+    "technology": "tech_ambient.mp3",
+    "sports": "upbeat_groove.mp3",
+    "entertainment": "upbeat_groove.mp3",
+    "politics": "corporate_drone.mp3",
+    "business": "corporate_drone.mp3",
+    "science": "science_space.mp3",
+    "lifestyle": "lofi_relax.mp3",
+}
+
+
+def _mix_background_music(speech_bytes: bytes, category: str, offset_ms: int) -> bytes:
+    music_dir = Path("d:/2026/PocketNews/music")
+    music_file = CATEGORY_MUSIC_MAP.get(category.lower(), "lofi_relax.mp3")
+    music_path = music_dir / music_file
+
+    if not music_path.is_file():
+        return speech_bytes
+
+    try:
+        speech_segment = AudioSegment.from_file(io.BytesIO(speech_bytes), format="wav")
+        speech_len_ms = len(speech_segment)
+
+        path_str = str(music_path)
+        if path_str not in _MUSIC_CACHE:
+            _MUSIC_CACHE[path_str] = AudioSegment.from_file(music_path, format="mp3")
+
+        music_segment = _MUSIC_CACHE[path_str]
+        music_len_ms = len(music_segment)
+
+        start_pos = offset_ms % music_len_ms
+        end_pos = start_pos + speech_len_ms
+
+        music_slice = music_segment[start_pos:end_pos]
+        if len(music_slice) < speech_len_ms:
+            music_slice += music_segment[0:(speech_len_ms - len(music_slice))]
+
+        music_slice = music_slice - 24
+
+        mixed = music_slice.overlay(speech_segment)
+
+        out_buf = io.BytesIO()
+        mixed.export(out_buf, format="wav")
+        return out_buf.getvalue()
+    except Exception as e:
+        print(f"Warning: Background music mix failed: {e}")
+        return speech_bytes

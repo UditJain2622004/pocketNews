@@ -16,7 +16,7 @@ from story_generator import MODEL
 
 BASE_DIR = Path(__file__).resolve().parent
 SCRIPTS_DIR = BASE_DIR / "scripts"
-LANGUAGE_LOCALES = {"english": "en-IN", "hindi": "hi-IN", "marathi": "mr-IN", "bengali": "bn-IN", "tamil": "ta-IN", "kannada": "kn-IN", "spanish": "es-ES", "mandarin": "zh-CN", "german": "de-DE", "french": "fr-FR", "japanese": "ja-JP"}
+LANGUAGE_LOCALES = {"english": "en-IN", "hindi": "hi-IN", "marathi": "mr-IN", "bengali": "bn-IN", "tamil": "ta-IN", "kannada": "kn-IN", "spanish": "es-ES", "mandarin": "zh-CN", "german": "de-DE", "french": "fr-FR", "japanese": "ja-JP", "bhojpuri": "bho-IN"}
 
 
 def locale_for_language(language: str) -> str:

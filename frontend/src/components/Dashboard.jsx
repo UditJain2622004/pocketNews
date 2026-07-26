@@ -125,7 +125,7 @@ export default function Dashboard({
       <header className="md:hidden sticky top-0 z-50 bg-white/70 backdrop-blur-lg border-b border-white/40 p-4 flex items-center justify-between shadow-sm">
         <div className="flex items-center gap-2">
           <img src="/logo.png" className="w-8 h-8 object-contain rounded-lg bg-white/90 border border-white/50" alt="Logo" />
-          <span className="text-sm font-black text-zinc-850 tracking-tight">StoryCast AI</span>
+          <span className="text-sm font-black text-zinc-850 tracking-tight">Pocket News</span>
         </div>
         <div className="flex items-center gap-3">
           {user && (
