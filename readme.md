@@ -1,21 +1,28 @@
 # Pocket News - Cinematic News Engine
 
-Pocket News is an automated daily podcast and news brief generator.
+Pocket News is an automated daily podcast and news brief generator that transforms flat news feeds into highly engaging, multi-sensory, and interactive audio-visual experiences.
 
 ---
 
 ### 🔴 The Problem
-Traditional news feeds are dry, text-heavy, and passive. They struggle to engage modern, audio-first audiences, leading to rapid attention drop-offs.
+Traditional news feeds are dry, passive, and text-heavy. They struggle to hold the attention of modern, audio-first audiences, leading to low retention and engagement.
 
 ### 🟢 The Solution
-Pocket News curates daily headlines and morphs them into personalized, multi-character cinematic audio podcasts that keep listeners engaged.
+Pocket News curates daily headlines and morphs them into highly personalized, multi-character cinematic audio dramas accompanied by AI-generated scenes, dynamic soundscapes, and on-demand interactive features.
 
-### 🌟 Feature Highlights
-* **Cinematic Scripts:** Converts headlines into multi-character audio dialogues with custom pacing.
-* **Indian-Tuned Voices:** Integrates Sarvam AI (Arjun, Meera, Shreya, etc.) for natural Indian-accented narration, with OpenAI audio fallback.
-* **Dynamic Background Music:** Mixes category-specific background loops (e.g. upbeat for Sports, drone for Politics, synthwave for Tech) into dialogue WAV files at offset-aligned generation time.
-* **On-Demand Translations:** Translate scripts and voices on-the-fly into English, Hindi, Bhojpuri, Marathi, Bengali, Tamil, Kannada, Spanish, French, German, or Japanese.
-* **Interactive Player:** Minimalist glassmorphism web interface featuring subtitles and a custom playback queue.
+---
+
+### 🌟 Key Feature Highlights
+
+* **Cinematic Story Generation:** Turns raw headlines into multi-character audio dialogues with natural pacing and distinct voice personalities.
+* **Indian-Tuned Voice Cast:** Integrates Sarvam AI TTS (Arjun, Meera, Shreya, Shubh, Manan, Ishita) for authentic Indian-accented narration, with OpenAI audio fallback.
+* **Dynamic Background Music:** Automatically overlays category-matched background loops (e.g. synthwave for Tech, upbeat for Sports, corporate drone for Politics) into narration clips at offset-aligned generation time.
+* **Interactive AI Q&A ("Ask AI"):** An on-page Q&A sidebar that lets users ask custom questions about the current story and get real-time answers.
+* **Personalized Curiosity Paths:** Lets listeners choose their depth of understanding for any story by selecting a path: *60s Summary*, *Why it matters*, *Critique (Opposite Perspective)*, or *Next Update*.
+* **Chronological Event Timelines:** Reconstructs and visualizes dates and key progression events for each news story in a sleek visual timeline.
+* **Prediction Challenges & Impact Polls:** Displays interactive pop-ups over the story image, letting users vote or predict outcomes to test their knowledge.
+* **Engagement Reactions:** Listeners can react to stories (Useful 👍, Surprising 😮, Context 🤔, Disagree 👎) during playback.
+* **On-Demand Translations:** Translate scripts and voices instantly into English, Hindi, Bhojpuri, Marathi, Bengali, Tamil, Kannada, Spanish, French, German, or Japanese.
 
 ---
 
