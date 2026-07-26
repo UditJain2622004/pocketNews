@@ -2,11 +2,14 @@
 from __future__ import annotations
 
 from collections import defaultdict
+import logging
 import re
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from news_adapter import NewsArticle
+
+logger = logging.getLogger(__name__)
 
 
 def select_story_candidates(
@@ -16,6 +19,7 @@ def select_story_candidates(
 ) -> tuple[list[tuple[int, "NewsArticle", object]], dict[str, object]]:
     """Keep one strong representative for repeated coverage, then apply fair caps."""
     if max_articles_per_category is None and max_total_stories is None:
+        _log_selected_articles(jobs)
         return jobs, _selection_report(jobs, jobs, 0, 0, max_articles_per_category, max_total_stories)
 
     grouped: dict[str, list[tuple[int, NewsArticle, object]]] = defaultdict(list)
@@ -45,9 +49,21 @@ def select_story_candidates(
     }
     selected = _round_robin(candidates, max_total_stories)
     selected.sort(key=lambda item: item[0])
+    _log_selected_articles(selected)
     return selected, _selection_report(
         jobs, selected, duplicate_ids, clustered_articles, max_articles_per_category, max_total_stories
     )
+
+
+def _log_selected_articles(selected: list[tuple[int, "NewsArticle", object]]) -> None:
+    logger.info("Editorial selection chose %s article(s).", len(selected))
+    for _, article, source_file in selected:
+        logger.info(
+            "Selected article | category=%s | title=%s | url=%s",
+            getattr(source_file, "stem", "uncategorized"),
+            article.title,
+            article.url,
+        )
 
 
 def _round_robin(grouped: dict[str, list[tuple[int, "NewsArticle", object]]], limit: int | None) -> list[tuple[int, "NewsArticle", object]]:
