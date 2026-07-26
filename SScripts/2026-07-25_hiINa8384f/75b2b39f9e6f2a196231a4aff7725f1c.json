@@ -1,0 +1,236 @@
+{
+  "article": {
+    "id": "75b2b39f9e6f2a196231a4aff7725f1c",
+    "title": "Education minister concedes to 'Cockroach' demands, resigns - DW.com",
+    "summary": "Education minister concedes to 'Cockroach' demands, resigns DW.com",
+    "full_text": "To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video India’s Education Minister Dharmendra Pradhan resigned after nationwide youth-led protests over alleged irregularities in major exams. Demonstrators organised by the social media-driven Cockroach Janta Party (CJP) demanded education reforms, compensation for affected students and the withdrawal of cases against protesters. After renewed talks, the government accepted the group’s demands, prompting CJP to end the demonstrations. The protests became one of the most significant challenges to Prime Minister Narendra Modi’s administration since his 2024 re-election.",
+    "url": "https://www.dw.com/en/education-minister-concedes-to-cockroach-demands-resigns/video-78113911",
+    "language": "english",
+    "categories": [
+      "politics"
+    ],
+    "published_at": null,
+    "source_name": "dw.com"
+  },
+  "sourceFile": "news/daily/2026-07-25/politics.json",
+  "story": {
+    "title": "The Barricade Comes Down",
+    "skipLabel": "Education minister resigns after Cockroach demands are accepted",
+    "classification": {
+      "category": "Politics",
+      "subcategories": [
+        "Government",
+        "Policy & Laws"
+      ]
+    },
+    "creativeDirection": {
+      "genre": "tense emotional drama",
+      "dramaticPremise": "Two young protesters must decide whether to keep holding a barricade or end their demonstration after the government accepts the Cockroach Janta Party's demands and the Education Minister resigns.",
+      "selectedFormat": "two-person-banter",
+      "performanceMode": "character-dialogue",
+      "castMode": "story_duo",
+      "visualStyle": "animated"
+    },
+    "dramaticSpine": {
+      "characterGoal": "Asha wants to keep the protest barricade standing until every student believes the demands are real; Kabir wants to lower it and let the exhausted crowd go home.",
+      "obstacle": "They disagree over whether accepting the demands is enough to stop protesting.",
+      "newsCatalyst": "The government accepts the Cockroach Janta Party's demands after renewed talks, and Education Minister Dharmendra Pradhan resigns following nationwide youth-led protests over alleged exam irregularities.",
+      "reversal": "Kabir receives confirmation that the demands include education reforms, compensation for affected students, and withdrawal of cases against protesters.",
+      "costOfFailure": "If they refuse to end the demonstration, the group breaks its commitment; if they leave too quickly, Asha fears students will be forgotten again.",
+      "emotionalTurn": "Asha realises ending the protest can be a deliberate choice rather than surrender.",
+      "resolution": "They lower the barricade together and leave one handmade sign standing as the crowd disperses."
+    },
+    "visualBible": {
+      "setting": "A fictional city protest barricade outside a government education office, shown as one continuous animated-film scene with a narrow street, bundled placards, discarded water bottles, and a shuttered gate.",
+      "colorAndLighting": "Muted blue-grey daylight with saffron, teal, and crimson accents on clothing and placards; lighting shifts from tense hard side-light to softer sunlight as the barricade comes down.",
+      "recurringProps": [
+        "bent metal barricade",
+        "Asha's red cloth wristband",
+        "Kabir's cracked blue phone",
+        "rolled protest placards with indistinct markings"
+      ],
+      "storyArc": "The barricade begins upright between the students and the gate, becomes a physical point of argument, then lowers as both characters choose to end the demonstration together.",
+      "referenceImagePrompt": "Editorial animated-film frame of two fictional Indian university-age protesters together at a metal barricade outside a government education office: Asha in a mustard kurta with a red cloth wristband, Kabir in a faded blue hoodie holding a cracked blue phone, rolled placards and water bottles around them, tense blue-grey daylight, cinematic depth, open caption-safe upper-third space, no text, logos, or watermark.",
+      "referenceImagePath": "scripts/2026-07-25_hiINa8384f/images/politics/75b2b39f9e6f2a196231a4aff7725f1c/reference.png"
+    },
+    "cast": [
+      {
+        "id": "asha",
+        "role": "Student protest organiser",
+        "voiceProfile": "Warm but taut mezzo voice, quick deliberate pace, emotionally controlled at first; clipped interruptions and a dry edge under pressure, softening into relieved conviction by the ending; use a brief breath before difficult choices.",
+        "language": "Hindi",
+        "visualIdentity": "Young Indian woman in a mustard kurta, dark braid, red cloth wristband, scuffed trainers, carrying a folded placard."
+      },
+      {
+        "id": "kabir",
+        "role": "Student protest volunteer",
+        "voiceProfile": "Low youthful baritone with nervous energy, conversational pace, tiny laughs used to mask fatigue; starts frustrated and defensive, then becomes grounded and quietly hopeful; land the final line with a small exhale.",
+        "language": "Hindi",
+        "visualIdentity": "Young Indian man in a faded blue hoodie, canvas trousers, tired eyes, cracked blue phone in hand, one sleeve rolled up."
+      }
+    ],
+    "beats": [
+      {
+        "id": "title-cue",
+        "dramaticAction": "Asha grips the upright barricade as Kabir tries to pull it aside, and a phone call interrupts them.",
+        "turningPoint": "The resignation makes their argument immediate: the protest has forced a major political consequence, but neither knows whether to stop.",
+        "visual": {
+          "kind": "factual-visual",
+          "durationSeconds": 8,
+          "caption": "Education minister resigns after Cockroach demands are accepted",
+          "imagePrompt": "Editorial animated-film close two-shot: Asha grips a bent metal barricade while Kabir reaches to move it, his cracked blue phone vibrating in his hand, outside a government education office, blue-grey daylight, tense intimate mood, mustard kurta, red wristband, faded blue hoodie, rolled placards, open caption-safe upper-third space, no text, logos, or watermark",
+          "scenePrompt": "Continuous scene begins at the barricade; Kabir's phone vibrates and Asha blocks his movement.",
+          "continuityNotes": "Establish Asha, Kabir, barricade, phone, placards, and water bottles; keep the barricade upright for the next shot.",
+          "motion": "slow push-in",
+          "imagePath": "scripts/2026-07-25_hiINa8384f/images/politics/75b2b39f9e6f2a196231a4aff7725f1c/title-cue.png"
+        },
+        "lines": [
+          {
+            "speaker": "Asha",
+            "text": "तिलचट्टा विरोध प्रदर्शनों के बाद शिक्षा मंत्री धर्मेंद्र प्रधान ने इस्तीफ़ा दे दिया है। अभी उस बैरिकेड को मत हटाओ।"
+          },
+          {
+            "speaker": "Kabir",
+            "text": "आशा, यह कोई ट्रॉफी नहीं है। भीड़ इंतज़ार कर रही है।"
+          }
+        ]
+      },
+      {
+        "id": "hook",
+        "dramaticAction": "Kabir plants his shoulder against the barricade and tries to force a gap while Asha braces it with both hands.",
+        "turningPoint": "Kabir's attempt to leave is physically stopped, turning their disagreement into a choice the two must make together.",
+        "visual": {
+          "kind": "character-reaction",
+          "durationSeconds": 9,
+          "caption": "The protest's next move is personal",
+          "imagePrompt": "Editorial animated-film medium shot: Kabir leans hard into the metal barricade trying to open a gap, Asha braces it with both hands and blocks him, shuttered education office behind them, sharp side-light, anxious comic tension, recurring clothing and props visible, open caption-safe upper-third space, no text, logos, or watermark",
+          "scenePrompt": "The phone call continues off-screen as Kabir pushes and Asha holds the barricade fast.",
+          "continuityNotes": "Keep the phone in Kabir's right hand and the barricade at the same angle; advance by showing Kabir nearly opening a gap.",
+          "motion": "gentle pan",
+          "imagePath": "scripts/2026-07-25_hiINa8384f/images/politics/75b2b39f9e6f2a196231a4aff7725f1c/hook.png"
+        },
+        "lines": [
+          {
+            "speaker": "Kabir",
+            "text": "छात्र थक चुके हैं। हमने बदलाव की माँग की थी, हाँ—लेकिन मैं चाहता हूँ कि सब सुरक्षित बाहर निकलें।"
+          },
+          {
+            "speaker": "Asha",
+            "text": "और मैं चाहता हूँ कि इसका सबूत मिले कि हम एक और वादे के लिए सामान नहीं समेट रहे।"
+          }
+        ]
+      },
+      {
+        "id": "what-happened",
+        "dramaticAction": "Kabir answers the call, listens, then stops pulling and lowers his shoulder from the barricade.",
+        "turningPoint": "He learns the government accepted the CJP's demands after renewed talks, including reforms, compensation for affected students, and withdrawal of cases against protesters.",
+        "visual": {
+          "kind": "factual-visual",
+          "durationSeconds": 11,
+          "caption": "Government accepts the CJP's demands",
+          "imagePrompt": "Editorial animated-film over-shoulder shot: Kabir listens intently to his cracked blue phone while his shoulder drops away from the barricade, Asha watches his face, protest street and shuttered office behind, cooler light beginning to soften, suspenseful mood, recurring wardrobe and props, open caption-safe upper-third space, no text, logos, or watermark",
+          "scenePrompt": "Kabir receives the decisive call while still holding the barricade; his posture changes before he speaks.",
+          "continuityNotes": "Continue directly from the struggle; keep Asha's hands on the barricade and show Kabir's phone as the source of the turn without readable screen text.",
+          "motion": "slow push-in",
+          "imagePath": "scripts/2026-07-25_hiINa8384f/images/politics/75b2b39f9e6f2a196231a4aff7725f1c/what-happened.png"
+        },
+        "lines": [
+          {
+            "speaker": "Kabir",
+            "text": "रुको। दोबारा हुई बातचीत के बाद उन्होंने सीजेपी की माँगें मान ली हैं।"
+          },
+          {
+            "speaker": "Asha",
+            "text": "सारी माँगें?"
+          },
+          {
+            "speaker": "Kabir",
+            "text": "सुधार। प्रभावित छात्रों को मुआवज़ा। प्रदर्शनकारियों के ख़िलाफ़ मामले वापस।"
+          }
+        ]
+      },
+      {
+        "id": "why-it-matters",
+        "dramaticAction": "Asha releases one hand, then tests the barricade's weight while Kabir catches the opposite end.",
+        "turningPoint": "Asha can now end the demonstration without abandoning the students' demands, but she must trust the acceptance enough to act.",
+        "visual": {
+          "kind": "cinematic-recreation",
+          "durationSeconds": 10,
+          "caption": "Ending a protest can be a choice",
+          "imagePrompt": "Editorial animated-film medium-wide shot: Asha cautiously releases one hand from the barricade and Kabir catches the opposite end, their faces shifting from suspicion to guarded relief, softening daylight, scattered placards and water bottles, open caption-safe upper-third space, no text, logos, or watermark",
+          "scenePrompt": "Asha and Kabir begin lowering the barricade together, carefully checking each other's grip.",
+          "continuityNotes": "The barricade must remain the same bent object; preserve the phone in Kabir's hand or tucked near his sleeve and move it aside as he grips the metal.",
+          "motion": "gentle pan",
+          "imagePath": "scripts/2026-07-25_hiINa8384f/images/politics/75b2b39f9e6f2a196231a4aff7725f1c/why-it-matters.png"
+        },
+        "lines": [
+          {
+            "speaker": "Asha",
+            "text": "अगर हम इसे नीचे करते हैं, तो मामले मायने रखते हैं। मुआवज़ा मायने रखता है। सुधार मायने रखते हैं।"
+          },
+          {
+            "speaker": "Kabir",
+            "text": "तो मेरे साथ इसे नीचे करो। इसलिए नहीं कि हम हार गए।"
+          },
+          {
+            "speaker": "Asha",
+            "text": "बल्कि इसलिए कि आख़िरकार उन्हें हमारी बात सुननी पड़ी।"
+          }
+        ]
+      },
+      {
+        "id": "takeaway",
+        "dramaticAction": "They set the barricade flat, and Asha leaves one rolled placard propped against it before walking away with Kabir.",
+        "turningPoint": "The protest ends as a chosen act after the minister's resignation and accepted demands, while the remaining placard preserves their reason for standing there.",
+        "visual": {
+          "kind": "summary-visual",
+          "durationSeconds": 10,
+          "caption": "The crowd can finally go home",
+          "imagePrompt": "Editorial animated-film wide closing shot: Asha and Kabir set the bent barricade flat and walk away side by side, one rolled placard left leaning against it, soft daylight across the emptying protest street, warm restrained release, recurring mustard kurta, red wristband, blue hoodie, cracked phone, open caption-safe upper-third space, no text, logos, or watermark",
+          "scenePrompt": "The barricade lands with a muted clang; Asha props the placard against it and exits beside Kabir as the street begins to clear.",
+          "continuityNotes": "Pay off the lowered barricade and preserve the placard as the final visual; end with the pair moving away, not addressing the camera.",
+          "motion": "slow push-in",
+          "imagePath": "scripts/2026-07-25_hiINa8384f/images/politics/75b2b39f9e6f2a196231a4aff7725f1c/takeaway.png"
+        },
+        "lines": [
+          {
+            "speaker": "Kabir",
+            "text": "मंत्री गए। माँगें मान ली गईं। अब घर चलें?"
+          },
+          {
+            "speaker": "Asha",
+            "text": "हाँ। लेकिन यह तख्ती यहीं रहने दो।"
+          },
+          {
+            "speaker": "Kabir",
+            "text": "उस अगले इंसान के लिए, जिसे दरवाज़ा खुला चाहिए।"
+          }
+        ]
+      }
+    ],
+    "exit": "The barricade lies flat, the placard remains standing, and Asha and Kabir disappear into the dispersing crowd—relieved, cautious, and still together.",
+    "storyId": "75b2b39f9e6f2a196231a4aff7725f1c",
+    "category": "Politics",
+    "sourceCategory": "politics",
+    "topics": [
+      "politics"
+    ],
+    "format": "mix",
+    "selectedFormat": "two-person-banter",
+    "requestedCastMode": "auto",
+    "requestedVisualStyle": "animated",
+    "sources": [
+      {
+        "name": "dw.com",
+        "url": "https://www.dw.com/en/education-minister-concedes-to-cockroach-demands-resigns/video-78113911",
+        "publishedAt": null
+      }
+    ],
+    "durationSeconds": 48,
+    "entry": {
+      "direct": "The Barricade Comes Down",
+      "afterRelated": "Staying with this thread: The Barricade Comes Down.",
+      "afterUnrelated": "Different kind of plot twist: The Barricade Comes Down."
+    }
+  }
+}

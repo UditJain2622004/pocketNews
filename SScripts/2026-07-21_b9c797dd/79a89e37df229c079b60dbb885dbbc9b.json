@@ -1,0 +1,223 @@
+{
+  "article": {
+    "id": "79a89e37df229c079b60dbb885dbbc9b",
+    "title": "U.K. PM Andy Burnham names ministers - The Hindu",
+    "summary": "U.K. PM Andy Burnham names ministers The Hindu",
+    "full_text": "Account subscription benefits alongside Premium Stories, Editorials, Opinions and more. Unlock these with Subscription British Business Minister Jonathan Reynolds walks on Downing Street after Britain's newly appointed Prime Minister Andy Burnham took office, in London, Britain, July 20, 2026. | Photo Credit: Reuters Former Labour Party leader Ed Miliband was appointed U.K. Foreign Secretary on Monday (July 20, 2026) as the country’s new Prime Minister put together his Cabinet with some old faces from the Keir Starmer Cabinet and some new names. Mr. Miliband — whose focus has been clean energy and climate action — was the Energy Minister in the Starmer administration. Mr. Miliband had visited India in February 2025 to co-chair the fourth Energy Dialogue between the countries. External Affairs Minister S. Jaishankar congratulated his new British counterpart on website X. He wrote, “The India-U.K. Comprehensive Strategic Partnership has witnessed a strong momentum in recent years, including the entry into force of CETA. Look forward to working together to advance our cooperation.” Former U.K. Foreign Secretary, Yvette Cooper was appointed Health Secretary. John Healey, who resigned from the Starmer Cabinet over inadequate defence investments, was appointed the Chancellor of the Exchequer (i.e., Finance Minister). Shabana Mahmood is continuing as Home Secretary. Mr. Burnham had earlier said he intended to follow through with the significant tightening of immigration that Ms. Mahmood had proposed under the Starmer government (the details are expected to be finalised towards the end of the year). Wes Streeting, who had resigned as Health Secretary from the Starmer Cabinet in recent weeks and became a potential contender for the Prime Minister’ job, was appointed Defence Secretary. Lisa Nandy is continuing as Culture Secretary. India-born Kanishka Narayan , who is an MP from the Vale of Glamorgan in Wales, was elevated to the post of AI Minister. He was already a Parliamentary Under-Secretary of State in the Starmer administration , which is the equivalent of a Minister of State. “A nation which welcomed a 12-year old and his family, gave us the best chance at opportunity, put me in Parliament as Wales’ first ethnic minority MP, and now affords me the chance to make a mark in Cabinet,” Mr. Narayan, who was born in Muzaffarpur, Bihar, wrote on X. Miatta Fahnbulleh was appointed Energy Secretary, replacing Mr. Milliband. She was a junior minister in the Starmer administration, resigning shortly after Labour’s losses in the May local elections. Former Home Office Minsiter Alex Norris was appointed Justice Secretary. World / United Kingdom Comments have to be in English, and in full sentences. They cannot be abusive or personal. Please abide by our community guidelines for posting your comments. We have migrated to a new commenting platform. If you are already a registered user of The Hindu and logged in, you may continue to engage with our articles. If you do not have an account please register and login to post comments. Users can access their older comments by logging into their accounts on Vuukle.",
+    "url": "https://www.thehindu.com/news/international/uk-pm-burnham-names-reynolds-as-business-minister-rayner-for-housing/article71247903.ece",
+    "language": "english",
+    "categories": [
+      "politics"
+    ],
+    "published_at": null,
+    "source_name": "thehindu.com"
+  },
+  "sourceFile": "news/daily/2026-07-21/politics.json",
+  "story": {
+    "title": "The Cabinet Door Keeps Moving",
+    "skipLabel": "Skip this story about Andy Burnham naming a new U.K. Cabinet",
+    "classification": {
+      "category": "Politics",
+      "subcategories": [
+        "Government"
+      ]
+    },
+    "creativeDirection": {
+      "genre": "comedic political drama",
+      "dramaticPremise": "As Downing Street prepares a last-minute Cabinet handover, a meticulous aide tries to keep the old seating plan while a rival aide insists the newly named ministers have changed everything.",
+      "selectedFormat": "two-person-banter",
+      "performanceMode": "character-dialogue",
+      "castMode": "story_duo",
+      "visualStyle": "animated"
+    },
+    "dramaticSpine": {
+      "characterGoal": "Maya wants to get the Cabinet room ready before the ministers arrive.",
+      "obstacle": "Rafi wants to use the previous Cabinet arrangement, and the new appointments make his plan obsolete.",
+      "newsCatalyst": "Andy Burnham has named ministers, including Ed Miliband as Foreign Secretary, Yvette Cooper as Health Secretary, John Healey as Chancellor, Wes Streeting as Defence Secretary, and Kanishka Narayan as AI Minister.",
+      "reversal": "Maya discovers that the old Energy slot must change too, because Miatta Fahnbulleh replaces Miliband as Energy Secretary.",
+      "costOfFailure": "The handover will begin with the wrong names and departments in place.",
+      "emotionalTurn": "Rafi's irritation becomes reluctant admiration when he recognises the breadth of the new Cabinet changes.",
+      "resolution": "They abandon the old plan, divide the work, and carry the corrected folders into the Cabinet room together."
+    },
+    "visualBible": {
+      "setting": "A stylised Downing Street interior corridor leading into a Cabinet room, moments before a fictional handover.",
+      "colorAndLighting": "Rainy blue daylight through tall windows, warm amber corridor lamps, polished dark wood, and flashes of red from government folders.",
+      "recurringProps": [
+        "brass Cabinet-room key",
+        "stack of plain red folders",
+        "rolling trolley",
+        "old seating-plan sheet with no readable text"
+      ],
+      "storyArc": "The corridor begins orderly and controlled, becomes a comic obstacle course of shifting folders and furniture, then settles into brisk teamwork as the doors open.",
+      "referenceImagePrompt": "Editorial animated-film scene inside a polished Downing Street corridor opening into a Cabinet room: Maya, a sharp-eyed South Asian woman in a navy suit with a mustard scarf, and Rafi, a lanky white man in a rumpled charcoal suit with a red tie, stand beside a rolling trolley of plain red folders and a brass key; rainy blue daylight, warm amber lamps, dark wood, cinematic depth, expressive faces, no text, logos, or watermark.",
+      "referenceImagePath": "scripts/2026-07-21_b9c797dd/images/politics/79a89e37df229c079b60dbb885dbbc9b/reference.png"
+    },
+    "cast": [
+      {
+        "id": "maya",
+        "role": "Downing Street operations aide",
+        "voiceProfile": "Bright, clipped mezzo-soprano; starts controlled and practical, speeds up under pressure, then softens into relieved amusement by the end. Use quick interruptions and precise comic timing.",
+        "language": "en-IN",
+        "visualIdentity": "South Asian woman in her early thirties, navy suit, mustard scarf, neat bun, silver watch."
+      },
+      {
+        "id": "rafi",
+        "role": "Cabinet-room logistics aide",
+        "voiceProfile": "Warm, slightly nasal baritone; begins smug and defensive, with dry pauses, then shifts into breathless cooperation and genuine warmth. Land small embarrassed laughs between lines.",
+        "language": "en-IN",
+        "visualIdentity": "Lanky white man in his late thirties, rumpled charcoal suit, red tie, untidy curls, spectacles slipping down his nose."
+      }
+    ],
+    "beats": [
+      {
+        "id": "title-cue",
+        "dramaticAction": "Maya yanks open the Cabinet-room door while Rafi wheels in the old seating trolley.",
+        "turningPoint": "The room is ready to receive ministers, but their first look reveals that the existing arrangement may already be wrong.",
+        "visual": {
+          "kind": "cinematic-recreation",
+          "durationSeconds": 8,
+          "caption": "Andy Burnham names his ministers as Downing Street resets the Cabinet room.",
+          "imagePrompt": "Animated editorial-film shot of Maya pulling open a heavy Cabinet-room door as Rafi struggles with a trolley of red folders, polished Downing Street corridor, low wide camera, rainy blue daylight mixed with amber lamps, urgent comic mood, navy suit and mustard scarf, charcoal suit and red tie, brass key visible, clear upper-third space, no text, logos, or watermark",
+          "scenePrompt": "Continuous opening shot: the trolley bumps over the threshold as Maya takes command of the room.",
+          "continuityNotes": "Establish both characters, wardrobe, trolley, brass key, and old seating-plan sheet; no objects or clothing change.",
+          "motion": "slow push-in",
+          "imagePath": "scripts/2026-07-21_b9c797dd/images/politics/79a89e37df229c079b60dbb885dbbc9b/title-cue.png"
+        },
+        "lines": [
+          {
+            "speaker": "Maya",
+            "text": "Andy Burnham has named his ministers—and your old Cabinet layout is already wobbling."
+          },
+          {
+            "speaker": "Rafi",
+            "text": "It is not wobbling. It is historically stable."
+          }
+        ]
+      },
+      {
+        "id": "hook",
+        "dramaticAction": "Maya snatches the old seating-plan sheet from Rafi and folds it beneath her arm.",
+        "turningPoint": "Rafi loses his shortcut and must follow Maya's faster, riskier reorganisation.",
+        "visual": {
+          "kind": "character-reaction",
+          "durationSeconds": 9,
+          "caption": "A new Cabinet means an old plan cannot simply be reused.",
+          "imagePrompt": "Animated editorial-film medium shot: Maya folds the plain old seating-plan sheet away while Rafi reaches after it, trolley angled dangerously, Cabinet room behind them, shoulder-height camera, warm lamp glow against cool window light, playful tension, recurring red folders and brass key, upper-third caption-safe space, no text, logos, or watermark",
+          "scenePrompt": "The camera tracks sideways as Maya takes the plan and pivots towards the trolley.",
+          "continuityNotes": "The door remains open from the previous shot; Maya now holds the folded sheet, while Rafi keeps both hands on the trolley.",
+          "motion": "gentle pan",
+          "imagePath": "scripts/2026-07-21_b9c797dd/images/politics/79a89e37df229c079b60dbb885dbbc9b/hook.png"
+        },
+        "lines": [
+          {
+            "speaker": "Maya",
+            "text": "Miliband is Foreign Secretary, Cooper is Health, Healey is Finance. Move."
+          },
+          {
+            "speaker": "Rafi",
+            "text": "You have removed the one paper making me look prepared."
+          }
+        ]
+      },
+      {
+        "id": "what-happened",
+        "dramaticAction": "Rafi pushes the trolley too quickly; folders slide off, and Maya catches one before it hits the floor.",
+        "turningPoint": "The spill exposes another change: Streeting is Defence, while Mahmood and Nandy continue in their roles.",
+        "visual": {
+          "kind": "funny-metaphor",
+          "durationSeconds": 10,
+          "caption": "The reshuffle sends the old filing system into a comic spin.",
+          "imagePrompt": "Animated editorial-film action shot: red folders slide from a speeding trolley, Maya lunges to catch one, Rafi freezes mid-step, Cabinet corridor and open room behind, dynamic low camera, sharp amber highlights and blue rainlight, controlled chaos, mustard scarf and red tie in motion, upper-third space clear, no text, logos, or watermark",
+          "scenePrompt": "The trolley jolts around the corner; folders fan through the air as both aides scramble.",
+          "continuityNotes": "The folded seating plan stays under Maya's arm; the brass key remains in her hand; the trolley is now unstable and several folders are on the floor.",
+          "motion": "slow push-in",
+          "imagePath": "scripts/2026-07-21_b9c797dd/images/politics/79a89e37df229c079b60dbb885dbbc9b/what-happened.png"
+        },
+        "lines": [
+          {
+            "speaker": "Rafi",
+            "text": "Streeting is Defence? Then this folder is headed for the wrong end of the table."
+          },
+          {
+            "speaker": "Maya",
+            "text": "And Mahmood stays Home, Nandy stays Culture. Stop filing the past."
+          }
+        ]
+      },
+      {
+        "id": "why-it-matters",
+        "dramaticAction": "Maya swaps the final two folders, then stops as Rafi blocks the Cabinet-room entrance with one last red folder.",
+        "turningPoint": "Rafi reveals the Energy change, forcing them to redo the arrangement once more and confront the scale of the reshuffle.",
+        "visual": {
+          "kind": "character-reaction",
+          "durationSeconds": 10,
+          "caption": "One final appointment changes the last open place.",
+          "imagePrompt": "Animated editorial-film close two-shot: Rafi blocks the Cabinet-room entrance holding one plain red folder while Maya reaches for it, rolling trolley and scattered folders behind, intimate eye-level camera, amber doorway light, nervous comic suspense, consistent wardrobe and props, clean upper-third space, no text, logos, or watermark",
+          "scenePrompt": "The action compresses at the doorway; Rafi plants himself there, turning the final folder into a temporary barricade.",
+          "continuityNotes": "All scattered folders remain visible; Maya's scarf is slightly loosened from the scramble; the open door frames the room.",
+          "motion": "hold",
+          "imagePath": "scripts/2026-07-21_b9c797dd/images/politics/79a89e37df229c079b60dbb885dbbc9b/why-it-matters.png"
+        },
+        "lines": [
+          {
+            "speaker": "Rafi",
+            "text": "Wait. Narayan is the new AI Minister—and Fahnbulleh takes Energy from Miliband."
+          },
+          {
+            "speaker": "Maya",
+            "text": "Give me that. Your stable history needs a complete rewrite."
+          }
+        ]
+      },
+      {
+        "id": "takeaway",
+        "dramaticAction": "Rafi hands over the folder, lifts the fallen stack, and follows Maya through the Cabinet-room doors as they swing shut.",
+        "turningPoint": "They choose teamwork over the old plan, entering with the corrected appointments despite the lost time.",
+        "visual": {
+          "kind": "summary-visual",
+          "durationSeconds": 10,
+          "caption": "The new team enters; the old seating plan stays behind.",
+          "imagePrompt": "Animated editorial-film final wide shot: Maya and Rafi carry corrected plain red folders together into the glowing Cabinet room while the folded old seating plan lies abandoned on the corridor trolley, camera behind them, warm interior light against rainy blue hall, relieved comic mood, brass key and mustard scarf visible, generous upper-third space, no text, logos, or watermark",
+          "scenePrompt": "The doors open fully; the pair cross the threshold shoulder to shoulder, leaving the obsolete plan behind.",
+          "continuityNotes": "The same folders, trolley, key, wardrobe, and corridor persist; the final change is the abandoned old plan and the closing doors.",
+          "motion": "gentle pan",
+          "imagePath": "scripts/2026-07-21_b9c797dd/images/politics/79a89e37df229c079b60dbb885dbbc9b/takeaway.png"
+        },
+        "lines": [
+          {
+            "speaker": "Rafi",
+            "text": "I liked it better when one folder meant one job."
+          },
+          {
+            "speaker": "Maya",
+            "text": "Today, it means we run faster. Come on—the new Cabinet is waiting."
+          }
+        ]
+      }
+    ],
+    "exit": "The Cabinet-room doors close on the old plan as Maya and Rafi carry the newly corrected ministerial folders inside.",
+    "storyId": "79a89e37df229c079b60dbb885dbbc9b",
+    "category": "Politics",
+    "sourceCategory": "politics",
+    "topics": [
+      "politics"
+    ],
+    "format": "mix",
+    "selectedFormat": "two-person-banter",
+    "requestedCastMode": "auto",
+    "requestedVisualStyle": "animated",
+    "sources": [
+      {
+        "name": "thehindu.com",
+        "url": "https://www.thehindu.com/news/international/uk-pm-burnham-names-reynolds-as-business-minister-rayner-for-housing/article71247903.ece",
+        "publishedAt": null
+      }
+    ],
+    "durationSeconds": 47,
+    "entry": {
+      "direct": "The Cabinet Door Keeps Moving",
+      "afterRelated": "Staying with this thread: The Cabinet Door Keeps Moving.",
+      "afterUnrelated": "Different kind of plot twist: The Cabinet Door Keeps Moving."
+    }
+  }
+}

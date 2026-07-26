@@ -1,0 +1,213 @@
+{
+  "article": {
+    "id": "b22d31a96dbdbe4ac09df4094bf01bee",
+    "title": "Uber Intercity Travel Index 2026 reveals India's busiest intercity routes; Tier-2 city travel sees fastes - The Times of India",
+    "summary": "Uber Intercity Travel Index 2026 reveals India's busiest intercity routes; Tier-2 city travel sees fastes The Times of India",
+    "full_text": "Uber Intercity Travel Index 2026 reveals India's busiest intercity routes; Tier-2 city travel sees fastes The Times of India",
+    "url": "https://timesofindia.indiatimes.com/technology/tech-news/uber-intercity-travel-index-2026-reveals-indias-busiest-intercity-routes-tier-2-city-travel-sees-fastest-growth/articleshow/132621654.cms",
+    "language": "english",
+    "categories": [
+      "lifestyle"
+    ],
+    "published_at": null,
+    "source_name": "timesofindia.indiatimes.com"
+  },
+  "sourceFile": "news/daily/2026-07-03/lifestyle.json",
+  "story": {
+    "title": "The Route I Almost Cancelled",
+    "skipLabel": "Uber Intercity Travel Index 2026 and India's busiest intercity routes",
+    "classification": {
+      "category": "Lifestyle",
+      "subcategories": [
+        "Travel"
+      ]
+    },
+    "creativeDirection": {
+      "genre": "emotional road drama",
+      "dramaticPremise": "At a nearly empty intercity pickup point, a traveller is about to cancel a trip to a Tier-2 city until the Uber Intercity Travel Index 2026 changes the meaning of the journey.",
+      "selectedFormat": "dramatized-pov",
+      "performanceMode": "first-person-pov",
+      "castMode": "pov_lead",
+      "visualStyle": "animated"
+    },
+    "dramaticSpine": {
+      "characterGoal": "Reach a Tier-2 city that the lead has nearly decided not to visit.",
+      "obstacle": "The lead doubts the journey and is pressured to cancel before committing to the ride.",
+      "newsCatalyst": "The Uber Intercity Travel Index 2026 reveals India's busiest intercity routes and identifies Tier-2 city travel as seeing the fastest movement.",
+      "reversal": "Instead of abandoning the trip, the lead realises the journey belongs to a larger shift in intercity travel and keeps the destination.",
+      "costOfFailure": "The lead loses the chance to make the trip and remains with the safer, abandoned plan.",
+      "emotionalTurn": "Doubt becomes nervous determination.",
+      "resolution": "The lead lifts the bag and requests the ride to the Tier-2 city."
+    },
+    "visualBible": {
+      "setting": "A quiet Indian intercity pickup point before dawn, beside a shuttered tea stall and a rain-darkened road.",
+      "colorAndLighting": "Deep blue pre-dawn shadows, warm amber streetlight, soft reflective puddles, gradually brightening sky.",
+      "recurringProps": [
+        "A mustard canvas travel bag",
+        "A folded rain jacket",
+        "A phone held in the lead's hand",
+        "A small paper cup of untouched tea"
+      ],
+      "storyArc": "The lead begins isolated and hesitant, discovers the travel-index fact during a tense decision, then physically moves from the shelter toward the open road.",
+      "referenceImagePrompt": "Editorial animated-film still of one fictional Indian traveller in their early thirties, short dark hair, teal rain jacket, mustard canvas travel bag, standing at a quiet intercity pickup point before dawn beside a shuttered tea stall; phone in hand, folded rain jacket and paper cup nearby, blue shadows and amber streetlight, wet road, intimate cinematic composition, no text, logos, or watermark."
+    },
+    "cast": [
+      {
+        "id": "lead",
+        "role": "POV traveller",
+        "voiceProfile": "Intimate first-person voice, lightly breathless and low at the start, with nervous pauses and contained disbelief; shifts into warm, determined energy by the final line, using clipped timing during the decision.",
+        "language": "en-IN",
+        "visualIdentity": "Fictional Indian traveller in their early thirties, short dark hair, teal rain jacket, dark trousers, worn trainers, mustard canvas travel bag."
+      },
+      {
+        "id": "caller",
+        "role": "Voice-note friend",
+        "voiceProfile": "Brief off-screen voice-note interruption, practical and worried, delivered quickly with a dry edge; never dominates, creating pressure rather than banter.",
+        "language": "en-IN",
+        "visualIdentity": "Voice only, never shown; represented by a faint waveform glow on the lead's phone without readable text."
+      }
+    ],
+    "beats": [
+      {
+        "id": "title-cue",
+        "dramaticAction": "The lead grips the travel bag, opens the ride app, and hesitates over cancelling while naming the new travel index.",
+        "turningPoint": "The decision is no longer an ordinary cancellation: the news makes the destination feel connected to a wider movement.",
+        "visual": {
+          "kind": "cinematic-recreation",
+          "durationSeconds": 8,
+          "caption": "A trip almost abandoned",
+          "imagePrompt": "Editorial animated-film shot of the fictional Indian traveller gripping a mustard canvas bag and hovering over a phone at a quiet intercity pickup point, shuttered tea stall behind, wet road, low close-up camera, blue pre-dawn light mixed with amber streetlight, tense intimate mood, upper third clear for captions, recurring teal rain jacket and paper cup visible, no text, logos, or watermark",
+          "scenePrompt": "Continuous opening shot: the lead stands under a small shelter, bag at their feet, phone trembling slightly as traffic hiss passes on the wet road.",
+          "continuityNotes": "Establish the lead, mustard bag, teal jacket, phone, tea cup, and pre-dawn location; no movement toward the road yet.",
+          "motion": "slow push-in"
+        },
+        "lines": [
+          {
+            "speaker": "lead",
+            "text": "Uber's Intercity Travel Index 2026 just revealed India's busiest intercity routes—and Tier-2 city travel sees the fastest movement."
+          },
+          {
+            "speaker": "caller",
+            "text": "You're still going?"
+          }
+        ]
+      },
+      {
+        "id": "hook",
+        "dramaticAction": "The lead starts to cancel, then pulls the phone away as a voice note warns against wasting the fare.",
+        "turningPoint": "The lead's private hesitation becomes an immediate choice between safety and departure.",
+        "visual": {
+          "kind": "character-reaction",
+          "durationSeconds": 9,
+          "caption": "Cancel or commit",
+          "imagePrompt": "Editorial animated-film medium shot of the traveller beginning to cancel a ride, then pulling the phone to their chest as a voice note interrupts, mustard bag half-zipped, shuttered stall and rain puddles behind, handheld-feel camera, amber light cutting through blue dawn, anxious mood, upper third clear for captions, no text, logos, or watermark",
+          "scenePrompt": "The lead crouches to zip the bag, hears the voice note, and freezes with one hand on the zipper.",
+          "continuityNotes": "Continue directly from the phone hesitation; keep the bag half-zipped and the paper cup untouched.",
+          "motion": "gentle pan"
+        },
+        "lines": [
+          {
+            "speaker": "lead",
+            "text": "My bag is zipped. Your voice note said cancel before I waste the fare."
+          },
+          {
+            "speaker": "caller",
+            "text": "I said the city was quiet, not impossible."
+          }
+        ]
+      },
+      {
+        "id": "what-happened",
+        "dramaticAction": "The lead reopens the travel page, reads the index, and decisively removes the cancel gesture.",
+        "turningPoint": "The reported pattern gives the lead enough confidence to keep the Tier-2 destination instead of retreating.",
+        "visual": {
+          "kind": "factual-visual",
+          "durationSeconds": 10,
+          "caption": "The choice changes",
+          "imagePrompt": "Editorial animated-film close-up of the traveller's determined face reflected in a phone glow, thumb moving away from cancellation, wet pickup point and mustard bag in soft background, over-the-shoulder camera, cool dawn light with a warm highlight, startled-to-resolved mood, upper third clear for captions, no readable screen text, logos, or watermark",
+          "scenePrompt": "The lead scans the index on the phone, inhales, and locks the screen with sudden certainty.",
+          "continuityNotes": "The bag remains half-zipped from the previous shot; the lead's posture changes from crouched uncertainty to upright resolve.",
+          "motion": "slow push-in"
+        },
+        "lines": [
+          {
+            "speaker": "lead",
+            "text": "No—the index reveals India's busiest intercity routes. Tier-2 travel is moving fastest. I am not cancelling."
+          },
+          {
+            "speaker": "caller",
+            "text": "You heard one line and changed everything?"
+          }
+        ]
+      },
+      {
+        "id": "why-it-matters",
+        "dramaticAction": "The lead changes the destination, shoulders the bag, and steps out from under the shelter toward the road.",
+        "turningPoint": "The safer plan disappears; continuing now requires the lead to accept the unfamiliar route.",
+        "visual": {
+          "kind": "cinematic-recreation",
+          "durationSeconds": 9,
+          "caption": "Leaving the safe plan",
+          "imagePrompt": "Editorial animated-film wide shot of the traveller shouldering the mustard bag and stepping from the shelter onto the wet roadside, phone lowered, shuttered tea stall behind, low tracking camera, first pale dawn light, nervous but purposeful mood, upper third clear for captions, teal rain jacket and paper cup maintained, no text, logos, or watermark",
+          "scenePrompt": "The lead changes the destination, zips the bag fully, and walks two steps into the open air while the road remains nearly empty.",
+          "continuityNotes": "Advance the lead from shelter to roadside; retain the same bag, jacket, phone, puddles, and shuttered stall.",
+          "motion": "gentle pan"
+        },
+        "lines": [
+          {
+            "speaker": "lead",
+            "text": "I changed the destination. The familiar route is gone; this trip stays."
+          },
+          {
+            "speaker": "caller",
+            "text": "Then send your location."
+          }
+        ]
+      },
+      {
+        "id": "takeaway",
+        "dramaticAction": "The lead raises the phone, requests the ride, and walks toward the approaching headlights without looking back.",
+        "turningPoint": "The news has become a physical commitment: the lead chooses motion over cancellation.",
+        "visual": {
+          "kind": "summary-visual",
+          "durationSeconds": 9,
+          "caption": "The first move",
+          "imagePrompt": "Editorial animated-film final shot of the traveller lifting the mustard bag and walking toward soft approaching headlights on the wet intercity road, dawn opening behind them, camera low and behind, warm headlights against blue morning, relieved determined mood, upper third clear for captions, teal rain jacket and phone visible, no text, logos, or watermark",
+          "scenePrompt": "The lead requests the ride, sends their location, and walks into the widening headlights as the tea stall stays behind.",
+          "continuityNotes": "Pay off the movement begun in the previous shot; keep the road, bag, jacket, phone, and dawn lighting consistent, ending with the lead leaving frame.",
+          "motion": "slow push-in"
+        },
+        "lines": [
+          {
+            "speaker": "lead",
+            "text": "I lift the bag, leave the safe plan behind, and request the ride. Tonight, the smaller city gets my first move."
+          }
+        ]
+      }
+    ],
+    "exit": "The lead disappears into the approaching headlights, the cancelled plan left behind beneath the waking streetlight.",
+    "storyId": "b22d31a96dbdbe4ac09df4094bf01bee",
+    "category": "Lifestyle",
+    "sourceCategory": "lifestyle",
+    "topics": [
+      "lifestyle"
+    ],
+    "format": "dramatized-pov",
+    "selectedFormat": "dramatized-pov",
+    "requestedCastMode": "auto",
+    "requestedVisualStyle": "animated",
+    "sources": [
+      {
+        "name": "timesofindia.indiatimes.com",
+        "url": "https://timesofindia.indiatimes.com/technology/tech-news/uber-intercity-travel-index-2026-reveals-indias-busiest-intercity-routes-tier-2-city-travel-sees-fastest-growth/articleshow/132621654.cms",
+        "publishedAt": null
+      }
+    ],
+    "durationSeconds": 45,
+    "entry": {
+      "direct": "The Route I Almost Cancelled",
+      "afterRelated": "Staying with this thread: The Route I Almost Cancelled.",
+      "afterUnrelated": "Different kind of plot twist: The Route I Almost Cancelled."
+    }
+  }
+}

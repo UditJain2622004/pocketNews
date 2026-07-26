@@ -1,0 +1,223 @@
+{
+  "article": {
+    "id": "c110f15557264b3771aaea50a84487b6",
+    "title": "India vs Zimbabwe 1st T20I Live Streaming: When and where to watch IND vs ZIM, pitch report, Harare weath - The Times of India",
+    "summary": "India vs Zimbabwe 1st T20I Live Streaming: When and where to watch IND vs ZIM, pitch report, Harare weath The Times of India",
+    "full_text": "At TOI Sports Desk, reporters work around the clock to bring you comprehensive updates from the world of sports. Expect nuanced match reports, previews, and reviews, along with statistics-based technical analysis, the latest social media trends, and expert insights across cricket, football, tennis, badminton, hockey, motorsports, wrestling, boxing, shooting, athletics, and more.Read More",
+    "url": "https://timesofindia.indiatimes.com/sports/cricket/india-vs-zimbabwe/india-vs-zimbabwe-1st-t20i-live-streaming-when-and-where-to-watch-ind-vs-zim-pitch-report-harare-weather-predicted-xis/articleshow/132553136.cms",
+    "language": "english",
+    "categories": [
+      "entertainment"
+    ],
+    "published_at": null,
+    "source_name": "timesofindia.indiatimes.com"
+  },
+  "sourceFile": "news/daily/2026-07-23/entertainment.json",
+  "story": {
+    "title": "The Projector Claim",
+    "skipLabel": "Skip India vs Zimbabwe 1st T20I story",
+    "classification": {
+      "category": "Sports",
+      "subcategories": [
+        "Cricket"
+      ]
+    },
+    "creativeDirection": {
+      "genre": "situational comedy",
+      "dramaticPremise": "Two flatmates wrestle for their shared projector until the India-Zimbabwe first T20I streaming guide fails to provide the details needed to justify reserving it.",
+      "selectedFormat": "two-person-banter",
+      "performanceMode": "character-dialogue",
+      "castMode": "story_duo",
+      "visualStyle": "animated"
+    },
+    "dramaticSpine": {
+      "characterGoal": "Asha wants to reserve the projector immediately for the India versus Zimbabwe first T20I live stream.",
+      "obstacle": "Dev needs the projector for film night and refuses to surrender it without a confirmed start time and streaming platform.",
+      "newsCatalyst": "A guide names the India versus Zimbabwe first T20I live streaming, pitch report and Harare weather as its subjects.",
+      "reversal": "The supplied material provides no actual streaming time or platform, leaving Asha unable to prove when she needs the projector.",
+      "costOfFailure": "Asha must delay her match invitation and give up the projector claim for now.",
+      "emotionalTurn": "Her confident takeover becomes an embarrassed but practical retreat.",
+      "resolution": "Asha returns the cable to Dev and waits for the missing viewing details before inviting anyone."
+    },
+    "visualBible": {
+      "setting": "A compact urban Indian flat living room opening onto a small terrace; a projector sits between a blank wall and open balcony doors.",
+      "colorAndLighting": "Warm amber evening light meets cool blue projector spill, with expressive shadows and saturated editorial-animation colours.",
+      "recurringProps": [
+        "portable projector",
+        "red HDMI cable",
+        "Asha's phone",
+        "two snack bowls"
+      ],
+      "storyArc": "A playful projector tug-of-war escalates into a countdown, collapses when the viewing details are absent, and ends with a reluctant handover.",
+      "referenceImagePrompt": "Editorial animated-film key art of two fictional Indian flatmates together in a compact living room: Asha, a young woman with short curly black hair, round glasses, teal cricket-style jersey without logos, cream trousers and orange socks; Dev, a young man with swept black hair, light stubble, maroon overshirt, grey T-shirt and dark joggers. Both grip opposite ends of a red HDMI cable beside a portable projector, two snack bowls nearby, blank wall and open terrace doors behind them, warm amber evening light mixed with cool blue projector glow, lively comic tension, cinematic composition, no text, logos, or watermark.",
+      "referenceImagePath": "scripts/2026-07-23_86dc681b/images/entertainment/c110f15557264b3771aaea50a84487b6/reference.png"
+    },
+    "cast": [
+      {
+        "id": "asha",
+        "role": "Cricket fan determined to secure the projector",
+        "voiceProfile": "Warm, slightly husky Indian English voice; brisk pace and confident comic attack, beginning triumphantly, cracking into disbelief at the reversal, then ending with sheepish resolve; use clipped pauses before concessions.",
+        "language": "en-IN",
+        "visualIdentity": "Young Indian woman with short curly black hair, round glasses, teal unbranded cricket-style jersey, cream trousers and orange socks."
+      },
+      {
+        "id": "dev",
+        "role": "Flatmate defending his film-night plans",
+        "voiceProfile": "Smooth Indian English baritone; measured pace with dry amusement, calm under pressure, sharpening during the countdown and softening into affectionate victory; leave tiny pauses before punchlines.",
+        "language": "en-IN",
+        "visualIdentity": "Young Indian man with swept black hair, light stubble, maroon overshirt over a grey T-shirt, dark joggers and blue slippers."
+      }
+    ],
+    "beats": [
+      {
+        "id": "title-cue",
+        "dramaticAction": "Asha drags the projector towards the terrace while Dev catches the trailing HDMI cable and stops it.",
+        "turningPoint": "Asha claims the screen for the match, forcing Dev to challenge whether she can prove when it is needed.",
+        "visual": {
+          "kind": "cinematic-recreation",
+          "durationSeconds": 8,
+          "caption": "The projector claim begins.",
+          "imagePrompt": "Asha hauling a portable projector towards open terrace doors while Dev catches its red HDMI cable, compact Indian flat living room, medium-wide low-angle camera, warm amber evening and cool blue projector glow, playful urgency, teal jersey and maroon overshirt clearly visible, snack bowls wobbling, caption-safe upper-third space, no text, logos, or watermark.",
+          "scenePrompt": "Begin the continuous scene as the projector slides across a low table and the cable pulls taut between Asha and Dev.",
+          "continuityNotes": "Establish both wardrobes, projector, red cable, phone, snack bowls, blank wall and terrace doors; end with the cable stretched tight.",
+          "motion": "gentle pan",
+          "imagePath": "scripts/2026-07-23_86dc681b/images/entertainment/c110f15557264b3771aaea50a84487b6/title-cue.png"
+        },
+        "lines": [
+          {
+            "speaker": "asha",
+            "text": "India versus Zimbabwe, first T20I—I'm claiming the projector for the live stream."
+          },
+          {
+            "speaker": "dev",
+            "text": "You are claiming my film-night screen with no start time?"
+          }
+        ]
+      },
+      {
+        "id": "hook",
+        "dramaticAction": "They tug the cable in opposite directions as Dev starts a countdown and Asha unlocks her phone one-handed.",
+        "turningPoint": "Dev offers to surrender only if Asha can name the platform before his countdown ends.",
+        "visual": {
+          "kind": "character-reaction",
+          "durationSeconds": 8,
+          "caption": "Proof before possession.",
+          "imagePrompt": "Asha and Dev in a comic tug-of-war over the red HDMI cable as Asha hurriedly unlocks her phone one-handed, same compact living room and terrace, tight two-shot with slight Dutch angle, amber and blue mixed lighting, competitive expressions, projector balanced at centre, snack bowls trembling, caption-safe upper-third space, no text, logos, or watermark.",
+          "scenePrompt": "Continue immediately with the taut cable; Dev braces against the sofa while Asha searches without releasing her grip.",
+          "continuityNotes": "Keep projector centred and cable taut from the previous shot; advance by bringing Asha's phone into active use and tightening their stances.",
+          "motion": "slow push-in",
+          "imagePath": "scripts/2026-07-23_86dc681b/images/entertainment/c110f15557264b3771aaea50a84487b6/hook.png"
+        },
+        "lines": [
+          {
+            "speaker": "asha",
+            "text": "The guide should tell me when and where to watch. Hand over HDMI."
+          },
+          {
+            "speaker": "dev",
+            "text": "Name the platform, and I surrender. Three... two..."
+          }
+        ]
+      },
+      {
+        "id": "what-happened",
+        "dramaticAction": "Asha abruptly stops pulling, checks the supplied page and accidentally lets the cable recoil into Dev's hands.",
+        "turningPoint": "The missing time and platform destroy Asha's immediate claim to the projector.",
+        "visual": {
+          "kind": "factual-visual",
+          "durationSeconds": 9,
+          "caption": "The countdown hits missing details.",
+          "imagePrompt": "Asha frozen mid-search with a startled face as the red HDMI cable recoils safely into Dev's hands, phone screen angled away with no readable interface, same living room, close reaction shot widening to include Dev, cool projector light on their faces, comic reversal and mild embarrassment, recurring outfits and props, caption-safe upper-third space, no text, logos, or watermark.",
+          "scenePrompt": "At the end of Dev's countdown, Asha's pulling force vanishes and Dev stumbles backwards with the loose cable.",
+          "continuityNotes": "Preserve the same positions and lighting; change the cable from taut to slack and shift control of it fully to Dev.",
+          "motion": "slow push-in",
+          "imagePath": "scripts/2026-07-23_86dc681b/images/entertainment/c110f15557264b3771aaea50a84487b6/what-happened.png"
+        },
+        "lines": [
+          {
+            "speaker": "asha",
+            "text": "Wait. This supplied page only names live streaming, pitch report and Harare weather."
+          },
+          {
+            "speaker": "dev",
+            "text": "No actual time or platform here. Cable stays."
+          }
+        ]
+      },
+      {
+        "id": "why-it-matters",
+        "dramaticAction": "Asha lowers the projector, closes her unfinished invitation on the phone and pushes one snack bowl towards Dev.",
+        "turningPoint": "She abandons the group screening plan for now, allowing Dev's film night to proceed.",
+        "visual": {
+          "kind": "funny-metaphor",
+          "durationSeconds": 8,
+          "caption": "The screening plan folds.",
+          "imagePrompt": "Asha lowering the portable projector back onto the table, dismissing an unreadable phone draft and sliding a snack bowl towards victorious Dev, same compact flat, medium side-on camera, warm light becoming dominant as projector glow fades, rueful comedy, red cable now coiled in Dev's hand, caption-safe upper-third space, no text, logos, or watermark.",
+          "scenePrompt": "Continue without a cut in time as Asha sets the projector down and physically retreats from her takeover.",
+          "continuityNotes": "Keep Dev holding the recovered cable; advance by dimming the projector glow and moving one snack bowl to his side.",
+          "motion": "gentle pan",
+          "imagePath": "scripts/2026-07-23_86dc681b/images/entertainment/c110f15557264b3771aaea50a84487b6/why-it-matters.png"
+        },
+        "lines": [
+          {
+            "speaker": "asha",
+            "text": "Fine—I'm releasing the projector, not the match. I'll stop the invites."
+          },
+          {
+            "speaker": "dev",
+            "text": "Verify first. My film night keeps its screen."
+          }
+        ]
+      },
+      {
+        "id": "takeaway",
+        "dramaticAction": "Asha places the HDMI plug in Dev's palm, pockets her phone and claims the remaining snack bowl before dropping onto the sofa.",
+        "turningPoint": "The projector dispute ends: Dev gets the screen, while Asha commits to waiting for confirmed viewing details.",
+        "visual": {
+          "kind": "summary-visual",
+          "durationSeconds": 8,
+          "caption": "One screen, temporary peace.",
+          "imagePrompt": "Asha placing the red HDMI plug into Dev's open palm, then dropping onto the sofa with the remaining snack bowl as Dev turns towards the projector, same living room and open terrace, warm wide closing shot, relaxed comic relief, consistent teal jersey and maroon overshirt, phone disappearing into Asha's pocket, caption-safe upper-third space, no text, logos, or watermark.",
+          "scenePrompt": "End the continuous scene with the cable handover, Asha's decisive retreat to the sofa and Dev reclaiming the projector.",
+          "continuityNotes": "Maintain the warm lighting and all established wardrobe details; complete the prop transfer and finish on both characters sharing a relieved grin.",
+          "motion": "hold",
+          "imageError": "OpenAI image edit request failed: Connection error."
+        },
+        "lines": [
+          {
+            "speaker": "asha",
+            "text": "Projector is yours. The invite waits for the missing details."
+          },
+          {
+            "speaker": "dev",
+            "text": "Nobody gets sent to the wrong sofa."
+          }
+        ]
+      }
+    ],
+    "exit": "Asha crunches a snack as Dev plugs in the cable; the projector glow returns and both suppress a laugh.",
+    "storyId": "c110f15557264b3771aaea50a84487b6",
+    "category": "Sports",
+    "sourceCategory": "entertainment",
+    "topics": [
+      "entertainment"
+    ],
+    "format": "mix",
+    "selectedFormat": "two-person-banter",
+    "requestedCastMode": "auto",
+    "requestedVisualStyle": "animated",
+    "sources": [
+      {
+        "name": "timesofindia.indiatimes.com",
+        "url": "https://timesofindia.indiatimes.com/sports/cricket/india-vs-zimbabwe/india-vs-zimbabwe-1st-t20i-live-streaming-when-and-where-to-watch-ind-vs-zim-pitch-report-harare-weather-predicted-xis/articleshow/132553136.cms",
+        "publishedAt": null
+      }
+    ],
+    "durationSeconds": 41,
+    "entry": {
+      "direct": "The Projector Claim",
+      "afterRelated": "Staying with this thread: The Projector Claim.",
+      "afterUnrelated": "Different kind of plot twist: The Projector Claim."
+    }
+  }
+}

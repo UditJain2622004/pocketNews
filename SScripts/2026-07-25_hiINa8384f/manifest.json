@@ -1,0 +1,127 @@
+{
+  "runId": "2026-07-25_hiINa8384f",
+  "runDate": "2026-07-25",
+  "cadence": "daily",
+  "episodeTitle": "When the Signal Turns",
+  "language": "hi-IN",
+  "startedAt": "2026-07-26T03:26:51.311604+00:00",
+  "articlesFound": 93,
+  "articlesSelected": 4,
+  "selection": {
+    "articlesConsidered": 67,
+    "storiesSelected": 4,
+    "duplicateIdsRemoved": 0,
+    "similarHeadlinesRemoved": 15,
+    "maxArticlesPerCategory": 1,
+    "maxTotalStories": 4,
+    "temporaryFocus": "https://www.dw.com/en/education-minister-concedes-to-cockroach-demands-resigns/video-78113911",
+    "temporaryFocusMatches": 1
+  },
+  "scriptsGenerated": 4,
+  "imagesGenerated": 24,
+  "generateImages": true,
+  "threeImagesPerStory": false,
+  "generateAudio": true,
+  "castMode": "auto",
+  "visualStyle": "animated",
+  "storyFormat": "mix",
+  "requestedCategories": [
+    "business",
+    "entertainment",
+    "lifestyle",
+    "politics",
+    "science",
+    "sports",
+    "technology"
+  ],
+  "scripts": [
+    {
+      "articleId": "219d2d506f1f5375c972c84c4b4284d0",
+      "sourceFile": "news/daily/2026-07-25/business.json",
+      "scriptPath": "scripts/2026-07-25_hiINa8384f/219d2d506f1f5375c972c84c4b4284d0.json",
+      "imagePaths": [
+        "scripts/2026-07-25_9bb2de9f/images/business/219d2d506f1f5375c972c84c4b4284d0/hook.png",
+        "scripts/2026-07-25_9bb2de9f/images/business/219d2d506f1f5375c972c84c4b4284d0/reference.png",
+        "scripts/2026-07-25_9bb2de9f/images/business/219d2d506f1f5375c972c84c4b4284d0/takeaway.png",
+        "scripts/2026-07-25_9bb2de9f/images/business/219d2d506f1f5375c972c84c4b4284d0/title-cue.png",
+        "scripts/2026-07-25_9bb2de9f/images/business/219d2d506f1f5375c972c84c4b4284d0/what-happened.png",
+        "scripts/2026-07-25_9bb2de9f/images/business/219d2d506f1f5375c972c84c4b4284d0/why-it-matters.png"
+      ]
+    },
+    {
+      "articleId": "673fa4927a51598fdd8e07334be8d4ce",
+      "sourceFile": "news/daily/2026-07-25/entertainment.json",
+      "scriptPath": "scripts/2026-07-25_hiINa8384f/673fa4927a51598fdd8e07334be8d4ce.json",
+      "imagePaths": [
+        "scripts/2026-07-25_9bb2de9f/images/entertainment/673fa4927a51598fdd8e07334be8d4ce/hook.png",
+        "scripts/2026-07-25_9bb2de9f/images/entertainment/673fa4927a51598fdd8e07334be8d4ce/reference.png",
+        "scripts/2026-07-25_9bb2de9f/images/entertainment/673fa4927a51598fdd8e07334be8d4ce/takeaway.png",
+        "scripts/2026-07-25_9bb2de9f/images/entertainment/673fa4927a51598fdd8e07334be8d4ce/title-cue.png",
+        "scripts/2026-07-25_9bb2de9f/images/entertainment/673fa4927a51598fdd8e07334be8d4ce/what-happened.png",
+        "scripts/2026-07-25_9bb2de9f/images/entertainment/673fa4927a51598fdd8e07334be8d4ce/why-it-matters.png"
+      ]
+    },
+    {
+      "articleId": "790446e669c6cdc450b192e9de273b8a",
+      "sourceFile": "news/daily/2026-07-25/lifestyle.json",
+      "scriptPath": "scripts/2026-07-25_hiINa8384f/790446e669c6cdc450b192e9de273b8a.json",
+      "imagePaths": [
+        "scripts/2026-07-25_9bb2de9f/images/lifestyle/790446e669c6cdc450b192e9de273b8a/hook.png",
+        "scripts/2026-07-25_9bb2de9f/images/lifestyle/790446e669c6cdc450b192e9de273b8a/reference.png",
+        "scripts/2026-07-25_9bb2de9f/images/lifestyle/790446e669c6cdc450b192e9de273b8a/takeaway.png",
+        "scripts/2026-07-25_9bb2de9f/images/lifestyle/790446e669c6cdc450b192e9de273b8a/title-cue.png",
+        "scripts/2026-07-25_9bb2de9f/images/lifestyle/790446e669c6cdc450b192e9de273b8a/what-happened.png",
+        "scripts/2026-07-25_9bb2de9f/images/lifestyle/790446e669c6cdc450b192e9de273b8a/why-it-matters.png"
+      ]
+    },
+    {
+      "articleId": "75b2b39f9e6f2a196231a4aff7725f1c",
+      "sourceFile": "news/daily/2026-07-25/politics.json",
+      "scriptPath": "scripts/2026-07-25_hiINa8384f/75b2b39f9e6f2a196231a4aff7725f1c.json",
+      "imagePaths": [
+        "scripts/2026-07-25_9bb2de9f/images/politics/75b2b39f9e6f2a196231a4aff7725f1c/hook.png",
+        "scripts/2026-07-25_9bb2de9f/images/politics/75b2b39f9e6f2a196231a4aff7725f1c/reference.png",
+        "scripts/2026-07-25_9bb2de9f/images/politics/75b2b39f9e6f2a196231a4aff7725f1c/takeaway.png",
+        "scripts/2026-07-25_9bb2de9f/images/politics/75b2b39f9e6f2a196231a4aff7725f1c/title-cue.png",
+        "scripts/2026-07-25_9bb2de9f/images/politics/75b2b39f9e6f2a196231a4aff7725f1c/what-happened.png",
+        "scripts/2026-07-25_9bb2de9f/images/politics/75b2b39f9e6f2a196231a4aff7725f1c/why-it-matters.png"
+      ]
+    }
+  ],
+  "failures": [],
+  "audio": {
+    "runId": "2026-07-25_9bb2de9f",
+    "articlesRequested": 4,
+    "audioStoriesReady": 4,
+    "clipsGenerated": 52,
+    "clipsReused": 0,
+    "manifests": [
+      {
+        "articleId": "219d2d506f1f5375c972c84c4b4284d0",
+        "manifestPath": "scripts/2026-07-25_9bb2de9f/audio/219d2d506f1f5375c972c84c4b4284d0/manifest.json",
+        "manifestUrl": "/api/media/2026-07-25_9bb2de9f/audio/219d2d506f1f5375c972c84c4b4284d0/manifest.json",
+        "failures": []
+      },
+      {
+        "articleId": "673fa4927a51598fdd8e07334be8d4ce",
+        "manifestPath": "scripts/2026-07-25_9bb2de9f/audio/673fa4927a51598fdd8e07334be8d4ce/manifest.json",
+        "manifestUrl": "/api/media/2026-07-25_9bb2de9f/audio/673fa4927a51598fdd8e07334be8d4ce/manifest.json",
+        "failures": []
+      },
+      {
+        "articleId": "75b2b39f9e6f2a196231a4aff7725f1c",
+        "manifestPath": "scripts/2026-07-25_9bb2de9f/audio/75b2b39f9e6f2a196231a4aff7725f1c/manifest.json",
+        "manifestUrl": "/api/media/2026-07-25_9bb2de9f/audio/75b2b39f9e6f2a196231a4aff7725f1c/manifest.json",
+        "failures": []
+      },
+      {
+        "articleId": "790446e669c6cdc450b192e9de273b8a",
+        "manifestPath": "scripts/2026-07-25_9bb2de9f/audio/790446e669c6cdc450b192e9de273b8a/manifest.json",
+        "manifestUrl": "/api/media/2026-07-25_9bb2de9f/audio/790446e669c6cdc450b192e9de273b8a/manifest.json",
+        "failures": []
+      }
+    ],
+    "failures": []
+  },
+  "localizedFrom": "2026-07-25_9bb2de9f"
+}

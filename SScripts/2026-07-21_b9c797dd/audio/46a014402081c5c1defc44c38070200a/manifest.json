@@ -1,0 +1,143 @@
+{
+  "articleId": "46a014402081c5c1defc44c38070200a",
+  "scriptPath": "scripts/2026-07-21_b9c797dd/46a014402081c5c1defc44c38070200a.json",
+  "language": "en-IN",
+  "model": "gpt-audio-1.5",
+  "voiceAssignments": {
+    "leela": "marin",
+    "ravi": "cedar"
+  },
+  "clips": [
+    {
+      "clipId": "title-cue-0",
+      "beatId": "title-cue",
+      "lineIndex": 0,
+      "speaker": "Leela",
+      "path": "scripts/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/title-cue/0.wav",
+      "url": "/api/media/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/title-cue/0.wav",
+      "durationSeconds": 5.15,
+      "lineHash": "afe82ffc8e00e89ac95787a0cb5e415ddf259f882d9955c9ed7b8a050f80a15e"
+    },
+    {
+      "clipId": "title-cue-1",
+      "beatId": "title-cue",
+      "lineIndex": 1,
+      "speaker": "Ravi",
+      "path": "scripts/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/title-cue/1.wav",
+      "url": "/api/media/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/title-cue/1.wav",
+      "durationSeconds": 2.8,
+      "lineHash": "45d635c8aa828dae868f5ef56633a5b49f8f696306153c9229f1a85d1d9598b2"
+    },
+    {
+      "clipId": "hook-0",
+      "beatId": "hook",
+      "lineIndex": 0,
+      "speaker": "Ravi",
+      "path": "scripts/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/hook/0.wav",
+      "url": "/api/media/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/hook/0.wav",
+      "durationSeconds": 3.75,
+      "lineHash": "1daec93f2ab3e2139a537a612e1739f832f41167e978b4cb20750551c47835ac"
+    },
+    {
+      "clipId": "hook-1",
+      "beatId": "hook",
+      "lineIndex": 1,
+      "speaker": "Leela",
+      "path": "scripts/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/hook/1.wav",
+      "url": "/api/media/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/hook/1.wav",
+      "durationSeconds": 4.85,
+      "lineHash": "573d7a3736d5528092397f25c096ea3e8d9bd93614a595d34775b0da22fc463f"
+    },
+    {
+      "clipId": "hook-2",
+      "beatId": "hook",
+      "lineIndex": 2,
+      "speaker": "Ravi",
+      "path": "scripts/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/hook/2.wav",
+      "url": "/api/media/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/hook/2.wav",
+      "durationSeconds": 2.85,
+      "lineHash": "e8be1bd3dcffd08fece91f7eff1585f276662dcc430028f6073b3a1460f9a7dd"
+    },
+    {
+      "clipId": "what-happened-0",
+      "beatId": "what-happened",
+      "lineIndex": 0,
+      "speaker": "Leela",
+      "path": "scripts/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/what-happened/0.wav",
+      "url": "/api/media/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/what-happened/0.wav",
+      "durationSeconds": 8.2,
+      "lineHash": "4fe9d70cdaebfa9401cec5f7576d2fab3a0438bc484834aa62e49e01f66ae06b"
+    },
+    {
+      "clipId": "what-happened-1",
+      "beatId": "what-happened",
+      "lineIndex": 1,
+      "speaker": "Ravi",
+      "path": "scripts/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/what-happened/1.wav",
+      "url": "/api/media/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/what-happened/1.wav",
+      "durationSeconds": 2.1,
+      "lineHash": "620f669b9c024de803b04afb3c13b0e0cc08748b9ffa113d75bc36a7870a32a5"
+    },
+    {
+      "clipId": "what-happened-2",
+      "beatId": "what-happened",
+      "lineIndex": 2,
+      "speaker": "Leela",
+      "path": "scripts/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/what-happened/2.wav",
+      "url": "/api/media/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/what-happened/2.wav",
+      "durationSeconds": 3.15,
+      "lineHash": "ed92c9b152a33de018ff6206553cb00d6865d11448a7b34c10eb54ecaf07bbb8"
+    },
+    {
+      "clipId": "why-it-matters-0",
+      "beatId": "why-it-matters",
+      "lineIndex": 0,
+      "speaker": "Ravi",
+      "path": "scripts/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/why-it-matters/0.wav",
+      "url": "/api/media/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/why-it-matters/0.wav",
+      "durationSeconds": 4.75,
+      "lineHash": "1ffb5a5e5e41ba83a5cb1da72d26cdbc0573518e39cca35d84cc965c4b6c4529"
+    },
+    {
+      "clipId": "why-it-matters-1",
+      "beatId": "why-it-matters",
+      "lineIndex": 1,
+      "speaker": "Leela",
+      "path": "scripts/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/why-it-matters/1.wav",
+      "url": "/api/media/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/why-it-matters/1.wav",
+      "durationSeconds": 5.85,
+      "lineHash": "31d0ef1c686a1e718399a9bed0b37f63b8b825c57d3e4465001279843234d925"
+    },
+    {
+      "clipId": "why-it-matters-2",
+      "beatId": "why-it-matters",
+      "lineIndex": 2,
+      "speaker": "Ravi",
+      "path": "scripts/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/why-it-matters/2.wav",
+      "url": "/api/media/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/why-it-matters/2.wav",
+      "durationSeconds": 3.85,
+      "lineHash": "3428e07dca5a43bd85f0e25f58c9b5e6c00de47cea777a931a823257930862cd"
+    },
+    {
+      "clipId": "takeaway-0",
+      "beatId": "takeaway",
+      "lineIndex": 0,
+      "speaker": "Ravi",
+      "path": "scripts/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/takeaway/0.wav",
+      "url": "/api/media/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/takeaway/0.wav",
+      "durationSeconds": 5.6,
+      "lineHash": "facd5ffd340d515a1f356641363fa4c16e8b2b64e2c9ec566c0aaa9e12270be4"
+    },
+    {
+      "clipId": "takeaway-1",
+      "beatId": "takeaway",
+      "lineIndex": 1,
+      "speaker": "Leela",
+      "path": "scripts/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/takeaway/1.wav",
+      "url": "/api/media/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/takeaway/1.wav",
+      "durationSeconds": 5.25,
+      "lineHash": "73c643e64faa936d1c7bdb94afc96aa8c3ef0bdc872401003b150a549b079706"
+    }
+  ],
+  "failures": []
+}

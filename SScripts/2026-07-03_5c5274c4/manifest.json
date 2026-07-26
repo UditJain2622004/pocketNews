@@ -1,0 +1,69 @@
+{
+  "runId": "2026-07-03_5c5274c4",
+  "runDate": "2026-07-03",
+  "cadence": "daily",
+  "episodeTitle": "The Road After the Applause",
+  "language": "en-IN",
+  "startedAt": "2026-07-25T23:53:19.867407+00:00",
+  "articlesFound": 519,
+  "articlesSelected": 3,
+  "selection": {
+    "articlesConsidered": 519,
+    "storiesSelected": 3,
+    "duplicateIdsRemoved": 8,
+    "similarHeadlinesRemoved": 31,
+    "maxArticlesPerCategory": 1,
+    "maxTotalStories": 3
+  },
+  "scriptsGenerated": 2,
+  "imagesGenerated": 0,
+  "generateImages": false,
+  "threeImagesPerStory": false,
+  "generateAudio": true,
+  "castMode": "auto",
+  "visualStyle": "animated",
+  "storyFormat": "dramatized-pov",
+  "scripts": [
+    {
+      "articleId": "e252c401c3b42a217a383d24137dedde",
+      "sourceFile": "news/daily/2026-07-03/entertainment.json",
+      "scriptPath": "scripts/2026-07-03_5c5274c4/e252c401c3b42a217a383d24137dedde.json",
+      "imagePaths": []
+    },
+    {
+      "articleId": "b22d31a96dbdbe4ac09df4094bf01bee",
+      "sourceFile": "news/daily/2026-07-03/lifestyle.json",
+      "scriptPath": "scripts/2026-07-03_5c5274c4/b22d31a96dbdbe4ac09df4094bf01bee.json",
+      "imagePaths": []
+    }
+  ],
+  "failures": [
+    {
+      "articleId": "7768e68dc217ded41b1335840a3872c0",
+      "sourceFile": "news/daily/2026-07-03/business.json",
+      "error": "OpenAI story generation request failed."
+    }
+  ],
+  "audio": {
+    "runId": "2026-07-03_5c5274c4",
+    "articlesRequested": 2,
+    "audioStoriesReady": 2,
+    "clipsGenerated": 19,
+    "clipsReused": 0,
+    "manifests": [
+      {
+        "articleId": "b22d31a96dbdbe4ac09df4094bf01bee",
+        "manifestPath": "scripts/2026-07-03_5c5274c4/audio/b22d31a96dbdbe4ac09df4094bf01bee/manifest.json",
+        "manifestUrl": "/api/media/2026-07-03_5c5274c4/audio/b22d31a96dbdbe4ac09df4094bf01bee/manifest.json",
+        "failures": []
+      },
+      {
+        "articleId": "e252c401c3b42a217a383d24137dedde",
+        "manifestPath": "scripts/2026-07-03_5c5274c4/audio/e252c401c3b42a217a383d24137dedde/manifest.json",
+        "manifestUrl": "/api/media/2026-07-03_5c5274c4/audio/e252c401c3b42a217a383d24137dedde/manifest.json",
+        "failures": []
+      }
+    ],
+    "failures": []
+  }
+}

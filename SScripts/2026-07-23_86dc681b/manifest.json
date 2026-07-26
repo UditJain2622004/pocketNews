@@ -1,0 +1,112 @@
+{
+  "runId": "2026-07-23_86dc681b",
+  "runDate": "2026-07-23",
+  "cadence": "daily",
+  "episodeTitle": "The Screen, the Signal, the Sit-In",
+  "language": "en-IN",
+  "startedAt": "2026-07-26T04:00:25.427791+00:00",
+  "articlesFound": 81,
+  "articlesSelected": 3,
+  "selection": {
+    "articlesConsidered": 81,
+    "storiesSelected": 3,
+    "duplicateIdsRemoved": 0,
+    "similarHeadlinesRemoved": 10,
+    "maxArticlesPerCategory": 1,
+    "maxTotalStories": 3
+  },
+  "scriptsGenerated": 3,
+  "imagesGenerated": 15,
+  "generateImages": true,
+  "threeImagesPerStory": false,
+  "generateAudio": true,
+  "castMode": "auto",
+  "visualStyle": "animated",
+  "storyFormat": "mix",
+  "scripts": [
+    {
+      "articleId": "c110f15557264b3771aaea50a84487b6",
+      "sourceFile": "news/daily/2026-07-23/entertainment.json",
+      "scriptPath": "scripts/2026-07-23_86dc681b/c110f15557264b3771aaea50a84487b6.json",
+      "imagePaths": [
+        "scripts/2026-07-23_86dc681b/images/entertainment/c110f15557264b3771aaea50a84487b6/hook.png",
+        "scripts/2026-07-23_86dc681b/images/entertainment/c110f15557264b3771aaea50a84487b6/reference.png",
+        "scripts/2026-07-23_86dc681b/images/entertainment/c110f15557264b3771aaea50a84487b6/title-cue.png",
+        "scripts/2026-07-23_86dc681b/images/entertainment/c110f15557264b3771aaea50a84487b6/what-happened.png",
+        "scripts/2026-07-23_86dc681b/images/entertainment/c110f15557264b3771aaea50a84487b6/why-it-matters.png"
+      ]
+    },
+    {
+      "articleId": "2cb62926b1ea79020be0bc6afa6c5c64",
+      "sourceFile": "news/daily/2026-07-23/lifestyle.json",
+      "scriptPath": "scripts/2026-07-23_86dc681b/2cb62926b1ea79020be0bc6afa6c5c64.json",
+      "imagePaths": [
+        "scripts/2026-07-23_86dc681b/images/lifestyle/2cb62926b1ea79020be0bc6afa6c5c64/hook.png",
+        "scripts/2026-07-23_86dc681b/images/lifestyle/2cb62926b1ea79020be0bc6afa6c5c64/reference.png",
+        "scripts/2026-07-23_86dc681b/images/lifestyle/2cb62926b1ea79020be0bc6afa6c5c64/title-cue.png",
+        "scripts/2026-07-23_86dc681b/images/lifestyle/2cb62926b1ea79020be0bc6afa6c5c64/what-happened.png",
+        "scripts/2026-07-23_86dc681b/images/lifestyle/2cb62926b1ea79020be0bc6afa6c5c64/why-it-matters.png"
+      ]
+    },
+    {
+      "articleId": "10fbd0230e5e12efafe2d5f5b77fee6b",
+      "sourceFile": "news/daily/2026-07-23/politics.json",
+      "scriptPath": "scripts/2026-07-23_86dc681b/10fbd0230e5e12efafe2d5f5b77fee6b.json",
+      "imagePaths": [
+        "scripts/2026-07-23_86dc681b/images/politics/10fbd0230e5e12efafe2d5f5b77fee6b/hook.png",
+        "scripts/2026-07-23_86dc681b/images/politics/10fbd0230e5e12efafe2d5f5b77fee6b/reference.png",
+        "scripts/2026-07-23_86dc681b/images/politics/10fbd0230e5e12efafe2d5f5b77fee6b/takeaway.png",
+        "scripts/2026-07-23_86dc681b/images/politics/10fbd0230e5e12efafe2d5f5b77fee6b/what-happened.png",
+        "scripts/2026-07-23_86dc681b/images/politics/10fbd0230e5e12efafe2d5f5b77fee6b/why-it-matters.png"
+      ]
+    }
+  ],
+  "failures": [
+    {
+      "articleId": "c110f15557264b3771aaea50a84487b6",
+      "sourceFile": "news/daily/2026-07-23/entertainment.json",
+      "beatId": "takeaway",
+      "error": "OpenAI image edit request failed: Connection error."
+    },
+    {
+      "articleId": "2cb62926b1ea79020be0bc6afa6c5c64",
+      "sourceFile": "news/daily/2026-07-23/lifestyle.json",
+      "beatId": "takeaway",
+      "error": "OpenAI image edit request failed: Connection error."
+    },
+    {
+      "articleId": "10fbd0230e5e12efafe2d5f5b77fee6b",
+      "sourceFile": "news/daily/2026-07-23/politics.json",
+      "beatId": "title-cue",
+      "error": "OpenAI image edit request failed: Connection error."
+    }
+  ],
+  "audio": {
+    "runId": "2026-07-23_86dc681b",
+    "articlesRequested": 3,
+    "audioStoriesReady": 3,
+    "clipsGenerated": 36,
+    "clipsReused": 0,
+    "manifests": [
+      {
+        "articleId": "10fbd0230e5e12efafe2d5f5b77fee6b",
+        "manifestPath": "scripts/2026-07-23_86dc681b/audio/10fbd0230e5e12efafe2d5f5b77fee6b/manifest.json",
+        "manifestUrl": "/api/media/2026-07-23_86dc681b/audio/10fbd0230e5e12efafe2d5f5b77fee6b/manifest.json",
+        "failures": []
+      },
+      {
+        "articleId": "2cb62926b1ea79020be0bc6afa6c5c64",
+        "manifestPath": "scripts/2026-07-23_86dc681b/audio/2cb62926b1ea79020be0bc6afa6c5c64/manifest.json",
+        "manifestUrl": "/api/media/2026-07-23_86dc681b/audio/2cb62926b1ea79020be0bc6afa6c5c64/manifest.json",
+        "failures": []
+      },
+      {
+        "articleId": "c110f15557264b3771aaea50a84487b6",
+        "manifestPath": "scripts/2026-07-23_86dc681b/audio/c110f15557264b3771aaea50a84487b6/manifest.json",
+        "manifestUrl": "/api/media/2026-07-23_86dc681b/audio/c110f15557264b3771aaea50a84487b6/manifest.json",
+        "failures": []
+      }
+    ],
+    "failures": []
+  }
+}

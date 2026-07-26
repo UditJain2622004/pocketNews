@@ -1,0 +1,239 @@
+{
+  "article": {
+    "id": "fcf54beff0eb0bc313359113cbb757d2",
+    "title": "India vs Zimbabwe T20I series: Full schedule, squads, live streaming and all you need to know - livemint.com",
+    "summary": "India vs Zimbabwe T20I series: Full schedule, squads, live streaming and all you need to know livemint.com",
+    "full_text": "Team India will look to end their winless run in T20Is under new captain Shreyas Iyer when they take on Zimbabwe in a three-match series starting on Thursday, 23 July. All three matches will be played at the Harare Sports Club in Harare. Earlier in June, the BCCI appointed Shreyas Iyer as India's new T20I captain, replacing Suryakumar Yadav, who led the Men in Blue to their third T20 World Cup title. India's start under Iyer has been far from ideal. A two-match T20I series against Ireland in Belfast, which many expected India to win comfortably, ended in a shock 2-0 defeat. The struggles continued in England, where India lost the subsequent five-match T20I series 4-0. The opening match at Chester-le-Street was washed out due to rain, although India had posted 189/7 after fifties from Abhishek Sharma and Shreyas Iyer. Zimbabwe, meanwhile, have enjoyed an encouraging year. They stunned Australia and Sri Lanka during the group stage of the 2026 T20 World Cup to qualify for the Super Eights. Although they failed to win a match in the second round and exited the tournament, Zimbabwe earned widespread praise for their fearless brand of cricket and ability to challenge stronger opponents. With India desperate to rediscover their winning touch and Zimbabwe aiming to build on their recent progress, the three-match series promises to be an intriguing contest despite the visitors' superior ranking. The series also offers both teams an opportunity to build momentum as they continue their transition ahead of future international assignments. Fans in India can watch the India vs Zimbabwe T20I series live on Unite8 Sports TV channels. Live streaming will be available on the FanCode app and website. India and Zimbabwe have faced each other in 14 T20Is. India holds a dominant record with 11 wins, while Zimbabwe has won three matches. India: Shreyas Iyer (captain), Tilak Varma, Vaibhav Sooryavanshi, Abhishek Sharma, Ishan Kishan, Shivam Dube, Suryansh Shedge, Rinku Singh, Harsh Dubey, Ravi Bishnoi, Prince Yadav, Yash Thakur, Ashok Sharma, Mayank Yadav, Prabhsimran Singh. Zimbabwe: Sikandar Raza (Captain), Brian Bennett, Ryan Burl, Tanaka Chivanga, Ben Curran, Brad Evans, Wessly Madhevere, Tadiwanashe Marumani, Wellington Masakadza, Blessing Muzarabani, Dion Myers, Richard Ngarava, Newman Nyamhuri, Milton Shumba, Tafadzwa Tsiga Stay updated with all the latest news and insights on Cricket, Football, and Tennis at Livemint Sports. Log in to our website to save your bookmarks. It'll just take a moment. Oops! Looks like you have exceeded the limit to bookmark the image. Remove some to bookmark this image.",
+    "url": "https://www.livemint.com/sports/cricket-news/india-vs-zimbabwe-t20i-series-full-schedule-squads-live-streaming-and-all-you-need-to-know-11784631342573.html",
+    "language": "english",
+    "categories": [
+      "entertainment"
+    ],
+    "published_at": null,
+    "source_name": "livemint.com"
+  },
+  "sourceFile": "news/daily/2026-07-21/entertainment.json",
+  "story": {
+    "title": "The Harare Sofa Final",
+    "skipLabel": "India vs Zimbabwe T20I series schedule, squads and streaming",
+    "classification": {
+      "category": "Sports",
+      "subcategories": [
+        "Cricket"
+      ]
+    },
+    "creativeDirection": {
+      "genre": "comedy-drama",
+      "dramaticPremise": "Two flatmates race to claim their apartment society's only television room for India's opening T20I against Zimbabwe, but India's poor recent run and Zimbabwe's fearless form turn a confident watch party into a risky negotiation.",
+      "selectedFormat": "two-person-banter",
+      "performanceMode": "character-dialogue",
+      "castMode": "story_duo",
+      "visualStyle": "animated"
+    },
+    "dramaticSpine": {
+      "characterGoal": "Arjun wants to reserve the society TV room for India's three-match T20I series opener.",
+      "obstacle": "Meera refuses to give him the room unless he stops treating Zimbabwe as an easy opponent.",
+      "newsCatalyst": "The series starts Thursday, 23 July, all three matches are in Harare, and India arrive winless under new captain Shreyas Iyer after losing 2-0 to Ireland and 4-0 to England.",
+      "reversal": "Meera reveals Zimbabwe stunned Australia and Sri Lanka at the 2026 T20 World Cup, making Arjun's planned victory speech look foolish.",
+      "costOfFailure": "Arjun loses the room and the chance to host the opening match with his carefully prepared celebration.",
+      "emotionalTurn": "His confidence gives way to respect when Meera points out Zimbabwe's fearless progress.",
+      "resolution": "Arjun shares the room, switches the viewing plan to FanCode, and replaces his victory banner with a neutral series banner."
+    },
+    "visualBible": {
+      "setting": "A cramped Mumbai apartment society TV room corridor opening into the small common room, with a locked glass door, plastic chairs, one wall-mounted television, and a noticeboard.",
+      "colorAndLighting": "Warm late-evening corridor light, cool blue television glow, saturated animated-film colors, with red and green accents echoing both teams without using official logos.",
+      "recurringProps": [
+        "crumpled India victory banner",
+        "phone showing the FanCode app",
+        "key ring held by the society caretaker off-screen",
+        "two paper cups of chai"
+      ],
+      "storyArc": "Arjun begins as an overconfident host guarding the room; Meera punctures his certainty with India's recent defeats and Zimbabwe's progress; they finish by making space for a genuinely competitive series.",
+      "referenceImagePrompt": "Editorial animated-film scene in an Indian apartment society TV room corridor: Arjun, a lean young Indian man in a blue cricket jersey holding a crumpled victory banner, stands beside Meera, a sharp-eyed young Indian woman in a green hoodie holding a phone with a generic streaming interface; glass common-room door, plastic chairs, wall television, chai cups, warm corridor light and cool screen glow, expressive faces, cinematic composition, clean upper-third space, no text, logos, or watermark.",
+      "referenceImagePath": "scripts/2026-07-21_b9c797dd/images/entertainment/fcf54beff0eb0bc313359113cbb757d2/reference.png"
+    },
+    "cast": [
+      {
+        "id": "arjun",
+        "role": "Overconfident India supporter and would-be watch-party host",
+        "voiceProfile": "Bright, quick Indian-English male voice with playful swagger and clipped comic timing; starts breezy and certain, stumbles into nervous disbelief at the reversal, then ends warm and sheepish.",
+        "language": "en-IN",
+        "visualIdentity": "Lean young Indian man, tousled hair, blue cricket jersey, white sneakers, crumpled victory banner tucked under one arm."
+      },
+      {
+        "id": "meera",
+        "role": "Practical Zimbabwe-aware flatmate who wants the room shared fairly",
+        "voiceProfile": "Low, dry Indian-English female voice, measured pace with contained laughter; begins sceptical, sharpens during the argument, then softens into amused solidarity by the ending.",
+        "language": "en-IN",
+        "visualIdentity": "Young Indian woman with a short bob, green hoodie, black trousers, phone in hand, expressive raised eyebrow."
+      }
+    ],
+    "beats": [
+      {
+        "id": "title-cue",
+        "dramaticAction": "Arjun wedges his foot against the closing TV-room door and unfurls a victory banner before Meera can lock it.",
+        "turningPoint": "His private celebration plan becomes a public argument over who deserves the room.",
+        "visual": {
+          "kind": "character-reaction",
+          "durationSeconds": 8,
+          "caption": "India vs Zimbabwe T20I series: schedule, squads and streaming",
+          "imagePrompt": "Editorial animated-film frame of Arjun blocking a glass apartment society TV-room door with one foot, unfurling a crumpled blue victory banner, while Meera reaches for the handle; warm corridor lighting, cool television glow, chai cups on a plastic chair, medium-wide camera, comic tension, clear upper-third caption space, no text, logos, or watermark.",
+          "scenePrompt": "Continuous opening shot in the apartment society corridor as Arjun tries to claim the common TV room before Meera locks it.",
+          "continuityNotes": "Establish Arjun's blue jersey, Meera's green hoodie, the glass door, banner, phone, and chai cups; begin with the door moving shut.",
+          "motion": "slow push-in",
+          "imagePath": "scripts/2026-07-21_b9c797dd/images/entertainment/fcf54beff0eb0bc313359113cbb757d2/title-cue.png"
+        },
+        "lines": [
+          {
+            "speaker": "arjun",
+            "text": "India versus Zimbabwe, Thursday, 23 July. This room is booked for a victory lap."
+          },
+          {
+            "speaker": "meera",
+            "text": "Booked? You have not even survived India's last seven T20Is."
+          }
+        ]
+      },
+      {
+        "id": "hook",
+        "dramaticAction": "Meera snatches the banner and pulls Arjun away from the door as he fumbles for the key ring.",
+        "turningPoint": "Arjun's planned solo celebration is delayed, forcing him to defend India's new captain and recent form.",
+        "visual": {
+          "kind": "funny-metaphor",
+          "durationSeconds": 10,
+          "caption": "A new captain, a rough start",
+          "imagePrompt": "Animated-film close shot of Meera tugging the crumpled victory banner away while Arjun reaches awkwardly for a key ring, the common-room door half-shut behind them; exaggerated elastic motion, warm corridor light, blue screen spill, chai cups wobbling, low-angle camera, playful pressure, upper-third space, no text, logos, or watermark.",
+          "scenePrompt": "The argument becomes physical but harmless as Meera uses the banner to stop Arjun entering.",
+          "continuityNotes": "Keep the door half-shut and banner stretched between them; advance the action by moving both characters from the doorway toward the noticeboard.",
+          "motion": "gentle pan",
+          "imagePath": "scripts/2026-07-21_b9c797dd/images/entertainment/fcf54beff0eb0bc313359113cbb757d2/hook.png"
+        },
+        "lines": [
+          {
+            "speaker": "arjun",
+            "text": "New captain Shreyas Iyer. Fresh series. Fresh mood."
+          },
+          {
+            "speaker": "meera",
+            "text": "Fresh? Ireland beat them two-zero. England beat them four-zero. Your mood is doing dangerous work."
+          },
+          {
+            "speaker": "arjun",
+            "text": "That is why I need the big screen."
+          }
+        ]
+      },
+      {
+        "id": "what-happened",
+        "dramaticAction": "Meera hooks the door with her elbow, opens the FanCode app, and blocks Arjun from hanging the banner.",
+        "turningPoint": "She reveals Zimbabwe's 2026 T20 World Cup upsets, turning India's expected win into a contest Arjun can no longer dismiss.",
+        "visual": {
+          "kind": "character-reaction",
+          "durationSeconds": 12,
+          "caption": "Zimbabwe arrive with fearless momentum",
+          "imagePrompt": "Editorial animated-film medium shot: Meera braces the glass door with her elbow and raises her phone, while Arjun freezes halfway through hanging the banner; phone shows a generic streaming interface without readable text, noticeboard behind them, cool blue screen glow on faces, dramatic over-the-shoulder camera, surprised mood, upper-third caption-safe space, no text, logos, or watermark.",
+          "scenePrompt": "Meera stops the banner and uses the streaming phone as leverage while naming Zimbabwe's recent tournament progress.",
+          "continuityNotes": "The banner remains caught on the door handle; the phone is now visible; preserve the corridor lighting and character positions while rotating the conflict toward Meera.",
+          "motion": "slow push-in",
+          "imagePath": "scripts/2026-07-21_b9c797dd/images/entertainment/fcf54beff0eb0bc313359113cbb757d2/what-happened.png"
+        },
+        "lines": [
+          {
+            "speaker": "meera",
+            "text": "Zimbabwe stunned Australia and Sri Lanka at the 2026 T20 World Cup."
+          },
+          {
+            "speaker": "arjun",
+            "text": "You are using a phone to intimidate me?"
+          },
+          {
+            "speaker": "meera",
+            "text": "I am using facts. And FanCode streams all three matches."
+          }
+        ]
+      },
+      {
+        "id": "why-it-matters",
+        "dramaticAction": "Arjun tears down his victory banner, folds it under his arm, and drags two plastic chairs into the room instead.",
+        "turningPoint": "He abandons the solo celebration, but the limited room forces him to share the viewing plan with Meera.",
+        "visual": {
+          "kind": "cinematic-recreation",
+          "durationSeconds": 12,
+          "caption": "Three matches. One Harare venue. No easy night.",
+          "imagePrompt": "Animated-film wide shot of Arjun reluctantly folding the blue banner while dragging two plastic chairs into the common room; Meera holds the glass door open and watches with a knowing smile, wall television glowing, warm-to-cool mixed lighting, slightly elevated camera, mood shifting from rivalry to respect, clear upper-third space, no text, logos, or watermark.",
+          "scenePrompt": "Arjun physically changes the room from a victory display into a shared viewing setup.",
+          "continuityNotes": "Carry the phone and banner into the room; the door is now open, chairs move inward, and the television becomes the shared focal point without displaying readable text.",
+          "motion": "gentle pan",
+          "imagePath": "scripts/2026-07-21_b9c797dd/images/entertainment/fcf54beff0eb0bc313359113cbb757d2/why-it-matters.png"
+        },
+        "lines": [
+          {
+            "speaker": "arjun",
+            "text": "Fine. Two chairs. But India has beaten Zimbabwe eleven times in fourteen T20Is."
+          },
+          {
+            "speaker": "meera",
+            "text": "And Zimbabwe has won three. Enough to ruin your speech."
+          },
+          {
+            "speaker": "arjun",
+            "text": "Then no speech. Just cricket."
+          }
+        ]
+      },
+      {
+        "id": "takeaway",
+        "dramaticAction": "Arjun flips the banner to its blank side, tapes it above the television, and hands Meera one chai before pressing play on the stream.",
+        "turningPoint": "The room becomes a shared, cautious watch party, and Arjun chooses respect over a guaranteed India celebration.",
+        "visual": {
+          "kind": "summary-visual",
+          "durationSeconds": 10,
+          "caption": "Harare awaits: India vs Zimbabwe, three-match T20I series",
+          "imagePrompt": "Final editorial animated-film frame inside the common room: Arjun tapes the blank side of the crumpled banner above the glowing wall television, Meera accepts a chai beside him, two chairs aligned toward the screen, phone ready for streaming, warm faces against blue screen light, intimate wide camera, relieved comic mood, upper-third caption-safe space, no text, logos, or watermark.",
+          "scenePrompt": "The continuous scene ends as Arjun starts the stream and the two rivals sit together before the opening match.",
+          "continuityNotes": "Keep the same banner, phone, chairs, chai cups, clothing, and lighting; advance only to the shared final action and hold on their expectant faces.",
+          "motion": "slow push-in",
+          "imagePath": "scripts/2026-07-21_b9c797dd/images/entertainment/fcf54beff0eb0bc313359113cbb757d2/takeaway.png"
+        },
+        "lines": [
+          {
+            "speaker": "arjun",
+            "text": "Unite8 Sports TV or FanCode. Harare, all three matches. We watch properly."
+          },
+          {
+            "speaker": "meera",
+            "text": "Properly means no victory banner."
+          },
+          {
+            "speaker": "arjun",
+            "text": "Blank side only. Zimbabwe earned the suspense."
+          }
+        ]
+      }
+    ],
+    "exit": "Arjun presses play, Meera claims the better chair, and the former victory lap begins as a genuinely nervous shared watch.",
+    "storyId": "fcf54beff0eb0bc313359113cbb757d2",
+    "category": "Sports",
+    "sourceCategory": "entertainment",
+    "topics": [
+      "entertainment"
+    ],
+    "format": "mix",
+    "selectedFormat": "two-person-banter",
+    "requestedCastMode": "auto",
+    "requestedVisualStyle": "animated",
+    "sources": [
+      {
+        "name": "livemint.com",
+        "url": "https://www.livemint.com/sports/cricket-news/india-vs-zimbabwe-t20i-series-full-schedule-squads-live-streaming-and-all-you-need-to-know-11784631342573.html",
+        "publishedAt": null
+      }
+    ],
+    "durationSeconds": 52,
+    "entry": {
+      "direct": "The Harare Sofa Final",
+      "afterRelated": "Staying with this thread: The Harare Sofa Final.",
+      "afterUnrelated": "Different kind of plot twist: The Harare Sofa Final."
+    }
+  }
+}

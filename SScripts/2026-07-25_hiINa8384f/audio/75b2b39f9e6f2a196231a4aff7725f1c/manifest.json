@@ -1,0 +1,143 @@
+{
+  "articleId": "75b2b39f9e6f2a196231a4aff7725f1c",
+  "scriptPath": "scripts/2026-07-25_hiINa8384f/75b2b39f9e6f2a196231a4aff7725f1c.json",
+  "language": "hi-IN",
+  "model": "gpt-audio-1.5",
+  "voiceAssignments": {
+    "asha": "verse",
+    "kabir": "marin"
+  },
+  "clips": [
+    {
+      "clipId": "title-cue-0",
+      "beatId": "title-cue",
+      "lineIndex": 0,
+      "speaker": "Asha",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/title-cue/0.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/title-cue/0.wav",
+      "durationSeconds": 8.3,
+      "lineHash": "b95e2393c1636da8d5e1fcfe0fbcd44f928e63cfdc813bc52420c17657748d2e"
+    },
+    {
+      "clipId": "title-cue-1",
+      "beatId": "title-cue",
+      "lineIndex": 1,
+      "speaker": "Kabir",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/title-cue/1.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/title-cue/1.wav",
+      "durationSeconds": 4.9,
+      "lineHash": "92e79c6fb392fb1cdc47524122f6570795e40a981799a1004e009d9ac4beefb6"
+    },
+    {
+      "clipId": "hook-0",
+      "beatId": "hook",
+      "lineIndex": 0,
+      "speaker": "Kabir",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/hook/0.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/hook/0.wav",
+      "durationSeconds": 8.15,
+      "lineHash": "1756c34f9c263d33fd2bbc79187dc59fb7166367b498558d48232431ba2ff97a"
+    },
+    {
+      "clipId": "hook-1",
+      "beatId": "hook",
+      "lineIndex": 1,
+      "speaker": "Asha",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/hook/1.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/hook/1.wav",
+      "durationSeconds": 7.35,
+      "lineHash": "a5d00c73d906c5cf95f6fa99bf8563d443e87facd8a5d23b93ac7d20679778f1"
+    },
+    {
+      "clipId": "what-happened-0",
+      "beatId": "what-happened",
+      "lineIndex": 0,
+      "speaker": "Kabir",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/what-happened/0.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/what-happened/0.wav",
+      "durationSeconds": 5.0,
+      "lineHash": "013b230ed7d35ee146cc5e57e2103e4ed4d5dba9a0d2230e931b72c55d6acba6"
+    },
+    {
+      "clipId": "what-happened-1",
+      "beatId": "what-happened",
+      "lineIndex": 1,
+      "speaker": "Asha",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/what-happened/1.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/what-happened/1.wav",
+      "durationSeconds": 1.2,
+      "lineHash": "2bebf9509fe3cfcc480146703bcb0ae0d195e78225f968caffc331fb4cd5b650"
+    },
+    {
+      "clipId": "what-happened-2",
+      "beatId": "what-happened",
+      "lineIndex": 2,
+      "speaker": "Kabir",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/what-happened/2.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/what-happened/2.wav",
+      "durationSeconds": 7.25,
+      "lineHash": "53f29ee3b98ab934ff379771486d4eb19a9f8d8ae1f4188c0df01b0b465dcda8"
+    },
+    {
+      "clipId": "why-it-matters-0",
+      "beatId": "why-it-matters",
+      "lineIndex": 0,
+      "speaker": "Asha",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/why-it-matters/0.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/why-it-matters/0.wav",
+      "durationSeconds": 7.35,
+      "lineHash": "a7d8c2ac75d58bb8ec7711e19d481237ed37981abec0ff9919d8f7e8edbfecc1"
+    },
+    {
+      "clipId": "why-it-matters-1",
+      "beatId": "why-it-matters",
+      "lineIndex": 1,
+      "speaker": "Kabir",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/why-it-matters/1.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/why-it-matters/1.wav",
+      "durationSeconds": 4.5,
+      "lineHash": "b4fc1180a159ac90f5c439b9c135aa48f42d999cd81ac2c2301e74e84cd7536e"
+    },
+    {
+      "clipId": "why-it-matters-2",
+      "beatId": "why-it-matters",
+      "lineIndex": 2,
+      "speaker": "Asha",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/why-it-matters/2.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/why-it-matters/2.wav",
+      "durationSeconds": 3.7,
+      "lineHash": "c9b6430d6b5388f0e835d9f123f15ceb0d1e657f8f71d71cfa459553f6566b52"
+    },
+    {
+      "clipId": "takeaway-0",
+      "beatId": "takeaway",
+      "lineIndex": 0,
+      "speaker": "Kabir",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/takeaway/0.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/takeaway/0.wav",
+      "durationSeconds": 3.35,
+      "lineHash": "3dc43f68ad14950774bd9a7c0c17f4c6628f9eaafc938d8d1539e1eb48f227f5"
+    },
+    {
+      "clipId": "takeaway-1",
+      "beatId": "takeaway",
+      "lineIndex": 1,
+      "speaker": "Asha",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/takeaway/1.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/takeaway/1.wav",
+      "durationSeconds": 3.45,
+      "lineHash": "7223992f0a90ae7dd95449cbef8acbca21684cdad58018ae7e7e9d70393dd09d"
+    },
+    {
+      "clipId": "takeaway-2",
+      "beatId": "takeaway",
+      "lineIndex": 2,
+      "speaker": "Kabir",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/takeaway/2.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/75b2b39f9e6f2a196231a4aff7725f1c/takeaway/2.wav",
+      "durationSeconds": 3.3,
+      "lineHash": "008118f16a8c6a06e0fd2dccf36c0f7d2aa39bb3ab1b6c27d80c735cf8c0963c"
+    }
+  ],
+  "failures": []
+}

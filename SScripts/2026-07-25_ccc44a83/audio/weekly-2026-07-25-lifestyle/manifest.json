@@ -1,0 +1,143 @@
+{
+  "articleId": "weekly-2026-07-25-lifestyle",
+  "scriptPath": "scripts/2026-07-25_ccc44a83/weekly-2026-07-25-lifestyle.json",
+  "language": "en-IN",
+  "model": "gpt-audio-1.5",
+  "voiceAssignments": {
+    "rohan": "marin",
+    "meera": "cedar"
+  },
+  "clips": [
+    {
+      "clipId": "title-cue-0",
+      "beatId": "title-cue",
+      "lineIndex": 0,
+      "speaker": "rohan",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/title-cue/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/title-cue/0.wav",
+      "durationSeconds": 3.75,
+      "lineHash": "75403ef318bc31f309448a54159cec3b8f2d464d55045d1a4db45173e1556068"
+    },
+    {
+      "clipId": "title-cue-1",
+      "beatId": "title-cue",
+      "lineIndex": 1,
+      "speaker": "meera",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/title-cue/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/title-cue/1.wav",
+      "durationSeconds": 4.3,
+      "lineHash": "097682a9baedfc6fe7a0858bd151fc52334646277c572368364f0efafad90a2b"
+    },
+    {
+      "clipId": "hook-0",
+      "beatId": "hook",
+      "lineIndex": 0,
+      "speaker": "rohan",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/hook/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/hook/0.wav",
+      "durationSeconds": 4.35,
+      "lineHash": "0b02b75ba69e0db1673221147208500e4aee819f1e2154bc833448a1c701e52c"
+    },
+    {
+      "clipId": "hook-1",
+      "beatId": "hook",
+      "lineIndex": 1,
+      "speaker": "meera",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/hook/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/hook/1.wav",
+      "durationSeconds": 6.35,
+      "lineHash": "a67fa6fd20fe169453ee047d9f5130cd643ba1bbd013fc3a84ae8d3f4114604f"
+    },
+    {
+      "clipId": "what-happened-0",
+      "beatId": "what-happened",
+      "lineIndex": 0,
+      "speaker": "rohan",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/what-happened/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/what-happened/0.wav",
+      "durationSeconds": 3.2,
+      "lineHash": "c854eff730f087c69c3014fb7aaa5aa62ef3e787aaa661965f42b43deed6689b"
+    },
+    {
+      "clipId": "what-happened-1",
+      "beatId": "what-happened",
+      "lineIndex": 1,
+      "speaker": "meera",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/what-happened/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/what-happened/1.wav",
+      "durationSeconds": 8.15,
+      "lineHash": "527d68530c2e931637f9fdd160a5d9e8cf652c4a0f20a22486e15babe36a89c5"
+    },
+    {
+      "clipId": "why-it-matters-0",
+      "beatId": "why-it-matters",
+      "lineIndex": 0,
+      "speaker": "rohan",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/why-it-matters/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/why-it-matters/0.wav",
+      "durationSeconds": 4.15,
+      "lineHash": "85743724caaa606ba4c6f48e65750e4dd45561c114cc13ce3378f2d1ce4a5ed6"
+    },
+    {
+      "clipId": "why-it-matters-1",
+      "beatId": "why-it-matters",
+      "lineIndex": 1,
+      "speaker": "meera",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/why-it-matters/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/why-it-matters/1.wav",
+      "durationSeconds": 2.55,
+      "lineHash": "4ea062d5e0477af6d2457d69d202d993b353c8a8a4984122118790522f7f9385"
+    },
+    {
+      "clipId": "why-it-matters-2",
+      "beatId": "why-it-matters",
+      "lineIndex": 2,
+      "speaker": "rohan",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/why-it-matters/2.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/why-it-matters/2.wav",
+      "durationSeconds": 6.1,
+      "lineHash": "9b41edaff44749ebe2b7525d0a9d66ea4d1bbb681a8b22370279df72d25ec721"
+    },
+    {
+      "clipId": "takeaway-0",
+      "beatId": "takeaway",
+      "lineIndex": 0,
+      "speaker": "meera",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/takeaway/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/takeaway/0.wav",
+      "durationSeconds": 1.3,
+      "lineHash": "81fc3ad07c0d25810819346ae566482e0bee0a0ccb4fa5cd68d33939555892dd"
+    },
+    {
+      "clipId": "takeaway-1",
+      "beatId": "takeaway",
+      "lineIndex": 1,
+      "speaker": "rohan",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/takeaway/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/takeaway/1.wav",
+      "durationSeconds": 1.05,
+      "lineHash": "4a83ec653637345dd93c3d18138812710d9b27702a0dc2d99c32f3327b2d4ad8"
+    },
+    {
+      "clipId": "takeaway-2",
+      "beatId": "takeaway",
+      "lineIndex": 2,
+      "speaker": "meera",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/takeaway/2.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/takeaway/2.wav",
+      "durationSeconds": 2.1,
+      "lineHash": "0124370d3c805f5cfc86e4306db4f85d6a0a84af5d2eeb6eec4b235e3f8db7e7"
+    },
+    {
+      "clipId": "takeaway-3",
+      "beatId": "takeaway",
+      "lineIndex": 3,
+      "speaker": "rohan",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/takeaway/3.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/takeaway/3.wav",
+      "durationSeconds": 2.85,
+      "lineHash": "81efa16422a5bb40566120f5d146636e0353b5a6b52315c51d73e541245e1e49"
+    }
+  ],
+  "failures": []
+}

@@ -1,0 +1,94 @@
+{
+  "runId": "2026-07-24_0c3c4274",
+  "runDate": "2026-07-24",
+  "cadence": "daily",
+  "episodeTitle": "The Last Signal Between Us",
+  "language": "en-IN",
+  "startedAt": "2026-07-26T03:45:22.815770+00:00",
+  "articlesFound": 80,
+  "articlesSelected": 2,
+  "selection": {
+    "articlesConsidered": 80,
+    "storiesSelected": 2,
+    "duplicateIdsRemoved": 0,
+    "similarHeadlinesRemoved": 4,
+    "maxArticlesPerCategory": 1,
+    "maxTotalStories": 2,
+    "temporaryFocus": null,
+    "temporaryFocusMatches": 0
+  },
+  "scriptsGenerated": 2,
+  "imagesGenerated": 11,
+  "generateImages": true,
+  "threeImagesPerStory": false,
+  "generateAudio": true,
+  "castMode": "auto",
+  "visualStyle": "animated",
+  "storyFormat": "mix",
+  "requestedCategories": [
+    "business",
+    "entertainment",
+    "lifestyle",
+    "politics",
+    "science",
+    "sports",
+    "technology"
+  ],
+  "scripts": [
+    {
+      "articleId": "8176dca93c077e6e96e1a7dcc1f43a0e",
+      "sourceFile": "news/daily/2026-07-24/entertainment.json",
+      "scriptPath": "scripts/2026-07-24_0c3c4274/8176dca93c077e6e96e1a7dcc1f43a0e.json",
+      "imagePaths": [
+        "scripts/2026-07-24_0c3c4274/images/entertainment/8176dca93c077e6e96e1a7dcc1f43a0e/hook.png",
+        "scripts/2026-07-24_0c3c4274/images/entertainment/8176dca93c077e6e96e1a7dcc1f43a0e/reference.png",
+        "scripts/2026-07-24_0c3c4274/images/entertainment/8176dca93c077e6e96e1a7dcc1f43a0e/takeaway.png",
+        "scripts/2026-07-24_0c3c4274/images/entertainment/8176dca93c077e6e96e1a7dcc1f43a0e/title-cue.png",
+        "scripts/2026-07-24_0c3c4274/images/entertainment/8176dca93c077e6e96e1a7dcc1f43a0e/why-it-matters.png"
+      ]
+    },
+    {
+      "articleId": "b6a4368b898dbf84b099c4dcaa9efd53",
+      "sourceFile": "news/daily/2026-07-24/lifestyle.json",
+      "scriptPath": "scripts/2026-07-24_0c3c4274/b6a4368b898dbf84b099c4dcaa9efd53.json",
+      "imagePaths": [
+        "scripts/2026-07-24_0c3c4274/images/lifestyle/b6a4368b898dbf84b099c4dcaa9efd53/hook.png",
+        "scripts/2026-07-24_0c3c4274/images/lifestyle/b6a4368b898dbf84b099c4dcaa9efd53/reference.png",
+        "scripts/2026-07-24_0c3c4274/images/lifestyle/b6a4368b898dbf84b099c4dcaa9efd53/takeaway.png",
+        "scripts/2026-07-24_0c3c4274/images/lifestyle/b6a4368b898dbf84b099c4dcaa9efd53/title-cue.png",
+        "scripts/2026-07-24_0c3c4274/images/lifestyle/b6a4368b898dbf84b099c4dcaa9efd53/what-happened.png",
+        "scripts/2026-07-24_0c3c4274/images/lifestyle/b6a4368b898dbf84b099c4dcaa9efd53/why-it-matters.png"
+      ]
+    }
+  ],
+  "failures": [
+    {
+      "articleId": "8176dca93c077e6e96e1a7dcc1f43a0e",
+      "sourceFile": "news/daily/2026-07-24/entertainment.json",
+      "beatId": "what-happened",
+      "error": "OpenAI image edit request failed: Error code: 400 - {'error': {'message': 'Your request was rejected by the safety system. If you believe this is an error, contact us at help.openai.com and include the request ID c20f0d74-9b0b-4095-beb1-0c4f3095c0dc.', 'type': 'image_generation_user_error', 'param': None, 'code': 'moderation_blocked', 'moderation_details': {'moderation_stage': 'output', 'categories': ['other']}}}"
+    }
+  ],
+  "audio": {
+    "runId": "2026-07-24_0c3c4274",
+    "articlesRequested": 2,
+    "audioStoriesReady": 2,
+    "clipsGenerated": 26,
+    "clipsReused": 0,
+    "manifests": [
+      {
+        "articleId": "8176dca93c077e6e96e1a7dcc1f43a0e",
+        "manifestPath": "scripts/2026-07-24_0c3c4274/audio/8176dca93c077e6e96e1a7dcc1f43a0e/manifest.json",
+        "manifestUrl": "/api/media/2026-07-24_0c3c4274/audio/8176dca93c077e6e96e1a7dcc1f43a0e/manifest.json",
+        "failures": []
+      },
+      {
+        "articleId": "b6a4368b898dbf84b099c4dcaa9efd53",
+        "manifestPath": "scripts/2026-07-24_0c3c4274/audio/b6a4368b898dbf84b099c4dcaa9efd53/manifest.json",
+        "manifestUrl": "/api/media/2026-07-24_0c3c4274/audio/b6a4368b898dbf84b099c4dcaa9efd53/manifest.json",
+        "failures": []
+      }
+    ],
+    "failures": []
+  }
+}
