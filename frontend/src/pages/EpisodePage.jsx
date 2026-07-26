@@ -182,7 +182,7 @@ export default function EpisodePage({ episodeId, token }) {
             const playback = await playbackResponse.json()
             runId = playback.runId
             manifest = { scripts: playback.scripts || [] }
-            
+
             if (!currentLanguage && playback.requestedLanguage) {
               setCurrentLanguage(playback.requestedLanguage)
             }
@@ -225,14 +225,14 @@ export default function EpisodePage({ episodeId, token }) {
         }
         if (!active) return
         setStories(playableStories)
-        
+
         // Preserve storyIndex and trackIndex across language reloads, recalculating elapsed time
         setStoryIndex((prevStoryIdx) => {
           const nextStoryIdx = prevStoryIdx < playableStories.length ? prevStoryIdx : 0
           setTrackIndex((prevTrackIdx) => {
             const nextStory = playableStories[nextStoryIdx]
             const nextTrackIdx = nextStory && prevTrackIdx < nextStory.tracks.length ? prevTrackIdx : 0
-            
+
             const elapsedBeforeStories = playableStories
               .slice(0, nextStoryIdx)
               .flatMap((story) => story.tracks)
@@ -241,7 +241,7 @@ export default function EpisodePage({ episodeId, token }) {
               ? nextStory.tracks.slice(0, nextTrackIdx).reduce((sum, track) => sum + track.duration, 0)
               : 0
             setElapsed(elapsedBeforeStories + elapsedInStory)
-            
+
             return nextTrackIdx
           })
           return nextStoryIdx
@@ -313,7 +313,7 @@ export default function EpisodePage({ episodeId, token }) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
       body: JSON.stringify({ eventId, storyId: story.storyId, event, progressRatio }),
-    }).catch(() => {})
+    }).catch(() => { })
   }
 
   const currentStoryProgress = () => {
@@ -424,11 +424,10 @@ export default function EpisodePage({ episodeId, token }) {
                         setCurrentLanguage(lang)
                         setShowLangDropdown(false)
                       }}
-                      className={`w-full text-left px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                        currentLanguage === lang
+                      className={`w-full text-left px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${currentLanguage === lang
                           ? 'bg-[#E11D48] text-white'
                           : 'text-zinc-700 hover:bg-zinc-100'
-                      }`}
+                        }`}
                     >
                       {lang}
                     </button>
@@ -437,7 +436,7 @@ export default function EpisodePage({ episodeId, token }) {
               )}
             </div>
           )}
-          <a href="/" className="rounded-full border border-zinc-300/80 bg-white/50 px-4 py-2 font-bold text-zinc-700 shadow-sm transition hover:border-[#E11D48]/50 hover:text-[#E11D48]">Back to library</a>
+          <a href="/home" className="rounded-full border border-zinc-300/80 bg-white/50 px-4 py-2 font-bold text-zinc-700 shadow-sm transition hover:border-[#E11D48]/50 hover:text-[#E11D48]">Back to library</a>
         </div>
       </header>
 
@@ -457,7 +456,7 @@ export default function EpisodePage({ episodeId, token }) {
                 <span className="animate-spin text-sm">⏳</span>
                 <span>Translating episode to {currentLanguage || 'selected language'}... playing English audio meanwhile.</span>
               </div>
-              <button 
+              <button
                 type="button"
                 onClick={() => setRefreshCounter((c) => c + 1)}
                 className="text-[10px] font-black uppercase tracking-wider text-amber-950 underline hover:no-underline cursor-pointer"
@@ -479,7 +478,7 @@ export default function EpisodePage({ episodeId, token }) {
                 <div className="mb-4 flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.18em] text-fuchsia-300">
                   <span>{currentStory.category}</span><span className="text-white/30">/</span><span className="text-white/55">{beatLabel}</span>
                 </div>
-                <p className="max-w-3xl text-lg font-bold leading-snug tracking-tight sm:text-2xl">{currentTrack.text}</p>
+                <p className="max-w-3xl text-sm font-bold leading-normal sm:text-lg">{currentTrack.text}</p>
               </div>
             )}
             {activeInteraction && (
@@ -562,10 +561,10 @@ export default function EpisodePage({ episodeId, token }) {
               <div className="h-full rounded-full bg-gradient-to-r from-[#E11D48] via-[#EC4899] to-[#7C3AED] transition-[width] duration-200" style={{ width: `${progress}%` }} />
             </div>
             <div className="flex items-center justify-center gap-2 sm:justify-start">
-                <button type="button" aria-label="Previous story" onClick={() => moveTrack(-1)} className="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-base text-white/70 transition hover:border-white/40 hover:text-white">‹</button>
-                <button type="button" onClick={playing ? pause : play} className="flex h-10 items-center gap-2 rounded-full bg-gradient-to-r from-fuchsia-600 to-pink-500 px-5 text-xs font-extrabold shadow-[0_8px_24px_-10px_rgba(236,72,153,0.8)] transition hover:brightness-110">{playing ? 'Pause' : 'Play episode'} <span className="text-base">{playing ? 'Ⅱ' : '▷'}</span></button>
-                <button type="button" aria-label="Next story" onClick={() => moveTrack(1)} className="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-base text-white/70 transition hover:border-white/40 hover:text-white">›</button>
-                <button type="button" onClick={skipStory} className="ml-1 hidden rounded-full border border-white/10 px-3 py-2 text-[11px] font-extrabold text-white/45 transition hover:border-white/30 hover:text-white sm:block">Skip story</button>
+              <button type="button" aria-label="Previous story" onClick={() => moveTrack(-1)} className="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-base text-white/70 transition hover:border-white/40 hover:text-white">‹</button>
+              <button type="button" onClick={playing ? pause : play} className="flex h-10 items-center gap-2 rounded-full bg-gradient-to-r from-fuchsia-600 to-pink-500 px-5 text-xs font-extrabold shadow-[0_8px_24px_-10px_rgba(236,72,153,0.8)] transition hover:brightness-110">{playing ? 'Pause' : 'Play episode'} <span className="text-base">{playing ? 'Ⅱ' : '▷'}</span></button>
+              <button type="button" aria-label="Next story" onClick={() => moveTrack(1)} className="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-base text-white/70 transition hover:border-white/40 hover:text-white">›</button>
+              <button type="button" onClick={skipStory} className="ml-1 hidden rounded-full border border-white/10 px-3 py-2 text-[11px] font-extrabold text-white/45 transition hover:border-white/30 hover:text-white sm:block">Skip story</button>
             </div>
 
             {/* Meaningful Reactions Row */}
@@ -613,6 +612,19 @@ export default function EpisodePage({ episodeId, token }) {
             </div>
             <span className="text-xs font-bold text-zinc-400">{stories.length} stories</span>
           </div>
+<<<<<<< HEAD
+            <div className="max-h-[34rem] space-y-1 overflow-y-auto pr-1 scrollbar-none">
+              {stories.map((story, index) => (
+                <button key={`${story.title}-${index}`} type="button" onClick={() => selectStory(index)} className={`group relative flex w-full items-center gap-4 rounded-xl px-3 py-4 text-left transition ${index === storyIndex ? 'bg-[#E11D48]/10' : 'hover:bg-zinc-100/70'}`}>
+                  <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-full border text-xs font-black ${index === storyIndex ? 'border-[#E11D48] bg-[#E11D48]/10 text-[#E11D48]' : 'border-zinc-200 bg-white/70 text-zinc-400'}`}>{String(index + 1).padStart(2, '0')}</span>
+                  <span className="min-w-0">
+                    <span className={`block truncate text-[15px] font-extrabold ${index === storyIndex ? 'text-zinc-900' : 'text-zinc-700 group-hover:text-zinc-900'}`}>{story.title}</span>
+                    <span className={`mt-0.5 block text-xs font-semibold ${index === storyIndex ? 'text-white/70' : 'text-slate-400'}`}>{story.category} · {formatTime(story.duration)}</span>
+                  </span>
+                </button>
+              ))}
+            </div></>}
+=======
           <div className="max-h-[34rem] space-y-1 overflow-y-auto pr-1 scrollbar-none">
             {stories.map((story, index) => (
               <button key={`${story.title}-${index}`} type="button" onClick={() => selectStory(index)} className={`group relative flex w-full items-center gap-4 rounded-xl px-3 py-4 text-left transition ${index === storyIndex ? 'bg-[#E11D48]/10' : 'hover:bg-zinc-100/70'}`}>
@@ -741,6 +753,7 @@ export default function EpisodePage({ episodeId, token }) {
             </div>
           )}
 
+>>>>>>> 886d0f3f3fa6f34579a46ce29aae0f14f9d1f531
           {sidePanel === 'about' && <div className="py-7"><p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#E11D48]">Sources used</p><h2 className="mt-2 text-2xl font-black tracking-tight text-zinc-900">{currentStory?.title || 'Current story'}</h2><div className="mt-6 space-y-3">{(currentStory?.sources || []).map((source, index) => <a key={`${source.url}-${index}`} href={source.url || '#'} target="_blank" rel="noreferrer" className="block rounded-xl border border-zinc-200 bg-white/65 p-4 transition hover:border-[#E11D48]/40"><p className="font-extrabold text-zinc-800">{source.name || 'Original source'}</p><p className="mt-1 truncate text-xs text-zinc-500">{source.publishedAt || 'Publication date unavailable'}</p></a>)}{!(currentStory?.sources || []).length && <p className="text-sm font-semibold text-zinc-500">No source link was saved for this story.</p>}</div></div>}
         </aside>
       </section>
@@ -754,19 +767,19 @@ function buildStory(script, audioManifest, stem, episodeId, entryStoryId) {
   const clips = new Map((audioManifest.clips || []).map((clip) => [`${clip.beatId}-${clip.lineIndex}`, clip]))
   const canRecover = (audioManifest.failures || []).length > 0
   const tracks = []
-  ;(story.beats || []).forEach((beat) => (beat.lines || []).forEach((line, lineIndex) => {
-    const clip = clips.get(`${beat.id}-${lineIndex}`)
-    const fallback = canRecover ? mediaUrl(episodeId, `audio/${stem}/${beat.id}/${lineIndex}.wav`) : ''
-    if (!clip?.url && !fallback) return
-    tracks.push({
-      url: clip?.url ? `${API_BASE}${clip.url}` : fallback,
-      duration: safeDuration(clip?.durationSeconds, line.text),
-      text: line.text,
-      speaker: line.speaker,
-      image: beat.visual?.imagePath ? mediaUrl(episodeId, beat.visual.imagePath) : '',
-      beatId: beat.id,
-    })
-  }))
+    ; (story.beats || []).forEach((beat) => (beat.lines || []).forEach((line, lineIndex) => {
+      const clip = clips.get(`${beat.id}-${lineIndex}`)
+      const fallback = canRecover ? mediaUrl(episodeId, `audio/${stem}/${beat.id}/${lineIndex}.wav`) : ''
+      if (!clip?.url && !fallback) return
+      tracks.push({
+        url: clip?.url ? `${API_BASE}${clip.url}` : fallback,
+        duration: safeDuration(clip?.durationSeconds, line.text),
+        text: line.text,
+        speaker: line.speaker,
+        image: beat.visual?.imagePath ? mediaUrl(episodeId, beat.visual.imagePath) : '',
+        beatId: beat.id,
+      })
+    }))
   return {
     storyId: story.storyId || entryStoryId || '',
     title: story.title || 'Untitled story',
