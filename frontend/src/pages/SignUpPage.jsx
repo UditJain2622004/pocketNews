@@ -2,15 +2,7 @@ import React, { useState, useEffect } from 'react'
 import SignUpForm from '../components/auth/SignUpForm'
 import InterestSelector from '../components/auth/InterestSelector'
 import { API_BASE } from '../api'
-
-const DEFAULT_SUGGESTIONS = {
-  "Technology": ["Artificial Intelligence", "Web Development", "Mobile Applications", "Cybersecurity", "Blockchain"],
-  "Politics": ["Elections", "International Relations", "Policy & Laws", "Local Government"],
-  "Exams": ["College Entrance", "Civil Services", "Certifications", "Admissions"],
-  "Entertainment": ["Movies", "Music", "Gaming", "Celebrity News", "Television"],
-  "Sports": ["Cricket", "Football", "Basketball", "Tennis", "Athletics"],
-  "Science": ["Space Exploration", "Physics", "Biology", "Environment", "Medicine"]
-}
+import { PROFILE_TAXONOMY } from '../taxonomy'
 
 export default function SignUpPage({ onSignupSuccess, onCancel, onSwitchToSignIn }) {
   const [step, setStep] = useState(1) // 1: Credentials, 2: Interest Selector
@@ -24,7 +16,7 @@ export default function SignUpPage({ onSignupSuccess, onCancel, onSwitchToSignIn
   const [selectedSubtopics, setSelectedSubtopics] = useState([])
 
   // Suggestions state (starts with defaults)
-  const [suggestions, setSuggestions] = useState(DEFAULT_SUGGESTIONS)
+  const [suggestions, setSuggestions] = useState(PROFILE_TAXONOMY)
   const [loading, setLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
   const [successMsg, setSuccessMsg] = useState('')

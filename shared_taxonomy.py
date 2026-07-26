@@ -1,22 +1,114 @@
-"""Single category source for collection, stories, and user preferences."""
+"""Canonical PocketNews taxonomy for profiles, collection, and story classification."""
 from __future__ import annotations
 
+
 PROFILE_TAXONOMY = {
-    "Technology": ["Artificial Intelligence", "Web Development", "Mobile Applications", "Cybersecurity", "Blockchain"],
-    "Sports": ["Cricket", "Football", "Basketball", "Tennis", "Athletics"],
-    "Business": ["Finance", "Stocks", "Real Estate", "Startups", "Cryptocurrency"],
-    "Entertainment": ["Movies", "Music", "Gaming", "Celebrity News", "Television"],
-    "Science": ["Space Exploration", "Physics", "Biology", "Environment", "Medicine"],
-    "Lifestyle": ["Health & Fitness", "Travel", "Food & Cooking", "Fashion", "DIY"],
+    "Technology": [
+        "Artificial Intelligence",
+        "Apps & Gadgets",
+        "Cybersecurity",
+        "Startups & Innovation",
+        "Space Tech",
+    ],
+    "Sports": ["Cricket", "Football", "Badminton", "Kabaddi", "Athletics"],
+    "Business": [
+        "Markets & Economy",
+        "Startups",
+        "Personal Finance",
+        "Companies",
+        "Crypto & Fintech",
+    ],
+    "Entertainment": [
+        "Movies & OTT",
+        "Music",
+        "Gaming",
+        "Creators & Celebrity",
+        "Television",
+    ],
+    "Science": [
+        "Space Exploration",
+        "Climate & Environment",
+        "Health & Medicine",
+        "Research & Discovery",
+        "Biology",
+    ],
+    "Lifestyle": [
+        "Health & Fitness",
+        "Travel",
+        "Food & Culture",
+        "Fashion & Beauty",
+        "Campus & Careers",
+    ],
 }
 
+# Queries are deliberately simple: Google News adds the India constraint at fetch time.
 COLLECTOR_TAXONOMY = {
-    "technology": {"display": "Technology", "rss_topic": "TECHNOLOGY", "query": "technology OR AI OR cybersecurity"},
-    "sports": {"display": "Sports", "rss_topic": "SPORTS", "query": "sports OR cricket OR football"},
-    "business": {"display": "Business", "rss_topic": "BUSINESS", "query": "business OR markets OR finance"},
-    "entertainment": {"display": "Entertainment", "rss_topic": "ENTERTAINMENT", "query": "entertainment OR movies OR music"},
-    "science": {"display": "Science", "rss_topic": "SCIENCE", "query": "science OR space OR health research"},
-    "lifestyle": {"display": "Lifestyle", "rss_topic": "HEALTH", "query": "lifestyle OR travel OR wellness"},
+    "technology": {
+        "display": "Technology",
+        "rss_topic": "TECHNOLOGY",
+        "sub_topics": {
+            "artificial_intelligence": {"display": "Artificial Intelligence", "query": "AI OR artificial intelligence OR machine learning"},
+            "apps_gadgets": {"display": "Apps & Gadgets", "query": "apps OR smartphones OR gadgets OR mobile technology"},
+            "cybersecurity": {"display": "Cybersecurity", "query": "cybersecurity OR data breach OR online security"},
+            "startups_innovation": {"display": "Startups & Innovation", "query": "startups OR innovation OR venture capital"},
+            "space_tech": {"display": "Space Tech", "query": "space technology OR satellite OR ISRO"},
+        },
+    },
+    "sports": {
+        "display": "Sports",
+        "rss_topic": "SPORTS",
+        "sub_topics": {
+            "cricket": {"display": "Cricket", "query": "cricket"},
+            "football": {"display": "Football", "query": "football"},
+            "badminton": {"display": "Badminton", "query": "badminton"},
+            "kabaddi": {"display": "Kabaddi", "query": "kabaddi"},
+            "athletics": {"display": "Athletics", "query": "athletics OR track and field"},
+        },
+    },
+    "business": {
+        "display": "Business",
+        "rss_topic": "BUSINESS",
+        "sub_topics": {
+            "markets_economy": {"display": "Markets & Economy", "query": "markets OR economy OR RBI"},
+            "startups": {"display": "Startups", "query": "startups OR funding OR venture capital"},
+            "personal_finance": {"display": "Personal Finance", "query": "personal finance OR mutual funds OR income tax"},
+            "companies": {"display": "Companies", "query": "companies OR corporate earnings OR mergers"},
+            "crypto_fintech": {"display": "Crypto & Fintech", "query": "fintech OR digital payments OR cryptocurrency"},
+        },
+    },
+    "entertainment": {
+        "display": "Entertainment",
+        "rss_topic": "ENTERTAINMENT",
+        "sub_topics": {
+            "movies_ott": {"display": "Movies & OTT", "query": "movies OR OTT OR streaming"},
+            "music": {"display": "Music", "query": "music OR concert OR album"},
+            "gaming": {"display": "Gaming", "query": "gaming OR esports OR video games"},
+            "creators_celebrity": {"display": "Creators & Celebrity", "query": "creators OR influencers OR celebrity"},
+            "television": {"display": "Television", "query": "television OR TV series"},
+        },
+    },
+    "science": {
+        "display": "Science",
+        "rss_topic": "SCIENCE",
+        "sub_topics": {
+            "space_exploration": {"display": "Space Exploration", "query": "space exploration OR ISRO OR rocket launch"},
+            "climate_environment": {"display": "Climate & Environment", "query": "climate OR environment OR pollution"},
+            "health_medicine": {"display": "Health & Medicine", "query": "health OR medicine OR medical research"},
+            "research_discovery": {"display": "Research & Discovery", "query": "scientific research OR discovery"},
+            "biology": {"display": "Biology", "query": "biology OR genetics OR wildlife science"},
+        },
+    },
+    "lifestyle": {
+        "display": "Lifestyle",
+        "rss_topic": "HEALTH",
+        "sub_topics": {
+            "health_fitness": {"display": "Health & Fitness", "query": "fitness OR wellness OR mental health"},
+            "travel": {"display": "Travel", "query": "travel OR tourism OR destinations"},
+            "food_culture": {"display": "Food & Culture", "query": "food OR restaurants OR culture"},
+            "fashion_beauty": {"display": "Fashion & Beauty", "query": "fashion OR beauty OR style"},
+            "campus_careers": {"display": "Campus & Careers", "query": "campus OR college OR careers OR jobs"},
+        },
+    },
 }
 
 
