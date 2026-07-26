@@ -1,0 +1,208 @@
+{
+  "article": {
+    "id": "55a60cda11ff7c6ef245a4b0e4705502",
+    "title": "Report: Apple and Micron clash before Trump over Chinese memory chips - 9to5Mac",
+    "summary": "Report: Apple and Micron clash before Trump over Chinese memory chips 9to5MacExclusive | Trump Caught Between Apple and Micron in Fight Over Chinese Chips WSJApple’s China chip gamble: Is it ready to bet on Pentagon-blacklisted CXMT and YMTC to win the AI race? livemint.comMicron CEO Sanjay Mehrotra’s Bad Blood With Apple Traces Back Years, Report Reveals Amid Chip Standoff & Efforts To Procure From China’s CXMT WccftechMicron urges White House to reject Apple's blacklist memory plan AppleInsider",
+    "full_text": "The Wall Street Journal reports that Micron is pressing the Trump administration to block Apple’s push to use memory chips from Chinese suppliers. Here are the details. Last month, just before Apple hiked prices for several of its products due to the ongoing memory shortage, Tim Cook gave an interview to The Wall Street Journal, where he suggested that the US should reconsider its decision to restrict access to certain Chinese suppliers. In the days that followed, the Journal reported that Apple had already been seeking clearance from the administration to purchase chips from China’s ChangXin Memory Technologies (CXMT). At the same time, the Financial Times said Apple was in negotiations to purchase chips from Yangtze Memory Technologies (YMTC). The FT would go on to claim Apple was already testing DRAM chips from CXMT. For context, CXMT and YMTC have been designated as Chinese military companies by the Pentagon, and YMTC is also on the Commerce Department’s Entity List. This does not necessarily prohibit Apple from using their chips in products sold outside the US, but it has made any potential deal politically sensitive and prompted pushback against the company in the past. Now, the Journal reports that as Apple has continued to push the Trump administration to approve the use of Chinese memory chips in products sold outside the US, rather than just in the Chinese market, it has faced opposition from Micron, which is lobbying officials to block the plan. In recent weeks, Apple Chief Executive Tim Cook and top executives have pitched Trump and officials including Commerce Secretary Howard Lutnick and Treasury Secretary Scott Bessent on a plan to use memory chips from China’s ChangXin Memory Technologies and Yangtze Memory Technologies in Apple products sold outside the U.S., people familiar with the discussions said. Those arguments have been countered by Micron, the only sizable U.S. maker of memory chips. Micron executives including CEO Sanjay Mehrotra have warned Lutnick and other administration officials that allowing CXMT and other Chinese companies to sell to U.S. tech companies, regardless of the region of sale, could destroy the domestic industry the same way China played a role in decimating U.S. steel and manufacturing plants, the people said. In a nutshell, the general argument against Apple’s plan is that sourcing memory from heavily state-subsidized Chinese suppliers, even if only for the Chinese market, could ultimately undercut US producers and weaken competition. Additionally, the Journal reports that Micro says that it can help ease the shortage by accelerating construction of domestic plants and increasing US investment. Just a few weeks ago, a Micron executive suggested that Apple’s aggressive purchasing tactics had helped fuel the memory shortage, telling the Journal that “a couple of [its] customers” had been “very aggressive with pricing” during the 2023 market downturn. He went on to argue that those rock-bottom prices discouraged investment in additional production capacity, helping lay the groundwork for today’s supply crunch. Back to the report, the Journal says this dispute between Apple and Micron has put the Trump administration in an uncomfortable position, as “the lobbying fight will likely force Trump to choose between two of his top economic priorities: cutting prices for U.S. consumers and increasing domestic semiconductor production to reduce dependence on other countries.” Apple, for its part, has spent the better part of the past two years touting investments such as its $600 billion American Manufacturing Program, along with deals with Intel and, more recently, a S30 billion agreement with Broadcom. This spending has widely been seen as an effort to build goodwill with the administration, giving Apple political capital to offset controversial requests such as its push to source memory chips from restricted Chinese suppliers. Micron, on the other hand, has seen its valuation follow the broader memory market. Its stock is up 191% year-to-date, and 727% over the past 12 months, though it has experienced considerable volatility in recent weeks. Shares are currently trading 23% below their late-June all-time high, and fell 6.99% today alone. In a statement to the Journal, a White House spokesperson offered little direct indication of how the administration plans to square Apple’s and Micron’s competing priorities, saying only that it would pursue “investments and economic relief for the American people while safeguarding our national security.” Do you think the Trump administration should let Apple source components from CXMT and YMTC? Let us know in the comments. Marcus Mendes is a Brazilian tech podcaster and journalist who has been closely following Apple since the mid-2000s. He began covering Apple news in Brazilian media in 2012 and later broadened his focus to the wider tech industry, hosting a daily podcast for seven years.",
+    "url": "https://9to5mac.com/2026/07/24/report-apple-and-micron-clash-before-trump-over-chinese-memory-chips/",
+    "language": "english",
+    "categories": [
+      "business"
+    ],
+    "published_at": null,
+    "source_name": "9to5mac.com"
+  },
+  "sourceFile": "news/daily/2026-07-01/business.json",
+  "story": {
+    "title": "The Chip on My Desk",
+    "skipLabel": "Apple-Micron Chinese memory-chip clash",
+    "classification": {
+      "category": "Business",
+      "subcategories": [
+        "Finance"
+      ]
+    },
+    "creativeDirection": {
+      "genre": "tense workplace drama",
+      "dramaticPremise": "A fictional Indian hardware founder must send a low-cost device proposal tonight, but a report about Apple and Micron fighting over Chinese memory chips makes her question the supply plan behind it.",
+      "performanceMode": "solo-character-hot-take",
+      "castMode": "solo_host",
+      "visualStyle": "animated"
+    },
+    "dramaticSpine": {
+      "characterGoal": "Send a competitive device proposal before her investor's deadline.",
+      "obstacle": "The proposal depends on a cheaper memory-sourcing route whose political and industry risks have suddenly become impossible to ignore.",
+      "newsCatalyst": "A Wall Street Journal report says Apple is seeking approval to use memory chips from China's CXMT and YMTC in products sold outside the US, while Micron is lobbying officials to block the plan.",
+      "reversal": "The apparent shortcut is not simply a price decision: Micron argues subsidised Chinese suppliers could weaken US memory production, while Apple argues lower prices matter amid a shortage.",
+      "costOfFailure": "She may miss the deadline and lose the chance to launch her device at an affordable price.",
+      "emotionalTurn": "Her excitement over a cheap component turns into uneasy respect for the supply chain behind it.",
+      "resolution": "She sends a revised proposal that pauses the risky sourcing promise and commits only to a transparent cost review."
+    },
+    "visualBible": {
+      "setting": "A cramped animated hardware workshop in Bengaluru at night, with one workbench, a half-built handheld device, soldering tools, sample memory packages, and a laptop showing an unsent proposal without readable text.",
+      "colorAndLighting": "Midnight indigo shadows cut by a warm amber desk lamp; cool blue light from the laptop; the palette shifts from energetic orange to cautious blue by the ending.",
+      "recurringProps": [
+        "matte teal handheld-device prototype with exposed circuit board",
+        "red ceramic tea cup",
+        "small anti-static pouch with an abstract silver component",
+        "yellow deadline sticky note with no readable writing"
+      ],
+      "storyArc": "The founder begins rushing to lock in a low price, discovers the Apple-Micron dispute, nearly sends the original plan, then chooses a slower and more honest proposal.",
+      "referenceImagePrompt": "Editorial animated-film still of one fictional Indian woman hardware founder in her early thirties, curly black hair tied loosely, round glasses, mustard hoodie under a navy utility vest, seated at a cluttered Bengaluru workshop bench beside a matte teal handheld-device prototype, red ceramic tea cup, anti-static pouch, laptop, soldering tools and a yellow blank sticky note; midnight indigo room, warm amber desk lamp, cool laptop glow, cinematic intimate framing, no text, logos, or watermark."
+    },
+    "cast": [
+      {
+        "id": "anika",
+        "role": "fictional hardware founder and solo hot-take performer",
+        "voiceProfile": "Warm, quick Indian-English voice with a slightly husky texture; starts in clipped, breathless deadline mode, uses intimate self-talk and tiny incredulous laughs, then slows into worried pauses and finishes with firm relieved resolve; stress rises sharply at the reversal, with comic timing on the tea-cup and deadline beats.",
+        "language": "en-IN",
+        "visualIdentity": "Indian woman in her early thirties, curly black hair loosely tied, round glasses, mustard hoodie, navy utility vest, silver watch, ink-stained fingers"
+      }
+    ],
+    "beats": [
+      {
+        "id": "title-cue",
+        "dramaticAction": "Anika reaches for the sealed component pouch, then freezes as the report on her laptop catches her eye.",
+        "turningPoint": "Her simple purchase decision becomes entangled with a public fight over who should supply memory chips.",
+        "visual": {
+          "kind": "factual-visual",
+          "durationSeconds": 11,
+          "caption": "Apple and Micron clash over Chinese memory chips",
+          "imagePrompt": "Editorial animated-film close-up of Anika's ink-stained hand stopping above an anti-static pouch beside the matte teal handheld-device prototype; her startled face reflected in a laptop, Bengaluru workshop at night, warm amber desk lamp against indigo shadows, tense intimate mood, camera over shoulder, clear caption-safe upper-third space, recurring red tea cup and yellow blank sticky note visible, no text, logos, or watermark",
+          "scenePrompt": "Continuous opening shot: Anika leans over the workbench, reaches for the pouch, sees the report, and pulls her hand back.",
+          "continuityNotes": "Establish Anika, the teal prototype, pouch, tea cup, laptop and workshop. Keep all objects in place for the next shot.",
+          "motion": "slow push-in"
+        },
+        "lines": [
+          {
+            "speaker": "anika",
+            "text": "Apple and Micron are clashing over Chinese memory chips—and my deadline suddenly feels very expensive."
+          },
+          {
+            "speaker": "anika",
+            "text": "Come on, Anika. Sign the purchase plan, ship the prototype, drink the tea before it becomes history."
+          }
+        ]
+      },
+      {
+        "id": "hook",
+        "dramaticAction": "Anika drags the proposal toward the send button, then physically blocks the laptop with her tea cup.",
+        "turningPoint": "Her plan to win on price is halted by the possibility that the sourcing choice itself could become the biggest risk.",
+        "visual": {
+          "kind": "character-reaction",
+          "durationSeconds": 14,
+          "caption": "One cheap shortcut, one very awkward decision",
+          "imagePrompt": "Editorial animated-film medium shot of Anika urgently sliding a laptop toward herself, then planting a red ceramic tea cup over the send area; teal prototype and anti-static pouch between her and the screen, cluttered Bengaluru workshop, amber light, nervous comic tension, slight low camera angle, caption-safe upper-third space, no text, logos, or watermark",
+          "scenePrompt": "The camera tracks Anika's hand as she pulls the laptop closer, then follows the tea cup dropping decisively in front of it.",
+          "continuityNotes": "The pouch remains unopened beside the prototype. The tea cup now covers the laptop's send control; Anika's urgency must carry forward.",
+          "motion": "gentle pan"
+        },
+        "lines": [
+          {
+            "speaker": "anika",
+            "text": "If I promise the lower price tonight, this little machine gets a chance."
+          },
+          {
+            "speaker": "anika",
+            "text": "But the report says Apple has been seeking approval for CXMT and YMTC chips outside the US, while Micron is lobbying to stop it. Lovely. My bargain just grew a courtroom shadow."
+          }
+        ]
+      },
+      {
+        "id": "what-happened",
+        "dramaticAction": "Anika opens the pouch, holds the sample above the circuit board, and stops before fitting it.",
+        "turningPoint": "The component changes from an exciting shortcut into a choice with political sensitivity and consequences for domestic production.",
+        "visual": {
+          "kind": "cinematic-recreation",
+          "durationSeconds": 14,
+          "caption": "The shortcut carries a supply-chain fight",
+          "imagePrompt": "Editorial animated-film close-up of Anika holding a tiny abstract silver memory component above the exposed circuit board, her fingers trembling before installation; laptop glow on her glasses, indigo workshop, amber lamp, suspenseful mood, macro camera angle, teal prototype and red tea cup recurring, caption-safe upper-third space, no text, logos, or watermark",
+          "scenePrompt": "Anika tears open the pouch, lifts the component toward the board, and lowers it without making contact.",
+          "continuityNotes": "The tea cup still blocks the laptop. Advance the pouch from closed to open, but keep the component uninstalled.",
+          "motion": "slow push-in"
+        },
+        "lines": [
+          {
+            "speaker": "anika",
+            "text": "CXMT and YMTC are listed as Chinese military companies by the Pentagon, and YMTC is also on the Commerce Department's Entity List."
+          },
+          {
+            "speaker": "anika",
+            "text": "That does not automatically ban every product sold outside America—but it makes this component politically sensitive. My screwdriver has suddenly become a diplomatic instrument."
+          }
+        ]
+      },
+      {
+        "id": "why-it-matters",
+        "dramaticAction": "Anika removes the component from above the board, tears the original price line from the proposal, and types a replacement.",
+        "turningPoint": "She gives up her strongest selling point to avoid pretending the supply route is settled.",
+        "visual": {
+          "kind": "factual-visual",
+          "durationSeconds": 14,
+          "caption": "Lower prices versus domestic chip production",
+          "imagePrompt": "Editorial animated-film overhead shot of Anika pulling a yellow blank sticky note and a torn proposal page away from the laptop, setting the silver component aside, then typing with one hand; teal prototype centered, red tea cup pushed aside, workshop lit in split amber and blue, conflicted mood, caption-safe upper-third space, no text, logos, or watermark",
+          "scenePrompt": "Anika sweeps the old price sheet aside, moves the tea cup away, and rewrites the proposal while the unused component rests near the board.",
+          "continuityNotes": "The component remains visibly separate from the prototype. The laptop is unobstructed. Maintain Anika's wardrobe and the same night lighting.",
+          "motion": "gentle pan"
+        },
+        "lines": [
+          {
+            "speaker": "anika",
+            "text": "Micron says subsidised Chinese suppliers could weaken US memory production, and says it can ease the shortage by accelerating domestic plants and investment."
+          },
+          {
+            "speaker": "anika",
+            "text": "Apple wants relief while memory is scarce; Micron wants the industry protected. Me? I wanted a launch price. I am deleting it."
+          }
+        ]
+      },
+      {
+        "id": "takeaway",
+        "dramaticAction": "Anika closes the pouch, sends the revised proposal, and finally lifts the cold tea before switching off the lamp.",
+        "turningPoint": "She accepts the immediate cost of losing the cheap promise, but keeps control of a transparent next step.",
+        "visual": {
+          "kind": "summary-visual",
+          "durationSeconds": 14,
+          "caption": "She sends the honest version",
+          "imagePrompt": "Editorial animated-film final wide shot of Anika sealing the anti-static pouch, pressing send on the laptop, then lifting the cold red tea cup beside the untouched teal prototype; Bengaluru workshop falling into soft indigo darkness as the amber lamp fades, relieved but sober mood, cinematic three-quarter camera, generous caption-safe upper-third space, recurring yellow blank sticky note, no text, logos, or watermark",
+          "scenePrompt": "Anika seals the pouch, sends the revised proposal, exhales, takes one grim sip of cold tea, and switches off the desk lamp.",
+          "continuityNotes": "The prototype remains unfinished and the component remains unused. End with the lamp going dark after the send action.",
+          "motion": "slow push-in"
+        },
+        "lines": [
+          {
+            "speaker": "anika",
+            "text": "I sent the version that says: price under review, sourcing transparent, no heroic promises."
+          },
+          {
+            "speaker": "anika",
+            "text": "Apple and Micron can fight over the route. Tonight, I choose not to build my future on a chip I cannot explain."
+          }
+        ]
+      }
+    ],
+    "exit": "The workshop falls dark around the untouched prototype, while Anika carries the sealed component pouch out of frame.",
+    "storyId": "55a60cda11ff7c6ef245a4b0e4705502",
+    "category": "Business",
+    "sourceCategory": "business",
+    "topics": [
+      "business"
+    ],
+    "format": "solo-hot-take",
+    "requestedCastMode": "auto",
+    "requestedVisualStyle": "animated",
+    "sources": [
+      {
+        "name": "9to5mac.com",
+        "url": "https://9to5mac.com/2026/07/24/report-apple-and-micron-clash-before-trump-over-chinese-memory-chips/",
+        "publishedAt": null
+      }
+    ],
+    "durationSeconds": 67,
+    "entry": {
+      "direct": "The Chip on My Desk",
+      "afterRelated": "Staying with this thread: The Chip on My Desk.",
+      "afterUnrelated": "Different kind of plot twist: The Chip on My Desk."
+    }
+  }
+}

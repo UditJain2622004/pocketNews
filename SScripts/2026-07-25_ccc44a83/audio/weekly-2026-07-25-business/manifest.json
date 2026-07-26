@@ -1,0 +1,113 @@
+{
+  "articleId": "weekly-2026-07-25-business",
+  "scriptPath": "scripts/2026-07-25_ccc44a83/weekly-2026-07-25-business.json",
+  "language": "en-IN",
+  "model": "gpt-audio-1.5",
+  "voiceAssignments": {
+    "asha": "verse",
+    "rohan": "marin"
+  },
+  "clips": [
+    {
+      "clipId": "title-cue-0",
+      "beatId": "title-cue",
+      "lineIndex": 0,
+      "speaker": "asha",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-business/title-cue/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-business/title-cue/0.wav",
+      "durationSeconds": 9.2,
+      "lineHash": "9086dd43dc7735d780ddb072d9319fdadb813a00c432604169b8cb68bb220c1b"
+    },
+    {
+      "clipId": "title-cue-1",
+      "beatId": "title-cue",
+      "lineIndex": 1,
+      "speaker": "rohan",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-business/title-cue/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-business/title-cue/1.wav",
+      "durationSeconds": 2.6,
+      "lineHash": "a89386c408b8cf1346e704b3a3f2144da954a0ba732c3017701b748ce61a08c9"
+    },
+    {
+      "clipId": "hook-0",
+      "beatId": "hook",
+      "lineIndex": 0,
+      "speaker": "asha",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-business/hook/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-business/hook/0.wav",
+      "durationSeconds": 5.85,
+      "lineHash": "3719805597febc3290533ac9ff709381c7c0859a3e8ef78d3f811b7a0932786a"
+    },
+    {
+      "clipId": "hook-1",
+      "beatId": "hook",
+      "lineIndex": 1,
+      "speaker": "rohan",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-business/hook/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-business/hook/1.wav",
+      "durationSeconds": 3.85,
+      "lineHash": "dbfe188db75cb8a962ee365c16352be5765aebd8abbcc7472a40b3bff303513d"
+    },
+    {
+      "clipId": "what-happened-0",
+      "beatId": "what-happened",
+      "lineIndex": 0,
+      "speaker": "asha",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-business/what-happened/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-business/what-happened/0.wav",
+      "durationSeconds": 8.55,
+      "lineHash": "22c6174be28816edd2e2a68f7d24f302ebb4c43fb2ce396993b45ad3c585d29c"
+    },
+    {
+      "clipId": "what-happened-1",
+      "beatId": "what-happened",
+      "lineIndex": 1,
+      "speaker": "rohan",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-business/what-happened/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-business/what-happened/1.wav",
+      "durationSeconds": 4.8,
+      "lineHash": "9b8474594b5ac7e67bb769a75e09f6fbc2244148c86bfe7f46f345be25c9cf4e"
+    },
+    {
+      "clipId": "why-it-matters-0",
+      "beatId": "why-it-matters",
+      "lineIndex": 0,
+      "speaker": "asha",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-business/why-it-matters/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-business/why-it-matters/0.wav",
+      "durationSeconds": 5.9,
+      "lineHash": "4562ae084fb533af306bab8af36a13e66eafe60050e134e6df9aeb24bfaada89"
+    },
+    {
+      "clipId": "why-it-matters-1",
+      "beatId": "why-it-matters",
+      "lineIndex": 1,
+      "speaker": "rohan",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-business/why-it-matters/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-business/why-it-matters/1.wav",
+      "durationSeconds": 3.3,
+      "lineHash": "f66b142cd46304228366df7d28f0b7d4559a58c4a40b904c2d4be2ef262b6c8c"
+    },
+    {
+      "clipId": "takeaway-0",
+      "beatId": "takeaway",
+      "lineIndex": 0,
+      "speaker": "asha",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-business/takeaway/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-business/takeaway/0.wav",
+      "durationSeconds": 4.55,
+      "lineHash": "2fbd5b3ad0a2c4fc75e7ac37ae18e4926c370baf4ae26212481c900ed16dfe4c"
+    },
+    {
+      "clipId": "takeaway-1",
+      "beatId": "takeaway",
+      "lineIndex": 1,
+      "speaker": "rohan",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-business/takeaway/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-business/takeaway/1.wav",
+      "durationSeconds": 3.55,
+      "lineHash": "76ec89480e29bd2788657fee45f49831887875066db39891d341fe2c9b32998b"
+    }
+  ],
+  "failures": []
+}

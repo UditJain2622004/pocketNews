@@ -1,0 +1,75 @@
+{
+  "runId": "2026-07-01_5b39a446",
+  "runDate": "2026-07-01",
+  "cadence": "daily",
+  "episodeTitle": "What We Build After Failure",
+  "language": "en-IN",
+  "startedAt": "2026-07-25T23:40:25.738134+00:00",
+  "articlesFound": 218,
+  "articlesSelected": 3,
+  "selection": {
+    "articlesConsidered": 218,
+    "storiesSelected": 3,
+    "duplicateIdsRemoved": 0,
+    "similarHeadlinesRemoved": 3,
+    "maxArticlesPerCategory": 1,
+    "maxTotalStories": 3
+  },
+  "scriptsGenerated": 3,
+  "imagesGenerated": 0,
+  "generateImages": false,
+  "threeImagesPerStory": false,
+  "generateAudio": true,
+  "castMode": "auto",
+  "visualStyle": "animated",
+  "storyFormat": "solo-hot-take",
+  "scripts": [
+    {
+      "articleId": "55a60cda11ff7c6ef245a4b0e4705502",
+      "sourceFile": "news/daily/2026-07-01/business.json",
+      "scriptPath": "scripts/2026-07-01_5b39a446/55a60cda11ff7c6ef245a4b0e4705502.json",
+      "imagePaths": []
+    },
+    {
+      "articleId": "64d08a32768e057cbd09ccf57648f818",
+      "sourceFile": "news/daily/2026-07-01/entertainment.json",
+      "scriptPath": "scripts/2026-07-01_5b39a446/64d08a32768e057cbd09ccf57648f818.json",
+      "imagePaths": []
+    },
+    {
+      "articleId": "9dc0e96525b0d8004382648cc2c9426f",
+      "sourceFile": "news/daily/2026-07-01/lifestyle.json",
+      "scriptPath": "scripts/2026-07-01_5b39a446/9dc0e96525b0d8004382648cc2c9426f.json",
+      "imagePaths": []
+    }
+  ],
+  "failures": [],
+  "audio": {
+    "runId": "2026-07-01_5b39a446",
+    "articlesRequested": 3,
+    "audioStoriesReady": 3,
+    "clipsGenerated": 37,
+    "clipsReused": 0,
+    "manifests": [
+      {
+        "articleId": "55a60cda11ff7c6ef245a4b0e4705502",
+        "manifestPath": "scripts/2026-07-01_5b39a446/audio/55a60cda11ff7c6ef245a4b0e4705502/manifest.json",
+        "manifestUrl": "/api/media/2026-07-01_5b39a446/audio/55a60cda11ff7c6ef245a4b0e4705502/manifest.json",
+        "failures": []
+      },
+      {
+        "articleId": "64d08a32768e057cbd09ccf57648f818",
+        "manifestPath": "scripts/2026-07-01_5b39a446/audio/64d08a32768e057cbd09ccf57648f818/manifest.json",
+        "manifestUrl": "/api/media/2026-07-01_5b39a446/audio/64d08a32768e057cbd09ccf57648f818/manifest.json",
+        "failures": []
+      },
+      {
+        "articleId": "9dc0e96525b0d8004382648cc2c9426f",
+        "manifestPath": "scripts/2026-07-01_5b39a446/audio/9dc0e96525b0d8004382648cc2c9426f/manifest.json",
+        "manifestUrl": "/api/media/2026-07-01_5b39a446/audio/9dc0e96525b0d8004382648cc2c9426f/manifest.json",
+        "failures": []
+      }
+    ],
+    "failures": []
+  }
+}

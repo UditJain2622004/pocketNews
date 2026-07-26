@@ -1,0 +1,250 @@
+{
+  "article": {
+    "id": "weekly-2026-07-25-politics",
+    "title": "Politics Weekly Recap",
+    "summary": "## Factual briefing: India politics, July 20–25, 2026 - **June 28:** Activist and educator Sonam Wangchuk began a hunger strike in Delhi in support of youth-led education reform protests associated with the online Cockroach Janta Party (CJP). He reportedly consumed only salt and water and lost more than 9kg. - **July 18:** Police forcibly admitted Wangchuk to hospital as concerns grew over his deteriorating health. He said he would end the fast only if the government accepted accountability for recent education-system failures, CJP leaders reached Parliament and received assurances from MPs, or lawmakers visited him in hospital and gave similar assurances. - The CJP’s campaign followed controversies including recent examination-paper leaks. The protest was described as a major public display of dissent against Prime Minister Narendra Modi’s government. Opposition politicians, activists, Bollywood actors and musicians urged Wangchuk to stop fasting. - Wangchuk, 59, is a prominent activist and educator from Indian-administered Ladakh. He received the Ramon Magsaysay Award in 2018, inspired the film *Three Idiots*, and appeared on *Kaun Banega Crorepati* in 2017. He also held two hunger strikes the previous year over the fragile ecology of Ladakh. - **July 20:** Minister of State Suresh Gopi told the Rajya Sabha that India’s 20% ethanol-blending target had not affected food availability or food security. He said only surplus foodgrains could be used for ethanol production and that the government had found no widespread, verified vehicle-performance problems attributable to E20 petrol. - On the same date, Minister of State Kirti Vardhan Singh told the Lok Sabha that the government had introduced environmental measures, including the Solid Waste Management Rules, 2026, with provisions for hilly and island areas. - Other supplied headlines during the period reported a planned West Bengal policy making Bengali mandatory in government communications from **September 1**, including communications with other states. Headlines also referred to debate over the policy, a government appeal for the CJP protest sit-in to end after a meeting with its leaders, a protest march toward Parliament, police action against supporters of the movement, and other administrative and political developments.",
+    "full_text": "## Factual briefing: India politics, July 20–25, 2026 - **June 28:** Activist and educator Sonam Wangchuk began a hunger strike in Delhi in support of youth-led education reform protests associated with the online Cockroach Janta Party (CJP). He reportedly consumed only salt and water and lost more than 9kg. - **July 18:** Police forcibly admitted Wangchuk to hospital as concerns grew over his deteriorating health. He said he would end the fast only if the government accepted accountability for recent education-system failures, CJP leaders reached Parliament and received assurances from MPs, or lawmakers visited him in hospital and gave similar assurances. - The CJP’s campaign followed controversies including recent examination-paper leaks. The protest was described as a major public display of dissent against Prime Minister Narendra Modi’s government. Opposition politicians, activists, Bollywood actors and musicians urged Wangchuk to stop fasting. - Wangchuk, 59, is a prominent activist and educator from Indian-administered Ladakh. He received the Ramon Magsaysay Award in 2018, inspired the film *Three Idiots*, and appeared on *Kaun Banega Crorepati* in 2017. He also held two hunger strikes the previous year over the fragile ecology of Ladakh. - **July 20:** Minister of State Suresh Gopi told the Rajya Sabha that India’s 20% ethanol-blending target had not affected food availability or food security. He said only surplus foodgrains could be used for ethanol production and that the government had found no widespread, verified vehicle-performance problems attributable to E20 petrol. - On the same date, Minister of State Kirti Vardhan Singh told the Lok Sabha that the government had introduced environmental measures, including the Solid Waste Management Rules, 2026, with provisions for hilly and island areas. - Other supplied headlines during the period reported a planned West Bengal policy making Bengali mandatory in government communications from **September 1**, including communications with other states. Headlines also referred to debate over the policy, a government appeal for the CJP protest sit-in to end after a meeting with its leaders, a protest march toward Parliament, police action against supporters of the movement, and other administrative and political developments.",
+    "url": "",
+    "language": "english",
+    "categories": [
+      "politics"
+    ],
+    "published_at": null,
+    "source_name": "Source"
+  },
+  "sourceFile": "summaries/weekly/2026-07-25/politics.json",
+  "story": {
+    "title": "The Corridor Between",
+    "skipLabel": "Politics Weekly Recap",
+    "classification": {
+      "category": "Politics",
+      "subcategories": [
+        "Government",
+        "Policy & Laws"
+      ]
+    },
+    "creativeDirection": {
+      "genre": "tense human drama",
+      "dramaticPremise": "At a Delhi hospital, a young protest organiser must choose between marching toward Parliament and staying outside Sonam Wangchuk's room, after learning the conditions he set for ending his hunger strike.",
+      "selectedFormat": "two-person-banter",
+      "performanceMode": "character-dialogue",
+      "castMode": "story_duo",
+      "visualStyle": "animated"
+    },
+    "dramaticSpine": {
+      "characterGoal": "Tara wants to deliver a handwritten message to Sonam Wangchuk and remain outside his hospital room.",
+      "obstacle": "Arjun wants her to join the CJP supporters' march toward Parliament before the group moves on.",
+      "newsCatalyst": "Wangchuk was forcibly admitted to hospital on July 18 after fasting on salt and water since June 28 and losing more than 9kg.",
+      "reversal": "Tara learns that Wangchuk would end the fast only after accountability, assurances to CJP leaders at Parliament, or assurances from lawmakers visiting him.",
+      "costOfFailure": "Tara may miss the march, while the protest's immediate pressure remains unresolved.",
+      "emotionalTurn": "Arjun's urgency gives way to shared worry when neither of them can claim that any assurance has arrived.",
+      "resolution": "They abandon the rush to Parliament for the moment and stay outside the hospital, ready to carry any genuine assurance to Wangchuk."
+    },
+    "visualBible": {
+      "setting": "A fictional Delhi hospital corridor outside Sonam Wangchuk's room, with a distant glimpse of a protest crowd gathering beyond the entrance.",
+      "colorAndLighting": "Cool hospital whites and pale blue shadows contrast with warm saffron-and-red evening light filtering from the street; tension softens into quiet resolve.",
+      "recurringProps": [
+        "Tara's folded handwritten envelope",
+        "Arjun's worn protest scarf",
+        "a metal hospital bench",
+        "a muted phone showing abstract light only, never readable text"
+      ],
+      "storyArc": "The corridor begins as a bottleneck between hospital duty and street protest, tightens when the hunger-strike facts become personal, then settles into a deliberate choice to wait and witness.",
+      "referenceImagePrompt": "Editorial animated-film still of Tara, a young Indian woman in a denim jacket with a folded cream envelope, and Arjun, a young Indian man in a worn red protest scarf, standing together in a Delhi hospital corridor outside a closed room; metal bench, soft evening street glow, cool fluorescent ceiling light, restrained human tension, no readable signage, no text, logos, or watermark.",
+      "referenceImagePath": "scripts/2026-07-25_ccc44a83/images/politics/weekly-2026-07-25-politics/reference.png"
+    },
+    "cast": [
+      {
+        "id": "tara",
+        "role": "Young CJP supporter and educator",
+        "voiceProfile": "Intimate Indian English voice, low and quick at the start with nervous determination; clipped interruptions during pressure, then a warmer, steadier resolve at the ending, with one deliberate pause before the final choice.",
+        "language": "en-IN",
+        "visualIdentity": "Young Indian woman, denim jacket over a mustard kurta, canvas satchel, folded cream envelope held close."
+      },
+      {
+        "id": "arjun",
+        "role": "CJP organiser and Tara's friend",
+        "voiceProfile": "Energetic Indian English voice with restless pace and dry urgency; begins impatient and breathless, breaks into contained disbelief when the conditions are repeated, ending quietly protective rather than triumphant.",
+        "language": "en-IN",
+        "visualIdentity": "Young Indian man, charcoal shirt, worn red protest scarf, scuffed trainers, phone clenched in one hand."
+      }
+    ],
+    "beats": [
+      {
+        "id": "title-cue",
+        "dramaticAction": "Tara intercepts Arjun at the hospital corridor and presses her envelope against the closed room door before he can pull her toward the exit.",
+        "turningPoint": "The hospital becomes the immediate battleground between Tara's private message and Arjun's public march.",
+        "visual": {
+          "kind": "cinematic-recreation",
+          "durationSeconds": 8,
+          "caption": "Politics Weekly: Sonam Wangchuk's hunger strike reaches a hospital corridor",
+          "imagePrompt": "Editorial animated-film image, Tara presses a folded cream envelope to a closed hospital-room door while Arjun reaches toward her arm, Delhi hospital corridor, metal bench and red protest scarf visible, medium handheld camera, cool fluorescent light cut by warm evening glow, urgent intimate mood, recurring wardrobe and props, clear caption-safe upper-third space, no text, logos, or watermark",
+          "scenePrompt": "Continuous opening shot in the Delhi hospital corridor; Tara blocks the doorway while Arjun tries to turn her toward the street entrance.",
+          "continuityNotes": "Establish Tara, Arjun, the envelope, scarf, bench, and corridor. Keep the room door closed and the protest glow distant.",
+          "motion": "slow push-in"
+        },
+        "lines": [
+          {
+            "speaker": "tara",
+            "text": "Politics Weekly recap—and I’m outside Sonam Wangchuk’s hospital room with one job: get this message through."
+          },
+          {
+            "speaker": "arjun",
+            "text": "The CJP march is moving toward Parliament, Tara. Your envelope cannot outwalk a crowd."
+          }
+        ]
+      },
+      {
+        "id": "hook",
+        "dramaticAction": "Tara pulls the envelope back as Arjun reaches for it, refusing to leave the door.",
+        "turningPoint": "The duration and physical toll of the fast make Tara's decision more urgent than the departing march.",
+        "visual": {
+          "kind": "character-reaction",
+          "durationSeconds": 10,
+          "caption": "A message waits outside the ward",
+          "imagePrompt": "Editorial animated-film close two-shot, Tara snatches the envelope back and squares herself beside the closed hospital door while Arjun checks the corridor exit, Delhi hospital setting, metal bench behind them, cool blue light and warm street rim light, anxious mood, recurring denim jacket, mustard kurta, red scarf, caption-safe upper-third space, no text, logos, or watermark",
+          "scenePrompt": "The camera stays in the same corridor and moves closer as the pair physically contest the envelope and the exit.",
+          "continuityNotes": "Continue directly from the push-in. Tara remains by the door; Arjun stays between her and the street-facing exit.",
+          "motion": "gentle pan",
+          "imagePath": "scripts/2026-07-25_ccc44a83/images/politics/weekly-2026-07-25-politics/hook.png"
+        },
+        "lines": [
+          {
+            "speaker": "tara",
+            "text": "He began fasting in Delhi on June 28—salt and water. He’s lost more than nine kilos. I’m not leaving."
+          },
+          {
+            "speaker": "arjun",
+            "text": "Police forcibly took him to hospital on July 18. That is why the march has to reach Parliament."
+          }
+        ]
+      },
+      {
+        "id": "what-happened",
+        "dramaticAction": "Arjun lowers his phone and stops at the corridor junction as Tara unfolds the envelope, then folds it again without entering the room.",
+        "turningPoint": "The conditions for ending the fast turn the pair's simple delivery into three possible political routes, none guaranteed in their hands.",
+        "visual": {
+          "kind": "factual-visual",
+          "durationSeconds": 12,
+          "caption": "Three possible doors—and none is open yet",
+          "imagePrompt": "Editorial animated-film medium shot, Arjun lowers his phone and Tara opens then refolds the cream envelope at the hospital corridor junction, closed room door behind them, abstract phone glow with no readable screen, red scarf and metal bench recurring, side-on camera, stark cool lighting, mood of disbelief and pressure, generous caption-safe upper-third space, no text, logos, or watermark",
+          "scenePrompt": "The same continuous corridor shot advances to the junction; Tara's hand pauses over the envelope while Arjun physically abandons the exit for a moment.",
+          "continuityNotes": "Preserve the closed door, wardrobe, envelope, and scarf. Advance only their positions: Arjun leaves the exit, Tara faces the room.",
+          "motion": "slow push-in",
+          "imagePath": "scripts/2026-07-25_ccc44a83/images/politics/weekly-2026-07-25-politics/what-happened.png"
+        },
+        "lines": [
+          {
+            "speaker": "arjun",
+            "text": "He said the fast ends with government accountability, assurances to CJP leaders at Parliament, or lawmakers visiting him here."
+          },
+          {
+            "speaker": "tara",
+            "text": "So we cannot pretend this envelope is an answer."
+          }
+        ]
+      },
+      {
+        "id": "why-it-matters",
+        "dramaticAction": "Arjun starts toward the exit, then stops when Tara places the envelope on the metal bench and takes the seat beside it.",
+        "turningPoint": "Their competing plans collapse: racing to Parliament could leave the hospital door unattended, but staying costs Tara the march.",
+        "visual": {
+          "kind": "funny-metaphor",
+          "durationSeconds": 11,
+          "caption": "The corridor wins the argument",
+          "imagePrompt": "Editorial animated-film wide shot, Arjun takes two steps toward the hospital exit then freezes as Tara sits beside the envelope on the metal bench, closed room door looming behind, distant protest silhouettes outside, cool corridor light against orange dusk, bittersweet tension with a faint comic pause, recurring details, caption-safe upper-third space, no text, logos, or watermark",
+          "scenePrompt": "The continuous camera widens down the corridor, revealing the exit and the bench as two opposing directions.",
+          "continuityNotes": "The envelope now rests on the bench. Keep Tara seated, Arjun standing between bench and exit; the hospital door remains closed.",
+          "motion": "gentle pan"
+        },
+        "lines": [
+          {
+            "speaker": "arjun",
+            "text": "If we stay, we miss the march."
+          },
+          {
+            "speaker": "tara",
+            "text": "If we leave, we may miss the only person who can make those assurances real."
+          },
+          {
+            "speaker": "arjun",
+            "text": "That is an impressively terrible choice."
+          }
+        ]
+      },
+      {
+        "id": "takeaway",
+        "dramaticAction": "Arjun removes his protest scarf, drapes it over the envelope, and sits beside Tara as both face the closed room.",
+        "turningPoint": "He gives up the immediate rush and commits to waiting for a real assurance rather than carrying an empty promise.",
+        "visual": {
+          "kind": "summary-visual",
+          "durationSeconds": 10,
+          "caption": "They choose the door that is still closed",
+          "imagePrompt": "Editorial animated-film closing shot, Arjun drapes his worn red protest scarf over Tara's cream envelope and sits beside her on the metal bench, both facing the closed hospital-room door, Delhi evening light fading into cool corridor blue, quiet determined mood, fixed wardrobe and props, cinematic rear three-quarter camera, clear caption-safe upper-third space, no text, logos, or watermark",
+          "scenePrompt": "The continuous shot settles behind Tara and Arjun as they sit together outside the room, the distant protest glow shrinking beyond the corridor.",
+          "continuityNotes": "End with both seated, envelope under the scarf, closed door ahead, and the street light receding. No new characters or props appear.",
+          "motion": "hold",
+          "imagePath": "scripts/2026-07-25_ccc44a83/images/politics/weekly-2026-07-25-politics/takeaway.png"
+        },
+        "lines": [
+          {
+            "speaker": "arjun",
+            "text": "Fine. Parliament can wait one breath."
+          },
+          {
+            "speaker": "tara",
+            "text": "We wait for an assurance worth carrying."
+          },
+          {
+            "speaker": "arjun",
+            "text": "And if it comes, we run."
+          }
+        ]
+      }
+    ],
+    "interactions": [
+      {
+        "id": "condition-poll",
+        "beatId": "what-happened",
+        "type": "prediction_poll",
+        "question": "Which could end Wangchuk's fast?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Accountability or assurances"
+          },
+          {
+            "id": "b",
+            "text": "A vehicle-performance guarantee"
+          }
+        ],
+        "correctOptionId": "a",
+        "revealText": "Wangchuk said he would end the fast if the government accepted accountability, CJP leaders received assurances at Parliament, or lawmakers visited him with similar assurances. The supplied briefing does not link his condition to vehicle performance."
+      }
+    ],
+    "exit": "The corridor falls quiet. Tara and Arjun remain on the bench, ready to move only when an assurance—not an empty promise—arrives.",
+    "storyId": "weekly-2026-07-25-politics",
+    "category": "Politics",
+    "sourceCategory": "politics",
+    "topics": [
+      "politics"
+    ],
+    "format": "mix",
+    "selectedFormat": "two-person-banter",
+    "requestedCastMode": "auto",
+    "requestedVisualStyle": "animated",
+    "sources": [
+      {
+        "name": "Source",
+        "url": "",
+        "publishedAt": null
+      }
+    ],
+    "durationSeconds": 51,
+    "entry": {
+      "direct": "The Corridor Between",
+      "afterRelated": "Staying with this thread: The Corridor Between.",
+      "afterUnrelated": "Different kind of plot twist: The Corridor Between."
+    }
+  }
+}

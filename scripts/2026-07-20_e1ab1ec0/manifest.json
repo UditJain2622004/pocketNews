@@ -1,0 +1,94 @@
+{
+  "runId": "2026-07-20_e1ab1ec0",
+  "runDate": "2026-07-20",
+  "cadence": "daily",
+  "episodeTitle": "Nineteen Choices, One Last Stand",
+  "language": "en-IN",
+  "startedAt": "2026-07-26T04:17:52.941062+00:00",
+  "articlesFound": 72,
+  "articlesSelected": 3,
+  "selection": {
+    "articlesConsidered": 72,
+    "storiesSelected": 3,
+    "duplicateIdsRemoved": 0,
+    "similarHeadlinesRemoved": 1,
+    "maxArticlesPerCategory": 1,
+    "maxTotalStories": 3,
+    "temporaryFocus": null,
+    "temporaryFocusMatches": 0
+  },
+  "scriptsGenerated": 2,
+  "imagesGenerated": 12,
+  "generateImages": true,
+  "threeImagesPerStory": false,
+  "generateAudio": true,
+  "castMode": "auto",
+  "visualStyle": "animated",
+  "storyFormat": "mix",
+  "requestedCategories": [
+    "business",
+    "entertainment",
+    "lifestyle",
+    "politics",
+    "science",
+    "sports",
+    "technology"
+  ],
+  "scripts": [
+    {
+      "articleId": "cda077915d506b668f5ef747befc1595",
+      "sourceFile": "news/daily/2026-07-20/entertainment.json",
+      "scriptPath": "scripts/2026-07-20_e1ab1ec0/cda077915d506b668f5ef747befc1595.json",
+      "imagePaths": [
+        "scripts/2026-07-20_e1ab1ec0/images/entertainment/cda077915d506b668f5ef747befc1595/hook.png",
+        "scripts/2026-07-20_e1ab1ec0/images/entertainment/cda077915d506b668f5ef747befc1595/reference.png",
+        "scripts/2026-07-20_e1ab1ec0/images/entertainment/cda077915d506b668f5ef747befc1595/takeaway.png",
+        "scripts/2026-07-20_e1ab1ec0/images/entertainment/cda077915d506b668f5ef747befc1595/title-cue.png",
+        "scripts/2026-07-20_e1ab1ec0/images/entertainment/cda077915d506b668f5ef747befc1595/what-happened.png",
+        "scripts/2026-07-20_e1ab1ec0/images/entertainment/cda077915d506b668f5ef747befc1595/why-it-matters.png"
+      ]
+    },
+    {
+      "articleId": "d545289033b3a57456b03375d9b7c30f",
+      "sourceFile": "news/daily/2026-07-20/politics.json",
+      "scriptPath": "scripts/2026-07-20_e1ab1ec0/d545289033b3a57456b03375d9b7c30f.json",
+      "imagePaths": [
+        "scripts/2026-07-20_e1ab1ec0/images/politics/d545289033b3a57456b03375d9b7c30f/hook.png",
+        "scripts/2026-07-20_e1ab1ec0/images/politics/d545289033b3a57456b03375d9b7c30f/reference.png",
+        "scripts/2026-07-20_e1ab1ec0/images/politics/d545289033b3a57456b03375d9b7c30f/takeaway.png",
+        "scripts/2026-07-20_e1ab1ec0/images/politics/d545289033b3a57456b03375d9b7c30f/title-cue.png",
+        "scripts/2026-07-20_e1ab1ec0/images/politics/d545289033b3a57456b03375d9b7c30f/what-happened.png",
+        "scripts/2026-07-20_e1ab1ec0/images/politics/d545289033b3a57456b03375d9b7c30f/why-it-matters.png"
+      ]
+    }
+  ],
+  "failures": [
+    {
+      "articleId": "e67ab4ad89522dd731f2165fd0afbc99",
+      "sourceFile": "news/daily/2026-07-20/lifestyle.json",
+      "error": "OpenAI story generation request failed: 1 validation error for GeneratedStory\nclassification -> __root__\n  Invalid subcategories for Lifestyle: Health & Medicine (type=value_error)"
+    }
+  ],
+  "audio": {
+    "runId": "2026-07-20_e1ab1ec0",
+    "articlesRequested": 2,
+    "audioStoriesReady": 2,
+    "clipsGenerated": 25,
+    "clipsReused": 0,
+    "manifests": [
+      {
+        "articleId": "cda077915d506b668f5ef747befc1595",
+        "manifestPath": "scripts/2026-07-20_e1ab1ec0/audio/cda077915d506b668f5ef747befc1595/manifest.json",
+        "manifestUrl": "/api/media/2026-07-20_e1ab1ec0/audio/cda077915d506b668f5ef747befc1595/manifest.json",
+        "failures": []
+      },
+      {
+        "articleId": "d545289033b3a57456b03375d9b7c30f",
+        "manifestPath": "scripts/2026-07-20_e1ab1ec0/audio/d545289033b3a57456b03375d9b7c30f/manifest.json",
+        "manifestUrl": "/api/media/2026-07-20_e1ab1ec0/audio/d545289033b3a57456b03375d9b7c30f/manifest.json",
+        "failures": []
+      }
+    ],
+    "failures": []
+  }
+}

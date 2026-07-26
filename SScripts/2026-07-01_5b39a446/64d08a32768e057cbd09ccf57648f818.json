@@ -1,0 +1,225 @@
+{
+  "article": {
+    "id": "64d08a32768e057cbd09ccf57648f818",
+    "title": "Jana Nayagan Box Office Collection Day 2 Update: Vijay-starrer witnesses 50 percent drop, earns Rs 112 cr worldwide - The Indian Express",
+    "summary": "Jana Nayagan Box Office Collection Day 2 Update: Vijay-starrer witnesses 50 percent drop, earns Rs 112 cr worldwide The Indian ExpressH Vinoth says Vijay’s stardom helped ‘Jana Nayagan’s’ social message reach a wider audience Telegraph IndiaRavi Mohan Joins Fans Watching Jana Nayagan In Theatre, Blows Whistle During Vijay's Entry Scene NDTVVijay”s stardom brings sensitive politics to masses: Director Vinoth ThePrintTamil Movie Review–Jana Nayagan: Spunky, sentimental tale of a guardian Bangalore Mirror",
+    "full_text": "Jana Nayagan Box Office Collection Day 2 Update: Vijay-starrer witnesses 50 percent drop, earns Rs 112 cr worldwide The Indian ExpressH Vinoth says Vijay’s stardom helped ‘Jana Nayagan’s’ social message reach a wider audience Telegraph IndiaRavi Mohan Joins Fans Watching Jana Nayagan In Theatre, Blows Whistle During Vijay's Entry Scene NDTVVijay”s stardom brings sensitive politics to masses: Director Vinoth ThePrintTamil Movie Review–Jana Nayagan: Spunky, sentimental tale of a guardian Bangalore Mirror",
+    "url": "https://indianexpress.com/article/entertainment/tamil/jana-nayagan-box-office-collection-day-2-update-vijay-film-earns-rs-112-crore-10802264/",
+    "language": "english",
+    "categories": [
+      "entertainment"
+    ],
+    "published_at": null,
+    "source_name": "indianexpress.com"
+  },
+  "sourceFile": "news/daily/2026-07-01/entertainment.json",
+  "story": {
+    "title": "The Banner After Day Two",
+    "skipLabel": "Jana Nayagan Day 2 box office update",
+    "classification": {
+      "category": "Entertainment",
+      "subcategories": [
+        "Movies",
+        "Celebrity News"
+      ]
+    },
+    "creativeDirection": {
+      "genre": "emotional comedy",
+      "dramaticPremise": "A lone cinema volunteer must tear down her Jana Nayagan banner after a disappointing second day, but the exact box-office update forces her to choose between protecting her pride and carrying the film's message forward.",
+      "performanceMode": "solo-character-hot-take",
+      "castMode": "solo_host",
+      "visualStyle": "animated"
+    },
+    "dramaticSpine": {
+      "characterGoal": "Keep her hand-painted Jana Nayagan banner displayed until the theatre closes.",
+      "obstacle": "She has promised herself to remove it if the film's second-day result collapses, and the shutter is already coming down.",
+      "newsCatalyst": "The Vijay-starrer witnesses a 50 percent drop on Day 2 but earns Rs 112 crore worldwide; director H Vinoth says Vijay's stardom helped the film's social message reach a wider audience.",
+      "reversal": "The drop makes Nila reach for the tape cutter, but the Rs 112 crore figure and Vinoth's comment make the banner feel less like a failed bet and more like a message that travelled.",
+      "costOfFailure": "If she leaves the banner, she risks missing her last ride home and breaking her promise to stop treating every box-office number like a verdict on her taste.",
+      "emotionalTurn": "Her embarrassment turns into stubborn warmth when she realises the film's reach matters to her more than winning her private wager.",
+      "resolution": "Nila removes the banner from the wall, folds it carefully, and carries it out instead of throwing it away."
+    },
+    "visualBible": {
+      "setting": "A fictional single-screen cinema lobby at closing time, with a half-lowered metal shutter, empty ticket counter, tiled floor, and a narrow corridor leading toward the dark auditorium.",
+      "colorAndLighting": "Animated editorial-film style; warm amber tube lights fading into cool blue evening light under the shutter, with red and gold accents from the banner and soft expressive shadows.",
+      "recurringProps": [
+        "A hand-painted Jana Nayagan banner with a stylised star silhouette, kept without readable lettering",
+        "Nila's phone with a news article open but no legible text",
+        "A red tape cutter",
+        "A canvas tote bag with paint stains"
+      ],
+      "storyArc": "The lobby begins as a proud but anxious fan space, tightens into a comic deadline as the shutter descends, then softens into a quiet act of care when Nila carries the banner into the night.",
+      "referenceImagePrompt": "Editorial animated-film still of Nila, a fictional Indian cinema volunteer in her mid-twenties, standing alone in a closing single-screen cinema lobby beside a large hand-painted Jana Nayagan banner, wearing a mustard kurta, dark blue jeans, white sneakers, and a red lanyard, holding a phone and red tape cutter, half-lowered metal shutter behind her, warm amber lobby lights meeting cool blue evening light, canvas tote bag on the floor, cinematic composition, expressive face, no text, logos, or watermark"
+    },
+    "cast": [
+      {
+        "id": "nila",
+        "role": "Fictional cinema volunteer and passionate but self-aware Vijay fan",
+        "voiceProfile": "Warm, intimate en-IN voice with quick conversational pacing; begins breathless and defensive, uses clipped pauses and tiny bursts of embarrassed laughter, then shifts into grounded tenderness and firm resolve by the final beat. Perform like a private voice note made while working, not a presenter; let the tape cutter, shutter, and deadline interrupt her rhythm.",
+        "language": "en-IN",
+        "visualIdentity": "Mid-twenties Indian woman with expressive eyebrows, short wavy black hair, mustard kurta, dark blue jeans, white sneakers, red lanyard, paint-stained canvas tote, and a small red tape cutter"
+      }
+    ],
+    "beats": [
+      {
+        "id": "title-cue",
+        "dramaticAction": "Nila presses the phone against the banner and reaches for the first strip of tape while the lobby shutter begins to descend.",
+        "turningPoint": "The news item arrives at the exact moment she must decide whether the banner stays up or comes down.",
+        "visual": {
+          "kind": "factual-visual",
+          "durationSeconds": 12,
+          "caption": "Jana Nayagan Day 2: 50% drop, Rs 112 crore worldwide",
+          "imagePrompt": "Nila in a fictional single-screen cinema lobby, pressing her phone near a large hand-painted Jana Nayagan banner while reaching for a red tape cutter, half-lowered shutter behind her, mustard kurta, dark jeans, red lanyard, warm amber light with cool blue evening spill, medium close-up, anxious comic mood, clear caption-safe upper-third space, no text, logos, or watermark",
+          "scenePrompt": "Begin on Nila's hand gripping the tape cutter, then tilt up to her face as the shutter lowers behind her.",
+          "continuityNotes": "Establish Nila, the banner, phone, tape cutter, shutter, and tote bag. The banner remains taped to the wall and the shutter is one-third down.",
+          "motion": "slow push-in"
+        },
+        "lines": [
+          {
+            "speaker": "Nila",
+            "text": "Jana Nayagan Day 2: a 50 percent drop, but Rs 112 crore worldwide. Excellent. My banner has entered its own interval."
+          },
+          {
+            "speaker": "Nila",
+            "text": "I told myself, one bad number and I take it down before closing. I said it with confidence. Very dangerous habit."
+          }
+        ]
+      },
+      {
+        "id": "hook",
+        "dramaticAction": "Nila cuts one corner of the banner, then stops as the shutter scrapes lower and her phone slips toward the floor.",
+        "turningPoint": "Her promise becomes an immediate race: finish the removal before the shutter blocks the lobby, or abandon the banner half-torn.",
+        "visual": {
+          "kind": "character-reaction",
+          "durationSeconds": 14,
+          "caption": "One promise. One closing shutter.",
+          "imagePrompt": "Nila crouched beside the banner, one corner cut loose, lunging to catch her slipping phone as the metal shutter drops lower, empty cinema lobby, red tape cutter in her other hand, warm light cutting across cool blue floor shadows, low-angle shot, comic panic, recurring wardrobe and tote bag visible, caption-safe upper-third space, no text, logos, or watermark",
+          "scenePrompt": "The camera tracks down with the falling phone, then swings toward Nila as she catches it against her knee.",
+          "continuityNotes": "The first tape strip is removed; the banner hangs crookedly. The shutter advances to halfway down. Nila stays alone in the same lobby.",
+          "motion": "gentle pan"
+        },
+        "lines": [
+          {
+            "speaker": "Nila",
+            "text": "No, no, don't fall now. I can lose an argument, not my phone."
+          },
+          {
+            "speaker": "Nila",
+            "text": "Fifty percent is not a small wobble, okay? That is the number looking me directly in the eye."
+          },
+          {
+            "speaker": "Nila",
+            "text": "Come on, Nila. Cut the tape. Be mature for eight seconds."
+          }
+        ]
+      },
+      {
+        "id": "what-happened",
+        "dramaticAction": "Nila rises, turns the phone toward herself, and peels the remaining tape from the banner instead of cutting it.",
+        "turningPoint": "The Rs 112 crore worldwide figure gives her a second option: the result is a drop, but not an empty journey for the film.",
+        "visual": {
+          "kind": "factual-visual",
+          "durationSeconds": 14,
+          "caption": "Rs 112 crore worldwide after Day 2",
+          "imagePrompt": "Nila standing beneath the crooked banner, phone held close as she reads it, slowly peeling tape by hand instead of cutting, half-closed cinema shutter, amber light on her face, cool blue background, over-the-shoulder animated cinematic shot, disbelief turning to curiosity, caption-safe upper-third space, no text, logos, or watermark",
+          "scenePrompt": "Push past the phone without showing legible screen text, settle on Nila's fingers carefully peeling the tape.",
+          "continuityNotes": "The phone is now secure in Nila's hand. The banner remains attached at two points, and the shutter is halfway down.",
+          "motion": "slow push-in"
+        },
+        "lines": [
+          {
+            "speaker": "Nila",
+            "text": "Rs 112 crore worldwide. Fine. That is not exactly the sound of an empty theatre."
+          },
+          {
+            "speaker": "Nila",
+            "text": "And H Vinoth says Vijay's stardom helped the social message reach a wider audience."
+          },
+          {
+            "speaker": "Nila",
+            "text": "So my little rule is wobbling. Rude. I made it to feel powerful."
+          }
+        ]
+      },
+      {
+        "id": "why-it-matters",
+        "dramaticAction": "Nila pulls the banner free, folds it against her chest, and uses her shoulder to hold the shutter open as it reaches her waist.",
+        "turningPoint": "Keeping the banner on the wall is no longer the only way to honour it; carrying it out becomes the riskier choice.",
+        "visual": {
+          "kind": "cinematic-recreation",
+          "durationSeconds": 14,
+          "caption": "The number changes her next move",
+          "imagePrompt": "Nila clutching the freed hand-painted banner against her chest while bracing the descending shutter with her shoulder, phone tucked into her lanyard, red tape cutter on the floor, amber lobby light behind her and blue evening light outside, dynamic side profile, tender stubborn mood, recurring details visible, caption-safe upper-third space, no text, logos, or watermark",
+          "scenePrompt": "Follow Nila's pull as the banner comes loose, then widen to show her wedging herself beneath the shutter with the banner.",
+          "continuityNotes": "The banner is fully detached but not folded yet. The shutter is now at waist height; the tote bag remains on the lobby floor.",
+          "motion": "gentle pan"
+        },
+        "lines": [
+          {
+            "speaker": "Nila",
+            "text": "I could leave it here and pretend the wall is still winning."
+          },
+          {
+            "speaker": "Nila",
+            "text": "But if the message travelled wider because Vijay brought people in... then I am not throwing away the one thing I made for it."
+          },
+          {
+            "speaker": "Nila",
+            "text": "Also, I am not explaining to anyone why I murdered a banner over a fifty-percent drop."
+          }
+        ]
+      },
+      {
+        "id": "takeaway",
+        "dramaticAction": "Nila folds the banner into her paint-stained tote, grabs the tape cutter, and slips under the shutter before letting it close behind her.",
+        "turningPoint": "She accepts the smaller personal cost of carrying the banner out, choosing commitment over a neat box-office verdict.",
+        "visual": {
+          "kind": "summary-visual",
+          "durationSeconds": 14,
+          "caption": "Some banners leave the wall, not the story",
+          "imagePrompt": "Nila stepping under the nearly closed shutter with the folded hand-painted banner inside her canvas tote, red tape cutter in her pocket, looking back once at the empty wall before walking into cool blue evening light, warm lobby glow behind her, wide cinematic animated shot, relieved mischievous smile, caption-safe upper-third space, no text, logos, or watermark",
+          "scenePrompt": "Hold on the empty patch of wall, then pan to Nila exiting under the shutter; the shutter closes after she clears it.",
+          "continuityNotes": "The banner is folded inside the tote, the tape cutter is secured, and the lobby empties as the shutter closes. End outside the same entrance with Nila walking away.",
+          "motion": "gentle pan"
+        },
+        "lines": [
+          {
+            "speaker": "Nila",
+            "text": "There. Jana Nayagan comes down from the wall, not from my hands."
+          },
+          {
+            "speaker": "Nila",
+            "text": "Day 2 dropped fifty percent, and it still reached Rs 112 crore worldwide. My pride can walk home."
+          },
+          {
+            "speaker": "Nila",
+            "text": "Come on, banner. We are late, dramatic, and apparently still open for one more scene."
+          }
+        ]
+      }
+    ],
+    "exit": "Nila disappears into the blue evening with the folded banner in her tote as the cinema shutter clicks shut behind her.",
+    "storyId": "64d08a32768e057cbd09ccf57648f818",
+    "category": "Entertainment",
+    "sourceCategory": "entertainment",
+    "topics": [
+      "entertainment"
+    ],
+    "format": "solo-hot-take",
+    "requestedCastMode": "auto",
+    "requestedVisualStyle": "animated",
+    "sources": [
+      {
+        "name": "indianexpress.com",
+        "url": "https://indianexpress.com/article/entertainment/tamil/jana-nayagan-box-office-collection-day-2-update-vijay-film-earns-rs-112-crore-10802264/",
+        "publishedAt": null
+      }
+    ],
+    "durationSeconds": 68,
+    "entry": {
+      "direct": "The Banner After Day Two",
+      "afterRelated": "Staying with this thread: The Banner After Day Two.",
+      "afterUnrelated": "Different kind of plot twist: The Banner After Day Two."
+    }
+  }
+}

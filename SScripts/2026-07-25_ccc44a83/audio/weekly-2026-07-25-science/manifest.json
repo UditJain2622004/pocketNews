@@ -1,0 +1,133 @@
+{
+  "articleId": "weekly-2026-07-25-science",
+  "scriptPath": "scripts/2026-07-25_ccc44a83/weekly-2026-07-25-science.json",
+  "language": "en-IN",
+  "model": "gpt-audio-1.5",
+  "voiceAssignments": {
+    "meera": "sage",
+    "kabir": "verse"
+  },
+  "clips": [
+    {
+      "clipId": "title-cue-0",
+      "beatId": "title-cue",
+      "lineIndex": 0,
+      "speaker": "meera",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/title-cue/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/title-cue/0.wav",
+      "durationSeconds": 7.3,
+      "lineHash": "6465ff842b0cdfdcf09267378c2e7e7b41d89790fc050f66658a0e4dcc43636d"
+    },
+    {
+      "clipId": "title-cue-1",
+      "beatId": "title-cue",
+      "lineIndex": 1,
+      "speaker": "kabir",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/title-cue/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/title-cue/1.wav",
+      "durationSeconds": 5.15,
+      "lineHash": "87500cf32e51e6a9316dc4b2e9bb7b0546f07cc8ac9224305e4268d42c3c7796"
+    },
+    {
+      "clipId": "hook-0",
+      "beatId": "hook",
+      "lineIndex": 0,
+      "speaker": "meera",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/hook/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/hook/0.wav",
+      "durationSeconds": 5.75,
+      "lineHash": "cfc73c02ae0725941dde0b5c37c7f1aa8ae6ce6fe1c31274a7d0d8c2e548e76c"
+    },
+    {
+      "clipId": "hook-1",
+      "beatId": "hook",
+      "lineIndex": 1,
+      "speaker": "kabir",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/hook/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/hook/1.wav",
+      "durationSeconds": 7.3,
+      "lineHash": "eec17dd43f34f3b696c8774245376e4fa925c01bf64a6db620784ce1d02516fb"
+    },
+    {
+      "clipId": "what-happened-0",
+      "beatId": "what-happened",
+      "lineIndex": 0,
+      "speaker": "kabir",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/what-happened/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/what-happened/0.wav",
+      "durationSeconds": 7.9,
+      "lineHash": "2510f7c5ac0b6590995bbe3b56186f0110e33384304e63ef572ad6d66fb41081"
+    },
+    {
+      "clipId": "what-happened-1",
+      "beatId": "what-happened",
+      "lineIndex": 1,
+      "speaker": "meera",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/what-happened/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/what-happened/1.wav",
+      "durationSeconds": 7.4,
+      "lineHash": "6578da7a1e5d85bfd9978ef1bd908a0847516580e4e47b83104a7691509288a2"
+    },
+    {
+      "clipId": "why-it-matters-0",
+      "beatId": "why-it-matters",
+      "lineIndex": 0,
+      "speaker": "meera",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/why-it-matters/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/why-it-matters/0.wav",
+      "durationSeconds": 3.25,
+      "lineHash": "d0dff203ffcd60a083e3663556b6d01a35a57037f7a64ec550f5672b78953dec"
+    },
+    {
+      "clipId": "why-it-matters-1",
+      "beatId": "why-it-matters",
+      "lineIndex": 1,
+      "speaker": "kabir",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/why-it-matters/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/why-it-matters/1.wav",
+      "durationSeconds": 8.35,
+      "lineHash": "cb975d89e838a410eab9addf8173d6bfa57d4e3940725c44d89eb002e9e5be44"
+    },
+    {
+      "clipId": "why-it-matters-2",
+      "beatId": "why-it-matters",
+      "lineIndex": 2,
+      "speaker": "meera",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/why-it-matters/2.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/why-it-matters/2.wav",
+      "durationSeconds": 3.15,
+      "lineHash": "80cbf9f39fc8e1fd0a93bce47bd5f09753e03d02b675c42e04accc03dd7b9d83"
+    },
+    {
+      "clipId": "takeaway-0",
+      "beatId": "takeaway",
+      "lineIndex": 0,
+      "speaker": "kabir",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/takeaway/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/takeaway/0.wav",
+      "durationSeconds": 6.3,
+      "lineHash": "7ff424b5ecb45982cb9b8d4a3fc9125b9101c91adb84d88833d1948392c896dd"
+    },
+    {
+      "clipId": "takeaway-1",
+      "beatId": "takeaway",
+      "lineIndex": 1,
+      "speaker": "meera",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/takeaway/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/takeaway/1.wav",
+      "durationSeconds": 3.0,
+      "lineHash": "11160745aa88e923acec254f5bc960d1d38c6ae02689a9974e0f9a2153b9d9c4"
+    },
+    {
+      "clipId": "takeaway-2",
+      "beatId": "takeaway",
+      "lineIndex": 2,
+      "speaker": "kabir",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/takeaway/2.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/takeaway/2.wav",
+      "durationSeconds": 4.75,
+      "lineHash": "c164770d4b389b90341c0a3a3c67b87ab3b95d4d97e7748c8f475c5f11054aec"
+    }
+  ],
+  "failures": []
+}

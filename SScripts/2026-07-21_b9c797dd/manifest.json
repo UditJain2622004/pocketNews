@@ -1,0 +1,107 @@
+{
+  "runId": "2026-07-21_b9c797dd",
+  "runDate": "2026-07-21",
+  "cadence": "daily",
+  "episodeTitle": "The Last Seat Before Change",
+  "language": "en-IN",
+  "startedAt": "2026-07-26T04:00:25.987331+00:00",
+  "articlesFound": 57,
+  "articlesSelected": 3,
+  "selection": {
+    "articlesConsidered": 57,
+    "storiesSelected": 3,
+    "duplicateIdsRemoved": 0,
+    "similarHeadlinesRemoved": 1,
+    "maxArticlesPerCategory": 1,
+    "maxTotalStories": 3,
+    "temporaryFocus": null,
+    "temporaryFocusMatches": 0
+  },
+  "scriptsGenerated": 3,
+  "imagesGenerated": 18,
+  "generateImages": true,
+  "threeImagesPerStory": false,
+  "generateAudio": true,
+  "castMode": "auto",
+  "visualStyle": "animated",
+  "storyFormat": "mix",
+  "requestedCategories": [
+    "business",
+    "entertainment",
+    "lifestyle",
+    "politics",
+    "science",
+    "sports",
+    "technology"
+  ],
+  "scripts": [
+    {
+      "articleId": "fcf54beff0eb0bc313359113cbb757d2",
+      "sourceFile": "news/daily/2026-07-21/entertainment.json",
+      "scriptPath": "scripts/2026-07-21_b9c797dd/fcf54beff0eb0bc313359113cbb757d2.json",
+      "imagePaths": [
+        "scripts/2026-07-21_b9c797dd/images/entertainment/fcf54beff0eb0bc313359113cbb757d2/hook.png",
+        "scripts/2026-07-21_b9c797dd/images/entertainment/fcf54beff0eb0bc313359113cbb757d2/reference.png",
+        "scripts/2026-07-21_b9c797dd/images/entertainment/fcf54beff0eb0bc313359113cbb757d2/takeaway.png",
+        "scripts/2026-07-21_b9c797dd/images/entertainment/fcf54beff0eb0bc313359113cbb757d2/title-cue.png",
+        "scripts/2026-07-21_b9c797dd/images/entertainment/fcf54beff0eb0bc313359113cbb757d2/what-happened.png",
+        "scripts/2026-07-21_b9c797dd/images/entertainment/fcf54beff0eb0bc313359113cbb757d2/why-it-matters.png"
+      ]
+    },
+    {
+      "articleId": "46a014402081c5c1defc44c38070200a",
+      "sourceFile": "news/daily/2026-07-21/lifestyle.json",
+      "scriptPath": "scripts/2026-07-21_b9c797dd/46a014402081c5c1defc44c38070200a.json",
+      "imagePaths": [
+        "scripts/2026-07-21_b9c797dd/images/lifestyle/46a014402081c5c1defc44c38070200a/hook.png",
+        "scripts/2026-07-21_b9c797dd/images/lifestyle/46a014402081c5c1defc44c38070200a/reference.png",
+        "scripts/2026-07-21_b9c797dd/images/lifestyle/46a014402081c5c1defc44c38070200a/takeaway.png",
+        "scripts/2026-07-21_b9c797dd/images/lifestyle/46a014402081c5c1defc44c38070200a/title-cue.png",
+        "scripts/2026-07-21_b9c797dd/images/lifestyle/46a014402081c5c1defc44c38070200a/what-happened.png",
+        "scripts/2026-07-21_b9c797dd/images/lifestyle/46a014402081c5c1defc44c38070200a/why-it-matters.png"
+      ]
+    },
+    {
+      "articleId": "79a89e37df229c079b60dbb885dbbc9b",
+      "sourceFile": "news/daily/2026-07-21/politics.json",
+      "scriptPath": "scripts/2026-07-21_b9c797dd/79a89e37df229c079b60dbb885dbbc9b.json",
+      "imagePaths": [
+        "scripts/2026-07-21_b9c797dd/images/politics/79a89e37df229c079b60dbb885dbbc9b/hook.png",
+        "scripts/2026-07-21_b9c797dd/images/politics/79a89e37df229c079b60dbb885dbbc9b/reference.png",
+        "scripts/2026-07-21_b9c797dd/images/politics/79a89e37df229c079b60dbb885dbbc9b/takeaway.png",
+        "scripts/2026-07-21_b9c797dd/images/politics/79a89e37df229c079b60dbb885dbbc9b/title-cue.png",
+        "scripts/2026-07-21_b9c797dd/images/politics/79a89e37df229c079b60dbb885dbbc9b/what-happened.png",
+        "scripts/2026-07-21_b9c797dd/images/politics/79a89e37df229c079b60dbb885dbbc9b/why-it-matters.png"
+      ]
+    }
+  ],
+  "failures": [],
+  "audio": {
+    "runId": "2026-07-21_b9c797dd",
+    "articlesRequested": 3,
+    "audioStoriesReady": 3,
+    "clipsGenerated": 37,
+    "clipsReused": 0,
+    "manifests": [
+      {
+        "articleId": "46a014402081c5c1defc44c38070200a",
+        "manifestPath": "scripts/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/manifest.json",
+        "manifestUrl": "/api/media/2026-07-21_b9c797dd/audio/46a014402081c5c1defc44c38070200a/manifest.json",
+        "failures": []
+      },
+      {
+        "articleId": "79a89e37df229c079b60dbb885dbbc9b",
+        "manifestPath": "scripts/2026-07-21_b9c797dd/audio/79a89e37df229c079b60dbb885dbbc9b/manifest.json",
+        "manifestUrl": "/api/media/2026-07-21_b9c797dd/audio/79a89e37df229c079b60dbb885dbbc9b/manifest.json",
+        "failures": []
+      },
+      {
+        "articleId": "fcf54beff0eb0bc313359113cbb757d2",
+        "manifestPath": "scripts/2026-07-21_b9c797dd/audio/fcf54beff0eb0bc313359113cbb757d2/manifest.json",
+        "manifestUrl": "/api/media/2026-07-21_b9c797dd/audio/fcf54beff0eb0bc313359113cbb757d2/manifest.json",
+        "failures": []
+      }
+    ],
+    "failures": []
+  }
+}

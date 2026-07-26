@@ -1,0 +1,261 @@
+{
+  "article": {
+    "id": "weekly-2026-07-25-sports",
+    "title": "Sports Weekly Recap",
+    "summary": "## Sports briefing: July 20–25, 2026 - **2022:** India won eight athletics medals at the Birmingham Commonwealth Games—one gold, four silver and three bronze. Eldhose Paul won triple-jump gold, while Murali Sreeshankar took long-jump silver. Shooting, a major source of India’s past Commonwealth Games medals, was absent from the Birmingham programme and is also not included in Glasgow’s reduced programme. - **May 19, 2026:** Neeraj Chopra returned from an injury-enforced absence at the Doha Diamond League. He cleared the Athletics Federation of India’s 82.61m qualifying mark with an 82.77m second-round throw, improved to 85.69m and finished fourth. His 90.23m national record was set in 2025. Chopra is the 2018 Commonwealth champion, but faces defending champion Arshad Nadeem, whose personal best is 92.97m, and Sri Lanka’s Rumesh Tharanga, who has thrown 92.62m this year. - **May 25, 2026:** Praveen Chithravel won triple-jump gold at the 29th National Senior Athletics Federation Competition in Ranchi. The supplied Sportstar text identifies him among India’s five athletics medal prospects but does not provide further details. - **June 24–28, 2026:** At the National Inter-State Championships in Bhubaneswar, Sreeshankar recorded 8.38m in the long jump, described as the second-best legal jump of his career. He had earlier won with 8.15m at the Indian Athletics Series in Bengaluru. Sreeshankar, who is 27, won silver at Birmingham 2022 with 8.08m and is listed as India’s leading long-jump prospect for Glasgow. - **By late June 2026:** The Athletics Federation of India named the maximum permitted 32-member athletics contingent for Glasgow. Neeraj Chopra was ranked second nationally in men’s javelin with 85.69m, behind Rohit Yadav’s 87.05m. Sreeshankar was ranked first in men’s long jump. - **July 23–August 2, 2026:** The Commonwealth Games are scheduled to take place in Glasgow. With wrestling, badminton, hockey and table tennis absent from the reduced programme, athletics is expected to carry a larger share of India’s medal expectations. The supplied reports present Chopra and Sreeshankar, along with Praveen Chithravel and two other athletes not detailed in the provided text, as Indian athletics medal prospects.",
+    "full_text": "## Sports briefing: July 20–25, 2026 - **2022:** India won eight athletics medals at the Birmingham Commonwealth Games—one gold, four silver and three bronze. Eldhose Paul won triple-jump gold, while Murali Sreeshankar took long-jump silver. Shooting, a major source of India’s past Commonwealth Games medals, was absent from the Birmingham programme and is also not included in Glasgow’s reduced programme. - **May 19, 2026:** Neeraj Chopra returned from an injury-enforced absence at the Doha Diamond League. He cleared the Athletics Federation of India’s 82.61m qualifying mark with an 82.77m second-round throw, improved to 85.69m and finished fourth. His 90.23m national record was set in 2025. Chopra is the 2018 Commonwealth champion, but faces defending champion Arshad Nadeem, whose personal best is 92.97m, and Sri Lanka’s Rumesh Tharanga, who has thrown 92.62m this year. - **May 25, 2026:** Praveen Chithravel won triple-jump gold at the 29th National Senior Athletics Federation Competition in Ranchi. The supplied Sportstar text identifies him among India’s five athletics medal prospects but does not provide further details. - **June 24–28, 2026:** At the National Inter-State Championships in Bhubaneswar, Sreeshankar recorded 8.38m in the long jump, described as the second-best legal jump of his career. He had earlier won with 8.15m at the Indian Athletics Series in Bengaluru. Sreeshankar, who is 27, won silver at Birmingham 2022 with 8.08m and is listed as India’s leading long-jump prospect for Glasgow. - **By late June 2026:** The Athletics Federation of India named the maximum permitted 32-member athletics contingent for Glasgow. Neeraj Chopra was ranked second nationally in men’s javelin with 85.69m, behind Rohit Yadav’s 87.05m. Sreeshankar was ranked first in men’s long jump. - **July 23–August 2, 2026:** The Commonwealth Games are scheduled to take place in Glasgow. With wrestling, badminton, hockey and table tennis absent from the reduced programme, athletics is expected to carry a larger share of India’s medal expectations. The supplied reports present Chopra and Sreeshankar, along with Praveen Chithravel and two other athletes not detailed in the provided text, as Indian athletics medal prospects.",
+    "url": "",
+    "language": "english",
+    "categories": [
+      "sports"
+    ],
+    "published_at": null,
+    "source_name": "Source"
+  },
+  "sourceFile": "summaries/weekly/2026-07-25/sports.json",
+  "story": {
+    "title": "The Last Clear Lane",
+    "skipLabel": "Sports Weekly Recap: India’s Glasgow athletics prospects",
+    "classification": {
+      "category": "Sports",
+      "subcategories": [
+        "Athletics"
+      ]
+    },
+    "creativeDirection": {
+      "genre": "competitive drama",
+      "dramaticPremise": "Two young athletes fight over one clear training lane until India’s Glasgow athletics prospects turn their private rivalry into a difficult act of solidarity.",
+      "selectedFormat": "two-person-banter",
+      "performanceMode": "character-dialogue",
+      "castMode": "story_duo",
+      "visualStyle": "animated"
+    },
+    "dramaticSpine": {
+      "characterGoal": "Kabir wants the only clear lane for one final javelin practice before leaving the sports centre.",
+      "obstacle": "Naina needs that same lane to rehearse her long-jump approach and refuses to move.",
+      "newsCatalyst": "The reduced Glasgow Commonwealth Games programme excludes wrestling, badminton, hockey, table tennis and shooting, leaving athletics with a larger share of India’s medal expectations.",
+      "reversal": "Naina’s 8.38m long jump and Sreeshankar’s leading national ranking make Kabir realise the lane matters more to her immediate preparation than to his extra throw.",
+      "costOfFailure": "Kabir must give up his last planned throw and risk leaving without testing his form.",
+      "emotionalTurn": "Their competition shifts into mutual respect as they recognise the pressure on athletics prospects.",
+      "resolution": "Kabir clears the lane for Naina, then uses the remaining space for a short, improvised practice without a full throw."
+    },
+    "visualBible": {
+      "setting": "A nearly empty community athletics ground at dusk, with one clear runway, a sandpit, a coiled measuring tape, two kit bags and a distant locked multi-sport court.",
+      "colorAndLighting": "Animated editorial sports-film palette: cobalt dusk, warm amber floodlights, sharp lime track markings, soft shadows and a subtle glow around the open runway.",
+      "recurringProps": [
+        "red javelin case",
+        "blue long-jump shoes",
+        "coiled measuring tape",
+        "two scuffed kit bags"
+      ],
+      "storyArc": "The open lane begins as contested territory, becomes a symbol of unequal pressure, and ends as shared space after Kabir makes room for Naina.",
+      "referenceImagePrompt": "Editorial animated-film still of two fictional Indian young adult athletes together on a community athletics ground at dusk: Kabir in a maroon training jacket beside a red javelin case, Naina in a teal tracksuit holding blue long-jump shoes, one clear runway leading to a sandpit, coiled measuring tape and two scuffed kit bags, distant locked multi-sport court, cobalt sky and warm amber floodlights, expressive faces, cinematic depth, uncluttered upper-third space, no text, logos, or watermark.",
+      "referenceImagePath": "scripts/2026-07-25_ccc44a83/images/sports/weekly-2026-07-25-sports/reference.png"
+    },
+    "cast": [
+      {
+        "id": "kabir",
+        "role": "Fictional javelin trainee guarding his final practice attempt",
+        "voiceProfile": "Low, quick Indian-English voice with competitive energy and a dry laugh; begins impatient and defensive, uses clipped interruptions under pressure, then softens into reluctant warmth and relief at the ending.",
+        "language": "en-IN",
+        "visualIdentity": "Lean young Indian man with tousled black hair, maroon training jacket, black track trousers and worn white trainers; carries a red javelin case."
+      },
+      {
+        "id": "naina",
+        "role": "Fictional long-jump trainee demanding the runway for her approach practice",
+        "voiceProfile": "Bright, precise Indian-English voice at a brisk pace; baseline is stubborn confidence, with sharp comic timing during interruptions, shifting to focused vulnerability and generous calm by the end.",
+        "language": "en-IN",
+        "visualIdentity": "Young Indian woman with braided black hair, teal tracksuit, blue long-jump shoes and a yellow wristband; carries a scuffed blue kit bag."
+      }
+    ],
+    "beats": [
+      {
+        "id": "title-cue",
+        "dramaticAction": "Kabir drags the javelin case across the runway while Naina steps into his path and plants her shoes on the take-off board.",
+        "turningPoint": "Their private training dispute becomes a timed contest for the only usable lane.",
+        "visual": {
+          "kind": "cinematic-recreation",
+          "durationSeconds": 8,
+          "caption": "Sports Weekly Recap: India’s Glasgow athletics prospects",
+          "imagePrompt": "Animated editorial sports-film image of Kabir dragging a red javelin case onto a single clear athletics runway as Naina blocks him at the take-off board, community ground at cobalt dusk, low tracking camera, warm amber floodlights, tense playful mood, maroon jacket, teal tracksuit, blue shoes, measuring tape and kit bags visible, caption-safe empty upper third, no text, logos, or watermark",
+          "scenePrompt": "Continuous opening shot at ground level, camera follows the red case and reveals Naina blocking the lane.",
+          "continuityNotes": "Establish both characters, the single runway, sandpit, red case, blue shoes, measuring tape and two kit bags; preserve all positions for the next shot.",
+          "motion": "slow push-in"
+        },
+        "lines": [
+          {
+            "speaker": "kabir",
+            "text": "Sports Weekly Recap, July 20 to 25—and you are standing on my runway."
+          },
+          {
+            "speaker": "naina",
+            "text": "Your runway? I need three approaches. You need one throw."
+          }
+        ]
+      },
+      {
+        "id": "hook",
+        "dramaticAction": "Kabir takes two measured steps back, but Naina snaps the measuring tape across the take-off board before he can begin.",
+        "turningPoint": "Kabir loses his immediate throwing mark and must argue instead of practising.",
+        "visual": {
+          "kind": "character-reaction",
+          "durationSeconds": 10,
+          "caption": "One lane. Two medal dreams.",
+          "imagePrompt": "Animated editorial close two-shot: Naina sharply stretches the coiled measuring tape across the take-off board while Kabir freezes mid-step with the red javelin case, same dusk athletics ground and props, slightly tilted camera, amber light catching frustrated faces, comic competitive mood, clear caption-safe upper third, no text, logos, or watermark",
+          "scenePrompt": "The camera arcs around the blocked board as the tape snaps taut between them.",
+          "continuityNotes": "Keep the javelin case at Kabir’s feet and Naina’s blue shoes on the board; advance the tape from loose coil to barrier.",
+          "motion": "gentle pan",
+          "imagePath": "scripts/2026-07-25_ccc44a83/images/sports/weekly-2026-07-25-sports/hook.png"
+        },
+        "lines": [
+          {
+            "speaker": "kabir",
+            "text": "Glasgow has athletics carrying more medal expectation. I cannot leave cold."
+          },
+          {
+            "speaker": "naina",
+            "text": "Because wrestling, badminton, hockey, table tennis—and shooting—are out of the reduced programme?"
+          },
+          {
+            "speaker": "kabir",
+            "text": "Exactly. So let me throw."
+          }
+        ]
+      },
+      {
+        "id": "what-happened",
+        "dramaticAction": "Naina pulls up her phone, reads while jogging her approach, then stops abruptly at the sandpit’s edge.",
+        "turningPoint": "The factual performances make Naina’s rehearsal more urgent, while Kabir’s own javelin benchmark suddenly looks less secure.",
+        "visual": {
+          "kind": "factual-visual",
+          "durationSeconds": 12,
+          "caption": "Sreeshankar: 8.38m; Chopra: 85.69m",
+          "imagePrompt": "Animated editorial sports-film shot of Naina jogging an approach with phone in one hand, stopping at the sandpit edge as Kabir opens the red case behind her, same runway and floodlights, side-on camera with motion blur, surprise and pressure in the mood, recurring maroon and teal wardrobe, empty upper third for captions, no text, logos, or watermark",
+          "scenePrompt": "The camera tracks Naina’s approach, then whip-pans to Kabir as the phone changes the rhythm.",
+          "continuityNotes": "The tape remains across the board until Naina steps over it; the red case is now open but the javelin stays inside.",
+          "motion": "slow push-in",
+          "imagePath": "scripts/2026-07-25_ccc44a83/images/sports/weekly-2026-07-25-sports/what-happened.png"
+        },
+        "lines": [
+          {
+            "speaker": "naina",
+            "text": "Sreeshankar just hit 8.38 metres—the second-best legal jump of his career."
+          },
+          {
+            "speaker": "kabir",
+            "text": "And Chopra is at 85.69, still behind Rohit Yadav’s 87.05 nationally."
+          },
+          {
+            "speaker": "naina",
+            "text": "So nobody gets a lazy final session."
+          }
+        ]
+      },
+      {
+        "id": "why-it-matters",
+        "dramaticAction": "Kabir lifts the javelin, hesitates, then lays it back in the case as Naina marks a shortened approach with her heel.",
+        "turningPoint": "Kabir gives up his full throw, leaving himself only a cramped practice option while Naina gets the clear lane.",
+        "visual": {
+          "kind": "funny-metaphor",
+          "durationSeconds": 10,
+          "caption": "Pressure turns the runway into a negotiation.",
+          "imagePrompt": "Animated editorial sports-film image: Kabir reluctantly lowers a javelin back into the red case while Naina marks a shortened approach with her heel, one clear runway between them, sandpit and measuring tape prominent, overhead three-quarter camera, warm light and bittersweet comic mood, recurring props intact, caption-safe upper third, no text, logos, or watermark",
+          "scenePrompt": "The camera looks down as Kabir’s javelin nearly rises, then drops; Naina quietly resets her starting mark.",
+          "continuityNotes": "Maintain the open case and tape barrier; move Naina’s mark farther down the runway and leave Kabir beside the case.",
+          "motion": "gentle pan"
+        },
+        "lines": [
+          {
+            "speaker": "kabir",
+            "text": "Fine. You take it. But if I miss Glasgow-level form, I am blaming your tape."
+          },
+          {
+            "speaker": "naina",
+            "text": "Blame the programme. Athletics now has to carry the room."
+          },
+          {
+            "speaker": "kabir",
+            "text": "That is a horrible pep talk."
+          }
+        ]
+      },
+      {
+        "id": "takeaway",
+        "dramaticAction": "Naina completes one clean approach and jump; Kabir immediately folds the tape, steps into the remaining space and rehearses a short throwing motion without releasing the javelin.",
+        "turningPoint": "They finish with shared preparation: Naina keeps her runway, and Kabir chooses a safer incomplete session over forcing one final throw.",
+        "visual": {
+          "kind": "summary-visual",
+          "durationSeconds": 12,
+          "caption": "One lane, shared pressure.",
+          "imagePrompt": "Animated editorial final shot: Naina lands in the sandpit as Kabir rehearses a compact javelin motion safely beside the runway, folded measuring tape near the red case, blue shoes kicking sand, amber floodlights against cobalt dusk, wide cinematic camera, relieved affectionate mood, recurring wardrobe and kit bags, generous caption-safe upper third, no text, logos, or watermark",
+          "scenePrompt": "A wide shot holds the complete lane as Naina lands and Kabir practises beside her, ending on their shared breath and small laugh.",
+          "continuityNotes": "Carry forward the folded tape, open red case, sandpit marks and both kit bags; the contested lane is now physically shared without a full release.",
+          "motion": "hold",
+          "imagePath": "scripts/2026-07-25_ccc44a83/images/sports/weekly-2026-07-25-sports/takeaway.png"
+        },
+        "lines": [
+          {
+            "speaker": "naina",
+            "text": "Eight point thirty-eight makes my three approaches feel very small."
+          },
+          {
+            "speaker": "kabir",
+            "text": "Good. Small is still better than one dramatic injury."
+          },
+          {
+            "speaker": "naina",
+            "text": "Tomorrow, we share the lane."
+          },
+          {
+            "speaker": "kabir",
+            "text": "Tomorrow, I bring less tape."
+          }
+        ]
+      }
+    ],
+    "interactions": [
+      {
+        "id": "athletics-pressure",
+        "beatId": "hook",
+        "type": "impact_poll",
+        "question": "With several sports absent from Glasgow’s reduced programme, which sport carries more of India’s medal expectations?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Athletics"
+          },
+          {
+            "id": "b",
+            "text": "Shooting"
+          }
+        ],
+        "correctOptionId": "a",
+        "revealText": "Athletics is expected to carry a larger share of India’s medal expectations; shooting is not included in Glasgow’s reduced programme."
+      }
+    ],
+    "exit": "The floodlights hum on as Naina brushes sand from her knees and Kabir closes the javelin case—neither got everything they wanted, but the runway remains open.",
+    "storyId": "weekly-2026-07-25-sports",
+    "category": "Sports",
+    "sourceCategory": "sports",
+    "topics": [
+      "sports"
+    ],
+    "format": "mix",
+    "selectedFormat": "two-person-banter",
+    "requestedCastMode": "auto",
+    "requestedVisualStyle": "animated",
+    "sources": [
+      {
+        "name": "Source",
+        "url": "",
+        "publishedAt": null
+      }
+    ],
+    "durationSeconds": 52,
+    "entry": {
+      "direct": "The Last Clear Lane",
+      "afterRelated": "Staying with this thread: The Last Clear Lane.",
+      "afterUnrelated": "Different kind of plot twist: The Last Clear Lane."
+    }
+  }
+}

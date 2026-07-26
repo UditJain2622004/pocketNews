@@ -1,0 +1,239 @@
+{
+  "article": {
+    "id": "219d2d506f1f5375c972c84c4b4284d0",
+    "title": "Can you get income tax notice for UPI, NEFT, RTGS or IMPS transactions? CA explains when your transactions may come under scrutiny - The Economic Times",
+    "summary": "Can you get income tax notice for UPI, NEFT, RTGS or IMPS transactions? CA explains when your transactions may come under scrutiny The Economic Times",
+    "full_text": "Many taxpayers worry that receiving or sending money through the Unified Payments Interface (UPI), National Electronic Funds Transfer (NEFT), Real Time Gross Settlement (RTGS) and Immediate Payment Service (IMPS) may also invite an income tax notice. With digital payments becoming the norm, such concerns are common, especially when large amounts are involved. However, according to chartered accountant Abhishek Soni, CEO & co-founder of Tax2win, the mode of payment itself is not what attracts the Income Tax Department's attention. Instead, what matters is whether your financial transactions are consistent with the income disclosed in your Income Tax Return (ITR). Soni explains situations when a taxpayer may receive an income tax notice. No, simply using the UPI, NEFT, RTGS, or IMPS does not trigger an income tax notice. These are just payment methods. The Income Tax Department does not issue notices based on how you transfer or receive money. The Income Tax Department looks at whether your transactions match the income you have reported in your Income Tax Return (ITR).For example, you may receive a notice if:You report a low income but your bank account shows large or frequent transactions.You make high-value cash deposits without a valid source. A notice may also be issued if:You make high-value cash deposits without a valid source.Your account receives regular UPI payments that appear to be business income, but you don't report them in your ITR.Source of funds mattersYou may also face scrutiny if you cannot explain the source of money received through the UPI, NEFT, RTGS, or IMPS. Banks report certain high-value transactions, such as large cash deposits, to the Income Tax Department. However, this does not automatically result in a notice. If your transactions are genuine, properly documented, and consistent with the income reported in your ITR, there is generally no cause for concern.",
+    "url": "https://m.economictimes.com/wealth/tax/can-you-get-income-tax-notice-for-upi-neft-rtgs-or-imps-transactions-ca-explains-when-your-transactions-may-come-under-scrutiny/does-using-upi-neft-rtgs-or-imps-trigger-an-income-tax-notice/slideshow/132620633.cms",
+    "language": "english",
+    "categories": [
+      "business"
+    ],
+    "published_at": null,
+    "source_name": "m.economictimes.com"
+  },
+  "sourceFile": "news/daily/2026-07-25/business.json",
+  "story": {
+    "title": "The QR Code at Closing Time",
+    "skipLabel": "Skip this story about income-tax scrutiny of UPI, NEFT, RTGS and IMPS transactions.",
+    "classification": {
+      "category": "Business",
+      "subcategories": [
+        "Personal Finance"
+      ]
+    },
+    "creativeDirection": {
+      "genre": "comedy-drama",
+      "dramaticPremise": "At closing time, a small shop owner must decide whether to accept a rush of digital payments or shut off her QR code, while her anxious brother fears an income-tax notice.",
+      "selectedFormat": "two-person-banter",
+      "performanceMode": "character-dialogue",
+      "castMode": "story_duo",
+      "visualStyle": "animated"
+    },
+    "dramaticSpine": {
+      "characterGoal": "Meera wants to accept the evening’s genuine customer payments and pay her supplier on time.",
+      "obstacle": "Her brother Arjun wants to disable every digital payment method because he fears UPI, NEFT, RTGS or IMPS activity will itself trigger scrutiny.",
+      "newsCatalyst": "A CA explanation makes clear that the payment mode itself does not trigger a notice; consistency with disclosed ITR income and an explainable source of funds matter.",
+      "reversal": "Arjun finds that regular UPI receipts could appear to be business income if Meera does not report them in her ITR.",
+      "costOfFailure": "Shutting the QR code costs Meera the chance to complete legitimate sales before closing.",
+      "emotionalTurn": "Fear shifts into a practical decision: keep receiving genuine payments while preserving records and reporting income accurately.",
+      "resolution": "Meera leaves the QR code on, saves the transaction records, and prepares to explain the source of funds rather than panic about the payment method."
+    },
+    "visualBible": {
+      "setting": "A tiny animated neighbourhood stationery shop at closing time, with a half-lowered shutter, a cluttered counter, and a glowing QR payment stand beside a paper ledger.",
+      "colorAndLighting": "Warm amber shop light against cool blue evening street light; the QR stand casts a small green reflection, shifting from anxious shadows to gentle relief.",
+      "recurringProps": [
+        "half-lowered metal shutter",
+        "glowing QR payment stand",
+        "paper ledger and pen",
+        "sealed supplier parcel on the counter"
+      ],
+      "storyArc": "The shop begins cramped and tense, becomes frantic when the QR code starts pinging, then settles into a practical, warm choice as the shutter rises slightly for one final customer.",
+      "referenceImagePrompt": "Editorial animated-film still of Meera, a focused Indian shop owner in a mustard kurta and teal apron, and Arjun, her nervous younger brother in a maroon hoodie and round glasses, standing together behind the counter of a tiny stationery shop at blue-hour closing time; half-lowered shutter, glowing QR payment stand, paper ledger, pen, sealed supplier parcel, warm amber interior against cool blue street light, expressive faces, upper-third caption-safe space, no text, logos, or watermark",
+      "referenceImagePath": "scripts/2026-07-25_9bb2de9f/images/business/219d2d506f1f5375c972c84c4b4284d0/reference.png"
+    },
+    "cast": [
+      {
+        "id": "meera",
+        "role": "Stationery shop owner",
+        "voiceProfile": "Warm, quick Indian-English voice with a practical lower register; starts brisk and determined, tightens into irritation under pressure, then softens into relieved confidence. Use clipped interruptions during the payment panic and a small amused pause at the ending.",
+        "language": "en-IN",
+        "visualIdentity": "Indian woman in her early thirties, mustard kurta, teal apron, tied-back hair, small silver studs; expressive eyebrows and ink-stained fingers."
+      },
+      {
+        "id": "arjun",
+        "role": "Meera’s anxious brother and helper",
+        "voiceProfile": "Nervous, slightly nasal Indian-English voice at a fast pace; baseline is catastrophising disbelief, with comic overreaction, then a careful thoughtful shift and quiet acceptance by the end.",
+        "language": "en-IN",
+        "visualIdentity": "Indian man in his late twenties, maroon hoodie, round glasses, tousled hair; constantly clutching a pen and glancing between the shutter and the QR stand."
+      }
+    ],
+    "beats": [
+      {
+        "id": "title-cue",
+        "dramaticAction": "As Meera reaches to switch off the QR stand, Arjun grabs her wrist and blurts out the specific tax concern.",
+        "turningPoint": "The payment device becomes the object of a live argument: Meera wants it active, while Arjun treats it as the danger.",
+        "visual": {
+          "kind": "character-reaction",
+          "durationSeconds": 8,
+          "caption": "UPI, NEFT, RTGS or IMPS: does the payment mode itself trigger an income-tax notice?",
+          "imagePrompt": "Editorial animated-film close two-shot, Meera reaching toward the glowing QR payment stand while Arjun catches her wrist in alarm, tiny stationery shop at closing time, half-lowered shutter, amber counter light and cool blue street light, nervous comic mood, paper ledger and sealed supplier parcel visible, camera at counter height, clear upper-third caption-safe space, no text, logos, or watermark",
+          "scenePrompt": "Continuous opening shot inside the shop as the shutter rattles down and the QR stand glows between the siblings.",
+          "continuityNotes": "Establish both characters, wardrobe, props and the closing-time pressure; the QR stand remains on for the next shot.",
+          "motion": "slow push-in",
+          "imagePath": "scripts/2026-07-25_9bb2de9f/images/business/219d2d506f1f5375c972c84c4b4284d0/title-cue.png"
+        },
+        "lines": [
+          {
+            "speaker": "meera",
+            "text": "UPI, NEFT, RTGS or IMPS does not summon an income-tax notice, Arjun. Let go."
+          },
+          {
+            "speaker": "arjun",
+            "text": "Then why does that QR box look like it knows my ITR?"
+          }
+        ]
+      },
+      {
+        "id": "hook",
+        "dramaticAction": "A payment ping sounds; Meera lifts the supplier parcel while Arjun tries to cover the QR stand with his hoodie.",
+        "turningPoint": "Meera’s immediate supplier payment now depends on accepting genuine digital receipts, but Arjun’s panic threatens to stop the sale.",
+        "visual": {
+          "kind": "funny-metaphor",
+          "durationSeconds": 9,
+          "caption": "The worry is not the app; it is whether the money can be explained.",
+          "imagePrompt": "Editorial animated-film medium shot, Arjun comically draping his maroon hoodie over the glowing QR stand while Meera hoists the sealed supplier parcel and reaches for the ledger, closing stationery shop, half-lowered shutter, warm amber light, blue evening rim light, urgent playful mood, upper-third caption-safe space, no text, logos, or watermark",
+          "scenePrompt": "The payment ping interrupts their argument; Meera moves toward the ledger and parcel while Arjun physically blocks the QR stand.",
+          "continuityNotes": "Keep Arjun’s hand on the QR stand and Meera holding the parcel; advance the action from fear to a threatened shutdown.",
+          "motion": "gentle pan",
+          "imagePath": "scripts/2026-07-25_9bb2de9f/images/business/219d2d506f1f5375c972c84c4b4284d0/hook.png"
+        },
+        "lines": [
+          {
+            "speaker": "meera",
+            "text": "I need tonight’s real payments to clear this supplier parcel."
+          },
+          {
+            "speaker": "arjun",
+            "text": "Or tonight’s real payments become tomorrow’s awkward letter."
+          },
+          {
+            "speaker": "meera",
+            "text": "Only if I pretend they came from nowhere."
+          }
+        ]
+      },
+      {
+        "id": "what-happened",
+        "dramaticAction": "Arjun snatches the pen, scans the ledger, and reads the CA’s explanation aloud while Meera pulls the hoodie away from the QR stand.",
+        "turningPoint": "The factual catalyst removes the payment-method fear, but exposes a new risk: regular UPI receipts may look like business income if not reported in the ITR.",
+        "visual": {
+          "kind": "factual-visual",
+          "durationSeconds": 12,
+          "caption": "Scrutiny can arise when transactions do not match disclosed income, or when business receipts go unreported.",
+          "imagePrompt": "Editorial animated-film over-the-counter shot, Arjun gripping a pen over an open paper ledger while Meera pulls the hoodie off the QR stand, both leaning into the tense discovery, tiny shop interior, amber light on ledger and cool blue street beyond shutter, serious-but-comic mood, recurring parcel and QR stand, upper-third caption-safe space, no text, logos, or watermark",
+          "scenePrompt": "Arjun finds the relevant explanation in the article on a phone just below frame and speaks while Meera restores the QR stand.",
+          "continuityNotes": "The QR stand stays visible and uncovered; the ledger is now open, creating the practical record-keeping option for the next shot.",
+          "motion": "slow push-in",
+          "imagePath": "scripts/2026-07-25_9bb2de9f/images/business/219d2d506f1f5375c972c84c4b4284d0/what-happened.png"
+        },
+        "lines": [
+          {
+            "speaker": "arjun",
+            "text": "CA Abhishek Soni’s point is clear: the mode itself is not what they look at."
+          },
+          {
+            "speaker": "meera",
+            "text": "They look at whether transactions match income disclosed in the ITR."
+          },
+          {
+            "speaker": "arjun",
+            "text": "And regular UPI receipts that look like business income? Those need reporting."
+          }
+        ]
+      },
+      {
+        "id": "why-it-matters",
+        "dramaticAction": "A customer’s payment arrives; Meera writes its source in the ledger, while Arjun freezes over a pile of unexplained cash receipts beside it.",
+        "turningPoint": "The brothers’ abstract fear becomes a concrete choice between a documented genuine payment and money whose source cannot be explained.",
+        "visual": {
+          "kind": "character-reaction",
+          "durationSeconds": 11,
+          "caption": "Large or frequent transactions and unexplained high-value cash deposits may invite scrutiny.",
+          "imagePrompt": "Editorial animated-film split-focus shot, Meera calmly writing in the open ledger as a payment ping arrives, Arjun recoils from a small pile of unlabelled cash receipts on the counter, stationery shop at dusk, warm light on Meera and cooler shadow on Arjun, tense practical mood, QR stand and supplier parcel recurring, upper-third caption-safe space, no text, logos, or watermark",
+          "scenePrompt": "The new payment lands as Meera records it; Arjun notices the contrast between traceable receipts and cash with no clear source.",
+          "continuityNotes": "Carry forward the open ledger and uncovered QR stand; introduce the cash receipts only as an obstacle representing an unexplained source, not as a new factual event.",
+          "motion": "gentle pan",
+          "imagePath": "scripts/2026-07-25_9bb2de9f/images/business/219d2d506f1f5375c972c84c4b4284d0/why-it-matters.png"
+        },
+        "lines": [
+          {
+            "speaker": "arjun",
+            "text": "Fine. But this cash pile has no source, no story, nothing."
+          },
+          {
+            "speaker": "meera",
+            "text": "Then we do not invent one. We document what we can explain."
+          },
+          {
+            "speaker": "arjun",
+            "text": "Banks can report certain high-value transactions—but that still is not an automatic notice?"
+          }
+        ]
+      },
+      {
+        "id": "takeaway",
+        "dramaticAction": "Meera slides the recorded ledger toward Arjun, leaves the QR stand on, and lifts the shutter just enough to accept one final payment.",
+        "turningPoint": "Arjun abandons the shutdown plan and helps preserve the records, while Meera chooses transparent documentation over panic.",
+        "visual": {
+          "kind": "summary-visual",
+          "durationSeconds": 10,
+          "caption": "Genuine, documented transactions consistent with the ITR are generally not cause for concern.",
+          "imagePrompt": "Editorial animated-film closing shot, Meera sliding the completed ledger toward a calmer Arjun while lifting the shutter a little and leaving the QR stand glowing for one last customer, warm amber interior opening into cool blue evening, relieved comic mood, mustard kurta, teal apron, maroon hoodie, round glasses, sealed parcel, upper-third caption-safe space, no text, logos, or watermark",
+          "scenePrompt": "The siblings settle the immediate dispute through action: the ledger is preserved, the shutter rises slightly, and the shop accepts one final genuine payment.",
+          "continuityNotes": "End with the same props and wardrobe; show the emotional shift through the raised shutter, shared ledger, and QR stand remaining active.",
+          "motion": "slow push-in",
+          "imagePath": "scripts/2026-07-25_9bb2de9f/images/business/219d2d506f1f5375c972c84c4b4284d0/takeaway.png"
+        },
+        "lines": [
+          {
+            "speaker": "meera",
+            "text": "Keep the QR on. Keep the records. Report the income honestly."
+          },
+          {
+            "speaker": "arjun",
+            "text": "So the scary part is not UPI—it is money I cannot explain."
+          },
+          {
+            "speaker": "meera",
+            "text": "Good. Now help me sell one last notebook before your hoodie kills the business."
+          }
+        ]
+      }
+    ],
+    "exit": "The shutter rises a little, the QR stand stays lit, and Arjun reluctantly takes the pen as one final payment ping breaks his panic.",
+    "storyId": "219d2d506f1f5375c972c84c4b4284d0",
+    "category": "Business",
+    "sourceCategory": "business",
+    "topics": [
+      "business"
+    ],
+    "format": "mix",
+    "selectedFormat": "two-person-banter",
+    "requestedCastMode": "auto",
+    "requestedVisualStyle": "animated",
+    "sources": [
+      {
+        "name": "m.economictimes.com",
+        "url": "https://m.economictimes.com/wealth/tax/can-you-get-income-tax-notice-for-upi-neft-rtgs-or-imps-transactions-ca-explains-when-your-transactions-may-come-under-scrutiny/does-using-upi-neft-rtgs-or-imps-trigger-an-income-tax-notice/slideshow/132620633.cms",
+        "publishedAt": null
+      }
+    ],
+    "durationSeconds": 50,
+    "entry": {
+      "direct": "The QR Code at Closing Time",
+      "afterRelated": "Staying with this thread: The QR Code at Closing Time.",
+      "afterUnrelated": "Different kind of plot twist: The QR Code at Closing Time."
+    }
+  }
+}

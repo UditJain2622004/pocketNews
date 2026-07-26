@@ -1,0 +1,163 @@
+{
+  "articleId": "790446e669c6cdc450b192e9de273b8a",
+  "scriptPath": "scripts/2026-07-25_hiINa8384f/790446e669c6cdc450b192e9de273b8a.json",
+  "language": "hi-IN",
+  "model": "gpt-audio-1.5",
+  "voiceAssignments": {
+    "nia": "alloy",
+    "arjun": "coral"
+  },
+  "clips": [
+    {
+      "clipId": "title-cue-0",
+      "beatId": "title-cue",
+      "lineIndex": 0,
+      "speaker": "nia",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/title-cue/0.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/title-cue/0.wav",
+      "durationSeconds": 7.05,
+      "lineHash": "51122ff3e2fe0d1ceb1588ef94a1bfaca2be059cd27b533e583993286b9970e4"
+    },
+    {
+      "clipId": "title-cue-1",
+      "beatId": "title-cue",
+      "lineIndex": 1,
+      "speaker": "arjun",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/title-cue/1.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/title-cue/1.wav",
+      "durationSeconds": 3.0,
+      "lineHash": "6ec3a151345d4079d7c3fe2c8a6abedf3ad4bcba0eee7c02375f6856367d6305"
+    },
+    {
+      "clipId": "hook-0",
+      "beatId": "hook",
+      "lineIndex": 0,
+      "speaker": "nia",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/hook/0.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/hook/0.wav",
+      "durationSeconds": 5.95,
+      "lineHash": "dcdc46bf6b4efde196994347e325dd9ff2eba679164a7cad7197fdb634cdde4b"
+    },
+    {
+      "clipId": "hook-1",
+      "beatId": "hook",
+      "lineIndex": 1,
+      "speaker": "arjun",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/hook/1.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/hook/1.wav",
+      "durationSeconds": 4.85,
+      "lineHash": "035ed0c1312e41892f303622a816ca31a2367f33d909610a3caa950043f18064"
+    },
+    {
+      "clipId": "hook-2",
+      "beatId": "hook",
+      "lineIndex": 2,
+      "speaker": "nia",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/hook/2.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/hook/2.wav",
+      "durationSeconds": 1.65,
+      "lineHash": "3533ac88d57f7c8702010a9b3196ad05243e19caaa5093007be1d19cbccfceee"
+    },
+    {
+      "clipId": "what-happened-0",
+      "beatId": "what-happened",
+      "lineIndex": 0,
+      "speaker": "arjun",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/what-happened/0.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/what-happened/0.wav",
+      "durationSeconds": 5.75,
+      "lineHash": "34fd898dc66deb05557746a93accf4f6164216fb59d3847f90402804fd74c2c2"
+    },
+    {
+      "clipId": "what-happened-1",
+      "beatId": "what-happened",
+      "lineIndex": 1,
+      "speaker": "nia",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/what-happened/1.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/what-happened/1.wav",
+      "durationSeconds": 3.15,
+      "lineHash": "6294f3eff2474ef417243cffa7e3c0a14ae81ef93045bd0fca6c1ce9eb6c6e7c"
+    },
+    {
+      "clipId": "what-happened-2",
+      "beatId": "what-happened",
+      "lineIndex": 2,
+      "speaker": "arjun",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/what-happened/2.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/what-happened/2.wav",
+      "durationSeconds": 2.9,
+      "lineHash": "27e271bc3f74ec02c2695a5f123c0ce5da10b40e6c35b3c77632899c678e8fec"
+    },
+    {
+      "clipId": "why-it-matters-0",
+      "beatId": "why-it-matters",
+      "lineIndex": 0,
+      "speaker": "nia",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/why-it-matters/0.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/why-it-matters/0.wav",
+      "durationSeconds": 3.15,
+      "lineHash": "41bb049da9bc369ede3685736d38a1f097787cb55ba2de9249d5672fdc5b2390"
+    },
+    {
+      "clipId": "why-it-matters-1",
+      "beatId": "why-it-matters",
+      "lineIndex": 1,
+      "speaker": "arjun",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/why-it-matters/1.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/why-it-matters/1.wav",
+      "durationSeconds": 3.65,
+      "lineHash": "82d6ddc990bad39f7e3265f85261c3ebf612a89171bb938cf0980121bd6ec39a"
+    },
+    {
+      "clipId": "why-it-matters-2",
+      "beatId": "why-it-matters",
+      "lineIndex": 2,
+      "speaker": "nia",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/why-it-matters/2.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/why-it-matters/2.wav",
+      "durationSeconds": 4.1,
+      "lineHash": "0c49bf0337a4a4af25f746c9567919a64a2380dc3b531731e11b46e9433ad276"
+    },
+    {
+      "clipId": "takeaway-0",
+      "beatId": "takeaway",
+      "lineIndex": 0,
+      "speaker": "arjun",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/takeaway/0.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/takeaway/0.wav",
+      "durationSeconds": 1.3,
+      "lineHash": "45dfd0dae0c72fde9ab9d53bdefdba9e416e41b6a416b1535b8149b9753c789f"
+    },
+    {
+      "clipId": "takeaway-1",
+      "beatId": "takeaway",
+      "lineIndex": 1,
+      "speaker": "nia",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/takeaway/1.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/takeaway/1.wav",
+      "durationSeconds": 5.65,
+      "lineHash": "ac3b986264009973194cab7d574dba66dcfd8fe6f2f5adccbb90e3b279f1a937"
+    },
+    {
+      "clipId": "takeaway-2",
+      "beatId": "takeaway",
+      "lineIndex": 2,
+      "speaker": "arjun",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/takeaway/2.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/takeaway/2.wav",
+      "durationSeconds": 0.7,
+      "lineHash": "0613bbf4898b10f4b8a811ef18e06dff7ba2439ab2ac80f9c220bebf4cbb5e75"
+    },
+    {
+      "clipId": "takeaway-3",
+      "beatId": "takeaway",
+      "lineIndex": 3,
+      "speaker": "nia",
+      "path": "scripts/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/takeaway/3.wav",
+      "url": "/api/media/2026-07-25_hiINa8384f/audio/790446e669c6cdc450b192e9de273b8a/takeaway/3.wav",
+      "durationSeconds": 7.65,
+      "lineHash": "843a46f01791bff13292316d4f5a1618abac5874f2fa36bcf02c645498ceba30"
+    }
+  ],
+  "failures": []
+}

@@ -1,0 +1,133 @@
+{
+  "articleId": "weekly-2026-07-25-politics",
+  "scriptPath": "scripts/2026-07-25_ccc44a83/weekly-2026-07-25-politics.json",
+  "language": "en-IN",
+  "model": "gpt-audio-1.5",
+  "voiceAssignments": {
+    "tara": "sage",
+    "arjun": "verse"
+  },
+  "clips": [
+    {
+      "clipId": "title-cue-0",
+      "beatId": "title-cue",
+      "lineIndex": 0,
+      "speaker": "tara",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/title-cue/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/title-cue/0.wav",
+      "durationSeconds": 7.85,
+      "lineHash": "9bedbbd91a8cd5d554b352b1249c063a6a61fca0d34d9900e9543cbdaf7598f0"
+    },
+    {
+      "clipId": "title-cue-1",
+      "beatId": "title-cue",
+      "lineIndex": 1,
+      "speaker": "arjun",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/title-cue/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/title-cue/1.wav",
+      "durationSeconds": 5.95,
+      "lineHash": "6f2eb3cad9ee267cc463771d87d1cf0bbd5d209117b0ac574a92c38d1785c23f"
+    },
+    {
+      "clipId": "hook-0",
+      "beatId": "hook",
+      "lineIndex": 0,
+      "speaker": "tara",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/hook/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/hook/0.wav",
+      "durationSeconds": 9.2,
+      "lineHash": "cceecf5055f9f71188a0e0503eb0ccaea045618f1bfa9c4f9525846e28cd48bd"
+    },
+    {
+      "clipId": "hook-1",
+      "beatId": "hook",
+      "lineIndex": 1,
+      "speaker": "arjun",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/hook/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/hook/1.wav",
+      "durationSeconds": 6.95,
+      "lineHash": "53a0f32dfc8391caca811eb116a4a8af92e623f29d7de35497ba0d0f8e9ec3ac"
+    },
+    {
+      "clipId": "what-happened-0",
+      "beatId": "what-happened",
+      "lineIndex": 0,
+      "speaker": "arjun",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/what-happened/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/what-happened/0.wav",
+      "durationSeconds": 8.95,
+      "lineHash": "449535022bb90b6f64d103816755099019ea741c90db98b6e3abaee78079b442"
+    },
+    {
+      "clipId": "what-happened-1",
+      "beatId": "what-happened",
+      "lineIndex": 1,
+      "speaker": "tara",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/what-happened/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/what-happened/1.wav",
+      "durationSeconds": 5.55,
+      "lineHash": "0b787fa2ad4ee926c8a70241d4e00c886234a48504459d0604396e827e1fbf1d"
+    },
+    {
+      "clipId": "why-it-matters-0",
+      "beatId": "why-it-matters",
+      "lineIndex": 0,
+      "speaker": "arjun",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/why-it-matters/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/why-it-matters/0.wav",
+      "durationSeconds": 2.0,
+      "lineHash": "15596759b5b2f9ffd52ef599a51e33a8b1f4e9f45abff969a5f4f23a4d1ccc4c"
+    },
+    {
+      "clipId": "why-it-matters-1",
+      "beatId": "why-it-matters",
+      "lineIndex": 1,
+      "speaker": "tara",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/why-it-matters/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/why-it-matters/1.wav",
+      "durationSeconds": 5.4,
+      "lineHash": "f83ef428d9a94ebf639dac01217ad6165dad75c89158d0d57ec7356dbe7996f3"
+    },
+    {
+      "clipId": "why-it-matters-2",
+      "beatId": "why-it-matters",
+      "lineIndex": 2,
+      "speaker": "arjun",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/why-it-matters/2.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/why-it-matters/2.wav",
+      "durationSeconds": 3.8,
+      "lineHash": "a188515c6e98a95fcc3f8a79c89a44a3c6d6d63492d4ffe006009eabc12cdac7"
+    },
+    {
+      "clipId": "takeaway-0",
+      "beatId": "takeaway",
+      "lineIndex": 0,
+      "speaker": "arjun",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/takeaway/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/takeaway/0.wav",
+      "durationSeconds": 3.65,
+      "lineHash": "699db21f7edd874bec8b63dde567a88aa01f4459de489d20bb587d94c2c9917b"
+    },
+    {
+      "clipId": "takeaway-1",
+      "beatId": "takeaway",
+      "lineIndex": 1,
+      "speaker": "tara",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/takeaway/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/takeaway/1.wav",
+      "durationSeconds": 4.7,
+      "lineHash": "1492b5e4e66b0af521b3f165f0d4ce8ee636323b085ea146013cd2bb9c6cc120"
+    },
+    {
+      "clipId": "takeaway-2",
+      "beatId": "takeaway",
+      "lineIndex": 2,
+      "speaker": "arjun",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/takeaway/2.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/takeaway/2.wav",
+      "durationSeconds": 2.4,
+      "lineHash": "031899b444562519d31058b68b40fa725464ea32c3f72a23490bb26da720f66b"
+    }
+  ],
+  "failures": []
+}

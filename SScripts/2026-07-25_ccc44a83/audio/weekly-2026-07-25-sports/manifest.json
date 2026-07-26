@@ -1,0 +1,163 @@
+{
+  "articleId": "weekly-2026-07-25-sports",
+  "scriptPath": "scripts/2026-07-25_ccc44a83/weekly-2026-07-25-sports.json",
+  "language": "en-IN",
+  "model": "gpt-audio-1.5",
+  "voiceAssignments": {
+    "kabir": "sage",
+    "naina": "verse"
+  },
+  "clips": [
+    {
+      "clipId": "title-cue-0",
+      "beatId": "title-cue",
+      "lineIndex": 0,
+      "speaker": "kabir",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/title-cue/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/title-cue/0.wav",
+      "durationSeconds": 6.7,
+      "lineHash": "d06e321bb5c40fb93047cd3292130cbd9f20ba181a18c6de2821d967ec471aa5"
+    },
+    {
+      "clipId": "title-cue-1",
+      "beatId": "title-cue",
+      "lineIndex": 1,
+      "speaker": "naina",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/title-cue/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/title-cue/1.wav",
+      "durationSeconds": 5.45,
+      "lineHash": "abc1cda7f1312b2beda70091fd1afd83ac9fba2e4c11b3440141f62736910489"
+    },
+    {
+      "clipId": "hook-0",
+      "beatId": "hook",
+      "lineIndex": 0,
+      "speaker": "kabir",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/hook/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/hook/0.wav",
+      "durationSeconds": 6.3,
+      "lineHash": "243d44015e53d160844c43fe99d921cef8f7256044122ebb6099d78f1c2b90ca"
+    },
+    {
+      "clipId": "hook-1",
+      "beatId": "hook",
+      "lineIndex": 1,
+      "speaker": "naina",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/hook/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/hook/1.wav",
+      "durationSeconds": 7.05,
+      "lineHash": "133378d9c6b124d7f638023fef4f6552cf0bfbe7b6dfc86ae8d784c560127cb0"
+    },
+    {
+      "clipId": "hook-2",
+      "beatId": "hook",
+      "lineIndex": 2,
+      "speaker": "kabir",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/hook/2.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/hook/2.wav",
+      "durationSeconds": 3.25,
+      "lineHash": "ee0d6ea02f52f5d760c7b062aa9310b070322056f3e9f8287a7c04a4a07ea281"
+    },
+    {
+      "clipId": "what-happened-0",
+      "beatId": "what-happened",
+      "lineIndex": 0,
+      "speaker": "naina",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/what-happened/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/what-happened/0.wav",
+      "durationSeconds": 6.35,
+      "lineHash": "0fcb460e73b99a39678d98126210e6e8daea31dd9c0144dd107a1996bc6dd50a"
+    },
+    {
+      "clipId": "what-happened-1",
+      "beatId": "what-happened",
+      "lineIndex": 1,
+      "speaker": "kabir",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/what-happened/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/what-happened/1.wav",
+      "durationSeconds": 5.85,
+      "lineHash": "1fc0516b056cf26364fb4151cdaf6397301fee42a407f181a8455b95018f94d1"
+    },
+    {
+      "clipId": "what-happened-2",
+      "beatId": "what-happened",
+      "lineIndex": 2,
+      "speaker": "naina",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/what-happened/2.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/what-happened/2.wav",
+      "durationSeconds": 2.6,
+      "lineHash": "50d65cd6631cbf403dc3a3dfabf7a80491388bfc7b2278bc379f2fa67400bf46"
+    },
+    {
+      "clipId": "why-it-matters-0",
+      "beatId": "why-it-matters",
+      "lineIndex": 0,
+      "speaker": "kabir",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/why-it-matters/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/why-it-matters/0.wav",
+      "durationSeconds": 6.1,
+      "lineHash": "9bcc5a1fe47a19f942b6876f2fd1a282ab7a7e6f4fe967cbc107b1fabdda698d"
+    },
+    {
+      "clipId": "why-it-matters-1",
+      "beatId": "why-it-matters",
+      "lineIndex": 1,
+      "speaker": "naina",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/why-it-matters/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/why-it-matters/1.wav",
+      "durationSeconds": 3.9,
+      "lineHash": "0dc1225e1d19e6b974cb4ec6ee0b6e9a02cf688dd457612357775ea43ba56e32"
+    },
+    {
+      "clipId": "why-it-matters-2",
+      "beatId": "why-it-matters",
+      "lineIndex": 2,
+      "speaker": "kabir",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/why-it-matters/2.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/why-it-matters/2.wav",
+      "durationSeconds": 2.6,
+      "lineHash": "f5a13af08a286e6bd2fcd0aa398b51ada210c8e9d9f4a255d664393f6249593d"
+    },
+    {
+      "clipId": "takeaway-0",
+      "beatId": "takeaway",
+      "lineIndex": 0,
+      "speaker": "naina",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/takeaway/0.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/takeaway/0.wav",
+      "durationSeconds": 5.1,
+      "lineHash": "241200e39c9d8bbdd01ca042ed22fce27883d8b7fd65f116b4d48568d7c9c1cf"
+    },
+    {
+      "clipId": "takeaway-1",
+      "beatId": "takeaway",
+      "lineIndex": 1,
+      "speaker": "kabir",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/takeaway/1.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/takeaway/1.wav",
+      "durationSeconds": 4.35,
+      "lineHash": "4bc2ee758e9a6756443cbcd15c271c0b42dadf1ce0c8bf951ef62df88da519d6"
+    },
+    {
+      "clipId": "takeaway-2",
+      "beatId": "takeaway",
+      "lineIndex": 2,
+      "speaker": "naina",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/takeaway/2.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/takeaway/2.wav",
+      "durationSeconds": 2.6,
+      "lineHash": "1e1a6b9792ef2101198bb58b96baea462de241ffe7970d48f89c01a92ea2e3b7"
+    },
+    {
+      "clipId": "takeaway-3",
+      "beatId": "takeaway",
+      "lineIndex": 3,
+      "speaker": "kabir",
+      "path": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/takeaway/3.wav",
+      "url": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/takeaway/3.wav",
+      "durationSeconds": 3.7,
+      "lineHash": "299031dbf1dc038b1f3ceca545de4c2ebd803772ff137b6d0bead34c72258d78"
+    }
+  ],
+  "failures": []
+}

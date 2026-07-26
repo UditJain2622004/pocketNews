@@ -1,0 +1,148 @@
+{
+  "runId": "2026-07-25_ccc44a83",
+  "runDate": "2026-07-25",
+  "cadence": "weekly",
+  "episodeTitle": "When Every Choice Has a Cost",
+  "language": "en-IN",
+  "startedAt": "2026-07-26T05:06:49.524493+00:00",
+  "articlesFound": 7,
+  "articlesSelected": 7,
+  "selection": {
+    "articlesConsidered": 7,
+    "storiesSelected": 7,
+    "duplicateIdsRemoved": 0,
+    "similarHeadlinesRemoved": 0,
+    "maxArticlesPerCategory": null,
+    "maxTotalStories": null
+  },
+  "scriptsGenerated": 6,
+  "imagesGenerated": 24,
+  "generateImages": true,
+  "threeImagesPerStory": true,
+  "generateAudio": true,
+  "castMode": "auto",
+  "visualStyle": "animated",
+  "storyFormat": "mix",
+  "requestedCategories": [],
+  "scripts": [
+    {
+      "articleId": "weekly-2026-07-25-business",
+      "sourceFile": "summaries/weekly/2026-07-25/business.json",
+      "scriptPath": "scripts/2026-07-25_ccc44a83/weekly-2026-07-25-business.json",
+      "imagePaths": [
+        "scripts/2026-07-25_ccc44a83/images/business/weekly-2026-07-25-business/hook.png",
+        "scripts/2026-07-25_ccc44a83/images/business/weekly-2026-07-25-business/reference.png",
+        "scripts/2026-07-25_ccc44a83/images/business/weekly-2026-07-25-business/takeaway.png",
+        "scripts/2026-07-25_ccc44a83/images/business/weekly-2026-07-25-business/what-happened.png"
+      ]
+    },
+    {
+      "articleId": "weekly-2026-07-25-entertainment",
+      "sourceFile": "summaries/weekly/2026-07-25/entertainment.json",
+      "scriptPath": "scripts/2026-07-25_ccc44a83/weekly-2026-07-25-entertainment.json",
+      "imagePaths": [
+        "scripts/2026-07-25_ccc44a83/images/entertainment/weekly-2026-07-25-entertainment/hook.png",
+        "scripts/2026-07-25_ccc44a83/images/entertainment/weekly-2026-07-25-entertainment/reference.png",
+        "scripts/2026-07-25_ccc44a83/images/entertainment/weekly-2026-07-25-entertainment/takeaway.png",
+        "scripts/2026-07-25_ccc44a83/images/entertainment/weekly-2026-07-25-entertainment/what-happened.png"
+      ]
+    },
+    {
+      "articleId": "weekly-2026-07-25-lifestyle",
+      "sourceFile": "summaries/weekly/2026-07-25/lifestyle.json",
+      "scriptPath": "scripts/2026-07-25_ccc44a83/weekly-2026-07-25-lifestyle.json",
+      "imagePaths": [
+        "scripts/2026-07-25_ccc44a83/images/lifestyle/weekly-2026-07-25-lifestyle/hook.png",
+        "scripts/2026-07-25_ccc44a83/images/lifestyle/weekly-2026-07-25-lifestyle/reference.png",
+        "scripts/2026-07-25_ccc44a83/images/lifestyle/weekly-2026-07-25-lifestyle/takeaway.png",
+        "scripts/2026-07-25_ccc44a83/images/lifestyle/weekly-2026-07-25-lifestyle/what-happened.png"
+      ]
+    },
+    {
+      "articleId": "weekly-2026-07-25-politics",
+      "sourceFile": "summaries/weekly/2026-07-25/politics.json",
+      "scriptPath": "scripts/2026-07-25_ccc44a83/weekly-2026-07-25-politics.json",
+      "imagePaths": [
+        "scripts/2026-07-25_ccc44a83/images/politics/weekly-2026-07-25-politics/hook.png",
+        "scripts/2026-07-25_ccc44a83/images/politics/weekly-2026-07-25-politics/reference.png",
+        "scripts/2026-07-25_ccc44a83/images/politics/weekly-2026-07-25-politics/takeaway.png",
+        "scripts/2026-07-25_ccc44a83/images/politics/weekly-2026-07-25-politics/what-happened.png"
+      ]
+    },
+    {
+      "articleId": "weekly-2026-07-25-science",
+      "sourceFile": "summaries/weekly/2026-07-25/science.json",
+      "scriptPath": "scripts/2026-07-25_ccc44a83/weekly-2026-07-25-science.json",
+      "imagePaths": [
+        "scripts/2026-07-25_ccc44a83/images/science/weekly-2026-07-25-science/hook.png",
+        "scripts/2026-07-25_ccc44a83/images/science/weekly-2026-07-25-science/reference.png",
+        "scripts/2026-07-25_ccc44a83/images/science/weekly-2026-07-25-science/takeaway.png",
+        "scripts/2026-07-25_ccc44a83/images/science/weekly-2026-07-25-science/what-happened.png"
+      ]
+    },
+    {
+      "articleId": "weekly-2026-07-25-sports",
+      "sourceFile": "summaries/weekly/2026-07-25/sports.json",
+      "scriptPath": "scripts/2026-07-25_ccc44a83/weekly-2026-07-25-sports.json",
+      "imagePaths": [
+        "scripts/2026-07-25_ccc44a83/images/sports/weekly-2026-07-25-sports/hook.png",
+        "scripts/2026-07-25_ccc44a83/images/sports/weekly-2026-07-25-sports/reference.png",
+        "scripts/2026-07-25_ccc44a83/images/sports/weekly-2026-07-25-sports/takeaway.png",
+        "scripts/2026-07-25_ccc44a83/images/sports/weekly-2026-07-25-sports/what-happened.png"
+      ]
+    }
+  ],
+  "failures": [
+    {
+      "articleId": "weekly-2026-07-25-technology",
+      "sourceFile": "summaries/weekly/2026-07-25/technology.json",
+      "error": "OpenAI story generation request failed: 1 validation error for GeneratedStory\nclassification -> __root__\n  Invalid subcategories for Technology: Companies (type=value_error)"
+    }
+  ],
+  "audio": {
+    "runId": "2026-07-25_ccc44a83",
+    "articlesRequested": 6,
+    "audioStoriesReady": 6,
+    "clipsGenerated": 72,
+    "clipsReused": 0,
+    "manifests": [
+      {
+        "articleId": "weekly-2026-07-25-business",
+        "manifestPath": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-business/manifest.json",
+        "manifestUrl": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-business/manifest.json",
+        "failures": []
+      },
+      {
+        "articleId": "weekly-2026-07-25-entertainment",
+        "manifestPath": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-entertainment/manifest.json",
+        "manifestUrl": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-entertainment/manifest.json",
+        "failures": []
+      },
+      {
+        "articleId": "weekly-2026-07-25-lifestyle",
+        "manifestPath": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/manifest.json",
+        "manifestUrl": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-lifestyle/manifest.json",
+        "failures": []
+      },
+      {
+        "articleId": "weekly-2026-07-25-politics",
+        "manifestPath": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/manifest.json",
+        "manifestUrl": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-politics/manifest.json",
+        "failures": []
+      },
+      {
+        "articleId": "weekly-2026-07-25-science",
+        "manifestPath": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/manifest.json",
+        "manifestUrl": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-science/manifest.json",
+        "failures": []
+      },
+      {
+        "articleId": "weekly-2026-07-25-sports",
+        "manifestPath": "scripts/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/manifest.json",
+        "manifestUrl": "/api/media/2026-07-25_ccc44a83/audio/weekly-2026-07-25-sports/manifest.json",
+        "failures": []
+      }
+    ],
+    "failures": []
+  }
+}

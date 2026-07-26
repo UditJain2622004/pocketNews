@@ -1,0 +1,243 @@
+{
+  "article": {
+    "id": "790446e669c6cdc450b192e9de273b8a",
+    "title": "Apoorva Makhija Discusses Mental Health During Controversy - India News Network",
+    "summary": "Apoorva Makhija Discusses Mental Health During Controversy India News Network",
+    "full_text": "Apoorva Makhija Discusses Mental Health During Controversy India News Network",
+    "url": "https://www.indianewsnetwork.com/en/apoorva-makhija-discusses-mental-health-during-controversy-20260725",
+    "language": "english",
+    "categories": [
+      "lifestyle"
+    ],
+    "published_at": null,
+    "source_name": "indianewsnetwork.com"
+  },
+  "sourceFile": "news/daily/2026-07-25/lifestyle.json",
+  "story": {
+    "title": "The Red Upload Light",
+    "skipLabel": "Apoorva Makhija discusses mental health during controversy",
+    "classification": {
+      "category": "Lifestyle",
+      "subcategories": [
+        "Health & Fitness"
+      ]
+    },
+    "creativeDirection": {
+      "genre": "ethical tension drama",
+      "dramaticPremise": "Two creators race to publish a reaction clip, but a factual update about Apoorva Makhija discussing mental health during the controversy forces them to choose between speed and restraint.",
+      "selectedFormat": "two-person-banter",
+      "performanceMode": "character-dialogue",
+      "castMode": "story_duo",
+      "visualStyle": "animated"
+    },
+    "dramaticSpine": {
+      "characterGoal": "Nia wants to publish their reaction clip before its scheduled upload slot closes.",
+      "obstacle": "Arjun believes the hurried edit turns a sensitive subject into spectacle and tries to stop the upload.",
+      "newsCatalyst": "They discover that Apoorva Makhija is discussing mental health during the controversy.",
+      "reversal": "The news makes their dramatic edit feel especially reckless, so Nia's urgency becomes a liability.",
+      "costOfFailure": "They lose their planned upload window and the clip they worked on may never be used.",
+      "emotionalTurn": "Nia shifts from chasing attention to recognising the weight of the subject.",
+      "resolution": "Nia cancels the upload and the pair leave the edit untouched until they can handle it responsibly."
+    },
+    "visualBible": {
+      "setting": "A tiny animated creator studio at night, with one editing desk, a glowing laptop, acoustic foam, and a narrow rain-streaked window.",
+      "colorAndLighting": "Electric cyan monitor light clashes with a pulsing red upload lamp; by the end, the red light is switched off and warm corridor light enters.",
+      "recurringProps": [
+        "silver laptop with an editing timeline",
+        "phone with a blurred news article layout",
+        "red upload indicator lamp",
+        "coiled headphones"
+      ],
+      "storyArc": "The studio begins frantic and compressed, becomes visually harsh when the news changes the stakes, then relaxes into quiet restraint as the upload is cancelled.",
+      "referenceImagePrompt": "Editorial animated-film still of Nia and Arjun together in a cramped creator studio at night, Nia in a mustard hoodie at a silver laptop and Arjun in a teal overshirt reaching toward the mouse, red upload lamp glowing, phone nearby with a blurred article layout, rain-streaked window, cyan monitor light, warm hallway beyond the door, expressive faces, caption-safe empty upper-third space, no text, logos, or watermark.",
+      "referenceImagePath": "scripts/2026-07-25_9bb2de9f/images/lifestyle/790446e669c6cdc450b192e9de273b8a/reference.png"
+    },
+    "cast": [
+      {
+        "id": "nia",
+        "role": "Fast-moving video creator desperate to hit the upload slot",
+        "voiceProfile": "Bright, quick Indian-English delivery with a nervous laugh tucked under every sentence; begins playful and breathless, then slows into embarrassed honesty by the ending, using clipped interruptions and one conspicuous pause before the final decision.",
+        "language": "en-IN",
+        "visualIdentity": "Young woman with a mustard hoodie, cropped black hair, expressive eyebrows, red thread bracelet, and oversized headphones around her neck."
+      },
+      {
+        "id": "arjun",
+        "role": "Co-creator who wants to prevent a sensational edit",
+        "voiceProfile": "Low, contained Indian-English voice with dry comic timing; starts firm and mildly exasperated, briefly sharpens under pressure, then softens into calm warmth when Nia changes course.",
+        "language": "en-IN",
+        "visualIdentity": "Young man with a teal overshirt, round glasses, curly hair, canvas watch strap, and a small notebook tucked into his pocket."
+      }
+    ],
+    "beats": [
+      {
+        "id": "title-cue",
+        "dramaticAction": "Nia lunges for the laptop mouse as the red upload lamp begins blinking, while Arjun catches her wrist.",
+        "turningPoint": "The upload is seconds away, but Arjun physically creates a pause before the clip can go live.",
+        "visual": {
+          "kind": "character-reaction",
+          "durationSeconds": 7,
+          "caption": "Apoorva Makhija discusses mental health during the controversy",
+          "imagePrompt": "Editorial animated-film close shot of Nia lunging toward a silver laptop while Arjun catches her wrist, red upload lamp blinking, cramped creator studio, cyan monitor glow, rain at the window, comic tension, recurring mustard hoodie and teal overshirt, caption-safe empty upper-third space, no text, logos, or watermark",
+          "scenePrompt": "Continuous opening shot inside the studio as Nia tries to publish and Arjun stops her.",
+          "continuityNotes": "Establish both characters, the laptop, phone, headphones, and red lamp; the lamp must remain lit into the next shot.",
+          "motion": "slow push-in",
+          "imagePath": "scripts/2026-07-25_9bb2de9f/images/lifestyle/790446e669c6cdc450b192e9de273b8a/title-cue.png"
+        },
+        "lines": [
+          {
+            "speaker": "nia",
+            "text": "Apoorva Makhija is discussing mental health during the controversy—and our upload is now."
+          },
+          {
+            "speaker": "arjun",
+            "text": "Your hand is not allowed to outrun your brain."
+          }
+        ]
+      },
+      {
+        "id": "hook",
+        "dramaticAction": "Nia twists free and drags the cursor toward the publish button while Arjun pulls the headphones off the laptop, cutting the audio.",
+        "turningPoint": "Their argument becomes a real technical delay, costing precious seconds but stopping the clip's punchline from playing.",
+        "visual": {
+          "kind": "funny-metaphor",
+          "durationSeconds": 8,
+          "caption": "The upload clock is running",
+          "imagePrompt": "Animated-film medium shot of Nia dragging a cursor toward a glowing laptop button while Arjun yanks the coiled headphones free, audio waveform frozen, red lamp pulsing, studio desk clutter, cyan and red lighting, frantic comic mood, recurring wardrobe and props, caption-safe empty upper-third space, no text, logos, or watermark",
+          "scenePrompt": "The camera tracks across the desk as the pair physically disrupt the upload.",
+          "continuityNotes": "Begin with Arjun still holding Nia's wrist, then show the headphones pulled free; keep the laptop open and the lamp blinking.",
+          "motion": "gentle pan",
+          "imagePath": "scripts/2026-07-25_9bb2de9f/images/lifestyle/790446e669c6cdc450b192e9de273b8a/hook.png"
+        },
+        "lines": [
+          {
+            "speaker": "nia",
+            "text": "It is thirty seconds of reaction, Arjun. Thirty."
+          },
+          {
+            "speaker": "arjun",
+            "text": "And the joke lands harder than the person in it."
+          },
+          {
+            "speaker": "nia",
+            "text": "That is why people will click."
+          }
+        ]
+      },
+      {
+        "id": "what-happened",
+        "dramaticAction": "Arjun's phone vibrates; he reads the new article line aloud, and Nia's finger freezes above the button.",
+        "turningPoint": "The factual subject is no longer an abstract controversy to them: it is a discussion of mental health, making their edited punchline newly dangerous.",
+        "visual": {
+          "kind": "factual-visual",
+          "durationSeconds": 9,
+          "caption": "A sensitive subject changes the edit",
+          "imagePrompt": "Editorial animated-film over-the-shoulder shot of Arjun holding a phone with a deliberately blurred article layout while Nia freezes beside the laptop, red lamp reflected in her eyes, tight studio, cool cyan light, sudden seriousness, recurring character details, caption-safe empty upper-third space, no text, logos, or watermark",
+          "scenePrompt": "The phone vibration interrupts the struggle; Arjun reads the article discovery aloud without the camera presenting readable text.",
+          "continuityNotes": "Carry the unplugged headphones onto the desk. The red lamp continues blinking, but Nia's hand must remain suspended until the next shot.",
+          "motion": "slow push-in",
+          "imagePath": "scripts/2026-07-25_9bb2de9f/images/lifestyle/790446e669c6cdc450b192e9de273b8a/what-happened.png"
+        },
+        "lines": [
+          {
+            "speaker": "arjun",
+            "text": "Wait. It says she is discussing mental health during the controversy."
+          },
+          {
+            "speaker": "nia",
+            "text": "Our thumbnail is literally a laughing face."
+          },
+          {
+            "speaker": "arjun",
+            "text": "Then our thumbnail just became the problem."
+          }
+        ]
+      },
+      {
+        "id": "why-it-matters",
+        "dramaticAction": "Nia opens the edit, removes the exaggerated reaction cut, then hesitates over the publish control as the countdown light flashes faster.",
+        "turningPoint": "Fixing the clip costs them the upload window; Nia must choose between a rushed post and losing the moment entirely.",
+        "visual": {
+          "kind": "cinematic-recreation",
+          "durationSeconds": 10,
+          "caption": "A rushed edit can cross a line",
+          "imagePrompt": "Animated-film close-up of Nia deleting a flamboyant reaction segment from the laptop timeline while Arjun watches silently, countdown-like red lamp flashing faster, phone face-down, rain-dark window, tense cyan lighting, remorseful mood, recurring wardrobe and props, caption-safe empty upper-third space, no text, logos, or watermark",
+          "scenePrompt": "The camera stays close as Nia edits out the most sensational portion while the studio clock-like light accelerates.",
+          "continuityNotes": "Nia's hand moves from frozen hesitation to deleting the reaction segment. Arjun releases the wrist and stands beside her, not blocking her anymore.",
+          "motion": "slow push-in",
+          "imagePath": "scripts/2026-07-25_9bb2de9f/images/lifestyle/790446e669c6cdc450b192e9de273b8a/why-it-matters.png"
+        },
+        "lines": [
+          {
+            "speaker": "nia",
+            "text": "There. No laugh. No dramatic zoom."
+          },
+          {
+            "speaker": "arjun",
+            "text": "You are cutting the only part that made it fast."
+          },
+          {
+            "speaker": "nia",
+            "text": "Maybe fast is exactly what it should not be."
+          }
+        ]
+      },
+      {
+        "id": "takeaway",
+        "dramaticAction": "Nia closes the laptop without publishing, switches off the red lamp, and hands Arjun the headphones before opening the studio door.",
+        "turningPoint": "They accept the small cost of missing the upload slot, choosing not to turn the mental-health discussion into hurried entertainment.",
+        "visual": {
+          "kind": "summary-visual",
+          "durationSeconds": 9,
+          "caption": "They choose the pause",
+          "imagePrompt": "Editorial animated-film wide shot of Nia closing the laptop and switching off the red upload lamp while Arjun accepts the coiled headphones, studio door opening to warm hallway light, rain-streaked window behind them, relieved quiet mood, mustard hoodie and teal overshirt consistent, caption-safe empty upper-third space, no text, logos, or watermark",
+          "scenePrompt": "The continuous scene ends as Nia kills the upload light and the two leave the cramped studio together.",
+          "continuityNotes": "The laptop, phone, and deleted edit remain on the desk. The red glow disappears; warm hallway light becomes the final illumination.",
+          "motion": "gentle pan",
+          "imagePath": "scripts/2026-07-25_9bb2de9f/images/lifestyle/790446e669c6cdc450b192e9de273b8a/takeaway.png"
+        },
+        "lines": [
+          {
+            "speaker": "arjun",
+            "text": "We missed the slot."
+          },
+          {
+            "speaker": "nia",
+            "text": "Good. Let the silence miss it too."
+          },
+          {
+            "speaker": "arjun",
+            "text": "Tea?"
+          },
+          {
+            "speaker": "nia",
+            "text": "First. Then we decide if this clip deserves a life."
+          }
+        ]
+      }
+    ],
+    "exit": "The red upload light stays dark as the studio door closes, leaving the untouched clip—and their more careful choice—behind.",
+    "storyId": "790446e669c6cdc450b192e9de273b8a",
+    "category": "Lifestyle",
+    "sourceCategory": "lifestyle",
+    "topics": [
+      "lifestyle"
+    ],
+    "format": "mix",
+    "selectedFormat": "two-person-banter",
+    "requestedCastMode": "auto",
+    "requestedVisualStyle": "animated",
+    "sources": [
+      {
+        "name": "indianewsnetwork.com",
+        "url": "https://www.indianewsnetwork.com/en/apoorva-makhija-discusses-mental-health-during-controversy-20260725",
+        "publishedAt": null
+      }
+    ],
+    "durationSeconds": 43,
+    "entry": {
+      "direct": "The Red Upload Light",
+      "afterRelated": "Staying with this thread: The Red Upload Light.",
+      "afterUnrelated": "Different kind of plot twist: The Red Upload Light."
+    }
+  }
+}

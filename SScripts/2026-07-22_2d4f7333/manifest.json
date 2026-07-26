@@ -1,0 +1,58 @@
+{
+  "runId": "2026-07-22_2d4f7333",
+  "runDate": "2026-07-22",
+  "cadence": "daily",
+  "episodeTitle": "The Long Vigil at the Barricade",
+  "language": "en-IN",
+  "startedAt": "2026-07-26T01:46:40.340616+00:00",
+  "articlesFound": 16,
+  "articlesSelected": 1,
+  "selection": {
+    "articlesConsidered": 16,
+    "storiesSelected": 1,
+    "duplicateIdsRemoved": 0,
+    "similarHeadlinesRemoved": 1,
+    "maxArticlesPerCategory": 1,
+    "maxTotalStories": 3
+  },
+  "scriptsGenerated": 1,
+  "imagesGenerated": 6,
+  "generateImages": true,
+  "threeImagesPerStory": false,
+  "generateAudio": true,
+  "castMode": "auto",
+  "visualStyle": "animated",
+  "storyFormat": "mix",
+  "scripts": [
+    {
+      "articleId": "0d58afb3908d3699da9047d6073521fe",
+      "sourceFile": "news/daily/2026-07-22/politics.json",
+      "scriptPath": "scripts/2026-07-22_2d4f7333/0d58afb3908d3699da9047d6073521fe.json",
+      "imagePaths": [
+        "scripts/2026-07-22_2d4f7333/images/politics/0d58afb3908d3699da9047d6073521fe/hook.png",
+        "scripts/2026-07-22_2d4f7333/images/politics/0d58afb3908d3699da9047d6073521fe/reference.png",
+        "scripts/2026-07-22_2d4f7333/images/politics/0d58afb3908d3699da9047d6073521fe/takeaway.png",
+        "scripts/2026-07-22_2d4f7333/images/politics/0d58afb3908d3699da9047d6073521fe/title-cue.png",
+        "scripts/2026-07-22_2d4f7333/images/politics/0d58afb3908d3699da9047d6073521fe/what-happened.png",
+        "scripts/2026-07-22_2d4f7333/images/politics/0d58afb3908d3699da9047d6073521fe/why-it-matters.png"
+      ]
+    }
+  ],
+  "failures": [],
+  "audio": {
+    "runId": "2026-07-22_2d4f7333",
+    "articlesRequested": 1,
+    "audioStoriesReady": 1,
+    "clipsGenerated": 10,
+    "clipsReused": 0,
+    "manifests": [
+      {
+        "articleId": "0d58afb3908d3699da9047d6073521fe",
+        "manifestPath": "scripts/2026-07-22_2d4f7333/audio/0d58afb3908d3699da9047d6073521fe/manifest.json",
+        "manifestUrl": "/api/media/2026-07-22_2d4f7333/audio/0d58afb3908d3699da9047d6073521fe/manifest.json",
+        "failures": []
+      }
+    ],
+    "failures": []
+  }
+}
