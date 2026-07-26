@@ -62,14 +62,33 @@ def run_daily_workflow(
         raise
 
 
-def run_weekly_workflow(run_date: str | None = None) -> dict[str, object]:
-    period_end = date.fromisoformat(run_date) if run_date else date.today()
-    period_start = period_end - timedelta(days=7)
+def run_weekly_workflow(
+    run_date: str | None = None,
+    period_start: str | None = None,
+    period_end: str | None = None,
+) -> dict[str, object]:
+    if period_start or period_end:
+        if not period_start or not period_end:
+            raise ValueError("Weekly workflow requires both periodStart and periodEnd.")
+        selected_start = date.fromisoformat(period_start)
+        selected_end = date.fromisoformat(period_end)
+        if selected_end < selected_start:
+            raise ValueError("periodEnd must be on or after periodStart.")
+        archive_end = selected_end + timedelta(days=1)
+    else:
+        selected_end = date.fromisoformat(run_date) if run_date else date.today()
+        selected_start = selected_end - timedelta(days=7)
+        archive_end = selected_end
+
+    period_start = selected_start
+    period_end = selected_end
     workflow_id = start_workflow("weekly", period_start.isoformat(), period_end.isoformat())
     try:
-        summary_dir = _build_summaries("weekly", period_start, period_end, _daily_articles(period_start, period_end))
+        summary_dir = _build_summaries("weekly", period_start, period_end, _daily_articles(period_start, archive_end))
         generation = run_script_workflow(
             period_end.isoformat(), "en-IN", True, True, source_root=None, input_dir=summary_dir, cadence="weekly",
+            three_images_per_story=True,
+            max_total_stories=3,
         )
         result = {
             "workflowId": workflow_id,
