@@ -612,19 +612,6 @@ export default function EpisodePage({ episodeId, token }) {
             </div>
             <span className="text-xs font-bold text-zinc-400">{stories.length} stories</span>
           </div>
-<<<<<<< HEAD
-            <div className="max-h-[34rem] space-y-1 overflow-y-auto pr-1 scrollbar-none">
-              {stories.map((story, index) => (
-                <button key={`${story.title}-${index}`} type="button" onClick={() => selectStory(index)} className={`group relative flex w-full items-center gap-4 rounded-xl px-3 py-4 text-left transition ${index === storyIndex ? 'bg-[#E11D48]/10' : 'hover:bg-zinc-100/70'}`}>
-                  <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-full border text-xs font-black ${index === storyIndex ? 'border-[#E11D48] bg-[#E11D48]/10 text-[#E11D48]' : 'border-zinc-200 bg-white/70 text-zinc-400'}`}>{String(index + 1).padStart(2, '0')}</span>
-                  <span className="min-w-0">
-                    <span className={`block truncate text-[15px] font-extrabold ${index === storyIndex ? 'text-zinc-900' : 'text-zinc-700 group-hover:text-zinc-900'}`}>{story.title}</span>
-                    <span className={`mt-0.5 block text-xs font-semibold ${index === storyIndex ? 'text-white/70' : 'text-slate-400'}`}>{story.category} · {formatTime(story.duration)}</span>
-                  </span>
-                </button>
-              ))}
-            </div></>}
-=======
           <div className="max-h-[34rem] space-y-1 overflow-y-auto pr-1 scrollbar-none">
             {stories.map((story, index) => (
               <button key={`${story.title}-${index}`} type="button" onClick={() => selectStory(index)} className={`group relative flex w-full items-center gap-4 rounded-xl px-3 py-4 text-left transition ${index === storyIndex ? 'bg-[#E11D48]/10' : 'hover:bg-zinc-100/70'}`}>
@@ -649,10 +636,10 @@ export default function EpisodePage({ episodeId, token }) {
                   "What is the government's role in this?"
                 ].map((q) => (
                   <button
-                    key={q}
-                    type="button"
-                    onClick={() => { setAskQuery(q); handleAskAI(q); }}
-                    className="text-left px-3 py-2 rounded-xl bg-white border border-zinc-200 hover:border-[#E11D48]/50 text-xs font-semibold text-zinc-600 transition cursor-pointer"
+                     key={q}
+                     type="button"
+                     onClick={() => { setAskQuery(q); handleAskAI(q); }}
+                     className="text-left px-3 py-2 rounded-xl bg-white border border-zinc-200 hover:border-[#E11D48]/50 text-xs font-semibold text-zinc-600 transition cursor-pointer"
                   >
                     💡 {q}
                   </button>
@@ -752,8 +739,6 @@ export default function EpisodePage({ episodeId, token }) {
               )}
             </div>
           )}
-
->>>>>>> 886d0f3f3fa6f34579a46ce29aae0f14f9d1f531
           {sidePanel === 'about' && <div className="py-7"><p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#E11D48]">Sources used</p><h2 className="mt-2 text-2xl font-black tracking-tight text-zinc-900">{currentStory?.title || 'Current story'}</h2><div className="mt-6 space-y-3">{(currentStory?.sources || []).map((source, index) => <a key={`${source.url}-${index}`} href={source.url || '#'} target="_blank" rel="noreferrer" className="block rounded-xl border border-zinc-200 bg-white/65 p-4 transition hover:border-[#E11D48]/40"><p className="font-extrabold text-zinc-800">{source.name || 'Original source'}</p><p className="mt-1 truncate text-xs text-zinc-500">{source.publishedAt || 'Publication date unavailable'}</p></a>)}{!(currentStory?.sources || []).length && <p className="text-sm font-semibold text-zinc-500">No source link was saved for this story.</p>}</div></div>}
         </aside>
       </section>
