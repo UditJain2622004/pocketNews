@@ -8,7 +8,7 @@ export default function StoryDemo({ demoStep, demoWaveHeight }) {
         <p className="text-slate-600 max-w-lg mx-auto text-sm sm:text-base">Experience how Pocket News translates technical stats into immersive digital beats in real-time.</p>
       </div>
 
-      <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 text-left relative overflow-hidden shadow-sm">
+      <div className="bg-white/90 backdrop-blur-md border border-white/60 rounded-3xl p-6 sm:p-10 text-left relative overflow-hidden shadow-xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)] transition-all duration-300">
         <div className="absolute top-0 right-0 w-44 h-44 bg-[#7C3AED]/5 rounded-full blur-3xl pointer-events-none" />
 
         <div className="flex flex-wrap items-center justify-between border-b border-slate-100 pb-6 mb-6 gap-4">
@@ -17,13 +17,13 @@ export default function StoryDemo({ demoStep, demoWaveHeight }) {
             <h3 className="text-lg font-bold text-slate-800 mt-1">Live Translation Demo</h3>
           </div>
           <div className="flex gap-2">
-            <span className={`px-3 py-1 rounded-lg text-xs font-semibold ${demoStep === 0 ? 'bg-rose-500/10 text-rose-600 border border-rose-500/20' : 'bg-slate-100 text-slate-400'}`}>
+            <span className={`px-3 py-1 rounded-lg text-xs font-semibold ${demoStep === 0 ? 'bg-rose-500/10 text-rose-600 border border-rose-500/20' : 'bg-slate-100/60 text-slate-400'}`}>
               1. Raw Fact
             </span>
-            <span className={`px-3 py-1 rounded-lg text-xs font-semibold ${demoStep === 1 ? 'bg-violet-500/10 text-violet-600 border border-violet-500/20' : 'bg-slate-100 text-slate-400'}`}>
+            <span className={`px-3 py-1 rounded-lg text-xs font-semibold ${demoStep === 1 ? 'bg-violet-500/10 text-violet-600 border border-violet-500/20' : 'bg-slate-100/60 text-slate-400'}`}>
               2. Story Morph
             </span>
-            <span className={`px-3 py-1 rounded-lg text-xs font-semibold ${demoStep === 2 ? 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20' : 'bg-slate-100 text-slate-400'}`}>
+            <span className={`px-3 py-1 rounded-lg text-xs font-semibold ${demoStep === 2 ? 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20' : 'bg-slate-100/60 text-slate-400'}`}>
               3. Narration Deck
             </span>
           </div>
@@ -35,7 +35,7 @@ export default function StoryDemo({ demoStep, demoWaveHeight }) {
               <div className="flex items-center gap-2 text-rose-600 text-xs font-bold uppercase">
                 <span>📰</span> Breaking News Fact
               </div>
-              <p className="text-slate-700 text-lg font-mono italic bg-slate-50 border border-slate-200 p-5 rounded-2xl">
+              <p className="text-slate-700 text-lg font-mono italic bg-slate-50/50 border border-slate-200/80 p-5 rounded-2xl shadow-inner">
                 "OpenAI today announced the official release of GPT-X, its latest multimodal reasoning model capable of solving advanced mathematics and logical sequences."
               </p>
             </div>
@@ -64,8 +64,8 @@ export default function StoryDemo({ demoStep, demoWaveHeight }) {
                 <span className="text-[10px] text-slate-400">Voice: Prof. Higgins</span>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center gap-6 bg-slate-50 border border-slate-200 p-5 rounded-2xl">
-                <div className="w-16 h-16 rounded-xl bg-[#7C3AED]/10 flex items-center justify-center text-3xl">
+              <div className="flex flex-col sm:flex-row items-center gap-6 bg-slate-50/50 border border-slate-200/80 p-5 rounded-2xl shadow-sm">
+                <div className="w-16 h-16 rounded-xl bg-[#7C3AED]/10 flex items-center justify-center text-3xl shadow-sm">
                   🎓
                 </div>
                 <div className="flex-1 space-y-2 w-full">
