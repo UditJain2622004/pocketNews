@@ -19,7 +19,7 @@ from story_generator import CAST_MODES, VISUAL_STYLES, StoryGenerationError, gen
 from workflow_service import WorkflowInputError, run_script_workflow
 from auth.database import setup_db_indexes
 from auth.database import db
-from auth.router import get_current_user_id, router as auth_router
+from auth.router import get_current_user_id, get_current_user_id_optional, router as auth_router
 from automated_workflows import run_daily_workflow
 from localization_service import locale_for_language, prepare_localized_episode
 from publication_store import backfill_complete_episodes, delete_published_episode, episode_playback, list_episodes, list_published_episodes, publish_local_run, set_localized_run, setup_publication_indexes, workflow_status
@@ -517,8 +517,8 @@ def story_path_endpoint(story_id: str, path_type: str = Query(...)):
     return {"content": get_story_curiosity_path(story_id, path_type)}
 
 @app.get("/api/game/challenge")
-def game_challenge_endpoint():
-    return get_daily_challenge()
+def game_challenge_endpoint(user_id: Optional[str] = Depends(get_current_user_id_optional)):
+    return get_daily_challenge(user_id)
 
 @app.post("/api/game/submit")
 def game_submit_endpoint(request: GameSubmission, user_id: str = Depends(get_current_user_id)):

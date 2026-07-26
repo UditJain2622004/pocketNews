@@ -170,35 +170,228 @@ Generate a concise, engaging response paragraph (3-4 sentences max) in simple En
     content = response.choices[0].message.content.strip()
     return content.replace("**", "")
 
-# Daily News Challenge Game
-def get_daily_challenge() -> dict[str, Any]:
-    # Try fetching 3 stories from published episodes or mock articles
-    stories_list = []
+def find_news_article(story_id: str) -> dict[str, Any] | None:
+    # 1. Try loading the script JSON from BASE_DIR / script_path to get the 'article' payload
     if db is not None:
-        episodes = list(db.episodes.find().sort("publishedAt", -1).limit(3))
-        for ep in episodes:
-            for script in ep.get("scripts", []):
-                if script.get("storyId") not in [s["storyId"] for s in stories_list]:
-                    stories_list.append(script)
-                    if len(stories_list) >= 3:
-                        break
-            if len(stories_list) >= 3:
+        episode = db.episodes.find_one({"scripts.storyId": story_id})
+        if episode:
+            for script_entry in episode.get("scripts", []):
+                if script_entry.get("storyId") == story_id:
+                    script_path = script_entry.get("scriptPath")
+                    if script_path:
+                        try:
+                            from main import BASE_DIR
+                            import json
+                            path = BASE_DIR / script_path
+                            if path.exists():
+                                with open(path, "r", encoding="utf-8") as f:
+                                    data = json.load(f)
+                                    if isinstance(data, dict) and "article" in data:
+                                        return data["article"]
+                        except Exception:
+                            pass
+
+    # 2. Try searching in the local News/daily/ archive
+    try:
+        from main import BASE_DIR
+        news_daily_dir = BASE_DIR / "News" / "daily"
+        if news_daily_dir.exists():
+            import json
+            for root, _, files in os.walk(news_daily_dir):
+                for file in files:
+                    if file.endswith(".json"):
+                        try:
+                            with open(os.path.join(root, file), "r", encoding="utf-8") as f:
+                                data = json.load(f)
+                                results = data.get("results", [])
+                                for art in results:
+                                    if art.get("article_id") == story_id:
+                                        return art
+                        except Exception:
+                            pass
+    except Exception:
+        pass
+
+    # 3. Try searching in the main news archive folder "News"
+    try:
+        from main import BASE_DIR
+        news_root_dir = BASE_DIR / "News"
+        if news_root_dir.exists():
+            import json
+            for root, _, files in os.walk(news_root_dir):
+                for file in files:
+                    if file.endswith(".json"):
+                        try:
+                            with open(os.path.join(root, file), "r", encoding="utf-8") as f:
+                                data = json.load(f)
+                                results = []
+                                if isinstance(data, dict):
+                                    results = data.get("results", [])
+                                    if not results and "articles" in data:
+                                        results = data.get("articles", [])
+                                elif isinstance(data, list):
+                                    results = data
+                                for art in results:
+                                    if isinstance(art, dict):
+                                        if art.get("article_id") == story_id or art.get("id") == story_id:
+                                            return art
+                        except Exception:
+                            pass
+                        
+    except Exception:
+        pass
+
+    # 4. Fallback to news_format.json articles
+    try:
+        from main import NEWS_FEED_PATH
+        articles = load_mock_articles(NEWS_FEED_PATH)
+        for art in articles:
+            if art.id == story_id:
+                return art.to_dict() if hasattr(art, "to_dict") else {
+                    "title": art.title,
+                    "content": art.best_available_text,
+                    "description": art.description
+                }
+    except Exception:
+        pass
+
+    return None
+
+def find_news_text(story_id: str) -> str:
+    art = find_news_article(story_id)
+    if not art:
+        return find_story_text(story_id)
+    
+    title = art.get("title") or art.get("article_title") or ""
+    description = art.get("description") or art.get("summary") or art.get("article_summary") or ""
+    content = art.get("content") or art.get("full_text") or art.get("article_text") or ""
+    
+    parts = []
+    if title:
+        parts.append(f"Headline: {title}")
+    if description:
+        parts.append(f"Summary: {description}")
+    if content:
+        parts.append(f"Full Text: {content}")
+        
+    return "\n\n".join(parts) if parts else find_story_text(story_id)
+
+# Daily News Challenge Game
+def get_daily_challenge(user_id: Optional[str] = None) -> dict[str, Any]:
+    # 1. Determine user's interested categories
+    user_topics = []
+    if db is not None and user_id:
+        try:
+            user = db.users.find_one({"_id": ObjectId(user_id)})
+            if user:
+                user_topics = user.get("followed_topics", [])
+        except Exception as e:
+            print(f"Error getting user followed topics: {e}")
+            
+    # Normalize user topics to lowercase (matching filenames under News/daily/{date}/{category}.json)
+    user_categories = [t.lower() for t in user_topics]
+    
+    # 2. Find the latest available daily news directory
+    from main import BASE_DIR
+    news_daily_dir = BASE_DIR / "News" / "daily"
+    
+    selected_date_dir = None
+    if news_daily_dir.exists():
+        # Get all directories in news_daily_dir, sorted descending
+        subdirs = sorted(
+            [d for d in news_daily_dir.iterdir() if d.is_dir()],
+            key=lambda x: x.name,
+            reverse=True
+        )
+        if subdirs:
+            selected_date_dir = subdirs[0]
+            
+    # 3. Load articles from the selected date directory
+    category_to_articles = {}
+    if selected_date_dir:
+        import json
+        for file in selected_date_dir.iterdir():
+            if file.is_file() and file.suffix == ".json" and file.name != "manifest.json":
+                category_name = file.stem.lower() # e.g. "technology"
+                try:
+                    with open(file, "r", encoding="utf-8") as f:
+                        payload = json.load(f)
+                        from news_adapter import normalize_news_feed
+                        articles = normalize_news_feed(payload)
+                        if articles:
+                            category_to_articles[category_name] = articles
+                except Exception as e:
+                    print(f"Error loading daily news file {file}: {e}")
+                    
+    # Select up to 3 articles, prioritizing user interested categories
+    stories_list = []
+    selected_articles = []
+    
+    # Filter available categories the user is interested in
+    interested_cats = [c for c in user_categories if c in category_to_articles]
+    
+    # If no matching categories found, or user has no interests, default to all available categories
+    if not interested_cats:
+        interested_cats = list(category_to_articles.keys())
+        
+    # We want to select up to 3 articles, trying to distribute them across the categories
+    if interested_cats:
+        cat_index = 0
+        article_indices = {cat: 0 for cat in interested_cats}
+        
+        while len(selected_articles) < 3:
+            any_available = False
+            for cat in interested_cats:
+                if article_indices[cat] < len(category_to_articles[cat]):
+                    any_available = True
+                    break
+            if not any_available:
                 break
                 
-    if len(stories_list) < 3:
-        # Fallback to mock articles
-        try:
-            from main import NEWS_FEED_PATH
-            articles = load_mock_articles(NEWS_FEED_PATH)
-            for art in articles[:3]:
-                stories_list.append({
-                    "storyId": art.id,
-                    "title": art.title,
-                    "category": art.categories[0] if art.categories else "News"
-                })
-        except Exception:
-            pass
+            cat = interested_cats[cat_index % len(interested_cats)]
+            idx = article_indices[cat]
+            if idx < len(category_to_articles[cat]):
+                selected_articles.append((cat, category_to_articles[cat][idx]))
+                article_indices[cat] += 1
             
+            cat_index += 1
+            
+    for cat, art in selected_articles:
+        stories_list.append({
+            "storyId": art.id,
+            "title": art.title,
+            "category": cat.capitalize(),
+            "content": art.best_available_text
+        })
+        
+    # Fallback to the original episodes/mock method if we don't have enough articles from daily directories
+    if len(stories_list) < 3:
+        stories_list = []
+        if db is not None:
+            episodes = list(db.episodes.find().sort("publishedAt", -1).limit(3))
+            for ep in episodes:
+                for script in ep.get("scripts", []):
+                    if script.get("storyId") not in [s["storyId"] for s in stories_list]:
+                        stories_list.append(script)
+                        if len(stories_list) >= 3:
+                            break
+                if len(stories_list) >= 3:
+                    break
+                    
+        if len(stories_list) < 3:
+            # Fallback to mock articles
+            try:
+                from main import NEWS_FEED_PATH
+                articles = load_mock_articles(NEWS_FEED_PATH)
+                for art in articles[:3]:
+                    stories_list.append({
+                        "storyId": art.id,
+                        "title": art.title,
+                        "category": art.categories[0] if art.categories else "News"
+                    })
+            except Exception:
+                pass
+                
     # Attempt to dynamically generate real questions using LLM based on story content
     questions = []
     try:
@@ -207,7 +400,7 @@ def get_daily_challenge() -> dict[str, Any]:
         for idx, story in enumerate(stories_list[:3]):
             story_id = story.get("storyId") or story.get("id")
             if story_id:
-                content = find_story_text(story_id)
+                content = story.get("content") or find_news_text(story_id)
                 stories_data.append({
                     "index": idx,
                     "title": story.get("title", ""),
@@ -218,8 +411,9 @@ def get_daily_challenge() -> dict[str, Any]:
             client = OpenAI()
             prompt = f"""
 You are a quiz master. Create a multiple-choice question for each of the following news stories.
-Each question must have exactly 2 options (a and b) and must be based on the actual facts/events in that specific story.
-Do NOT create generic or placeholder questions. Make sure the questions and options test real comprehension of the story content.
+Each question must have exactly 2 options (a and b) and must be based on the actual facts/events/details in the news article text.
+Do NOT create meta-questions about the story category, the story title, the scripts, characters, or hosts. Focus ONLY on the actual real-world news event and facts (e.g. details, figures, events, actions) described in the article content.
+Do NOT create generic or placeholder questions. Make sure the questions and options test real comprehension of the news content.
 
 Stories:
 {json.dumps(stories_data, indent=2)}
