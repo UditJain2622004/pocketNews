@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 export default function InterestSelector({
   selectedTopics,
@@ -10,18 +10,6 @@ export default function InterestSelector({
   onSubmit,
   loading
 }) {
-  const [customTopic, setCustomTopic] = useState('')
-
-  const handleAddCustomTopic = () => {
-    const trimmed = customTopic.trim()
-    if (trimmed) {
-      if (!selectedTopics.includes(trimmed)) {
-        toggleTopic(trimmed)
-      }
-      setCustomTopic('')
-    }
-  }
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 gap-8 text-slate-800">
       
@@ -94,13 +82,13 @@ export default function InterestSelector({
         </div>
       </div>
 
-      {/* Right Column - User's Active Choices, Custom Input & Actions */}
+      {/* Right Column - User's Active Choices & Actions */}
       <div className="md:col-span-5 flex flex-col justify-between space-y-6 border-t md:border-t-0 md:border-l border-black/5 pt-6 md:pt-0 md:pl-6">
         <div className="space-y-5">
           <div className="flex items-center gap-3">
             <img src="/logo.png" className="w-10 h-10 object-contain rounded-xl" alt="Logo" />
             <div>
-              <h3 className="text-base font-extrabold tracking-tight text-slate-850">Your Custom Interests</h3>
+              <h3 className="text-base font-extrabold tracking-tight text-slate-850">Your Interests</h3>
               <p className="text-[11px] text-slate-500 font-medium">Personalize your cinematic feed</p>
             </div>
           </div>
@@ -145,35 +133,9 @@ export default function InterestSelector({
           )}
         </div>
 
-        {/* Custom Interest Input & Final Actions */}
+        {/* Final Actions */}
         <div className="space-y-4 pt-4 border-t border-black/5">
-          <div className="space-y-1.5">
-            <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">Add Custom Interest</label>
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={customTopic}
-                onChange={(e) => setCustomTopic(e.target.value)}
-                placeholder="Type your own topic..."
-                className="flex-1 bg-white/70 border border-black/5 hover:border-black/10 focus:border-[#7C3AED] focus:bg-white rounded-xl px-3 py-2 text-xs transition-all focus:outline-none shadow-sm placeholder-slate-400 text-slate-805"
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault()
-                    handleAddCustomTopic()
-                  }
-                }}
-              />
-              <button
-                type="button"
-                onClick={handleAddCustomTopic}
-                className="px-4 py-2 bg-gradient-to-r from-[#7C3AED] to-[#2563EB] text-white rounded-xl text-xs font-bold hover:opacity-90 transition-all shadow-sm"
-              >
-                Add
-              </button>
-            </div>
-          </div>
-
-          <div className="flex gap-3 pt-2">
+          <div className="flex gap-3">
             <button
               type="button"
               onClick={onBack}
